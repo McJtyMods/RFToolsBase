@@ -1,0 +1,157 @@
+
+// For those who want the bleeding edge
+buildscript {
+    repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+    }
+}
+
+//plugins {
+    //id 'com.matthewprenger.cursegradle' version '1.1.0'
+//}
+
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+
+repositories {
+    maven { // The repo from which to get waila
+        name "Mobius Repo"
+        url "https://tehnut.info/maven"
+        //url "http://mobiusstrip.eu/maven"
+    }
+    maven { // JEI
+        url "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name 'OC Repo'
+        url "http://maven.cil.li/"
+    }
+    maven { // TOP
+        name 'tterrag maven'
+        url "https://maven.tterrag.com/"
+    }
+    maven { // McJtyLib
+        url "http://maven.k-4u.nl"
+    }
+    maven { // OC Repo
+        url "http://maven.cil.li/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+    maven {
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
+    }
+}
+
+group= "com.github.mcjty" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "rftoolsbase"
+
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += "-${System.getenv('BUILD_NUMBER')}"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+minecraft {
+    mappings channel: 'snapshot', version: "${mcp_mappings}"
+
+    runs {
+        client = {
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+        server = {
+            // recommended logging data for a userdev environment
+            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // recommended logging level for the console
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+    }
+}
+
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    compile fg.deobf (project.dependencies.create("mcjty.theoneprobe:TheOneProbe-${top_version}") {
+        transitive = false
+    })
+    compile fg.deobf (project.dependencies.create("com.github.mcjty:mcjtylib:${mcjtylib_version}") {
+        transitive = false
+    })
+    //deobfCompile "mezz.jei:jei_${jei_version}"
+    //deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}"
+    //deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
+    //deobfCompile "cofh:RedstoneFlux:${redstoneflux_version}"
+    //deobfCompile "com.github.mcjty:intwheel:${intwheel_version}"
+    //deobfCompile "com.github.mcjty:mcjtylib:${mcjtylib_version}"
+    //compile "li.cil.oc:OpenComputers:${oc_version}"
+}
+
+String getChangelogText() {
+    def changelogFile = file('changelog.txt')
+    String str = ''
+    int lineCount = 0
+    boolean done = false
+    changelogFile.eachLine {
+        if (done || it == null) {
+            return
+        }
+        if (it.size() > 1) {
+            def temp = it
+            if (lineCount == 0) {
+                temp = "${modname} ${version}"
+                temp = "<h2>$temp</h2>"
+            } else if (it.startsWith('-')) {
+                temp = "&nbsp;&nbsp;&nbsp;$temp"
+                temp = temp.replaceAll("(\\S+\\/\\S+)#([0-9]+)\\b", "<a href=\"https://github.com/\$1/issues/\$2\">\$0</a>");
+                temp = temp.replaceAll("#([0-9]+)\\b(?!<\\/a>)", "<a href=\"https://github.com/$github_project/issues/\$1\">\$0</a>");
+            } else {
+                temp = "<h4>$temp</h4>"
+            }
+            str += "$temp<br/>"
+            lineCount++
+            return
+        } else {
+            done = true
+        }
+    }
+    return str
+}
+
+//tasks.curseforge.enabled = project.hasProperty('curseforge_key')
+
+//curseforge {
+//    if (project.hasProperty('curseforge_key')) {
+//        apiKey = project.curseforge_key
+//    }
+//
+//    project {
+//        id = project.projectId
+//        changelog = System.getenv('CHANGELOG') == null || System.getenv('CHANGELOG').equals('none') ? getChangelogText() : System.getenv('CHANGELOG')
+//        changelogType = 'html'
+//        releaseType = project.curse_type
+//        addGameVersion '1.12.2'
+//        mainArtifact(jar) {
+//            displayName = "${modname} - ${version}"
+//        }
+//        relations {
+//            requiredLibrary 'mcjtylib'
+//            optionalLibrary 'the-one-probe'
+//        }
+//    }
+//}
