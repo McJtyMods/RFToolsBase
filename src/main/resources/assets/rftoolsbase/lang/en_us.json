@@ -1,0 +1,33 @@
+{
+    "item.rftoolsbase.network_monitor": "RF Network Monitor",
+    "item.rftoolsbase.teleport_probe": "Teleporter Probe",
+    "item.rftoolsbase.developers_delight": "Developers Delight",
+    "item.rftoolsbase.shard_wand": "Shard Wand",
+    "item.rftoolsbase.orphaning_card": "Orphaning Card",
+    "item.rftoolsbase.security_card": "Security Card",
+    "item.rftoolsbase.infused_diamond": "Infused Diamond",
+    "item.rftoolsbase.infused_enderpearl": "Infused Enderpearl",
+    "item.rftoolsbase.smartwrench": "Smart Wrench",
+    "item.rftoolsbase.smartwrench_select": "Smart Wrench (Select)",
+    "item.rftoolsbase.dimensionalshard": "Dimensional Shard",
+
+    "block.rftoolsbase.machine_frame": "Machine Frame",
+    "block.rftoolsbase.machine_base": "Machine Base",
+    "block.rftoolsbase.machine_infuser": "Machine Infuser",
+    "block.rftoolsbase.security_manager": "Security Manager",
+    "block.rftoolsbase.dimensionalshard_overworld": "Dimensional Shard Ore",
+    "block.rftoolsbase.dimensionalshard_nether": "Dimensional Shard Ore",
+    "block.rftoolsbase.dimensionalshard_end": "Dimensional Shard Ore",
+
+    "_comment": "Creative Tabs",
+    "itemGroup.rftoolsbase": "RFTools Base",
+
+    "_comment": "Keys",
+    "key.categories.rftools": "RFTools",
+    "key.debugDumpNBTItem": "Dump NBT for Held Item",
+    "key.debugDumpNBTBlock": "Dump NBT for Selected Block",
+
+    "_comment": "Messages",
+    "message.rftools.shiftmessage": "<Press Shift>",
+    "message.rftools.security_manager": "@aContents: %s stacks\\n@fThis block manages your security cards"
+}

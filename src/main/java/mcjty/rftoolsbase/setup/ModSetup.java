@@ -1,13 +1,13 @@
 package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.setup.DefaultModSetup;
+import mcjty.rftoolsbase.items.ModItems;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 
 public class ModSetup extends DefaultModSetup {
 
     public ModSetup() {
-        createTab("rftoolsbase", () -> new ItemStack(Items.DIAMOND));   // @todo, use the wrench here
+        createTab("rftoolsbase", () -> new ItemStack(ModItems.SMARTWRENCH));
     }
 
     @Override
