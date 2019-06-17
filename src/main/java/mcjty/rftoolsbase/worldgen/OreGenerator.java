@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.worldgen;
 
 import mcjty.rftoolsbase.blocks.ModBlocks;
+import mcjty.rftoolsbase.config.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.biome.Biome;
@@ -23,18 +24,32 @@ public class OreGenerator {
     public static void init() {
         for (Biome biome : ForgeRegistries.BIOMES) {
 
-            CountRangeConfig placementConfig = new CountRangeConfig(5, 2, 0, 40);
+            int overworldChances = Config.OVERWORLD_ORE_CHANCES.get();
+            if (overworldChances > 0) {
+                ConfiguredFeature<?> featureOverworld = Biome.createDecoratedFeature(Feature.ORE,
+                        new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.DIMENSIONAL_SHARD_OVERWORLD.getDefaultState(),
+                                Config.OVERWORLD_ORE_VEINSIZE.get()),
+                        Placement.COUNT_RANGE, new CountRangeConfig(
+                                overworldChances,
+                                Config.OVERWORLD_ORE_MINY.get(),
+                                0,
+                                Config.OVERWORLD_ORE_MAXY.get() - Config.OVERWORLD_ORE_MINY.get()));
+                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(featureOverworld, DimensionType.OVERWORLD));
+            }
 
-            ConfiguredFeature<?> featureOverworld = Biome.createDecoratedFeature(Feature.ORE,
-                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.DIMENSIONAL_SHARD_OVERWORLD.getDefaultState(), 8),
-                    Placement.COUNT_RANGE, placementConfig);
-            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(featureOverworld, DimensionType.OVERWORLD));
 
-            ConfiguredFeature<?> featureNether = Biome.createDecoratedFeature(Feature.ORE,
-                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, ModBlocks.DIMENSIONAL_SHARD_NETHER.getDefaultState(), 8),
-                    Placement.COUNT_RANGE, placementConfig);
-            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(featureNether, DimensionType.NETHER));
-
+            int netherChances = Config.NETHER_ORE_CHANCES.get();
+            if (netherChances > 0) {
+                ConfiguredFeature<?> featureNether = Biome.createDecoratedFeature(Feature.ORE,
+                        new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, ModBlocks.DIMENSIONAL_SHARD_NETHER.getDefaultState(),
+                                Config.NETHER_ORE_VEINSIZE.get()),
+                        Placement.COUNT_RANGE, new CountRangeConfig(
+                                netherChances,
+                                Config.NETHER_ORE_MINY.get(),
+                                0,
+                                Config.NETHER_ORE_MAXY.get() - Config.NETHER_ORE_MINY.get()));
+                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(featureNether, DimensionType.NETHER));
+            }
 //            ConfiguredFeature<?> featureEnd = Biome.createDecoratedFeature(Feature.ORE,
 //                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, ModBlocks.DIMENSIONAL_SHARD_END.getDefaultState(), 8),
 //                    Placement.COUNT_RANGE, placementConfig);
