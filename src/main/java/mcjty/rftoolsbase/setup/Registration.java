@@ -1,7 +1,9 @@
 package mcjty.rftoolsbase.setup;
 
 
+import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.items.SmartWrenchItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
@@ -18,6 +20,8 @@ public class Registration {
 
     @SubscribeEvent
     public static void registerItems(final RegistryEvent.Register<Item> event) {
+        event.getRegistry().register(new SmartWrenchItem(SmartWrenchMode.MODE_WRENCH));
+        event.getRegistry().register(new SmartWrenchItem(SmartWrenchMode.MODE_SELECT));
     }
 
     @SubscribeEvent
