@@ -6,12 +6,16 @@ import mcjty.lib.container.*;
 import mcjty.lib.tileentity.GenericEnergyReceiverTileEntity;
 import mcjty.rftoolsbase.items.ModItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -39,6 +43,11 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
 
     public MachineInfuserTileEntity() {
         super(MachineInfuserSetup.TYPE_INFUSER, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
+    }
+
+    @Override
+    public boolean onBlockActivated(BlockState state, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        return super.onBlockActivated(state, player, hand, result);
     }
 
     @Override

@@ -8,9 +8,10 @@ import mcjty.lib.gui.widgets.EnergyBar;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.tileentity.GenericEnergyStorageTileEntity;
 import mcjty.rftoolsbase.RFToolsBase;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.*;
+import java.awt.Rectangle;
 
 import static mcjty.lib.tileentity.GenericEnergyStorageTileEntity.getCurrentRF;
 
@@ -22,8 +23,10 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/machineinfuser.png");
 
-    public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container) {
-        super(RFTools.instance, RFToolsMessages.INSTANCE, machineInfuserTileEntity, container, 0/*@todoRFTools.GUI_MANUAL_DIMENSION*/, "infuser");
+
+
+    public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container, PlayerInventory inventory) {
+        super(RFToolsBase.instance, null /*@todo*/, machineInfuserTileEntity, container, inventory, 0, "infuser");
         GenericEnergyStorageTileEntity.setCurrentRF(machineInfuserTileEntity.getStoredPower());
 
         xSize = INFUSER_WIDTH;
@@ -31,19 +34,20 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     }
 
     @Override
-    public void initGui() {
-        super.initGui();
+    public void init() {
+        super.init();
 
-        energyBar = new EnergyBar(mc, this).setName("energybar").setVertical().setLayoutHint(10, 7, 8, 54).setShowText(false);
+        energyBar = new EnergyBar(getMinecraft(), this).setName("energybar").setVertical().setLayoutHint(10, 7, 8, 54).setShowText(false);
 
-        Panel toplevel = new Panel(mc, this).setBackground(iconLocation).setLayout(new PositionalLayout()).addChild(energyBar); //.addChild(arrow);
+        Panel toplevel = new Panel(getMinecraft(), this).setBackground(iconLocation).setLayout(new PositionalLayout()).addChild(energyBar); //.addChild(arrow);
         toplevel.setBounds(new Rectangle(guiLeft, guiTop, xSize, ySize));
 
         window = new Window(this, toplevel);
 
         initializeFields();
 
-        tileEntity.requestRfFromServer(RFTools.MODID);
+        // @todo
+//        tileEntity.requestRfFromServer(RFToolsBase.MODID);
     }
 
     private void initializeFields() {
@@ -59,6 +63,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
         energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
 
-        tileEntity.requestRfFromServer(RFTools.MODID);
+        // @todo
+        tileEntity.requestRfFromServer(RFToolsBase.MODID);
     }
 }
