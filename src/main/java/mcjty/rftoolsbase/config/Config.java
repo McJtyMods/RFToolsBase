@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.config;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import mcjty.rftoolsbase.blocks.infuser.MachineInfuserConfiguration;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +21,7 @@ public class Config {
 
 
     public static String CATEGORY_WORLDGEN = "worldgen";
+    public static String CATEGORY_GENERAL = "general";
 
     public static ForgeConfigSpec.IntValue OVERWORLD_ORE_CHANCES;
     public static ForgeConfigSpec.IntValue OVERWORLD_ORE_VEINSIZE;
@@ -44,6 +46,13 @@ public class Config {
     }
 
     static {
+        setupWorldgenConfig();
+        MachineInfuserConfiguration.init(SERVER_BUILDER);
+
+        SERVER_CONFIG = SERVER_BUILDER.build();
+    }
+
+    private static void setupWorldgenConfig() {
         SERVER_BUILDER.comment("Dimensional shard ore generation").push(CATEGORY_WORLDGEN);
 
         OVERWORLD_ORE_CHANCES = SERVER_BUILDER
@@ -73,8 +82,6 @@ public class Config {
                 .defineInRange("netherOreMax", 40, 0, 256);
 
         SERVER_BUILDER.pop();
-
-        SERVER_CONFIG = SERVER_BUILDER.build();
     }
 
 }

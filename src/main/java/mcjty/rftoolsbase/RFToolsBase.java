@@ -27,10 +27,14 @@ public class RFToolsBase implements ModBase {
     @SuppressWarnings("PublicField")
     public static ModSetup setup = new ModSetup();
 
+    @SuppressWarnings("PublicField")
+    public static RFToolsBase instance;
+
     public RFToolsBase() {
+        instance = this;
+
 //        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
-
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
 

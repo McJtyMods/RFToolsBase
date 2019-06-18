@@ -5,6 +5,8 @@ import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.blocks.ModBlocks;
+import mcjty.rftoolsbase.blocks.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.blocks.infuser.MachineInfuserTileEntity;
 import mcjty.rftoolsbase.items.SmartWrenchItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
@@ -22,6 +24,8 @@ public class Registration {
         event.getRegistry().register(new DimensionalShardBlock(DimensionalShardBlock.OreType.ORE_OVERWORLD));
         event.getRegistry().register(new DimensionalShardBlock(DimensionalShardBlock.OreType.ORE_NETHER));
         event.getRegistry().register(new DimensionalShardBlock(DimensionalShardBlock.OreType.ORE_END));
+
+        event.getRegistry().register(MachineInfuserSetup.createInfuserBlock());
     }
 
     @SubscribeEvent
@@ -37,10 +41,13 @@ public class Registration {
         event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_OVERWORLD, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_OVERWORLD.getRegistryName()));
         event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_NETHER, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_NETHER.getRegistryName()));
         event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_END, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_END.getRegistryName()));
+
+        event.getRegistry().register(new BlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
     @SubscribeEvent
     public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> registry) {
+        registry.getRegistry().register(MachineInfuserSetup.TYPE_INFUSER = TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
 }
