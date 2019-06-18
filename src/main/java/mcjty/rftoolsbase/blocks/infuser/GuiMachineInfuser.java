@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
-import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.PositionalLayout;
@@ -11,21 +10,21 @@ import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
-import java.awt.Rectangle;
+import java.awt.*;
 
 import static mcjty.lib.tileentity.GenericEnergyStorageTileEntity.getCurrentRF;
 
-public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEntity> {
+public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEntity, MachineInfuserContainer> {
     public static final int INFUSER_WIDTH = 180;
     public static final int INFUSER_HEIGHT = 152;
 
     private EnergyBar energyBar;
 
-    private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/machineinfuser.png");
+    private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
 
 
 
-    public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container, PlayerInventory inventory) {
+    public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, MachineInfuserContainer container, PlayerInventory inventory) {
         super(RFToolsBase.instance, null /*@todo*/, machineInfuserTileEntity, container, inventory, 0, "infuser");
         GenericEnergyStorageTileEntity.setCurrentRF(machineInfuserTileEntity.getStoredPower());
 

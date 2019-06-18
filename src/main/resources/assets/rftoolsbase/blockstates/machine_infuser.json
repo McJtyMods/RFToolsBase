@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=north": { "model": "rftoolsbase:block/machine_infuser" },
+    "facing=south": { "model": "rftoolsbase:block/machine_infuser", "y": 180 },
+    "facing=west": { "model": "rftoolsbase:block/machine_infuser", "y": 270 },
+    "facing=east": { "model": "rftoolsbase:block/machine_infuser", "y": 90 },
+    "facing=up": { "model": "rftoolsbase:block/machine_infuser", "x": -90 },
+    "facing=down": { "model": "rftoolsbase:block/machine_infuser", "x": 90 }
+  }
+}
