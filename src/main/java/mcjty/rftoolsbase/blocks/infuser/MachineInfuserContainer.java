@@ -1,5 +1,7 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
+import mcjty.lib.container.ContainerFactory;
+import mcjty.lib.container.GenericContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -9,13 +11,14 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 
-public class MachineInfuserContainer extends Container {
+public class MachineInfuserContainer extends GenericContainer {
 
     private final BlockPos pos;
 
-    public MachineInfuserContainer(@Nullable ContainerType<?> type, int windowId, PlayerInventory inv, PacketBuffer extraData) {
-        super(type, windowId);
-        this.pos = extraData.readBlockPos();
+    public MachineInfuserContainer(@Nullable ContainerType<?> type, int windowId, PlayerInventory inv, BlockPos pos) {
+        super(type, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY);
+        addInventory(ContainerFactory.CONTAINER_PLAYER, inv);
+        this.pos = pos;
     }
 
     @Override

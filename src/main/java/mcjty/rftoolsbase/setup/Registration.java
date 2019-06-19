@@ -56,7 +56,7 @@ public class Registration {
     @SubscribeEvent
     public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> registry) {
         registry.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> new MachineInfuserContainer(
-                MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, inv, data)));
+                MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, inv, data.readBlockPos())).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
 }

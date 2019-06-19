@@ -63,6 +63,6 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
 
         // @todo
-        tileEntity.requestRfFromServer(RFToolsBase.MODID);
+//        tileEntity.requestRfFromServer(RFToolsBase.MODID);
     }
 }

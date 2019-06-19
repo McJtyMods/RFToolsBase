@@ -24,7 +24,7 @@ public class MachineInfuserSetup {
         return ModBlocks.BUILDER_FACTORY.<MachineInfuserTileEntity> builder(INFUSER_REGNAME)
                 .tileEntityClass(MachineInfuserTileEntity.class)
                 .container(MachineInfuserTileEntity.CONTAINER_FACTORY)
-//                .guiId(GuiProxy.GUI_MACHINE_INFUSER)
+                .guiId(1)   // @todo
                 .infusable()
                 .info("message.rftoolsbase.shiftmessage")
                 .infoExtended("message.rftoolsbase.infuser")

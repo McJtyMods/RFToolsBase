@@ -8,6 +8,8 @@ import mcjty.rftoolsbase.items.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -187,5 +189,11 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
         super.writeRestorableToNBT(tagCompound);
         writeBufferToNBT(tagCompound, inventoryHelper);
         tagCompound.putInt("infusing", infusing);
+    }
+
+    @Nullable
+    @Override
+    public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
+        return new MachineInfuserContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, inventory, getPos());
     }
 }
