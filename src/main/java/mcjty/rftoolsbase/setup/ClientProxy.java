@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.setup;
 
+import mcjty.lib.container.GenericContainer;
 import mcjty.lib.setup.DefaultClientProxy;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.blocks.infuser.GuiMachineInfuser;
-import mcjty.rftoolsbase.blocks.infuser.MachineInfuserContainer;
 import mcjty.rftoolsbase.blocks.infuser.MachineInfuserSetup;
 import mcjty.rftoolsbase.blocks.infuser.MachineInfuserTileEntity;
 import net.minecraft.client.gui.ScreenManager;
@@ -22,7 +22,7 @@ public class ClientProxy extends DefaultClientProxy {
     }
 
     public static void initGuis() {
-        ScreenManager.IScreenFactory<MachineInfuserContainer, GuiMachineInfuser> factory = (container, inventory, title) -> {
+        ScreenManager.IScreenFactory<GenericContainer, GuiMachineInfuser> factory = (container, inventory, title) -> {
             BlockPos pos = container.getPos();
             TileEntity te = RFToolsBase.proxy.getClientWorld().getTileEntity(pos);
             if (te instanceof MachineInfuserTileEntity) {

@@ -22,6 +22,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,6 +41,7 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
         }
     };
     private InventoryHelper inventoryHelper = new InventoryHelper(this, CONTAINER_FACTORY, 2);
+    private IItemHandler itemHandler;
 
     private int infusing = 0;
 
@@ -141,28 +143,31 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction facing) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return LazyOptional.of(() -> (T) createItemHandler());
+            return LazyOptional.of(() -> (T) getItemHandler());
         }
         return super.getCapability(cap, facing);
     }
 
-    private IItemHandler createItemHandler() {
-        return new NoDirectionItemHander(inventoryHelper, this) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
-            }
+    private IItemHandler getItemHandler() {
+        if (itemHandler == null) {
+            itemHandler = new NoDirectionItemHander(inventoryHelper, this) {
+                @Override
+                public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                    return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
+                }
 
-            @Override
-            public boolean isItemInsertable(int slot, @Nonnull ItemStack stack) {
-                return CONTAINER_FACTORY.isInputSlot(slot) || CONTAINER_FACTORY.isSpecificItemSlot(slot);
-            }
+                @Override
+                public boolean isItemInsertable(int slot, @Nonnull ItemStack stack) {
+                    return CONTAINER_FACTORY.isInputSlot(slot) || CONTAINER_FACTORY.isSpecificItemSlot(slot);
+                }
 
-            @Override
-            public boolean isItemExtractable(int slot, @Nonnull ItemStack stack) {
-                return CONTAINER_FACTORY.isOutputSlot(slot);
-            }
-        };
+                @Override
+                public boolean isItemExtractable(int slot, @Nonnull ItemStack stack) {
+                    return CONTAINER_FACTORY.isOutputSlot(slot);
+                }
+            };
+        }
+        return itemHandler;
     }
 
 
@@ -194,6 +199,14 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-        return new MachineInfuserContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, inventory, getPos());
+        return createContainer(this, windowId, inventory);
+    }
+
+    public static Container createContainer(MachineInfuserTileEntity te, int windowId, PlayerInventory inventory) {
+        GenericContainer container = new GenericContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, te.getPos());
+        container.addInventory(ContainerFactory.CONTAINER_CONTAINER, te.getItemHandler());
+        container.addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
+        container.generateSlots();
+        return container;
     }
 }

@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
-import mcjty.lib.blocks.GenericBlock;
+import mcjty.lib.blocks.BaseBlockNew;
+import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.GenericContainer;
-import mcjty.rftoolsbase.blocks.ModBlocks;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
@@ -12,23 +12,22 @@ public class MachineInfuserSetup {
     public static final String INFUSER_REGNAME = "machine_infuser";
 
     @ObjectHolder("rftoolsbase:machine_infuser")
-    public static GenericBlock<MachineInfuserTileEntity, GenericContainer> MACHINE_INFUSER;
+    public static BaseBlockNew MACHINE_INFUSER;
 
     @ObjectHolder("rftoolsbase:machine_infuser")
-    public static ContainerType<MachineInfuserContainer> MACHINE_INFUSER_CONTAINER;
+    public static ContainerType<GenericContainer> MACHINE_INFUSER_CONTAINER;
 
     public static TileEntityType<?> TYPE_INFUSER;
 
 
-    public static GenericBlock<MachineInfuserTileEntity, GenericContainer> createInfuserBlock() {
-        return ModBlocks.BUILDER_FACTORY.<MachineInfuserTileEntity> builder(INFUSER_REGNAME)
-                .tileEntityClass(MachineInfuserTileEntity.class)
-                .container(MachineInfuserTileEntity.CONTAINER_FACTORY)
-                .guiId(1)   // @todo
+    public static BaseBlockNew createInfuserBlock() {
+
+        return new BaseBlockNew(INFUSER_REGNAME, new BlockBuilder()
+                .tileEntitySupplier(MachineInfuserTileEntity::new)
+                .hasGui()
                 .infusable()
                 .info("message.rftoolsbase.shiftmessage")
-                .infoExtended("message.rftoolsbase.infuser")
-                .build();
+                .infoExtended("message.rftoolsbase.infuser"));
     }
 
     public static void initClient() {

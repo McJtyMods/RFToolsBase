@@ -28,6 +28,6 @@
     "key.debugDumpNBTBlock": "Dump NBT for Selected Block",
 
     "_comment": "Messages",
-    "message.rftools.shiftmessage": "<Press Shift>",
-    "message.rftools.security_manager": "@aContents: %s stacks\\n@fThis block manages your security cards"
+    "message.rftoolsbase.shiftmessage": "<Press Shift>",
+    "message.rftoolsbase.security_manager": "@aContents: %s stacks\\n@fThis block manages your security cards"
 }
