@@ -29,5 +29,6 @@
 
     "_comment": "Messages",
     "message.rftoolsbase.shiftmessage": "<Press Shift>",
-    "message.rftoolsbase.security_manager": "@aContents: %s stacks\\n@fThis block manages your security cards"
+    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards",
+    "message.rftoolsbase.infuser": "@fWith this machine you can improve most other machines\n@fin RFTools in various ways. This needs dimensional\n@fshards.\n@eInfusing bonus: reduced power consumption"
 }
