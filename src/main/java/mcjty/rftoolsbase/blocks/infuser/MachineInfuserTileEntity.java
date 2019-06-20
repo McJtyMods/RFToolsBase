@@ -174,26 +174,17 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Override
     public void read(CompoundNBT tagCompound) {
         super.read(tagCompound);
-    }
-
-    @Override
-    public void readRestorableFromNBT(CompoundNBT tagCompound) {
-        super.readRestorableFromNBT(tagCompound);
         readBufferFromNBT(tagCompound, inventoryHelper);
         infusing = tagCompound.getInt("infusing");
     }
 
+    @Nonnull
     @Override
     public CompoundNBT write(CompoundNBT tagCompound) {
         super.write(tagCompound);
-        return tagCompound;
-    }
-
-    @Override
-    public void writeRestorableToNBT(CompoundNBT tagCompound) {
-        super.writeRestorableToNBT(tagCompound);
         writeBufferToNBT(tagCompound, inventoryHelper);
         tagCompound.putInt("infusing", infusing);
+        return tagCompound;
     }
 
     @Nullable
