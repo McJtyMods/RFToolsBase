@@ -1,9 +1,4 @@
 {
-  "conditions": [
-    {
-      "type": "rftoolsbase:dimshard_hard"
-    }
-  ],
   "result": {
     "item": "rftoolsbase:dimensionalshard",
     "count": 8

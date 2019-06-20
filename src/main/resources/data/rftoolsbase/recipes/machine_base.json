@@ -1,0 +1,18 @@
+{
+  "result": {
+    "item": "rftools:machine_base"
+  },
+  "pattern": [
+    "ggg",
+    "sss"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "s": {
+      "item": "minecraft:stone",
+    },
+    "g": {
+      "item": "minecraft:gold_nugget"
+    }
+  }
+}

@@ -10,9 +10,9 @@
     "item.rftoolsbase.smartwrench": "Smart Wrench",
     "item.rftoolsbase.smartwrench_select": "Smart Wrench (Select)",
     "item.rftoolsbase.dimensionalshard": "Dimensional Shard",
+    "item.rftoolsbase.machine_frame": "Machine Frame",
+    "item.rftoolsbase.machine_base": "Machine Base",
 
-    "block.rftoolsbase.machine_frame": "Machine Frame",
-    "block.rftoolsbase.machine_base": "Machine Base",
     "block.rftoolsbase.machine_infuser": "Machine Infuser",
     "block.rftoolsbase.security_manager": "Security Manager",
     "block.rftoolsbase.dimensionalshard_overworld": "Dimensional Shard Ore",

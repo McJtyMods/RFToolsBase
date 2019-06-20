@@ -1,14 +1,17 @@
 {
   "result": {
-    "item": "rftoolsbase:smartwrench"
+    "item": "rftools:machine_frame"
   },
   "pattern": [
-    "  i",
-    " l ",
-    "l  "
+    "ili",
+    "g g",
+    "ili"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
+    "g": {
+      "item": "minecraft:gold_nugget"
+    },
     "i": {
       "item": "minecraft:iron_ingot"
     },

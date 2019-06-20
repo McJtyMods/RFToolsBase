@@ -1,0 +1,8 @@
+{
+  "parent": "rftoolsbase:block/rftools_logicblock",
+  "textures": {
+    "up": "rftoolsbase:block/base/machinetop",
+    "side": "rftoolsbase:block/base/machineside",
+    "bottom": "rftoolsbase:block/base/machinebottom"
+  }
+}

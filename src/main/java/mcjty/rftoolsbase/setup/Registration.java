@@ -45,6 +45,9 @@ public class Registration {
         event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_END, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_END.getRegistryName()));
 
         event.getRegistry().register(new BlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
+
+        event.getRegistry().register(new Item(properties).setRegistryName("machine_frame"));
+        event.getRegistry().register(new Item(properties).setRegistryName("machine_base"));
     }
 
     @SubscribeEvent
