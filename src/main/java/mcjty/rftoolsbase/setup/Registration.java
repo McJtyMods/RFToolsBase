@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.setup;
 
 
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
+import mcjty.lib.container.GenericContainer;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.blocks.ModBlocks;
@@ -12,10 +13,7 @@ import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -56,14 +54,7 @@ public class Registration {
 
     @SubscribeEvent
     public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> registry) {
-        registry.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
-            BlockPos pos = data.readBlockPos();
-            TileEntity te = RFToolsBase.proxy.getClientWorld().getTileEntity(pos);
-            if (!(te instanceof MachineInfuserTileEntity)) {
-                throw new IllegalStateException("Where did my infuser go?");
-            }
-            return MachineInfuserTileEntity.createContainer((MachineInfuserTileEntity) te, windowId, inv);
-        }).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
+        registry.getRegistry().register(GenericContainer.createContainerType(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
 }
