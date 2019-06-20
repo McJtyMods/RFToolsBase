@@ -13,10 +13,10 @@ import java.nio.file.Path;
 @Mod.EventBusSubscriber
 public class Config {
 
-    private static final Builder SERVER_BUILDER = new Builder();
+    private static final Builder COMMON_BUILDER = new Builder();
 //    private static final Builder CLIENT_BUILDER = new Builder();
 
-    public static final ForgeConfigSpec SERVER_CONFIG;
+    public static final ForgeConfigSpec COMMON_CONFIG;
 //    public static final ForgeConfigSpec CLIENT_CONFIG;
 
 
@@ -47,41 +47,41 @@ public class Config {
 
     static {
         setupWorldgenConfig();
-        MachineInfuserConfiguration.init(SERVER_BUILDER);
+        MachineInfuserConfiguration.init(COMMON_BUILDER);
 
-        SERVER_CONFIG = SERVER_BUILDER.build();
+        COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
     private static void setupWorldgenConfig() {
-        SERVER_BUILDER.comment("Dimensional shard ore generation").push(CATEGORY_WORLDGEN);
+        COMMON_BUILDER.comment("Dimensional shard ore generation").push(CATEGORY_WORLDGEN);
 
-        OVERWORLD_ORE_CHANCES = SERVER_BUILDER
+        OVERWORLD_ORE_CHANCES = COMMON_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
                 .defineInRange("overworldOreChances", 0, 0, 256);
-        OVERWORLD_ORE_VEINSIZE = SERVER_BUILDER
+        OVERWORLD_ORE_VEINSIZE = COMMON_BUILDER
                 .comment("Max size of veins")
                 .defineInRange("overworldOreVeinsize", 8, 1, 256);
-        OVERWORLD_ORE_MINY = SERVER_BUILDER
+        OVERWORLD_ORE_MINY = COMMON_BUILDER
                 .comment("Min height")
                 .defineInRange("overworldOreMin", 2, 0, 256);
-        OVERWORLD_ORE_MAXY = SERVER_BUILDER
+        OVERWORLD_ORE_MAXY = COMMON_BUILDER
                 .comment("Max height")
                 .defineInRange("overworldOreMax", 40, 0, 256);
 
-        NETHER_ORE_CHANCES = SERVER_BUILDER
+        NETHER_ORE_CHANCES = COMMON_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
                 .defineInRange("netherOreChances", 8, 0, 256);
-        NETHER_ORE_VEINSIZE = SERVER_BUILDER
+        NETHER_ORE_VEINSIZE = COMMON_BUILDER
                 .comment("Max size of veins")
                 .defineInRange("netherOreVeinsize", 8, 1, 256);
-        NETHER_ORE_MINY = SERVER_BUILDER
+        NETHER_ORE_MINY = COMMON_BUILDER
                 .comment("Min height")
                 .defineInRange("netherOreMin", 2, 0, 256);
-        NETHER_ORE_MAXY = SERVER_BUILDER
+        NETHER_ORE_MAXY = COMMON_BUILDER
                 .comment("Max height")
                 .defineInRange("netherOreMax", 40, 0, 256);
 
-        SERVER_BUILDER.pop();
+        COMMON_BUILDER.pop();
     }
 
 }
