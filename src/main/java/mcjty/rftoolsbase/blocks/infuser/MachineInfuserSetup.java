@@ -17,6 +17,7 @@ public class MachineInfuserSetup {
     @ObjectHolder("rftoolsbase:machine_infuser")
     public static ContainerType<GenericContainer> MACHINE_INFUSER_CONTAINER;
 
+    @ObjectHolder("rftoolsbase:machine_infuser")
     public static TileEntityType<?> TYPE_INFUSER;
 
 

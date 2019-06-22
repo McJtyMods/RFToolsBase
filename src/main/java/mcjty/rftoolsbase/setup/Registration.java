@@ -52,7 +52,7 @@ public class Registration {
 
     @SubscribeEvent
     public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> registry) {
-        registry.getRegistry().register(MachineInfuserSetup.TYPE_INFUSER = TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
+        registry.getRegistry().register(TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
     @SubscribeEvent
