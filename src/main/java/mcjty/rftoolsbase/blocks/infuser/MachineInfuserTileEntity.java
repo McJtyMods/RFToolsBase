@@ -41,8 +41,7 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
         }
     };
     private InventoryHelper inventoryHelper = new InventoryHelper(this, CONTAINER_FACTORY, 2);
-    private IItemHandler itemHandler;
-
+    private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
     private int infusing = 0;
 
     public MachineInfuserTileEntity() {
@@ -143,31 +142,28 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction facing) {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-            return LazyOptional.of(() -> (T) getItemHandler());
+            return itemHandler.cast();
         }
         return super.getCapability(cap, facing);
     }
 
-    private IItemHandler getItemHandler() {
-        if (itemHandler == null) {
-            itemHandler = new NoDirectionItemHander(inventoryHelper, this) {
-                @Override
-                public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                    return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
-                }
+    private IItemHandler createItemHandler() {
+        return new NoDirectionItemHander(inventoryHelper, MachineInfuserTileEntity.this) {
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
+            }
 
-                @Override
-                public boolean isItemInsertable(int slot, @Nonnull ItemStack stack) {
-                    return CONTAINER_FACTORY.isInputSlot(slot) || CONTAINER_FACTORY.isSpecificItemSlot(slot);
-                }
+            @Override
+            public boolean isItemInsertable(int slot, @Nonnull ItemStack stack) {
+                return CONTAINER_FACTORY.isInputSlot(slot) || CONTAINER_FACTORY.isSpecificItemSlot(slot);
+            }
 
-                @Override
-                public boolean isItemExtractable(int slot, @Nonnull ItemStack stack) {
-                    return CONTAINER_FACTORY.isOutputSlot(slot);
-                }
-            };
-        }
-        return itemHandler;
+            @Override
+            public boolean isItemExtractable(int slot, @Nonnull ItemStack stack) {
+                return CONTAINER_FACTORY.isOutputSlot(slot);
+            }
+        };
     }
 
 
@@ -195,7 +191,7 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
 
     public static Container createContainer(MachineInfuserTileEntity te, int windowId, PlayerInventory inventory) {
         GenericContainer container = new GenericContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, te.getPos());
-        container.addInventory(ContainerFactory.CONTAINER_CONTAINER, te.getItemHandler());
+        container.addInventory(ContainerFactory.CONTAINER_CONTAINER, te.createItemHandler());
         container.addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
         container.generateSlots();
         return container;
