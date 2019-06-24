@@ -183,7 +183,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     @Override
     public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
         GenericContainer container = new GenericContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, getPos());
-        container.setupInventories(createItemHandler(), inventory);
+        itemHandler.ifPresent(h -> container.setupInventories(h, inventory));
         energyStorage.ifPresent(e -> e.addIntegerListeners(container));
         return container;
     }
