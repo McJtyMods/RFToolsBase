@@ -3,10 +3,10 @@ package mcjty.rftoolsbase.blocks.infuser;
 import mcjty.lib.api.Infusable;
 import mcjty.lib.blocks.GenericBlock;
 import mcjty.lib.container.*;
-import mcjty.lib.tileentity.GenericEnergyReceiverTileEntity;
+import mcjty.lib.tileentity.GenericEnergyStorage;
+import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.rftoolsbase.items.ModItems;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -16,18 +16,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
-public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity implements ITickableTileEntity {
+public class MachineInfuserTileEntity extends GenericTileEntity implements ITickableTileEntity {
 
     public static final int SLOT_SHARDINPUT = 0;
     public static final int SLOT_MACHINEOUTPUT = 1;
@@ -40,102 +39,94 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
             layoutPlayerInventorySlots(10, 70);
         }
     };
-    private InventoryHelper inventoryHelper = new InventoryHelper(this, CONTAINER_FACTORY, 2);
-    private LazyOptional<IItemHandler> itemHandler = LazyOptional.of(this::createItemHandler);
+
+    private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(this::createItemHandler);
+    private LazyOptional<GenericEnergyStorage> energyStorage = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
+
     private int infusing = 0;
 
     public MachineInfuserTileEntity() {
-        super(MachineInfuserSetup.TYPE_INFUSER, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
-    }
-
-    @Override
-    public boolean onBlockActivated(BlockState state, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-        return super.onBlockActivated(state, player, hand, result);
+        super(MachineInfuserSetup.TYPE_INFUSER);
     }
 
     @Override
     public void tick() {
         if (!world.isRemote) {
-            checkStateServer();
+            tickServer();
         }
     }
 
-    private void checkStateServer() {
-        if (infusing > 0) {
-            infusing--;
-            if (infusing == 0) {
-                ItemStack outputStack = inventoryHelper.getStackInSlot(1);
-                finishInfusing(outputStack);
+    private void tickServer() {
+        itemHandler.ifPresent(h -> {
+            if (infusing > 0) {
+                infusing--;
+                if (infusing == 0) {
+                    ItemStack outputStack = h.getStackInSlot(1);
+                    finishInfusing(outputStack);
+                }
+                markDirtyQuick();
+            } else {
+                ItemStack inputStack = h.getStackInSlot(0);
+                ItemStack outputStack = h.getStackInSlot(1);
+                if (!inputStack.isEmpty() && inputStack.getItem() == ModItems.DIMENSIONALSHARD && isInfusable(outputStack)) {
+                    startInfusing();
+                }
             }
-            markDirty();
-        } else {
-            ItemStack inputStack = inventoryHelper.getStackInSlot(0);
-            ItemStack outputStack = inventoryHelper.getStackInSlot(1);
-            if (!inputStack.isEmpty() && inputStack.getItem() == ModItems.DIMENSIONALSHARD && isInfusable(outputStack)) {
-                startInfusing();
-            }
-        }
+        });
     }
 
     private boolean isInfusable(ItemStack stack) {
-        CompoundNBT tagCompound = getTagCompound(stack);
-        if (tagCompound == null) {
-            return false;
-        }
-        int infused = tagCompound.getInt("infused");
-        if (infused >= MachineInfuserConfiguration.MAX_INFUSE.get()) {
-            return false;   // Already infused to the maximum.
-        }
-        return true;
+        return getTagCompound(stack).map(tagCompound -> {
+            int infused = tagCompound.getInt("infused");
+            return infused < MachineInfuserConfiguration.MAX_INFUSE.get();
+        }).orElse(false);
     }
 
-    @Nullable
-    private static CompoundNBT getTagCompound(ItemStack stack) {
-        if (stack.isEmpty()) {
-            return null;
-        }
-
-        if (stack.getCount() != 1) {
-            return null;
+    @Nonnull
+    private static Optional<CompoundNBT> getTagCompound(ItemStack stack) {
+        if (stack.isEmpty() || stack.getCount() != 1) {
+            return Optional.empty();
         }
 
         Item item = stack.getItem();
         if (!(item instanceof BlockItem)) {
-            return null;
+            return Optional.empty();
         }
-        Block block = ((BlockItem)item).getBlock();
+        Block block = ((BlockItem) item).getBlock();
         if (!(block instanceof Infusable || (block instanceof GenericBlock && ((GenericBlock) block).isInfusable()))) {
-            return null;
+            return Optional.empty();
         }
-        return stack.getOrCreateTag();
+        return Optional.of(stack.getOrCreateTag());
     }
 
     private void finishInfusing(ItemStack stack) {
-        CompoundNBT tagCompound = getTagCompound(stack);
-        if (tagCompound == null) {
-            return;
-        }
-        int infused = tagCompound.getInt("infused");
-        tagCompound.putInt("infused", infused+1);
-        stack.setTag(tagCompound);
+        getTagCompound(stack).ifPresent(tagCompound -> {
+            int infused = tagCompound.getInt("infused");
+            tagCompound.putInt("infused", infused + 1);
+            stack.setTag(tagCompound);
+        });
     }
 
     private void startInfusing() {
-        int rf = MachineInfuserConfiguration.RFPERTICK.get();
-        rf = (int) (rf * (2.0f - getInfusedFactor()) / 2.0f);
+        energyStorage.ifPresent(energy -> {
+            int rf = MachineInfuserConfiguration.RFPERTICK.get();
+            rf = (int) (rf * (2.0f - getInfusedFactor()) / 2.0f);
 
-        if (getStoredPower() < rf) {
-            // Not enough energy.
-            return;
-        }
-        consumeEnergy(rf);
+            if (energy.getEnergy() < rf) {
+                // Not enough energy.
+                return;
+            }
+            energy.consumeEnergy(rf);
 
-        inventoryHelper.getStackInSlot(0).split(1);
-        if (inventoryHelper.getStackInSlot(0).isEmpty()) {
-            inventoryHelper.setStackInSlot(0, ItemStack.EMPTY);
-        }
-        infusing = 5;
-        markDirty();
+            itemHandler.ifPresent(h -> {
+                h.getStackInSlot(0).split(1);
+                if (h.getStackInSlot(0).isEmpty()) {
+                    h.setStackInSlot(0, ItemStack.EMPTY);
+                }
+            });
+            infusing = 5;
+            markDirtyQuick();
+        });
     }
 
     @Nonnull
@@ -144,11 +135,14 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return itemHandler.cast();
         }
+        if (cap == CapabilityEnergy.ENERGY) {
+            return energyStorage.cast();
+        }
         return super.getCapability(cap, facing);
     }
 
-    private IItemHandler createItemHandler() {
-        return new NoDirectionItemHander(inventoryHelper, MachineInfuserTileEntity.this) {
+    private NoDirectionItemHander createItemHandler() {
+        return new NoDirectionItemHander(MachineInfuserTileEntity.this, CONTAINER_FACTORY, 2) {
             @Override
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
@@ -170,7 +164,8 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Override
     public void read(CompoundNBT tagCompound) {
         super.read(tagCompound);
-        readBufferFromNBT(tagCompound, inventoryHelper);
+        itemHandler.ifPresent(h -> h.deserializeNBT(tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND)));
+        energyStorage.ifPresent(h -> h.setEnergy(tagCompound.getLong("Energy")));
         infusing = tagCompound.getInt("infusing");
     }
 
@@ -178,7 +173,8 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Override
     public CompoundNBT write(CompoundNBT tagCompound) {
         super.write(tagCompound);
-        writeBufferToNBT(tagCompound, inventoryHelper);
+        itemHandler.ifPresent(h -> tagCompound.put("Items", h.serializeNBT()));
+        energyStorage.ifPresent(h -> tagCompound.putLong("Energy", h.getEnergy()));
         tagCompound.putInt("infusing", infusing);
         return tagCompound;
     }
@@ -186,14 +182,10 @@ public class MachineInfuserTileEntity extends GenericEnergyReceiverTileEntity im
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-        return createContainer(this, windowId, inventory);
-    }
-
-    public static Container createContainer(MachineInfuserTileEntity te, int windowId, PlayerInventory inventory) {
-        GenericContainer container = new GenericContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, te.getPos());
-        container.addInventory(ContainerFactory.CONTAINER_CONTAINER, te.createItemHandler());
-        container.addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
-        container.generateSlots();
+        GenericContainer container = new GenericContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, getPos());
+        container.setupInventories(createItemHandler(), inventory);
+        energyStorage.ifPresent(e -> e.addIntegerListeners(container));
         return container;
     }
+
 }

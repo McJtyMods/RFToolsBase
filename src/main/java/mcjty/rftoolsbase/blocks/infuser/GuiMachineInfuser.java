@@ -6,14 +6,13 @@ import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.PositionalLayout;
 import mcjty.lib.gui.widgets.EnergyBar;
 import mcjty.lib.gui.widgets.Panel;
-import mcjty.lib.tileentity.GenericEnergyStorageTileEntity;
+import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 import java.awt.Rectangle;
-
-import static mcjty.lib.tileentity.GenericEnergyStorageTileEntity.getCurrentRF;
 
 public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEntity, GenericContainer> {
     public static final int INFUSER_WIDTH = 180;
@@ -23,11 +22,8 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
 
-
-
     public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container, PlayerInventory inventory) {
         super(RFToolsBase.instance, null /*@todo*/, machineInfuserTileEntity, container, inventory, 0, "infuser");
-        GenericEnergyStorageTileEntity.setCurrentRF(machineInfuserTileEntity.getStoredPower());
 
         xSize = INFUSER_WIDTH;
         ySize = INFUSER_HEIGHT;
@@ -45,15 +41,10 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         window = new Window(this, toplevel);
 
         initializeFields();
-
-        // @todo
-//        tileEntity.requestRfFromServer(RFToolsBase.MODID);
     }
 
     private void initializeFields() {
         energyBar = window.findChild("energybar");
-        energyBar.setMaxValue(tileEntity.getCapacity());
-        energyBar.setValue(getCurrentRF());
     }
 
 
@@ -61,9 +52,9 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     protected void drawGuiContainerBackgroundLayer(float v, int i, int i2) {
         drawWindow();
 
-        energyBar.setValue(GenericEnergyStorageTileEntity.getCurrentRF());
-
-        // @todo
-//        tileEntity.requestRfFromServer(RFToolsBase.MODID);
+        tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(e -> {
+            energyBar.setMaxValue(((GenericEnergyStorage)e).getCapacity());
+            energyBar.setValue(((GenericEnergyStorage)e).getEnergy());
+        });
     }
 }
