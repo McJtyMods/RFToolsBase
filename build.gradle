@@ -87,14 +87,14 @@ minecraft {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-    if (project(':TheOneProbe') != null) {
+    if (findProject(':TheOneProbe') != null) {
         compile project(':TheOneProbe')
     } else {
         compile fg.deobf(project.dependencies.create("mcjty.theoneprobe:TheOneProbe-${top_version}") {
             transitive = false
         })
     }
-    if (project(':McJtyLib') != null) {
+    if (findProject(':McJtyLib') != null) {
         compile project(':McJtyLib')
     } else {
         compile fg.deobf (project.dependencies.create("com.github.mcjty:mcjtylib:${mcjtylib_version}") {
