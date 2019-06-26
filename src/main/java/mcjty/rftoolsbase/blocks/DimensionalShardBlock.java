@@ -64,7 +64,7 @@ public class DimensionalShardBlock extends Block {
     }
 
 //    @Override
-//    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+//    public Item getItemDropped(BlockState state, Random rand, int fortune) {
 //        return ModItems.dimensionalShardItem;
 //    }
 //
@@ -86,7 +86,7 @@ public class DimensionalShardBlock extends Block {
     private Random rand = new Random();
 
 //    @Override
-//    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
+//    public int getExpDrop(BlockState state, IBlockAccess world, BlockPos pos, int fortune) {
 //         @todo Check @@@@@@@@@@
 //        return rand.nextInt(7-3) + 3;
 //    }
