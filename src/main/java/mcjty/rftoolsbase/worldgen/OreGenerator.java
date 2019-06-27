@@ -48,7 +48,7 @@ public class OreGenerator {
                                 Config.NETHER_ORE_MINY.get(),
                                 0,
                                 Config.NETHER_ORE_MAXY.get() - Config.NETHER_ORE_MINY.get()));
-                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(featureNether, DimensionType.NETHER));
+                biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(featureNether, DimensionType.THE_NETHER));
             }
 //            ConfiguredFeature<?> featureEnd = Biome.createDecoratedFeature(Feature.ORE,
 //                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, ModBlocks.DIMENSIONAL_SHARD_END.getDefaultState(), 8),
