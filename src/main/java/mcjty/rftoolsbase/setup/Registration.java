@@ -51,13 +51,13 @@ public class Registration {
     }
 
     @SubscribeEvent
-    public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> registry) {
-        registry.getRegistry().register(TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
+    public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> event) {
+        event.getRegistry().register(TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
     @SubscribeEvent
-    public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> registry) {
-        registry.getRegistry().register(GenericContainer.createContainerType(MachineInfuserSetup.INFUSER_REGNAME));
+    public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
+        event.getRegistry().register(GenericContainer.createContainerType(MachineInfuserSetup.INFUSER_REGNAME));
     }
 
 }
