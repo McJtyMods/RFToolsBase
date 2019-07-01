@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.setup;
 
 
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
+import mcjty.lib.blocks.BaseBlockItem;
 import mcjty.lib.container.GenericContainer;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.blocks.DimensionalShardBlock;
@@ -11,7 +12,6 @@ import mcjty.rftoolsbase.blocks.infuser.MachineInfuserTileEntity;
 import mcjty.rftoolsbase.items.SmartWrenchItem;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.event.RegistryEvent;
@@ -40,11 +40,11 @@ public class Registration {
                 .setRegistryName("dimensionalshard"));
 
         Item.Properties properties = new Item.Properties().group(RFToolsBase.setup.getTab());
-        event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_OVERWORLD, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_OVERWORLD.getRegistryName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_NETHER, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_NETHER.getRegistryName()));
-        event.getRegistry().register(new BlockItem(ModBlocks.DIMENSIONAL_SHARD_END, properties).setRegistryName(ModBlocks.DIMENSIONAL_SHARD_END.getRegistryName()));
+        event.getRegistry().register(new BaseBlockItem(ModBlocks.DIMENSIONAL_SHARD_OVERWORLD, properties));
+        event.getRegistry().register(new BaseBlockItem(ModBlocks.DIMENSIONAL_SHARD_NETHER, properties));
+        event.getRegistry().register(new BaseBlockItem(ModBlocks.DIMENSIONAL_SHARD_END, properties));
 
-        event.getRegistry().register(new BlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
+        event.getRegistry().register(new BaseBlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties));
 
         event.getRegistry().register(new Item(properties).setRegistryName("machine_frame"));
         event.getRegistry().register(new Item(properties).setRegistryName("machine_base"));

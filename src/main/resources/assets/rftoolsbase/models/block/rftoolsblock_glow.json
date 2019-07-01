@@ -1,0 +1,21 @@
+{
+  "parent": "rftoolsbase:block/util_cube_glow_2",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [ 0, 135, 0 ],
+      "translation": [ 0, 0, 0 ],
+      "scale": [ 0.40, 0.40, 0.40 ]
+    }
+  },
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "#front",
+    "down": "rftoolsbase:block/base/machinebottom",
+    "up": "rftoolsbase:block/base/machinetop",
+    "north": "#front",
+    "glow_north": "#frontglow",
+    "east": "rftoolsbase:block/base/machineside",
+    "south": "rftoolsbase:block/base/machineside",
+    "west": "rftoolsbase:block/base/machineside"
+  }
+}

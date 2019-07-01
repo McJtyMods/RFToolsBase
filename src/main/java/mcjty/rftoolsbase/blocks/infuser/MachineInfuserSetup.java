@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
-import mcjty.lib.blocks.BaseBlockNew;
+import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.GenericContainer;
 import net.minecraft.inventory.container.ContainerType;
@@ -12,26 +12,22 @@ public class MachineInfuserSetup {
     public static final String INFUSER_REGNAME = "machine_infuser";
 
     @ObjectHolder("rftoolsbase:machine_infuser")
-    public static BaseBlockNew MACHINE_INFUSER;
+    public static BaseBlock MACHINE_INFUSER;
 
     @ObjectHolder("rftoolsbase:machine_infuser")
-    public static ContainerType<GenericContainer> MACHINE_INFUSER_CONTAINER;
+    public static ContainerType<GenericContainer> CONTAINER_INFUSER;
 
     @ObjectHolder("rftoolsbase:machine_infuser")
     public static TileEntityType<?> TYPE_INFUSER;
 
 
-    public static BaseBlockNew createInfuserBlock() {
+    public static BaseBlock createInfuserBlock() {
 
-        return new BaseBlockNew(INFUSER_REGNAME, new BlockBuilder()
+        return new BaseBlock(INFUSER_REGNAME, new BlockBuilder()
                 .tileEntitySupplier(MachineInfuserTileEntity::new)
                 .hasGui()
                 .infusable()
                 .info("message.rftoolsbase.shiftmessage")
                 .infoExtended("message.rftoolsbase.infuser"));
-    }
-
-    public static void initClient() {
-//        MACHINE_INFUSER.setGuiFactory(GuiMachineInfuser::new);
     }
 }

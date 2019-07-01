@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
 import mcjty.lib.api.Infusable;
-import mcjty.lib.blocks.BaseBlockNew;
+import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.container.*;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.GenericTileEntity;
@@ -41,7 +41,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     };
 
     private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(this::createItemHandler);
-    private LazyOptional<GenericEnergyStorage> energyStorage = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
+    private LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
 
     private int infusing = 0;
 
@@ -93,7 +93,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             return Optional.empty();
         }
         Block block = ((BlockItem) item).getBlock();
-        if (!(block instanceof Infusable || (block instanceof BaseBlockNew && ((BaseBlockNew) block).isInfusable()))) {
+        if (!(block instanceof Infusable || (block instanceof BaseBlock && ((BaseBlock) block).isInfusable()))) {
             return Optional.empty();
         }
         return Optional.of(stack.getOrCreateTag());
@@ -108,7 +108,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     }
 
     private void startInfusing() {
-        energyStorage.ifPresent(energy -> {
+        energyHandler.ifPresent(energy -> {
             int rf = MachineInfuserConfiguration.RFPERTICK.get();
             rf = (int) (rf * (2.0f - getInfusedFactor()) / 2.0f);
 
@@ -136,7 +136,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             return itemHandler.cast();
         }
         if (cap == CapabilityEnergy.ENERGY) {
-            return energyStorage.cast();
+            return energyHandler.cast();
         }
         return super.getCapability(cap, facing);
     }
@@ -165,7 +165,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public void read(CompoundNBT tagCompound) {
         super.read(tagCompound);
         itemHandler.ifPresent(h -> h.deserializeNBT(tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND)));
-        energyStorage.ifPresent(h -> h.setEnergy(tagCompound.getLong("Energy")));
+        energyHandler.ifPresent(h -> h.setEnergy(tagCompound.getLong("Energy")));
         infusing = tagCompound.getInt("infusing");
     }
 
@@ -174,7 +174,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public CompoundNBT write(CompoundNBT tagCompound) {
         super.write(tagCompound);
         itemHandler.ifPresent(h -> tagCompound.put("Items", h.serializeNBT()));
-        energyStorage.ifPresent(h -> tagCompound.putLong("Energy", h.getEnergy()));
+        energyHandler.ifPresent(h -> tagCompound.putLong("Energy", h.getEnergy()));
         tagCompound.putInt("infusing", infusing);
         return tagCompound;
     }
@@ -182,9 +182,9 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     @Nullable
     @Override
     public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-        GenericContainer container = new GenericContainer(MachineInfuserSetup.MACHINE_INFUSER_CONTAINER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, getPos());
+        GenericContainer container = new GenericContainer(MachineInfuserSetup.CONTAINER_INFUSER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, getPos());
         itemHandler.ifPresent(h -> container.setupInventories(h, inventory));
-        energyStorage.ifPresent(e -> e.addIntegerListeners(container));
+        energyHandler.ifPresent(e -> e.addIntegerListeners(container));
         return container;
     }
 
