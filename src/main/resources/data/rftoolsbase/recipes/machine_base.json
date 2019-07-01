@@ -9,7 +9,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "s": {
-      "item": "minecraft:stone",
+      "item": "minecraft:stone"
     },
     "g": {
       "item": "minecraft:gold_nugget"
