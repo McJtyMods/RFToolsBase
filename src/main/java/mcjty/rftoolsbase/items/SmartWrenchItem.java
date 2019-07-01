@@ -3,7 +3,7 @@ package mcjty.rftoolsbase.items;
 import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.api.smartwrench.SmartWrenchSelector;
-import mcjty.lib.blocks.GenericBlock;
+import mcjty.lib.blocks.BaseBlockNew;
 import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
@@ -74,10 +74,10 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             BlockPos pos = context.getPos();
 
             if (player != null && player.isSneaking()) {
-                // Make sure the block get activated if it is a GenericBlock
+                // Make sure the block get activated if it is a BaseBlockNew
                 BlockState state = world.getBlockState(pos);
                 Block block = state.getBlock();
-                if (block instanceof GenericBlock) {
+                if (block instanceof BaseBlockNew) {
                     if (state.onBlockActivated(world, player, hand, new BlockRayTraceResult(context.getHitVec(), context.getFace(), pos, context.func_221533_k()))) {
                         return ActionResultType.SUCCESS;
                     }

@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
 import mcjty.lib.api.Infusable;
-import mcjty.lib.blocks.GenericBlock;
+import mcjty.lib.blocks.BaseBlockNew;
 import mcjty.lib.container.*;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.GenericTileEntity;
@@ -93,7 +93,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             return Optional.empty();
         }
         Block block = ((BlockItem) item).getBlock();
-        if (!(block instanceof Infusable || (block instanceof GenericBlock && ((GenericBlock) block).isInfusable()))) {
+        if (!(block instanceof Infusable || (block instanceof BaseBlockNew && ((BaseBlockNew) block).isInfusable()))) {
             return Optional.empty();
         }
         return Optional.of(stack.getOrCreateTag());
