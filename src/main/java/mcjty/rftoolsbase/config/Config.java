@@ -22,6 +22,8 @@ public class Config {
 
     public static String CATEGORY_WORLDGEN = "worldgen";
     public static String CATEGORY_GENERAL = "general";
+    public static String SUB_CATEGORY_OVERWORLD = "overworld";
+    public static String SUB_CATEGORY_NETHER = "nether";
 
     public static ForgeConfigSpec.IntValue OVERWORLD_ORE_CHANCES;
     public static ForgeConfigSpec.IntValue OVERWORLD_ORE_VEINSIZE;
@@ -55,31 +57,35 @@ public class Config {
     private static void setupWorldgenConfig() {
         COMMON_BUILDER.comment("Dimensional shard ore generation").push(CATEGORY_WORLDGEN);
 
+        COMMON_BUILDER.comment("Overworld").push(SUB_CATEGORY_OVERWORLD);
         OVERWORLD_ORE_CHANCES = COMMON_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
-                .defineInRange("overworldOreChances", 0, 0, 256);
+                .defineInRange("oreChances", 1, 0, 256);
         OVERWORLD_ORE_VEINSIZE = COMMON_BUILDER
                 .comment("Max size of veins")
-                .defineInRange("overworldOreVeinsize", 8, 1, 256);
+                .defineInRange("oreVeinsize", 3, 1, 256);
         OVERWORLD_ORE_MINY = COMMON_BUILDER
                 .comment("Min height")
-                .defineInRange("overworldOreMin", 2, 0, 256);
+                .defineInRange("oreMin", 2, 0, 256);
         OVERWORLD_ORE_MAXY = COMMON_BUILDER
                 .comment("Max height")
-                .defineInRange("overworldOreMax", 40, 0, 256);
+                .defineInRange("oreMax", 40, 0, 256);
+        COMMON_BUILDER.pop();
 
+        COMMON_BUILDER.comment("Overworld").push(SUB_CATEGORY_NETHER);
         NETHER_ORE_CHANCES = COMMON_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
-                .defineInRange("netherOreChances", 8, 0, 256);
+                .defineInRange("oreChances", 8, 0, 256);
         NETHER_ORE_VEINSIZE = COMMON_BUILDER
                 .comment("Max size of veins")
-                .defineInRange("netherOreVeinsize", 8, 1, 256);
+                .defineInRange("oreVeinsize", 8, 1, 256);
         NETHER_ORE_MINY = COMMON_BUILDER
                 .comment("Min height")
-                .defineInRange("netherOreMin", 2, 0, 256);
+                .defineInRange("oreMin", 2, 0, 256);
         NETHER_ORE_MAXY = COMMON_BUILDER
                 .comment("Max height")
-                .defineInRange("netherOreMax", 40, 0, 256);
+                .defineInRange("oreMax", 40, 0, 256);
+        COMMON_BUILDER.pop();
 
         COMMON_BUILDER.pop();
     }
