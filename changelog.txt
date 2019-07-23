@@ -1,13 +1,2 @@
-1.3.0:
-- Depends on McJtyLib 3.5.0!
-
-1.2.1:
-- WARNING: Do not load any worlds with Restrictions 1.2.0 or earlier if you last saved them with Restrictions 1.2.1 or later!
-- Joseph fixed log warnings due to tile entities being registered with names like "minecraft:restrictions_pusher" instead of "restrictions:pusher".
-- Joseph fixed fall damage accumulating indefinitely while hovering (#11)
-
-1.2.0:
-- Made compatible with the latest McJtyLib (3.0.0)
-
-1.2.0alpha:
-- Made compatible with the latest McJtyLib (3.0.0)
+0.0.2:
+- Update to 1.14.4
