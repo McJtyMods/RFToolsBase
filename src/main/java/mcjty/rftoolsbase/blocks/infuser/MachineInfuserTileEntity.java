@@ -147,16 +147,6 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
                 return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
             }
-
-            @Override
-            public boolean isItemInsertable(int slot, @Nonnull ItemStack stack) {
-                return CONTAINER_FACTORY.isInputSlot(slot) || CONTAINER_FACTORY.isSpecificItemSlot(slot);
-            }
-
-            @Override
-            public boolean isItemExtractable(int slot, @Nonnull ItemStack stack) {
-                return CONTAINER_FACTORY.isOutputSlot(slot);
-            }
         };
     }
 
