@@ -1,0 +1,4 @@
+* Security system in RFTools Base: move code from GenericRFToolsBlock to a capability perhaps?
+* Check if all itemHandler/energyHandler is properly persisted
+* Get rid of all hardcoded SHIFT_MESSAGE in tooltips
+* Think about the new manual system
