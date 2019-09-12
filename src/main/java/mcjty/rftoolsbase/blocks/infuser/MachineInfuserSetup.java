@@ -25,7 +25,6 @@ public class MachineInfuserSetup {
 
         return new BaseBlock(INFUSER_REGNAME, new BlockBuilder()
                 .tileEntitySupplier(MachineInfuserTileEntity::new)
-                .hasGui()
                 .infusable()
                 .info("message.rftoolsbase.shiftmessage")
                 .infoExtended("message.rftoolsbase.infuser"));

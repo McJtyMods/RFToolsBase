@@ -1,15 +1,17 @@
 package mcjty.rftoolsbase.blocks.infuser;
 
-import mcjty.lib.api.Infusable;
+import mcjty.lib.api.container.CapabilityContainerProvider;
+import mcjty.lib.api.container.DefaultContainerProvider;
+import mcjty.lib.api.infusable.CapabilityInfusable;
+import mcjty.lib.api.infusable.DefaultInfusable;
+import mcjty.lib.api.infusable.IInfusable;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.container.*;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.rftoolsbase.items.ModItems;
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,6 +44,11 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
 
     private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(this::createItemHandler);
     private LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
+    private LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
+            .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserSetup.CONTAINER_INFUSER, windowId, CONTAINER_FACTORY, getPos(), MachineInfuserTileEntity.this))
+            .itemHandler(itemHandler)
+            .energyHandler(energyHandler));
+    private LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
 
     private int infusing = 0;
 
@@ -93,7 +100,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             return Optional.empty();
         }
         Block block = ((BlockItem) item).getBlock();
-        if (!(block instanceof Infusable || (block instanceof BaseBlock && ((BaseBlock) block).isInfusable()))) {
+        if (!(block instanceof IInfusable || (block instanceof BaseBlock && ((BaseBlock) block).isInfusable()))) {
             return Optional.empty();
         }
         return Optional.of(stack.getOrCreateTag());
@@ -109,8 +116,10 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
 
     private void startInfusing() {
         energyHandler.ifPresent(energy -> {
-            int rf = MachineInfuserConfiguration.RFPERTICK.get();
-            rf = (int) (rf * (2.0f - getInfusedFactor()) / 2.0f);
+            int defaultCost = MachineInfuserConfiguration.RFPERTICK.get();
+            int rf = infusableHandler.map(h -> {
+                return (int) (defaultCost * (2.0f - h.getInfusedFactor()) / 2.0f);
+            }).orElse(defaultCost);
 
             if (energy.getEnergy() < rf) {
                 // Not enough energy.
@@ -137,6 +146,12 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         }
         if (cap == CapabilityEnergy.ENERGY) {
             return energyHandler.cast();
+        }
+        if (cap == CapabilityContainerProvider.CONTAINER_PROVIDER_CAPABILITY) {
+            return screenHandler.cast();
+        }
+        if (cap == CapabilityInfusable.INFUSABLE_CAPABILITY) {
+            return infusableHandler.cast();
         }
         return super.getCapability(cap, facing);
     }
@@ -168,14 +183,4 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         tagCompound.putInt("infusing", infusing);
         return tagCompound;
     }
-
-    @Nullable
-    @Override
-    public Container createMenu(int windowId, PlayerInventory inventory, PlayerEntity player) {
-        GenericContainer container = new GenericContainer(MachineInfuserSetup.CONTAINER_INFUSER, windowId, MachineInfuserTileEntity.CONTAINER_FACTORY, getPos(), this);
-        itemHandler.ifPresent(h -> container.setupInventories(h, inventory));
-        energyHandler.ifPresent(e -> e.addIntegerListeners(container));
-        return container;
-    }
-
 }
