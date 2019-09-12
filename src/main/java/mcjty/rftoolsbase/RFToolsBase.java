@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase;
 
 import mcjty.lib.base.ModBase;
+import mcjty.rftoolsbase.client.ClientInfo;
 import mcjty.rftoolsbase.config.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +24,7 @@ public class RFToolsBase implements ModBase {
 
     @SuppressWarnings("PublicField")
     public static RFToolsBase instance;
+    public ClientInfo clientInfo = new ClientInfo();
 
     public RFToolsBase() {
         instance = this;
