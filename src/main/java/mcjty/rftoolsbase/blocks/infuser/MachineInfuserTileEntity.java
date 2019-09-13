@@ -6,7 +6,10 @@ import mcjty.lib.api.infusable.CapabilityInfusable;
 import mcjty.lib.api.infusable.DefaultInfusable;
 import mcjty.lib.api.infusable.IInfusable;
 import mcjty.lib.blocks.BaseBlock;
-import mcjty.lib.container.*;
+import mcjty.lib.container.ContainerFactory;
+import mcjty.lib.container.GenericContainer;
+import mcjty.lib.container.NoDirectionItemHander;
+import mcjty.lib.container.SlotDefinition;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.rftoolsbase.items.ModItems;
@@ -32,16 +35,16 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public static final int SLOT_SHARDINPUT = 0;
     public static final int SLOT_MACHINEOUTPUT = 1;
 
-    public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory() {
+    public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(2) {
         @Override
         protected void setup() {
-            addSlotBox(new SlotDefinition(SlotType.SLOT_SPECIFICITEM, new ItemStack(ModItems.DIMENSIONALSHARD)), ContainerFactory.CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24, 1, 18, 1, 18);
-            addSlotBox(new SlotDefinition(SlotType.SLOT_OUTPUT), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24, 1, 18, 1, 18);
-            layoutPlayerInventorySlots(10, 70);
+            slot(SlotDefinition.specific(new ItemStack(ModItems.DIMENSIONALSHARD)), ContainerFactory.CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24);
+            slot(SlotDefinition.output(), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24);
+            playerSlots(10, 70);
         }
     };
 
-    private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(this::createItemHandler);
+    private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(() -> new NoDirectionItemHander(this, CONTAINER_FACTORY));
     private LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
     private LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
             .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserSetup.CONTAINER_INFUSER, windowId, CONTAINER_FACTORY, getPos(), MachineInfuserTileEntity.this))
@@ -135,15 +138,6 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             infusing = 5;
             markDirtyQuick();
         });
-    }
-
-    private NoDirectionItemHander createItemHandler() {
-        return new NoDirectionItemHander(MachineInfuserTileEntity.this, CONTAINER_FACTORY, 2) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
-            }
-        };
     }
 
 
