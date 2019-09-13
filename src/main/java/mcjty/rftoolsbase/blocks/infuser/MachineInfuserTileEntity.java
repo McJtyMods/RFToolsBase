@@ -19,7 +19,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -138,6 +137,30 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         });
     }
 
+    private NoDirectionItemHander createItemHandler() {
+        return new NoDirectionItemHander(MachineInfuserTileEntity.this, CONTAINER_FACTORY, 2) {
+            @Override
+            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+                return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
+            }
+        };
+    }
+
+
+    @Override
+    public void read(CompoundNBT tagCompound) {
+        super.read(tagCompound);
+        infusing = tagCompound.getCompound("Info").getInt("infusing");
+    }
+
+    @Nonnull
+    @Override
+    public CompoundNBT write(CompoundNBT tagCompound) {
+        super.write(tagCompound);
+        getOrCreateInfo(tagCompound).putInt("infusing", infusing);
+        return tagCompound;
+    }
+
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction facing) {
@@ -154,33 +177,5 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             return infusableHandler.cast();
         }
         return super.getCapability(cap, facing);
-    }
-
-    private NoDirectionItemHander createItemHandler() {
-        return new NoDirectionItemHander(MachineInfuserTileEntity.this, CONTAINER_FACTORY, 2) {
-            @Override
-            public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-                return slot != SLOT_SHARDINPUT || stack.getItem() == ModItems.DIMENSIONALSHARD;
-            }
-        };
-    }
-
-
-    @Override
-    public void read(CompoundNBT tagCompound) {
-        super.read(tagCompound);
-        itemHandler.ifPresent(h -> h.deserializeNBT(tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND)));
-        energyHandler.ifPresent(h -> h.setEnergy(tagCompound.getLong("Energy")));
-        infusing = tagCompound.getInt("infusing");
-    }
-
-    @Nonnull
-    @Override
-    public CompoundNBT write(CompoundNBT tagCompound) {
-        super.write(tagCompound);
-        itemHandler.ifPresent(h -> tagCompound.put("Items", h.serializeNBT()));
-        energyHandler.ifPresent(h -> tagCompound.putLong("Energy", h.getEnergy()));
-        tagCompound.putInt("infusing", infusing);
-        return tagCompound;
     }
 }

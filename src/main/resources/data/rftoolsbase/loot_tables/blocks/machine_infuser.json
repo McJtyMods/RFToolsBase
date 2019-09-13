@@ -17,12 +17,6 @@
               "source": "block_entity",
               "ops": [
                 {
-                  "source": "infusing",
-                  "target": "BlockEntityTag.infusing",
-                  "op": "replace"
-                },
-
-                {
                   "source": "Info",
                   "target": "BlockEntityTag.Info",
                   "op": "replace"
