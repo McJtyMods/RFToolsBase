@@ -1,8 +1,9 @@
-package mcjty.rftoolsbase.blocks.infuser;
+package mcjty.rftoolsbase.modules.infuser;
 
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.GenericContainer;
+import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;

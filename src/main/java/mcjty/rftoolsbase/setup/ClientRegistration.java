@@ -3,8 +3,8 @@ package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.blocks.infuser.GuiMachineInfuser;
-import mcjty.rftoolsbase.blocks.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.infuser.client.GuiMachineInfuser;
+import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

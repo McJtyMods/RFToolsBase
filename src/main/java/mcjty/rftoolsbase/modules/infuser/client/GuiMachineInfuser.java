@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.blocks.infuser;
+package mcjty.rftoolsbase.modules.infuser.client;
 
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
@@ -8,6 +8,7 @@ import mcjty.lib.gui.widgets.EnergyBar;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.CapabilityEnergy;

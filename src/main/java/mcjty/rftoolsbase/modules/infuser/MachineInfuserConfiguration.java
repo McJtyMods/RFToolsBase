@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.blocks.infuser;
+package mcjty.rftoolsbase.modules.infuser;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

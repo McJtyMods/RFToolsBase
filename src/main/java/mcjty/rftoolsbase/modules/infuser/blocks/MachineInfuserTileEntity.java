@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.blocks.infuser;
+package mcjty.rftoolsbase.modules.infuser.blocks;
 
 import mcjty.lib.api.container.CapabilityContainerProvider;
 import mcjty.lib.api.container.DefaultContainerProvider;
@@ -13,6 +13,8 @@ import mcjty.lib.container.SlotDefinition;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.rftoolsbase.items.ModItems;
+import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
+import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
