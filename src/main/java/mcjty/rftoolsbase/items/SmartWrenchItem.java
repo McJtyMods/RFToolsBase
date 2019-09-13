@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.items;
 
 import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
-import mcjty.lib.api.smartwrench.SmartWrenchSelector;
+import mcjty.lib.api.smartwrench.ISmartWrenchSelector;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.GlobalCoordinate;
@@ -94,8 +94,8 @@ public class SmartWrenchItem extends Item implements SmartWrench {
                         return ActionResultType.FAIL;
                     }
                     TileEntity te = world.getTileEntity(b.getCoordinate());
-                    if (te instanceof SmartWrenchSelector) {
-                        SmartWrenchSelector smartWrenchSelector = (SmartWrenchSelector) te;
+                    if (te instanceof ISmartWrenchSelector) {
+                        ISmartWrenchSelector smartWrenchSelector = (ISmartWrenchSelector) te;
                         smartWrenchSelector.selectBlock(player, pos);
                     }
                 }

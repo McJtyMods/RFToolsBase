@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.setup.DefaultModSetup;
+import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.items.ModItems;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ public class ModSetup extends DefaultModSetup {
     public void init(FMLCommonSetupEvent e) {
         super.init(e);
         OreGenerator.init();
+        CapabilityMachineInformation.register();
     }
 
     @Override
