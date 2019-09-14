@@ -13,4 +13,11 @@ public class ModItems {
 
     @ObjectHolder("rftoolsbase:dimensionalshard")
     public static Item DIMENSIONALSHARD;
+
+
+    @ObjectHolder("rftoolsbase:machine_frame")
+    public static Item MACHINE_FRAME;
+
+    @ObjectHolder("rftoolsbase:machine_base")
+    public static Item MACHINE_BASE;
 }
