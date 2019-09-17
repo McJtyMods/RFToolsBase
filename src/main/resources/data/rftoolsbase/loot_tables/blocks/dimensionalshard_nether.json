@@ -2,7 +2,7 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "shard_pool",
+      "name": "dimshard",
       "rolls": 1,
       "entries": [
         {

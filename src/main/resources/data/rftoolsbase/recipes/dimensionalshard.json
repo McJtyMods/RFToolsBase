@@ -1,14 +1,10 @@
 {
-  "result": {
-    "item": "rftoolsbase:dimensionalshard",
-    "count": 8
-  },
+  "type": "minecraft:crafting_shaped",
   "pattern": [
     "deg",
     "irG",
     "qcL"
   ],
-  "type": "minecraft:crafting_shaped",
   "key": {
     "q": {
       "item": "minecraft:quartz"
@@ -37,5 +33,8 @@
     "L": {
       "item": "minecraft:glass"
     }
+  },
+  "result": {
+    "item": "rftoolsbase:dimensionalshard"
   }
 }

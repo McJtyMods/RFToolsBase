@@ -1,13 +1,10 @@
 {
-  "result": {
-    "item": "rftoolsbase:smartwrench"
-  },
+  "type": "minecraft:crafting_shaped",
   "pattern": [
     "  i",
     " l ",
     "l  "
   ],
-  "type": "minecraft:crafting_shaped",
   "key": {
     "i": {
       "item": "minecraft:iron_ingot"
@@ -15,5 +12,8 @@
     "l": {
       "tag": "forge:dyes/blue"
     }
+  },
+  "result": {
+    "item": "rftoolsbase:smartwrench"
   }
 }

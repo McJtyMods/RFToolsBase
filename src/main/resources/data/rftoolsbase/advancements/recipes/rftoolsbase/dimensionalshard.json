@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "rftoolsbase:dimensionalshard"
+    ]
+  },
+  "criteria": {
+    "gold": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:gold_ingot"
+          },
+          {
+            "item": "minecraft:quartz"
+          },
+          {
+            "item": "minecraft:redstone"
+          },
+          {
+            "item": "minecraft:prismarine_shard"
+          },
+          {
+            "item": "minecraft:diamond"
+          },
+          {
+            "item": "minecraft:emerald"
+          },
+          {
+            "item": "minecraft:glowstone_dust"
+          },
+          {
+            "item": "minecraft:iron_ingot"
+          },
+          {
+            "item": "minecraft:glass"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "rftoolsbase:dimensionalshard"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "gold",
+      "has_the_recipe"
+    ]
+  ]
+}
