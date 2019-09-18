@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.items;
 
+import mcjty.lib.api.smartwrench.ISmartWrenchSelector;
 import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
-import mcjty.lib.api.smartwrench.ISmartWrenchSelector;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.GlobalCoordinate;
@@ -20,12 +20,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -87,7 +89,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             if (mode == SmartWrenchMode.MODE_SELECT) {
                 GlobalCoordinate b = getCurrentBlock(stack);
                 if (b != null) {
-                    if (b.getDimension() != world.getDimension().getType().getId()) {
+                    if (!b.getDimension().equals(world.getDimension().getType())) {
                         if (player != null) {
                             Logging.message(player, TextFormatting.RED + "The selected block is in another dimension!");
                         }
@@ -153,7 +155,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             tagCompound.putInt("selectedX", c.getCoordinate().getX());
             tagCompound.putInt("selectedY", c.getCoordinate().getY());
             tagCompound.putInt("selectedZ", c.getCoordinate().getZ());
-            tagCompound.putInt("selectedDim", c.getDimension());
+            tagCompound.putString("selectedDim", c.getDimension().getRegistryName().toString());
         }
     }
 
@@ -163,8 +165,8 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             int x = tagCompound.getInt("selectedX");
             int y = tagCompound.getInt("selectedY");
             int z = tagCompound.getInt("selectedZ");
-            int dim = tagCompound.getInt("selectedDim");
-            return new GlobalCoordinate(new BlockPos(x, y, z), dim);
+            String dim = tagCompound.getString("selectedDim");
+            return new GlobalCoordinate(new BlockPos(x, y, z), DimensionType.byName(new ResourceLocation(dim)));
         }
         return null;
     }
