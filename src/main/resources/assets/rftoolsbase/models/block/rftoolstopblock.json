@@ -9,11 +9,11 @@
   },
   "textures": {
     "particle": "#particle",
-    "down": "rftoolsbase:block/machinebottom",
+    "down": "rftoolsbase:block/base/machinebottom",
     "up": "#up",
-    "north": "rftoolsbase:block/machineside",
-    "east": "rftoolsbase:block/machineside",
-    "south": "rftoolsbase:block/machineside",
-    "west": "rftoolsbase:block/machineside"
+    "north": "rftoolsbase:block/base/machineside",
+    "east": "rftoolsbase:block/base/machineside",
+    "south": "rftoolsbase:block/base/machineside",
+    "west": "rftoolsbase:block/base/machineside"
   }
 }
