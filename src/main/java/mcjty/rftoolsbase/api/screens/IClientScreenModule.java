@@ -5,6 +5,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 /**
  * This interface represents the client-side module. This will be called with
@@ -70,11 +71,11 @@ public interface IClientScreenModule<T extends IModuleData> {
      * This is called when your module is being instantiated from a saved world
      * so you can setup your data. The tags that are given to the tagCompound
      * depend on how you set up your GUI in the IClientScreenModule.
-     *  @param tagCompound
+     * @param tagCompound
      * @param dim the dimension for the screen this module is in
      * @param pos the position of the screen
      */
-    void setupFromNBT(CompoundNBT tagCompound, int dim, BlockPos pos);
+    void setupFromNBT(CompoundNBT tagCompound, DimensionType dim, BlockPos pos);
 
     // Return true if this module needs server data.
     boolean needsServerData();
