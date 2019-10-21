@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.network;
 
 import mcjty.lib.network.ICommandHandler;
-import mcjty.lib.network.NetworkTools;
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
@@ -27,7 +26,7 @@ public class PacketGetHudLog {
     }
 
     public PacketGetHudLog(PacketBuffer buf) {
-        pos = NetworkTools.readPos(buf);
+        pos = buf.readBlockPos();
         params = TypedMapTools.readArguments(buf);
     }
 
@@ -37,7 +36,7 @@ public class PacketGetHudLog {
     }
 
     public void toBytes(PacketBuffer buf) {
-        NetworkTools.writePos(buf, pos);
+        buf.writeBlockPos(pos);
         TypedMapTools.writeArguments(buf, params);
     }
 
