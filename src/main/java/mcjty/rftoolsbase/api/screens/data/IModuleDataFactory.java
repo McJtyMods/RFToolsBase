@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.screens.data;
 
-import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 
 /**
  * A CONTAINER_FACTORY for IModuleData. You need to register an implementation of this to
@@ -8,5 +8,5 @@ import io.netty.buffer.ByteBuf;
  */
 public interface IModuleDataFactory<T extends IModuleData> {
 
-    T createData(ByteBuf buf);
+    T createData(PacketBuffer buf);
 }
