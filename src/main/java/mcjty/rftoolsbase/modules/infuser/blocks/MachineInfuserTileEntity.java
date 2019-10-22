@@ -41,7 +41,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         @Override
         protected void setup() {
             slot(SlotDefinition.specific(new ItemStack(ModItems.DIMENSIONALSHARD)), ContainerFactory.CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24);
-            slot(SlotDefinition.output(), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24);
+            slot(SlotDefinition.specific(s -> isInfusable(s)), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24);
             playerSlots(10, 70);
         }
     };
@@ -86,15 +86,14 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         });
     }
 
-    private boolean isInfusable(ItemStack stack) {
-        return getTagCompound(stack).map(tagCompound -> {
-            int infused = tagCompound.getInt("infused");
-            return infused < MachineInfuserConfiguration.MAX_INFUSE.get();
+    private static boolean isInfusable(ItemStack stack) {
+        return getTagCompoundIfInfusable(stack).map(tagCompound -> {
+            return BaseBlock.getInfused(tagCompound) < MachineInfuserConfiguration.MAX_INFUSE.get();
         }).orElse(false);
     }
 
     @Nonnull
-    private static Optional<CompoundNBT> getTagCompound(ItemStack stack) {
+    private static Optional<CompoundNBT> getTagCompoundIfInfusable(ItemStack stack) {
         if (stack.isEmpty() || stack.getCount() != 1) {
             return Optional.empty();
         }
@@ -104,16 +103,16 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             return Optional.empty();
         }
         Block block = ((BlockItem) item).getBlock();
-        if (!(block instanceof IInfusable || (block instanceof BaseBlock && ((BaseBlock) block).isInfusable()))) {
+        if (block instanceof BaseBlock && ((BaseBlock) block).isInfusable()) {
+            return Optional.of(stack.getOrCreateTag());
+        } else {
             return Optional.empty();
         }
-        return Optional.of(stack.getOrCreateTag());
     }
 
     private void finishInfusing(ItemStack stack) {
-        getTagCompound(stack).ifPresent(tagCompound -> {
-            int infused = tagCompound.getInt("infused");
-            tagCompound.putInt("infused", infused + 1);
+        getTagCompoundIfInfusable(stack).ifPresent(tagCompound -> {
+            BaseBlock.setInfused(tagCompound, BaseBlock.getInfused(tagCompound)+1);
             stack.setTag(tagCompound);
         });
     }
