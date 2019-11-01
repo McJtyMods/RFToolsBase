@@ -8,6 +8,12 @@ public class ModItems {
     @ObjectHolder("rftoolsbase:smartwrench")
     public static SmartWrenchItem SMARTWRENCH;
 
+    @ObjectHolder("rftoolsbase:infused_diamond")
+    public static Item INFUSED_DIAMOND;
+
+    @ObjectHolder("rftoolsbase:infused_enderpearl")
+    public static Item INFUSED_ENDERPEARL;
+
     @ObjectHolder("rftoolsbase:smartwrench_select")
     public static SmartWrenchItem SMARTWRENCH_SELECT;
 

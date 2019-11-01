@@ -76,5 +76,23 @@ public class Recipes extends RecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("iron", InventoryChangeTrigger.Instance.forItems(Items.IRON_INGOT))
                 .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ModItems.INFUSED_DIAMOND)
+                .patternLine("sss")
+                .patternLine("sds")
+                .patternLine("sss")
+                .key('s', ModItems.DIMENSIONALSHARD)
+                .key('d', Items.DIAMOND)
+                .setGroup("rftools")
+                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(ModItems.DIMENSIONALSHARD))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ModItems.INFUSED_ENDERPEARL)
+                .patternLine("sss")
+                .patternLine("sds")
+                .patternLine("sss")
+                .key('s', ModItems.DIMENSIONALSHARD)
+                .key('d', Items.ENDER_PEARL)
+                .setGroup("rftools")
+                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(ModItems.DIMENSIONALSHARD))
+                .build(consumer);
     }
 }

@@ -44,6 +44,9 @@ public class Registration {
         event.getRegistry().register(new BaseBlockItem(ModBlocks.DIMENSIONAL_SHARD_NETHER, properties));
         event.getRegistry().register(new BaseBlockItem(ModBlocks.DIMENSIONAL_SHARD_END, properties));
 
+        event.getRegistry().register(new Item(new Item.Properties().group(RFToolsBase.setup.getTab()).maxStackSize(16)).setRegistryName(RFToolsBase.MODID, "infused_diamond"));
+        event.getRegistry().register(new Item(new Item.Properties().group(RFToolsBase.setup.getTab()).maxStackSize(16)).setRegistryName(RFToolsBase.MODID, "infused_enderpearl"));
+
         event.getRegistry().register(new BaseBlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties));
 
         event.getRegistry().register(new Item(properties).setRegistryName("machine_frame"));
