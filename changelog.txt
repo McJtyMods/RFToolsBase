@@ -1,5 +1,6 @@
-upcoming:
+0.0.7:
 - The Machine infuser actually works
+- Reintroduced infused diamond and enderpearls as crafting ingredients
 
 0.0.3:
 - Update to latest Forge
