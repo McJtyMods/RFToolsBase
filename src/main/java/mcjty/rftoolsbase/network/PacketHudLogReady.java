@@ -25,7 +25,7 @@ public class PacketHudLogReady {
 
     public PacketHudLogReady(PacketBuffer buf) {
         pos = buf.readBlockPos();
-        command = NetworkTools.readString(buf);
+        command = buf.readString();
         list = NetworkTools.readStringList(buf);
     }
 
@@ -38,7 +38,7 @@ public class PacketHudLogReady {
 
     public void toBytes(PacketBuffer buf) {
         buf.writeBlockPos(pos);
-        NetworkTools.writeString(buf, command);
+        buf.writeString(command);
         NetworkTools.writeStringList(buf, list);
     }
 
