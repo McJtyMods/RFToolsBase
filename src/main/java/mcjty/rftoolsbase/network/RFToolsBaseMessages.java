@@ -1,8 +1,6 @@
 package mcjty.rftoolsbase.network;
 
-import mcjty.lib.network.PacketHandler;
-import mcjty.lib.network.PacketSendClientCommand;
-import mcjty.lib.network.PacketSendServerCommand;
+import mcjty.lib.network.*;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,6 +34,9 @@ public class RFToolsBaseMessages {
 
         // Client side
         net.registerMessage(id(), PacketHudLogReady.class, PacketHudLogReady::toBytes, PacketHudLogReady::new, PacketHudLogReady::handle);
+
+        net.registerMessage(id(), PacketRequestDataFromServer.class, PacketRequestDataFromServer::toBytes, PacketRequestDataFromServer::new,
+                new ChannelBoundHandler<>(net, PacketRequestDataFromServer::handle));
 
         PacketHandler.registerStandardMessages(net);
     }
