@@ -1,3 +1,7 @@
+0.0.8:
+- API changes for the storage scanner
+- Update to latest McJtyLib
+
 0.0.7:
 - The Machine infuser actually works
 - Reintroduced infused diamond and enderpearls as crafting ingredients
