@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.api.storage;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -20,6 +21,8 @@ public interface IStorageScanner {
      */
     ItemStack requestItem(ItemStack match, int amount, boolean routable, boolean oredict);
 
+    void clearCachedCounts();
+
     /**
      * Request an itemstack from the storage scanner
      * Returns null/EMPTY if not possible.
@@ -33,7 +36,6 @@ public interface IStorageScanner {
      * Count the number of items that match in this storage scanner. This counts all the
      * items available in the system so the returned number can exceed the maximum
      * stacksize of the item
-     * @return
      */
     int countItems(ItemStack match, boolean routable, boolean oredict);
 
@@ -41,9 +43,19 @@ public interface IStorageScanner {
      * Count the number of items that match in this storage scanner. This counts all the
      * items available in the system so the returned number can exceed the maximum
      * stacksize of the item
-     * @return
      */
     int countItems(ItemStack match, boolean routable, boolean oredict, @Nullable Integer maxneeded);
+
+    /**
+     * this is used by the screen system to inject a stack when the player clicks on a screen
+     */
+    ItemStack injectStackFromScreen(ItemStack stack, PlayerEntity player);
+
+    /**
+     * Give a stack matching the input stack to the player containing either a single
+     * item or else a full stack
+     */
+    void giveToPlayerFromScreen(ItemStack stack, boolean single, PlayerEntity player, boolean oredict);
 
     /**
      * Count items matching a certain predicate.
