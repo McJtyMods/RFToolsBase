@@ -1,3 +1,6 @@
+Upcoming:
+- Fixed a networking problem on servers
+
 0.0.8:
 - API changes for the storage scanner
 - Update to latest McJtyLib
