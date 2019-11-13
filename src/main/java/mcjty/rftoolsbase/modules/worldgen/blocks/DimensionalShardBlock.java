@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.blocks;
+package mcjty.rftoolsbase.modules.worldgen.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
