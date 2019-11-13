@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.items;
+package mcjty.rftoolsbase.modules.crafting.items;
 
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -6,8 +6,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,14 +24,15 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static mcjty.rftoolsbase.items.CraftingCardContainer.GRID_WIDTH;
-import static mcjty.rftoolsbase.items.CraftingCardContainer.INPUT_SLOTS;
+import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.GRID_WIDTH;
+import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INPUT_SLOTS;
 
 public class CraftingCardItem extends Item {
 
@@ -117,6 +121,7 @@ public class CraftingCardItem extends Item {
                 list.add(new StringTextComponent(TextFormatting.BLUE + "Item: " + TextFormatting.WHITE + result.getDisplayName()));
             }
         }
+        // @todo tooltip icons
     }
 
     @Override
@@ -126,7 +131,19 @@ public class CraftingCardItem extends Item {
             return new ActionResult<>(ActionResultType.PASS, stack);
         }
         if (!world.isRemote) {
-//            player.openGui(RFToolsControl.instance, GuiProxy.GUI_CRAFTINGCARD, player.getEntityWorld(), (int) player.posX, (int) player.posY, (int) player.posZ);
+            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+                @Override
+                public ITextComponent getDisplayName() {
+                    return new StringTextComponent("Crafting Card");
+                }
+
+                @Override
+                public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+                    CraftingCardContainer container = new CraftingCardContainer(id, player.getPosition(), player);
+                    container.setupInventories(null, playerInventory);
+                    return container;
+                }
+            });
             return new ActionResult<>(ActionResultType.SUCCESS, stack);
         }
         return new ActionResult<>(ActionResultType.SUCCESS, stack);

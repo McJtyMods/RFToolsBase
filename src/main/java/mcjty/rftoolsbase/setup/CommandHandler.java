@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.McJtyLib;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.items.CraftingCardItem;
+import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 

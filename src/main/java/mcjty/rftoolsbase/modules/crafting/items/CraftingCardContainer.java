@@ -1,7 +1,8 @@
-package mcjty.rftoolsbase.items;
+package mcjty.rftoolsbase.modules.crafting.items;
 
 import mcjty.lib.container.*;
 import mcjty.lib.varia.ItemStackList;
+import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -32,7 +33,7 @@ public class CraftingCardContainer extends GenericContainer {
     };
 
 	public CraftingCardContainer(int id, BlockPos pos, PlayerEntity player) {
-		super(ModItems.CONTAINER_CRAFTING_CARD, id, CONTAINER_FACTORY, pos, null);
+		super(CraftingSetup.CONTAINER_CRAFTING_CARD, id, CONTAINER_FACTORY, pos, null);
 		cardIndex = player.inventory.currentItem;
 	}
 

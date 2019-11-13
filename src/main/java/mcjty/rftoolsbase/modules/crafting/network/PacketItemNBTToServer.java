@@ -1,5 +1,6 @@
-package mcjty.rftoolsbase.items;
+package mcjty.rftoolsbase.modules.crafting.network;
 
+import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -15,10 +16,6 @@ import java.util.function.Supplier;
 public class PacketItemNBTToServer {
     private CompoundNBT tagCompound;
 
-    public void fromBytes(PacketBuffer buf) {
-        tagCompound = buf.readCompoundTag();
-    }
-
     public void toBytes(PacketBuffer buf) {
         buf.writeCompoundTag(tagCompound);
     }
@@ -27,7 +24,7 @@ public class PacketItemNBTToServer {
     }
 
     public PacketItemNBTToServer(PacketBuffer buf) {
-        fromBytes(buf);
+        tagCompound = buf.readCompoundTag();
     }
 
     public PacketItemNBTToServer(CompoundNBT tagCompound) {

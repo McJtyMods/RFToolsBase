@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.items;
 
-import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -27,8 +26,4 @@ public class ModItems {
 
     @ObjectHolder("rftoolsbase:machine_base")
     public static Item MACHINE_BASE;
-
-    @ObjectHolder("rftoolsbase:crafting_card")
-    public static ContainerType<CraftingCardContainer> CONTAINER_CRAFTING_CARD;
-
 }

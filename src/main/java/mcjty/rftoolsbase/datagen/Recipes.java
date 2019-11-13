@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.datagen;
 
 import mcjty.rftoolsbase.items.ModItems;
+import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
@@ -93,6 +94,15 @@ public class Recipes extends RecipeProvider {
                 .key('d', Items.ENDER_PEARL)
                 .setGroup("rftools")
                 .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(ModItems.DIMENSIONALSHARD))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(CraftingSetup.CRAFTING_CARD, 8)
+                .patternLine("pc")
+                .patternLine("rp")
+                .key('c', Items.CRAFTING_TABLE)
+                .key('r', Items.REDSTONE)
+                .key('p', Items.PAPER)
+                .setGroup("rftools")
+                .addCriterion("crafter", InventoryChangeTrigger.Instance.forItems(Items.CRAFTING_TABLE))
                 .build(consumer);
     }
 }

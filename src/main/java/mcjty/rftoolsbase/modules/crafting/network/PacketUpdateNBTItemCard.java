@@ -1,9 +1,10 @@
-package mcjty.rftoolsbase.items;
+package mcjty.rftoolsbase.modules.crafting.network;
 
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
+import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

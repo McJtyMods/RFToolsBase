@@ -7,6 +7,7 @@ import mcjty.lib.container.GenericContainer;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.blocks.ModBlocks;
+import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import mcjty.rftoolsbase.items.SmartWrenchItem;
@@ -27,7 +28,7 @@ public class Registration {
         event.getRegistry().register(new DimensionalShardBlock(DimensionalShardBlock.OreType.ORE_NETHER));
         event.getRegistry().register(new DimensionalShardBlock(DimensionalShardBlock.OreType.ORE_END));
 
-        event.getRegistry().register(MachineInfuserSetup.createInfuserBlock());
+        MachineInfuserSetup.registerBlocks(event);
     }
 
     @SubscribeEvent
@@ -47,20 +48,22 @@ public class Registration {
         event.getRegistry().register(new Item(new Item.Properties().group(RFToolsBase.setup.getTab()).maxStackSize(16)).setRegistryName(RFToolsBase.MODID, "infused_diamond"));
         event.getRegistry().register(new Item(new Item.Properties().group(RFToolsBase.setup.getTab()).maxStackSize(16)).setRegistryName(RFToolsBase.MODID, "infused_enderpearl"));
 
-        event.getRegistry().register(new BaseBlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties));
-
         event.getRegistry().register(new Item(properties).setRegistryName("machine_frame"));
         event.getRegistry().register(new Item(properties).setRegistryName("machine_base"));
+
+        MachineInfuserSetup.registerItems(event);
+        CraftingSetup.registerItems(event);
     }
 
     @SubscribeEvent
     public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> event) {
-        event.getRegistry().register(TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
+        MachineInfuserSetup.registerTiles(event);
     }
 
     @SubscribeEvent
     public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
-        event.getRegistry().register(GenericContainer.createContainerType(MachineInfuserSetup.INFUSER_REGNAME));
+        MachineInfuserSetup.registerContainers(event);
+        CraftingSetup.registerContainers(event);
     }
 
 }

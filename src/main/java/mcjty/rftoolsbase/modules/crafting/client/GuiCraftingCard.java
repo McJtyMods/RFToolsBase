@@ -1,6 +1,5 @@
-package mcjty.rftoolsbase.items;
+package mcjty.rftoolsbase.modules.crafting.client;
 
-import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
@@ -17,9 +16,14 @@ import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
+import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
+import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
+import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
 import mcjty.rftoolsbase.network.RFToolsBaseMessages;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -31,10 +35,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static mcjty.rftoolsbase.items.CraftingCardContainer.*;
+import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.*;
 
 
-public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, GenericContainer> {
+public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, CraftingCardContainer> {
     public static final int WIDTH = 180;
     public static final int HEIGHT = 198;
 
@@ -42,8 +46,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Gene
 
     private BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
-    public GuiCraftingCard(CraftingCardContainer container) {
-        super(RFToolsBase.instance, RFToolsBaseMessages.INSTANCE, null, container, null /* @todo */,0 /* @todo 1.14 GuiProxy.GUI_MANUAL_CONTROL*/, "craftingcard");
+    public GuiCraftingCard(CraftingCardContainer container, PlayerInventory inventory) {
+        super(RFToolsBase.instance, RFToolsBaseMessages.INSTANCE, null, container, inventory, /* @todo 1.14 */0, "craftingcard");
         xSize = WIDTH;
         ySize = HEIGHT;
     }
