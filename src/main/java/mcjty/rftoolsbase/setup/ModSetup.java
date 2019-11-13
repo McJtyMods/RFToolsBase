@@ -19,6 +19,7 @@ public class ModSetup extends DefaultModSetup {
         super.init(e);
         OreGenerator.init();
         CapabilityMachineInformation.register();
+        CommandHandler.registerCommands();
         RFToolsBaseMessages.registerMessages("rftoolsbase");
     }
 

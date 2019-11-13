@@ -18,6 +18,7 @@ import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.network.RFToolsBaseMessages;
+import mcjty.rftoolsbase.setup.CommandHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
