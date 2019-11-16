@@ -2,9 +2,7 @@ package mcjty.rftoolsbase.modules.crafting.items;
 
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -14,6 +12,8 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ActionResult;
@@ -30,11 +30,19 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.GRID_WIDTH;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INPUT_SLOTS;
 
 public class CraftingCardItem extends Item {
+
+    private static final CraftingInventory CRAFTING_INVENTORY = new CraftingInventory(new Container(null, -1) {
+        @Override
+        public boolean canInteractWith(PlayerEntity playerIn) {
+            return false;
+        }
+    }, 3, 3);
 
     public CraftingCardItem() {
         super(new Properties()
@@ -44,35 +52,44 @@ public class CraftingCardItem extends Item {
         setRegistryName("crafting_card");
     }
 
-    private static IRecipe findRecipe(CraftingInventory inv) {
-        ClientWorld world = Minecraft.getInstance().world;
+    @Nullable
+    private static IRecipe findRecipeInternal(World world, CraftingInventory inv, IRecipeType type) {
         for (IRecipe r : world.getRecipeManager().getRecipes()) {
-            if (r != null && /*IRecipeType.CRAFTING.equals(r.getType()) && */ r.matches(inv, world)) {
+            if (r != null && type.equals(r.getType()) && r.matches(inv, world)) {
                 return r;
             }
         }
         return null;
     }
 
-    public static void testRecipe(World world, ItemStack craftingCard) {
+    /**
+     * If the recipe in this card is valid then this will return the matching IRecipe
+     */
+    @Nullable
+    public static IRecipe findRecipe(World world, ItemStack craftingCard, IRecipeType type) {
         ItemStackList stacks = getStacksFromItem(craftingCard);
-
-        CraftingInventory workInventory = new CraftingInventory(new Container(null, -1) {
-            @Override
-            public boolean canInteractWith(PlayerEntity playerIn) {
-                return false;
-            }
-        }, 3, 3);
         for (int y = 0 ; y < 3 ; y++) {
             for (int x = 0 ; x < 3 ; x++) {
                 int idx = y*3+x;
                 int idxCard = y*GRID_WIDTH + x;
-                workInventory.setInventorySlotContents(idx, stacks.get(idxCard));
+                CRAFTING_INVENTORY.setInventorySlotContents(idx, stacks.get(idxCard));
             }
         }
-        IRecipe recipe = findRecipe(workInventory);
+        return findRecipeInternal(world, CRAFTING_INVENTORY, type);
+    }
+
+    public static void testRecipe(World world, ItemStack craftingCard) {
+        ItemStackList stacks = getStacksFromItem(craftingCard);
+        for (int y = 0 ; y < 3 ; y++) {
+            for (int x = 0 ; x < 3 ; x++) {
+                int idx = y*3+x;
+                int idxCard = y*GRID_WIDTH + x;
+                CRAFTING_INVENTORY.setInventorySlotContents(idx, stacks.get(idxCard));
+            }
+        }
+        IRecipe recipe = findRecipeInternal(world, CRAFTING_INVENTORY, IRecipeType.CRAFTING);
         if (recipe != null) {
-            ItemStack stack = recipe.getCraftingResult(workInventory);
+            ItemStack stack = recipe.getCraftingResult(CRAFTING_INVENTORY);
             stacks.set(INPUT_SLOTS, stack);
         } else {
             stacks.set(INPUT_SLOTS, ItemStack.EMPTY);
@@ -213,7 +230,7 @@ public class CraftingCardItem extends Item {
         return stacks;
     }
 
-    public static List<ItemStack> getIngredients(ItemStack card) {
+    public static List<ItemStack> getIngredientStacks(ItemStack card) {
         CompoundNBT tagCompound = card.getTag();
         if (tagCompound == null) {
             return Collections.emptyList();
@@ -226,6 +243,28 @@ public class CraftingCardItem extends Item {
                 ItemStack s = ItemStack.read(nbtTagCompound);
                 if (!s.isEmpty()) {
                     stacks.add(s);
+                }
+            }
+        }
+        return stacks;
+    }
+
+    /**
+     * Get the stacks in this card as a list of Ingredient
+     */
+    public static List<Ingredient> getIngredients(ItemStack card) {
+        CompoundNBT tagCompound = card.getTag();
+        if (tagCompound == null) {
+            return Collections.emptyList();
+        }
+        ListNBT bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        List<Ingredient> stacks = new ArrayList<>();
+        for (int i = 0 ; i < bufferTagList.size() ; i++) {
+            if (i < INPUT_SLOTS) {
+                CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
+                ItemStack s = ItemStack.read(nbtTagCompound);
+                if (!s.isEmpty()) {
+                    stacks.add(Ingredient.fromStacks(s));
                 }
             }
         }
