@@ -47,7 +47,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     private BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
     public GuiCraftingCard(CraftingCardContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance, RFToolsBaseMessages.INSTANCE, null, container, inventory, /* @todo 1.14 */0, "craftingcard");
+        super(RFToolsBase.instance, null, container, inventory, /* @todo 1.14 */0, "craftingcard");
         xSize = WIDTH;
         ySize = HEIGHT;
     }
