@@ -18,8 +18,9 @@ import javax.annotation.Nonnull;
 public class RFToolsBaseMessages {
     public static SimpleChannel INSTANCE;
 
+    private static int packetId = 0;
     private static int id() {
-        return PacketHandler.nextPacketID();
+        return packetId++;
     }
 
     public static void registerMessages(String name) {
@@ -33,16 +34,16 @@ public class RFToolsBaseMessages {
         INSTANCE = net;
 
         // Server side
-        net.registerMessage(id(), PacketGetHudLog.class, PacketGetHudLog::toBytes, PacketGetHudLog::new, PacketGetHudLog::handle);
-        net.registerMessage(id(), PacketHudLogReady.class, PacketHudLogReady::toBytes, PacketHudLogReady::new, PacketHudLogReady::handle);
-        net.registerMessage(id(), PacketItemNBTToServer.class, PacketItemNBTToServer::toBytes, PacketItemNBTToServer::new, PacketItemNBTToServer::handle);
-        net.registerMessage(id(), PacketUpdateNBTItemCard.class, PacketUpdateNBTItemCard::toBytes, PacketUpdateNBTItemCard::new, PacketUpdateNBTItemCard::handle);
-        net.registerMessage(id(), PacketSendRecipe.class, PacketSendRecipe::toBytes, PacketSendRecipe::new, PacketSendRecipe::handle);
+        PacketHandler.debugRegister("RFToolsBase", net, id(), PacketGetHudLog.class, PacketGetHudLog::toBytes, PacketGetHudLog::new, PacketGetHudLog::handle);
+        PacketHandler.debugRegister("RFToolsBase", net, id(), PacketHudLogReady.class, PacketHudLogReady::toBytes, PacketHudLogReady::new, PacketHudLogReady::handle);
+        PacketHandler.debugRegister("RFToolsBase", net, id(), PacketItemNBTToServer.class, PacketItemNBTToServer::toBytes, PacketItemNBTToServer::new, PacketItemNBTToServer::handle);
+        PacketHandler.debugRegister("RFToolsBase", net, id(), PacketUpdateNBTItemCard.class, PacketUpdateNBTItemCard::toBytes, PacketUpdateNBTItemCard::new, PacketUpdateNBTItemCard::handle);
+        PacketHandler.debugRegister("RFToolsBase", net, id(), PacketSendRecipe.class, PacketSendRecipe::toBytes, PacketSendRecipe::new, PacketSendRecipe::handle);
 
-        net.registerMessage(id(), PacketRequestDataFromServer.class, PacketRequestDataFromServer::toBytes, PacketRequestDataFromServer::new,
+        PacketHandler.debugRegister("RFToolsBase", net, id(), PacketRequestDataFromServer.class, PacketRequestDataFromServer::toBytes, PacketRequestDataFromServer::new,
                 new ChannelBoundHandler<>(net, PacketRequestDataFromServer::handle));
 
-        PacketHandler.registerStandardMessages(net);
+        PacketHandler.registerStandardMessages("RFToolsBase - standard", id(), net);
     }
 
     public static void sendToServer(String command, @Nonnull TypedMap.Builder argumentBuilder) {
