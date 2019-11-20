@@ -6,6 +6,7 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.crafting.client.GuiCraftingCard;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
+import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRenderer;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import mcjty.rftoolsbase.modules.infuser.client.GuiMachineInfuser;
 import net.minecraft.client.gui.ScreenManager;
@@ -22,6 +23,7 @@ public class ClientRegistration {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent e) {
+        InformationScreenRenderer.register();
         GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_INFUSER, GuiMachineInfuser::new);
         ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD, ClientRegistration::create);
     }

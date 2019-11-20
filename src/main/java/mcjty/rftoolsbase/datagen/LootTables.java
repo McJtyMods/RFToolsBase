@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.datagen;
 
 import mcjty.lib.datagen.BaseLootTableProvider;
+import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.items.ModItems;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
@@ -18,6 +19,7 @@ public class LootTables extends BaseLootTableProvider {
         lootTables.put(WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD, createSilkTouchTable("dimshard", WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD, ModItems.DIMENSIONALSHARD, 4.0f, 5.0f));
         lootTables.put(WorldGenSetup.DIMENSIONAL_SHARD_END, createSilkTouchTable("dimshard", WorldGenSetup.DIMENSIONAL_SHARD_END, ModItems.DIMENSIONALSHARD, 4.0f, 5.0f));
         lootTables.put(WorldGenSetup.DIMENSIONAL_SHARD_NETHER, createSilkTouchTable("dimshard", WorldGenSetup.DIMENSIONAL_SHARD_NETHER, ModItems.DIMENSIONALSHARD, 4.0f, 5.0f));
+        lootTables.put(InformationScreenSetup.INFORMATION_SCREEN, createSimpleTable("informationscreen", InformationScreenSetup.INFORMATION_SCREEN));
     }
 
     @Override

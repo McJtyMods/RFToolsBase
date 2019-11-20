@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "rftoolsbase:block/information_screen", "x": 90 },
+    "facing=south": { "model": "rftoolsbase:block/information_screen", "x": 90, "y": 180 },
+    "facing=west": { "model": "rftoolsbase:block/information_screen", "x": 90, "y": 270 },
+    "facing=east": { "model": "rftoolsbase:block/information_screen", "x": 90, "y": 90 }
+  }
+}

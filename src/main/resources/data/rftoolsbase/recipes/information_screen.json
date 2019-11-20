@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "rftools",
+  "pattern": [
+    "---",
+    "rAr"
+  ],
+  "key": {
+    "-": {
+      "tag": "forge:glass_panes"
+    },
+    "A": {
+      "item": "rftoolsbase:machine_base"
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "rftoolsbase:information_screen"
+  }
+}

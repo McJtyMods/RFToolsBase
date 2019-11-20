@@ -1,3 +1,6 @@
+Upcoming:
+- Information Screen from RFTools Power has been moved to RFTools Base
+
 0.0.10:
 - Fixed a serious networking problem which could cause 'invalid discriminator spam' on servers
 

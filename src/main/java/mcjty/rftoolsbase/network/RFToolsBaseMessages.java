@@ -6,6 +6,8 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
+import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
+import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -33,13 +35,13 @@ public class RFToolsBaseMessages {
 
         INSTANCE = net;
 
-        // Server side
         PacketHandler.debugRegister("RFToolsBase", net, id(), PacketGetHudLog.class, PacketGetHudLog::toBytes, PacketGetHudLog::new, PacketGetHudLog::handle);
         PacketHandler.debugRegister("RFToolsBase", net, id(), PacketHudLogReady.class, PacketHudLogReady::toBytes, PacketHudLogReady::new, PacketHudLogReady::handle);
         PacketHandler.debugRegister("RFToolsBase", net, id(), PacketItemNBTToServer.class, PacketItemNBTToServer::toBytes, PacketItemNBTToServer::new, PacketItemNBTToServer::handle);
         PacketHandler.debugRegister("RFToolsBase", net, id(), PacketUpdateNBTItemCard.class, PacketUpdateNBTItemCard::toBytes, PacketUpdateNBTItemCard::new, PacketUpdateNBTItemCard::handle);
         PacketHandler.debugRegister("RFToolsBase", net, id(), PacketSendRecipe.class, PacketSendRecipe::toBytes, PacketSendRecipe::new, PacketSendRecipe::handle);
-
+        PacketHandler.debugRegister("RFToolsPower", net, id(), PacketGetMonitorLog.class, PacketGetMonitorLog::toBytes, PacketGetMonitorLog::new, PacketGetMonitorLog::handle);
+        PacketHandler.debugRegister("RFToolsPower", net, id(), PacketMonitorLogReady.class, PacketMonitorLogReady::toBytes, PacketMonitorLogReady::new, PacketMonitorLogReady::handle);
         PacketHandler.debugRegister("RFToolsBase", net, id(), PacketRequestDataFromServer.class, PacketRequestDataFromServer::toBytes, PacketRequestDataFromServer::new,
                 new ChannelBoundHandler<>(net, PacketRequestDataFromServer::handle));
 

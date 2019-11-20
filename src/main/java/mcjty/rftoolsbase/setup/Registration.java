@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
@@ -22,6 +23,7 @@ public class Registration {
     public static void registerBlocks(final RegistryEvent.Register<Block> event) {
         WorldGenSetup.registerBlocks(event);
         MachineInfuserSetup.registerBlocks(event);
+        InformationScreenSetup.registerBlocks(event);
     }
 
     @SubscribeEvent
@@ -43,17 +45,20 @@ public class Registration {
         WorldGenSetup.registerItems(event);
         MachineInfuserSetup.registerItems(event);
         CraftingSetup.registerItems(event);
+        InformationScreenSetup.registerItems(event);
     }
 
     @SubscribeEvent
     public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> event) {
         MachineInfuserSetup.registerTiles(event);
+        InformationScreenSetup.registerTiles(event);
     }
 
     @SubscribeEvent
     public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
         MachineInfuserSetup.registerContainers(event);
         CraftingSetup.registerContainers(event);
+        InformationScreenSetup.registerContainers(event);
     }
 
 }

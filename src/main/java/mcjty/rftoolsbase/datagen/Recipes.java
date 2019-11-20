@@ -1,22 +1,27 @@
 package mcjty.rftoolsbase.datagen;
 
+import mcjty.lib.datagen.BaseRecipeProvider;
 import mcjty.rftoolsbase.items.ModItems;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
+import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
-public class Recipes extends RecipeProvider {
+public class Recipes extends BaseRecipeProvider {
 
     public Recipes(DataGenerator generatorIn) {
         super(generatorIn);
+        add('F', ModItems.MACHINE_FRAME);
+        add('A', ModItems.MACHINE_BASE);
+        add('s', ModItems.DIMENSIONALSHARD);
+        group("rftools");
     }
 
     @Override
@@ -104,5 +109,9 @@ public class Recipes extends RecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("crafter", InventoryChangeTrigger.Instance.forItems(Items.CRAFTING_TABLE))
                 .build(consumer);
+        build(consumer, ShapedRecipeBuilder.shapedRecipe(InformationScreenSetup.INFORMATION_SCREEN)
+                        .key('-', Tags.Items.GLASS_PANES)
+                        .addCriterion("frame", InventoryChangeTrigger.Instance.forItems(ModItems.MACHINE_BASE, Items.REDSTONE)),
+                "---", "rAr");
     }
 }

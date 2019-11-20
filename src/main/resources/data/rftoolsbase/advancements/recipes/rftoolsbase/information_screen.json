@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "rftoolsbase:information_screen"
+    ]
+  },
+  "criteria": {
+    "frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "rftoolsbase:machine_base"
+          },
+          {
+            "item": "minecraft:redstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "rftoolsbase:information_screen"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "frame",
+      "has_the_recipe"
+    ]
+  ]
+}

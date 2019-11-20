@@ -18,6 +18,7 @@
     "block.rftoolsbase.dimensionalshard_overworld": "Dimensional Shard Ore",
     "block.rftoolsbase.dimensionalshard_nether": "Dimensional Shard Ore",
     "block.rftoolsbase.dimensionalshard_end": "Dimensional Shard Ore",
+    "block.rftoolsbase.information_screen": "Information Screen",
 
     "_comment": "Creative Tabs",
     "itemGroup.rftoolsbase": "RFTools Base",
