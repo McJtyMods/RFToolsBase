@@ -74,10 +74,6 @@ public class DefaultPowerInformationRenderer {
             long maxEnergy = data.get(DefaultPowerInformationScreenInfo.MAXENERGY);
             list.add(TextFormatting.BLUE + " RF: " + TextFormatting.WHITE + formatPower(energy));
             list.add(TextFormatting.BLUE + " Max: " + TextFormatting.WHITE + formatPower(maxEnergy));
-//            if (infoscreen.getRfExtractPerTick() != -1) {
-//                list.add(TextFormatting.BLUE + " Ext/t: " + TextFormatting.WHITE + formatPower(infoscreen.getRfExtractPerTick()));
-//                list.add(TextFormatting.BLUE + " Ins/t: " + TextFormatting.WHITE + formatPower(infoscreen.getRfInsertedPerTick()));
-//            }
         } else {
             list.add(TextFormatting.RED + " Not a powercell");
             list.add(TextFormatting.RED + " or anything that");
@@ -88,7 +84,7 @@ public class DefaultPowerInformationRenderer {
 
     private static DecimalFormat format = new DecimalFormat("#.###");
 
-    private static String formatPower(long l) {
+    public static String formatPower(long l) {
         if (l < 100000) {
             return Long.toString(l);
         } else if (l < 10000000) {
@@ -103,7 +99,7 @@ public class DefaultPowerInformationRenderer {
         }
     }
 
-    private static float getHudAngle(Direction orientation) {
+    public static float getHudAngle(Direction orientation) {
         float f3 = 0.0f;
 
         if (orientation != null) {
@@ -124,7 +120,7 @@ public class DefaultPowerInformationRenderer {
         return f3;
     }
 
-    private static int getPercentageColor(int i) {
+    public static int getPercentageColor(int i) {
         int col;
         if (i < 30) {
             col = 0xff00ff00;
