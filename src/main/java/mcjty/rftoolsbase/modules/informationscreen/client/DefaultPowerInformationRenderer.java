@@ -21,8 +21,8 @@ public class DefaultPowerInformationRenderer {
             return;
         }
 
-        long energy = data.get(DefaultPowerInformationScreenInfo.ENERGY);
-        long maxEnergy = data.get(DefaultPowerInformationScreenInfo.MAXENERGY);
+        long energy = data.getOptional(DefaultPowerInformationScreenInfo.ENERGY).orElse(0L);
+        long maxEnergy = data.getOptional(DefaultPowerInformationScreenInfo.MAXENERGY).orElse(0L);
 
         GlStateManager.pushMatrix();
         GlStateManager.translatef((float) x + 0.5F, (float) y + 0.75F, (float) z + 0.5F);
@@ -70,8 +70,8 @@ public class DefaultPowerInformationRenderer {
         list.add("");
 
         if (data != null && data.size() > 0) {
-            long energy = data.get(DefaultPowerInformationScreenInfo.ENERGY);
-            long maxEnergy = data.get(DefaultPowerInformationScreenInfo.MAXENERGY);
+            long energy = data.getOptional(DefaultPowerInformationScreenInfo.ENERGY).orElse(0L);
+            long maxEnergy = data.getOptional(DefaultPowerInformationScreenInfo.MAXENERGY).orElse(0L);
             list.add(TextFormatting.BLUE + " RF: " + TextFormatting.WHITE + formatPower(energy));
             list.add(TextFormatting.BLUE + " Max: " + TextFormatting.WHITE + formatPower(maxEnergy));
         } else {
