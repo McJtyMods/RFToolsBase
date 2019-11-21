@@ -1,5 +1,7 @@
 Upcoming:
 - Information Screen from RFTools Power has been moved to RFTools Base
+- The information screen will now remember the 'mode' when it is broken
+- Right clicking the information screen will activate the block behind it instead
 
 0.0.10:
 - Fixed a serious networking problem which could cause 'invalid discriminator spam' on servers

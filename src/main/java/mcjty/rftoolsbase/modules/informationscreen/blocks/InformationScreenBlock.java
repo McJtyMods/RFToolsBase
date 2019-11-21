@@ -13,7 +13,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
@@ -68,6 +70,24 @@ public class InformationScreenBlock extends BaseBlock {
             default:
                 return BLOCK_NORTH;
         }
+    }
+
+    @Override
+    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        boolean rc = super.onBlockActivated(state, world, pos, player, hand, result);
+        if (!rc) {
+            // We just pass along the block activation to the block behind it so that we can open the gui of that
+            BlockPos offset = pos.offset(OrientationTools.getOrientationHoriz(state).getOpposite());
+            result = new BlockRayTraceResult(result.getHitVec(), result.getFace(), offset, result.isInside());
+            return world.getBlockState(offset).onBlockActivated(world, player, hand, result);
+        }
+        return rc;
+    }
+
+    @Override
+    protected boolean openGui(World world, int x, int y, int z, PlayerEntity player) {
+        // This block does not have a gui
+        return false;
     }
 
     @Override
