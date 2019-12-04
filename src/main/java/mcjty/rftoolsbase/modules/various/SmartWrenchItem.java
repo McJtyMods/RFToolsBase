@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.items;
+package mcjty.rftoolsbase.modules.various;
 
 import mcjty.lib.api.smartwrench.ISmartWrenchSelector;
 import mcjty.lib.api.smartwrench.SmartWrench;
@@ -41,7 +41,6 @@ public class SmartWrenchItem extends Item implements SmartWrench {
                 .maxStackSize(1)
                 .group(RFToolsBase.setup.getTab()));
         this.mode = mode;
-        setRegistryName(mode == SmartWrenchMode.MODE_WRENCH ? "smartwrench" : "smartwrench_select");
     }
 
     @Override
@@ -53,10 +52,10 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             ItemStack newStack;
             if (mode == SmartWrenchMode.MODE_WRENCH) {
                 mode = SmartWrenchMode.MODE_SELECT;
-                newStack = new ItemStack(ModItems.SMARTWRENCH_SELECT);
+                newStack = new ItemStack(VariousSetup.SMARTWRENCH_SELECT.get());
             } else {
                 mode = SmartWrenchMode.MODE_WRENCH;
-                newStack = new ItemStack(ModItems.SMARTWRENCH);
+                newStack = new ItemStack(VariousSetup.SMARTWRENCH.get());
             }
             newStack.setTag(tag);
             player.setHeldItem(hand, newStack);

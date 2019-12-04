@@ -3,8 +3,10 @@ package mcjty.rftoolsbase;
 import mcjty.lib.base.ModBase;
 import mcjty.rftoolsbase.client.ClientInfo;
 import mcjty.rftoolsbase.config.Config;
+import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.various.VariousSetup;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.setup.ModSetup;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,6 +40,8 @@ public class RFToolsBase implements ModBase {
         WorldGenSetup.register();
         MachineInfuserSetup.register();
         InformationScreenSetup.register();
+        CraftingSetup.register();
+        VariousSetup.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLCommonSetupEvent e) -> setup.init(e));
 

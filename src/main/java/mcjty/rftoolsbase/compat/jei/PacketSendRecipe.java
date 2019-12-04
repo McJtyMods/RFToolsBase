@@ -37,7 +37,7 @@ public class PacketSendRecipe {
             World world = player.getEntityWorld();
             // Handle tablet version
             ItemStack mainhand = player.getHeldItemMainhand();
-            if (!mainhand.isEmpty() && mainhand.getItem() == CraftingSetup.CRAFTING_CARD) {
+            if (!mainhand.isEmpty() && mainhand.getItem() == CraftingSetup.CRAFTING_CARD.get()) {
                 if (player.openContainer instanceof CraftingCardContainer) {
                     CraftingCardContainer craftingCardContainer = (CraftingCardContainer) player.openContainer;
                     craftingCardContainer.setGridContents(player, stacks);

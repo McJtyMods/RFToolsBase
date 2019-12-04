@@ -33,7 +33,7 @@ public class CraftingCardContainer extends GenericContainer {
     };
 
 	public CraftingCardContainer(int id, BlockPos pos, PlayerEntity player) {
-		super(CraftingSetup.CONTAINER_CRAFTING_CARD, id, CONTAINER_FACTORY, pos, null);
+		super(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY, pos, null);
 		cardIndex = player.inventory.currentItem;
 	}
 

@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Predicate;
 
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.GRID_WIDTH;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INPUT_SLOTS;
@@ -49,7 +48,6 @@ public class CraftingCardItem extends Item {
                 .group(RFToolsBase.setup.getTab())
                 .defaultMaxDamage(0)
                 .maxStackSize(1));
-        setRegistryName("crafting_card");
     }
 
     @Nullable

@@ -13,9 +13,9 @@ import mcjty.lib.container.NoDirectionItemHander;
 import mcjty.lib.container.SlotDefinition;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.GenericTileEntity;
-import mcjty.rftoolsbase.items.ModItems;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.various.VariousSetup;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
@@ -41,8 +41,8 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(2) {
         @Override
         protected void setup() {
-            slot(SlotDefinition.specific(new ItemStack(ModItems.DIMENSIONALSHARD)), ContainerFactory.CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24);
-            slot(SlotDefinition.specific(s -> isInfusable(s)), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24);
+            slot(SlotDefinition.specific(new ItemStack(VariousSetup.DIMENSIONALSHARD.get())), ContainerFactory.CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24);
+            slot(SlotDefinition.specific(MachineInfuserTileEntity::isInfusable), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24);
             playerSlots(10, 70);
         }
     };
@@ -89,7 +89,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             } else {
                 ItemStack inputStack = h.getStackInSlot(0);
                 ItemStack outputStack = h.getStackInSlot(1);
-                if (!inputStack.isEmpty() && inputStack.getItem() == ModItems.DIMENSIONALSHARD && isInfusable(outputStack)) {
+                if (!inputStack.isEmpty() && inputStack.getItem() == VariousSetup.DIMENSIONALSHARD.get() && isInfusable(outputStack)) {
                     startInfusing();
                 }
             }

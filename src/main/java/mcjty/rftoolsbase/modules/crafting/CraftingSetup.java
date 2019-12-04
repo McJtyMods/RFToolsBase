@@ -7,28 +7,33 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import static mcjty.rftoolsbase.RFToolsBase.MODID;
 
 public class CraftingSetup {
 
-    @ObjectHolder("rftoolsbase:crafting_card")
-    public static Item CRAFTING_CARD;
+    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, MODID);
 
-    @ObjectHolder("rftoolsbase:crafting_card")
-    public static ContainerType<CraftingCardContainer> CONTAINER_CRAFTING_CARD;
-
-    public static void registerItems(final RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new CraftingCardItem());
+    public static void register() {
+        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
-        event.getRegistry().register(IForgeContainerType.create((windowId, inv, data) -> {
+    public static final RegistryObject<Item> CRAFTING_CARD = ITEMS.register("crafting_card", CraftingCardItem::new);
+    public static final RegistryObject<ContainerType<CraftingCardContainer>> CONTAINER_CRAFTING_CARD = CONTAINERS.register("crafting_card", CraftingSetup::createCraftingContainer);
+
+    private static ContainerType<CraftingCardContainer> createCraftingContainer() {
+        return IForgeContainerType.create((windowId, inv, data) -> {
             PlayerEntity player = McJtyLib.proxy.getClientPlayer();
             CraftingCardContainer container = new CraftingCardContainer(windowId, player.getPosition(), player);
             container.setupInventories(null, inv);
             return container;
-        }).setRegistryName("crafting_card"));
+        });
     }
 
 }

@@ -1,10 +1,10 @@
 package mcjty.rftoolsbase.datagen;
 
 import mcjty.lib.datagen.BaseRecipeProvider;
-import mcjty.rftoolsbase.items.ModItems;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.various.VariousSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
@@ -18,15 +18,15 @@ public class Recipes extends BaseRecipeProvider {
 
     public Recipes(DataGenerator generatorIn) {
         super(generatorIn);
-        add('F', ModItems.MACHINE_FRAME);
-        add('A', ModItems.MACHINE_BASE);
-        add('s', ModItems.DIMENSIONALSHARD);
+        add('F', VariousSetup.MACHINE_FRAME.get());
+        add('A', VariousSetup.MACHINE_BASE.get());
+        add('s', VariousSetup.DIMENSIONALSHARD.get());
         group("rftools");
     }
 
     @Override
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shapedRecipe(ModItems.DIMENSIONALSHARD)
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.DIMENSIONALSHARD.get())
                 .patternLine("deg")
                 .patternLine("irG")
                 .patternLine("qcL")
@@ -44,7 +44,7 @@ public class Recipes extends BaseRecipeProvider {
                         Items.QUARTZ, Items.REDSTONE, Items.PRISMARINE_SHARD, Items.DIAMOND,
                         Items.EMERALD, Items.GLOWSTONE_DUST, Items.IRON_INGOT, Items.GLASS))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ModItems.MACHINE_BASE)
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.MACHINE_BASE.get())
                 .patternLine("ggg")
                 .patternLine("sss")
                 .key('g', Items.GOLD_NUGGET)
@@ -52,7 +52,7 @@ public class Recipes extends BaseRecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("gold", InventoryChangeTrigger.Instance.forItems(Items.GOLD_NUGGET))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ModItems.MACHINE_FRAME)
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.MACHINE_FRAME.get())
                 .patternLine("ili")
                 .patternLine("g g")
                 .patternLine("ili")
@@ -67,13 +67,13 @@ public class Recipes extends BaseRecipeProvider {
                 .patternLine("dMd")
                 .patternLine("srs")
                 .key('r', Items.REDSTONE)
-                .key('s', ModItems.DIMENSIONALSHARD)
+                .key('s', VariousSetup.DIMENSIONALSHARD.get())
                 .key('d', Items.DIAMOND)
-                .key('M', ModItems.MACHINE_FRAME)
+                .key('M', VariousSetup.MACHINE_FRAME.get())
                 .setGroup("rftools")
-                .addCriterion("machine_frame", InventoryChangeTrigger.Instance.forItems(ModItems.MACHINE_FRAME, ModItems.DIMENSIONALSHARD))
+                .addCriterion("machine_frame", InventoryChangeTrigger.Instance.forItems(VariousSetup.MACHINE_FRAME.get(), VariousSetup.DIMENSIONALSHARD.get()))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ModItems.SMARTWRENCH)
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.SMARTWRENCH.get())
                 .patternLine("  i")
                 .patternLine(" l ")
                 .patternLine("l  ")
@@ -82,25 +82,25 @@ public class Recipes extends BaseRecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("iron", InventoryChangeTrigger.Instance.forItems(Items.IRON_INGOT))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ModItems.INFUSED_DIAMOND)
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.INFUSED_DIAMOND.get())
                 .patternLine("sss")
                 .patternLine("sds")
                 .patternLine("sss")
-                .key('s', ModItems.DIMENSIONALSHARD)
+                .key('s', VariousSetup.DIMENSIONALSHARD.get())
                 .key('d', Items.DIAMOND)
                 .setGroup("rftools")
-                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(ModItems.DIMENSIONALSHARD))
+                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(VariousSetup.DIMENSIONALSHARD.get()))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ModItems.INFUSED_ENDERPEARL)
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.INFUSED_ENDERPEARL.get())
                 .patternLine("sss")
                 .patternLine("sds")
                 .patternLine("sss")
-                .key('s', ModItems.DIMENSIONALSHARD)
+                .key('s', VariousSetup.DIMENSIONALSHARD.get())
                 .key('d', Items.ENDER_PEARL)
                 .setGroup("rftools")
-                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(ModItems.DIMENSIONALSHARD))
+                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(VariousSetup.DIMENSIONALSHARD.get()))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(CraftingSetup.CRAFTING_CARD, 8)
+        ShapedRecipeBuilder.shapedRecipe(CraftingSetup.CRAFTING_CARD.get(), 8)
                 .patternLine("pc")
                 .patternLine("rp")
                 .key('c', Items.CRAFTING_TABLE)
@@ -111,7 +111,7 @@ public class Recipes extends BaseRecipeProvider {
                 .build(consumer);
         build(consumer, ShapedRecipeBuilder.shapedRecipe(InformationScreenSetup.INFORMATION_SCREEN.get())
                         .key('-', Tags.Items.GLASS_PANES)
-                        .addCriterion("frame", InventoryChangeTrigger.Instance.forItems(ModItems.MACHINE_BASE, Items.REDSTONE)),
+                        .addCriterion("frame", InventoryChangeTrigger.Instance.forItems(VariousSetup.MACHINE_BASE.get(), Items.REDSTONE)),
                 "---", "rAr");
     }
 }
