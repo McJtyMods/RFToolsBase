@@ -30,8 +30,8 @@ import java.util.List;
 public class InformationScreenBlock extends BaseBlock {
 
     public InformationScreenBlock() {
-        super(InformationScreenTileEntity.REGNAME, new BlockBuilder()
-                .tileEntitySupplier(() -> new InformationScreenTileEntity()));
+        super(new BlockBuilder()
+                .tileEntitySupplier(InformationScreenTileEntity::new));
     }
 
     @Override

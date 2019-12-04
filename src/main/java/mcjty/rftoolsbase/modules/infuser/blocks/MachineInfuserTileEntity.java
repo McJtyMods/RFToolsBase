@@ -6,6 +6,7 @@ import mcjty.lib.api.infusable.CapabilityInfusable;
 import mcjty.lib.api.infusable.DefaultInfusable;
 import mcjty.lib.api.infusable.IInfusable;
 import mcjty.lib.blocks.BaseBlock;
+import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.ContainerFactory;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.container.NoDirectionItemHander;
@@ -49,7 +50,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(() -> new NoDirectionItemHander(this, CONTAINER_FACTORY));
     private LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
     private LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
-            .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserSetup.CONTAINER_INFUSER, windowId, CONTAINER_FACTORY, getPos(), MachineInfuserTileEntity.this))
+            .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), windowId, CONTAINER_FACTORY, getPos(), MachineInfuserTileEntity.this))
             .itemHandler(itemHandler)
             .energyHandler(energyHandler));
     private LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
@@ -57,7 +58,16 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     private int infusing = 0;
 
     public MachineInfuserTileEntity() {
-        super(MachineInfuserSetup.TYPE_INFUSER);
+        super(MachineInfuserSetup.TYPE_MACHINE_INFUSER.get());
+    }
+
+    public static BaseBlock createBlock() {
+
+        return new BaseBlock(new BlockBuilder()
+                .tileEntitySupplier(MachineInfuserTileEntity::new)
+                .infusable()
+                .info("message.rftoolsbase.shiftmessage")
+                .infoExtended("message.rftoolsbase.infuser"));
     }
 
     @Override

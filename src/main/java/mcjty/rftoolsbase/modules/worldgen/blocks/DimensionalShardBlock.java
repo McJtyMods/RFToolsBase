@@ -22,7 +22,6 @@ public class DimensionalShardBlock extends Block {
                 .hardnessAndResistance(3.0f, 5.0f)
                 .lightValue(7));
         this.oreType = variant;
-        setRegistryName("dimensionalshard_" + oreType.getName());
     }
 
     @Nullable

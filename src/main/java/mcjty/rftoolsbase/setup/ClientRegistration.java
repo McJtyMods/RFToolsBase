@@ -24,7 +24,7 @@ public class ClientRegistration {
     @SubscribeEvent
     public static void init(FMLClientSetupEvent e) {
         InformationScreenRenderer.register();
-        GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_INFUSER, GuiMachineInfuser::new);
+        GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
         ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD, ClientRegistration::create);
     }
 

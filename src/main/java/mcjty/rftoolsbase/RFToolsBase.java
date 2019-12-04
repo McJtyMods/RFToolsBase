@@ -3,8 +3,12 @@ package mcjty.rftoolsbase;
 import mcjty.lib.base.ModBase;
 import mcjty.rftoolsbase.client.ClientInfo;
 import mcjty.rftoolsbase.config.Config;
+import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
+import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.setup.ModSetup;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -14,7 +18,6 @@ import net.minecraftforge.fml.loading.FMLPaths;
 
 
 @Mod(RFToolsBase.MODID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RFToolsBase implements ModBase {
 
     public static final String MODID = "rftoolsbase";
@@ -32,6 +35,10 @@ public class RFToolsBase implements ModBase {
 //        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_CONFIG);
 
+        WorldGenSetup.register();
+        MachineInfuserSetup.register();
+        InformationScreenSetup.register();
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLCommonSetupEvent e) -> setup.init(e));
 
 //        Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("theoneprobe-client.toml"));
@@ -47,5 +54,9 @@ public class RFToolsBase implements ModBase {
     @Override
     public void openManual(PlayerEntity entityPlayer, int i, String s) {
         // @todo
+    }
+
+    public static Item.Properties createStandardProperties() {
+        return new Item.Properties().group(setup.getTab());
     }
 }

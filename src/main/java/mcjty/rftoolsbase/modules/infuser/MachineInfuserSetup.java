@@ -1,57 +1,36 @@
 package mcjty.rftoolsbase.modules.infuser;
 
-import mcjty.lib.blocks.BaseBlock;
-import mcjty.lib.blocks.BaseBlockItem;
-import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.GenericContainer;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import static mcjty.rftoolsbase.RFToolsBase.MODID;
 
 public class MachineInfuserSetup {
 
-    public static final String INFUSER_REGNAME = "machine_infuser";
+    public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
+    public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, MODID);
+    public static final DeferredRegister<TileEntityType<?>> TILES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, MODID);
+    public static final DeferredRegister<ContainerType<?>> CONTAINERS = new DeferredRegister<>(ForgeRegistries.CONTAINERS, MODID);
 
-    @ObjectHolder("rftoolsbase:machine_infuser")
-    public static BaseBlock MACHINE_INFUSER;
-
-    @ObjectHolder("rftoolsbase:machine_infuser")
-    public static ContainerType<GenericContainer> CONTAINER_INFUSER;
-
-    @ObjectHolder("rftoolsbase:machine_infuser")
-    public static TileEntityType<?> TYPE_INFUSER;
-
-
-    public static BaseBlock createInfuserBlock() {
-
-        return new BaseBlock(INFUSER_REGNAME, new BlockBuilder()
-                .tileEntitySupplier(MachineInfuserTileEntity::new)
-                .infusable()
-                .info("message.rftoolsbase.shiftmessage")
-                .infoExtended("message.rftoolsbase.infuser"));
+    public static void register() {
+        BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        TILES.register(FMLJavaModLoadingContext.get().getModEventBus());
+        CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static void registerBlocks(final RegistryEvent.Register<Block> event) {
-        event.getRegistry().register(MachineInfuserSetup.createInfuserBlock());
-    }
-
-    public static void registerItems(final RegistryEvent.Register<Item> event) {
-        Item.Properties properties = new Item.Properties().group(RFToolsBase.setup.getTab());
-        event.getRegistry().register(new BaseBlockItem(MachineInfuserSetup.MACHINE_INFUSER, properties));
-    }
-
-    public static void registerTiles(final RegistryEvent.Register<TileEntityType<?>> event) {
-        event.getRegistry().register(TileEntityType.Builder.create(MachineInfuserTileEntity::new, MachineInfuserSetup.MACHINE_INFUSER).build(null).setRegistryName(MachineInfuserSetup.INFUSER_REGNAME));
-    }
-
-    public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
-        event.getRegistry().register(GenericContainer.createContainerType(MachineInfuserSetup.INFUSER_REGNAME));
-    }
-
+    public static final RegistryObject<Block> MACHINE_INFUSER = BLOCKS.register("machine_infuser", MachineInfuserTileEntity::createBlock);
+    public static final RegistryObject<Item> MACHINE_INFUSER_ITEM = ITEMS.register("machine_infuser", () -> new BlockItem(MACHINE_INFUSER.get(), RFToolsBase.createStandardProperties()));
+    public static final RegistryObject<TileEntityType<?>> TYPE_MACHINE_INFUSER = TILES.register("machine_infuser", () -> TileEntityType.Builder.create(MachineInfuserTileEntity::new, MACHINE_INFUSER.get()).build(null));
+    public static final RegistryObject<ContainerType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 }

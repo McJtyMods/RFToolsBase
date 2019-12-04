@@ -27,7 +27,7 @@ public class OreGenerator {
             int overworldChances = Config.OVERWORLD_ORE_CHANCES.get();
             if (overworldChances > 0) {
                 ConfiguredFeature<?> featureOverworld = Biome.createDecoratedFeature(Feature.ORE,
-                        new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD.getDefaultState(),
+                        new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
                                 Config.OVERWORLD_ORE_VEINSIZE.get()),
                         Placement.COUNT_RANGE, new CountRangeConfig(
                                 overworldChances,
@@ -41,7 +41,7 @@ public class OreGenerator {
             int netherChances = Config.NETHER_ORE_CHANCES.get();
             if (netherChances > 0) {
                 ConfiguredFeature<?> featureNether = Biome.createDecoratedFeature(Feature.ORE,
-                        new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenSetup.DIMENSIONAL_SHARD_NETHER.getDefaultState(),
+                        new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenSetup.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
                                 Config.NETHER_ORE_VEINSIZE.get()),
                         Placement.COUNT_RANGE, new CountRangeConfig(
                                 netherChances,

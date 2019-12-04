@@ -62,7 +62,7 @@ public class Recipes extends BaseRecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("iron_ingot", InventoryChangeTrigger.Instance.forItems(Items.IRON_INGOT, Items.GOLD_NUGGET))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(MachineInfuserSetup.MACHINE_INFUSER)
+        ShapedRecipeBuilder.shapedRecipe(MachineInfuserSetup.MACHINE_INFUSER.get())
                 .patternLine("srs")
                 .patternLine("dMd")
                 .patternLine("srs")
@@ -109,7 +109,7 @@ public class Recipes extends BaseRecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("crafter", InventoryChangeTrigger.Instance.forItems(Items.CRAFTING_TABLE))
                 .build(consumer);
-        build(consumer, ShapedRecipeBuilder.shapedRecipe(InformationScreenSetup.INFORMATION_SCREEN)
+        build(consumer, ShapedRecipeBuilder.shapedRecipe(InformationScreenSetup.INFORMATION_SCREEN.get())
                         .key('-', Tags.Items.GLASS_PANES)
                         .addCriterion("frame", InventoryChangeTrigger.Instance.forItems(ModItems.MACHINE_BASE, Items.REDSTONE)),
                 "---", "rAr");
