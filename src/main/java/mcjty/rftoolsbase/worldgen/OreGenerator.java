@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.worldgen;
 
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
-import mcjty.rftoolsbase.config.Config;
+import mcjty.rftoolsbase.setup.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.biome.Biome;

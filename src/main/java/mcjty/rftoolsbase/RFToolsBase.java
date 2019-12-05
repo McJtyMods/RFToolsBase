@@ -2,7 +2,7 @@ package mcjty.rftoolsbase;
 
 import mcjty.lib.base.ModBase;
 import mcjty.rftoolsbase.client.ClientInfo;
-import mcjty.rftoolsbase.config.Config;
+import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;

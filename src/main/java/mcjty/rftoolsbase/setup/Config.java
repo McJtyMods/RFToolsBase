@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.config;
+package mcjty.rftoolsbase.setup;
 
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
