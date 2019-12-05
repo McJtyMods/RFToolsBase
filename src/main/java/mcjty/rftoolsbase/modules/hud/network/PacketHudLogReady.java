@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.network;
+package mcjty.rftoolsbase.modules.hud.network;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.network.IClientCommandHandler;

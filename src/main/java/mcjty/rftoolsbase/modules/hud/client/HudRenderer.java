@@ -1,9 +1,9 @@
-package mcjty.rftoolsbase.client;
+package mcjty.rftoolsbase.modules.hud.client;
 
 import mcjty.lib.client.HudRenderHelper;
 import mcjty.rftoolsbase.api.client.IHudSupport;
-import mcjty.rftoolsbase.network.PacketGetHudLog;
-import mcjty.rftoolsbase.network.RFToolsBaseMessages;
+import mcjty.rftoolsbase.modules.hud.network.PacketGetHudLog;
+import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.util.Direction;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.network;
+package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.network.*;
 import mcjty.lib.typed.TypedMap;
@@ -6,6 +6,8 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
+import mcjty.rftoolsbase.modules.hud.network.PacketGetHudLog;
+import mcjty.rftoolsbase.modules.hud.network.PacketHudLogReady;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
 import net.minecraft.entity.player.PlayerEntity;

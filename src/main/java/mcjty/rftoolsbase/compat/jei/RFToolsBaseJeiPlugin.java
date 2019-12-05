@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.compat.jei;
 
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.network.RFToolsBaseMessages;
+import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.gui.ingredient.IGuiIngredient;

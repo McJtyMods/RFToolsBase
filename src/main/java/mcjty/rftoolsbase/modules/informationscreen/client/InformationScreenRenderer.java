@@ -3,7 +3,7 @@ package mcjty.rftoolsbase.modules.informationscreen.client;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
-import mcjty.rftoolsbase.network.RFToolsBaseMessages;
+import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.util.Direction;
 import net.minecraftforge.fml.client.registry.ClientRegistry;

@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.informationscreen.network;
 
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
-import mcjty.rftoolsbase.network.RFToolsBaseMessages;
+import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

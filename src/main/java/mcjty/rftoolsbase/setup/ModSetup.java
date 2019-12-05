@@ -3,7 +3,6 @@ package mcjty.rftoolsbase.setup;
 import mcjty.lib.setup.DefaultModSetup;
 import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.various.VariousSetup;
-import mcjty.rftoolsbase.network.RFToolsBaseMessages;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;

@@ -20,7 +20,7 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
-import mcjty.rftoolsbase.network.RFToolsBaseMessages;
+import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerInventory;
