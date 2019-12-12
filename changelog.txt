@@ -1,3 +1,6 @@
+0.0.12:
+- Updates to latest McJtyLib
+
 0.0.11:
 - Information Screen from RFTools Power has been moved to RFTools Base
 - The information screen will now remember the 'mode' when it is broken
