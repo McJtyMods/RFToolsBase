@@ -6,11 +6,9 @@ import com.electronwill.nightconfig.core.io.WritingMode;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.Builder;
-import net.minecraftforge.fml.common.Mod;
 
 import java.nio.file.Path;
 
-@Mod.EventBusSubscriber
 public class Config {
 
     private static final Builder COMMON_BUILDER = new Builder();
