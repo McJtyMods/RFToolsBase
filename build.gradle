@@ -229,3 +229,5 @@ task("uploadJars", dependsOn: "reobf") {
             }
         }
     }
+
+}
