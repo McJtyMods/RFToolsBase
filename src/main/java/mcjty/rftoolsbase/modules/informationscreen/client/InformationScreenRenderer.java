@@ -37,8 +37,6 @@ public class InformationScreenRenderer extends TileEntityRenderer<InformationScr
     }
 
     public static void register() {
-        ClientRegistry.bindTileEntityRenderer(InformationScreenSetup.TYPE_INFORMATION_SCREEN.get(), dispatcher -> {
-            return new InformationScreenRenderer(dispatcher);
-        });
+        ClientRegistry.bindTileEntityRenderer(InformationScreenSetup.TYPE_INFORMATION_SCREEN.get(), InformationScreenRenderer::new);
     }
 }
