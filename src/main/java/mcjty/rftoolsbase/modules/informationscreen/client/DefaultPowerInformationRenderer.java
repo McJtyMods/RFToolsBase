@@ -1,11 +1,13 @@
 package mcjty.rftoolsbase.modules.informationscreen.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import mcjty.lib.client.HudRenderHelper;
 import mcjty.lib.client.RenderHelper;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.DefaultPowerInformationScreenInfo;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.opengl.GL11;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class DefaultPowerInformationRenderer {
 
-    public static void renderGraphical(TypedMap data, Direction orientation, double x, double y, double z, double scale) {
+    public static void renderGraphical(MatrixStack matrixStack, IRenderTypeBuffer buffer, TypedMap data, Direction orientation, double x, double y, double z, double scale) {
         if (data == null || data.size() == 0) {
             return;
         }
@@ -30,7 +32,7 @@ public class DefaultPowerInformationRenderer {
         GlStateManager.translatef(0.0F, -0.2500F, -0.4375F + 0.9f);
 
         net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
-        Minecraft.getInstance().gameRenderer.disableLightmap();
+        Minecraft.getInstance().gameRenderer.getLightTexture().disableLightmap();
         GlStateManager.disableBlend();
         GlStateManager.disableLighting();
 
@@ -48,7 +50,7 @@ public class DefaultPowerInformationRenderer {
                 RenderHelper.drawFlatBox(16, (int) (100-i*.8-13), 88 , (int) (100-i*.8+3-13), col, col);
             }
         }
-        Minecraft.getInstance().gameRenderer.enableLightmap();
+        Minecraft.getInstance().gameRenderer.getLightTexture().enableLightmap();
 
 //        RenderHelper.enableStandardItemLighting();
         GlStateManager.enableLighting();
@@ -58,11 +60,11 @@ public class DefaultPowerInformationRenderer {
         GlStateManager.popMatrix();
     }
 
-    public static void renderDefault(TypedMap data, Direction orientation, double x, double y, double z, double scale) {
+    public static void renderDefault(MatrixStack matrixStack, IRenderTypeBuffer buffer, TypedMap data, Direction orientation, double x, double y, double z, double scale) {
         List<String> log = getLog(data);
         HudRenderHelper.HudPlacement hudPlacement = HudRenderHelper.HudPlacement.HUD_FRONT;
         HudRenderHelper.HudOrientation hudOrientation = HudRenderHelper.HudOrientation.HUD_SOUTH;
-        HudRenderHelper.renderHud(log, hudPlacement, hudOrientation, orientation, x - orientation.getXOffset() * .95, y, z - orientation.getZOffset() * .95, (float) (1.0f + scale));
+        HudRenderHelper.renderHud(matrixStack, buffer, log, hudPlacement, hudOrientation, orientation, x - orientation.getXOffset() * .95, y, z - orientation.getZOffset() * .95, (float) (1.0f + scale));
     }
 
     private static List<String> getLog(TypedMap data) {

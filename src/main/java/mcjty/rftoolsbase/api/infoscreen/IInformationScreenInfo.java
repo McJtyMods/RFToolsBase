@@ -1,6 +1,8 @@
 package mcjty.rftoolsbase.api.infoscreen;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.typed.TypedMap;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.Direction;
 
 import javax.annotation.Nonnull;
@@ -35,5 +37,5 @@ public interface IInformationScreenInfo {
     /**
      * Called client-side to actually render the information
      */
-    void render(int mode, @Nonnull TypedMap info, Direction orientation, double x, double y, double z, double scale);
+    void render(int mode, MatrixStack matrixStack, IRenderTypeBuffer buffer, @Nonnull TypedMap info, Direction orientation, double x, double y, double z, double scale);
 }

@@ -28,5 +28,5 @@ public class InformationScreenSetup {
 
     public static final RegistryObject<Block> INFORMATION_SCREEN = BLOCKS.register("information_screen", InformationScreenBlock::new);
     public static final RegistryObject<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", () -> new BlockItem(INFORMATION_SCREEN.get(), RFToolsBase.createStandardProperties()));
-    public static final RegistryObject<TileEntityType<?>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> TileEntityType.Builder.create(InformationScreenTileEntity::new, INFORMATION_SCREEN.get()).build(null));
+    public static final RegistryObject<TileEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> TileEntityType.Builder.create(InformationScreenTileEntity::new, INFORMATION_SCREEN.get()).build(null));
 }

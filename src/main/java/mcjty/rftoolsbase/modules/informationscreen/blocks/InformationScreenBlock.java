@@ -12,6 +12,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -73,9 +74,10 @@ public class InformationScreenBlock extends BaseBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-        boolean rc = super.onBlockActivated(state, world, pos, player, hand, result);
-        if (!rc) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        ActionResultType rc = super.onBlockActivated(state, world, pos, player, hand, result);
+        // @todo 1.15 right?
+        if (rc == ActionResultType.SUCCESS) {
             // We just pass along the block activation to the block behind it so that we can open the gui of that
             BlockPos offset = pos.offset(OrientationTools.getOrientationHoriz(state).getOpposite());
             result = new BlockRayTraceResult(result.getHitVec(), result.getFace(), offset, result.isInside());

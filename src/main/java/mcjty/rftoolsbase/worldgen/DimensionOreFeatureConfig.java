@@ -21,6 +21,7 @@ public class DimensionOreFeatureConfig implements IFeatureConfig {
         this.dimension = dimension;
     }
 
+    @Override
     public <T> Dynamic<T> serialize(DynamicOps<T> ops) {
         return null;    // @todo check?
     }

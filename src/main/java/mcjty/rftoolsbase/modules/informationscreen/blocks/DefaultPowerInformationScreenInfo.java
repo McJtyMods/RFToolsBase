@@ -1,11 +1,12 @@
 package mcjty.rftoolsbase.modules.informationscreen.blocks;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
-import mcjty.lib.varia.EnergyTools;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
 import mcjty.rftoolsbase.modules.informationscreen.client.DefaultPowerInformationRenderer;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -45,11 +46,11 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     }
 
     @Override
-    public void render(int mode, @Nonnull TypedMap data, Direction orientation, double x, double y, double z, double scale) {
+    public void render(int mode, MatrixStack matrixStack, IRenderTypeBuffer buffer, @Nonnull TypedMap data, Direction orientation, double x, double y, double z, double scale) {
         if (mode == MODE_POWER) {
-            DefaultPowerInformationRenderer.renderDefault(data, orientation, x, y, z, scale);
+            DefaultPowerInformationRenderer.renderDefault(matrixStack, buffer, data, orientation, x, y, z, scale);
         } else {
-            DefaultPowerInformationRenderer.renderGraphical(data, orientation, x, y, z, scale);
+            DefaultPowerInformationRenderer.renderGraphical(matrixStack, buffer, data, orientation, x, y, z, scale);
         }
     }
 }
