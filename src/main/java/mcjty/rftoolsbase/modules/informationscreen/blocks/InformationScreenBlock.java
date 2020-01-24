@@ -76,8 +76,7 @@ public class InformationScreenBlock extends BaseBlock {
     @Override
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
         ActionResultType rc = super.onBlockActivated(state, world, pos, player, hand, result);
-        // @todo 1.15 right?
-        if (rc == ActionResultType.SUCCESS) {
+        if (rc != ActionResultType.SUCCESS) {
             // We just pass along the block activation to the block behind it so that we can open the gui of that
             BlockPos offset = pos.offset(OrientationTools.getOrientationHoriz(state).getOpposite());
             result = new BlockRayTraceResult(result.getHitVec(), result.getFace(), offset, result.isInside());

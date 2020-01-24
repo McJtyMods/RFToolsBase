@@ -74,7 +74,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             ItemStack stack = context.getItem();
             BlockPos pos = context.getPos();
 
-            if (player != null && player.func_225608_bj_ /*isSneaking*/()) {
+            if (player != null && player.isShiftKeyDown /*isSneaking*/()) {
                 // Make sure the block get activated if it is a BaseBlockNew
                 BlockState state = world.getBlockState(pos);
                 Block block = state.getBlock();
