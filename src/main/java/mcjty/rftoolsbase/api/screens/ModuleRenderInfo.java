@@ -23,14 +23,17 @@ public class ModuleRenderInfo {
     // If the mouse is pointing at this module then this is the relative y inside the module
     public final int hity;
 
-    // Non null if this should be rendered with truetype
+    // True if this should be rendered with truetype
     public final boolean truetype;
 
-    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype) {
+    public final boolean fullbright;
+
+    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright) {
         this.factor = factor;
         this.pos = pos;
         this.hitx = hitx;
         this.hity = hity;
         this.truetype = truetype;
+        this.fullbright = fullbright;
     }
 }
