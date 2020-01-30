@@ -27,7 +27,7 @@ public class OreGenerator {
             int overworldChances = Config.OVERWORLD_ORE_CHANCES.get();
             if (overworldChances > 0) {
                 biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
-                        .func_225566_b_(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
+                        .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
                                 Config.OVERWORLD_ORE_VEINSIZE.get()))
                         .func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(
                                 overworldChances,
@@ -41,7 +41,7 @@ public class OreGenerator {
             int netherChances = Config.NETHER_ORE_CHANCES.get();
             if (netherChances > 0) {
                 ConfiguredFeature<OreFeatureConfig, ?> netherFeature = Feature.ORE
-                        .func_225566_b_(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenSetup.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
+                        .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenSetup.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
                                 Config.NETHER_ORE_VEINSIZE.get()));
                 biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(netherFeature, DimensionType.THE_NETHER)
                         .func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(
