@@ -1,6 +1,8 @@
 package mcjty.rftoolsbase.api.screens;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.rftoolsbase.api.screens.data.IModuleDataContents;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -10,7 +12,7 @@ import javax.annotation.Nullable;
  */
 public interface ILevelRenderHelper {
 
-    void render(int x, int y, @Nullable IModuleDataContents data, @Nonnull ModuleRenderInfo renderInfo);
+    void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int x, int y, @Nullable IModuleDataContents data, @Nonnull ModuleRenderInfo renderInfo);
 
     ILevelRenderHelper label(String label);
 

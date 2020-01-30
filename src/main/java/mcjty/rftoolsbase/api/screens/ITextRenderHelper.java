@@ -1,5 +1,8 @@
 package mcjty.rftoolsbase.api.screens;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+
 /**
  * This text render helper knows how to render text in vanilla
  * or truetype font on the screen
@@ -48,5 +51,5 @@ public interface ITextRenderHelper {
      * @param color
      * @param renderInfo
      */
-    void renderText(int x, int y, int color, ModuleRenderInfo renderInfo);
+    void renderText(MatrixStack matrixStack, IRenderTypeBuffer buffer, int x, int y, int color, ModuleRenderInfo renderInfo);
 }
