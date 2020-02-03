@@ -26,7 +26,7 @@ public class ModuleRenderInfo {
     // True if this should be rendered with truetype
     public final boolean truetype;
 
-    public final boolean fullbright;
+    private final boolean fullbright;
 
     public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright) {
         this.factor = factor;
@@ -35,5 +35,9 @@ public class ModuleRenderInfo {
         this.hity = hity;
         this.truetype = truetype;
         this.fullbright = fullbright;
+    }
+
+    public int getLightmapValue() {
+        return fullbright ? 0xf000f0 : 140;
     }
 }
