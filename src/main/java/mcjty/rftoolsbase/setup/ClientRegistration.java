@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.client.RenderWorldLastEventHandler;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.crafting.client.GuiCraftingCard;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
@@ -13,6 +14,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -25,6 +27,7 @@ public class ClientRegistration {
         InformationScreenRenderer.register();
         GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
         ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), ClientRegistration::create);
+        MinecraftForge.EVENT_BUS.addListener(RenderWorldLastEventHandler::tick);
     }
 
     private static GuiCraftingCard create(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
