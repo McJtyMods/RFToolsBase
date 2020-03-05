@@ -29,7 +29,7 @@ public class OreGenerator {
                 biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
                         .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
                                 Config.OVERWORLD_ORE_VEINSIZE.get()))
-                        .func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(
+                        .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(
                                 overworldChances,
                                 Config.OVERWORLD_ORE_MINY.get(),
                                 0,
@@ -44,7 +44,7 @@ public class OreGenerator {
                         .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenSetup.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
                                 Config.NETHER_ORE_VEINSIZE.get()));
                 biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(netherFeature, DimensionType.THE_NETHER)
-                        .func_227228_a_(Placement.COUNT_RANGE.func_227446_a_(new CountRangeConfig(
+                        .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(
                                 overworldChances,
                                 Config.NETHER_ORE_MINY.get(),
                                 0,

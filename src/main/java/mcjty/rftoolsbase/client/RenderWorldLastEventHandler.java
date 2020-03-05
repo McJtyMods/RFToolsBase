@@ -46,7 +46,7 @@ public class RenderWorldLastEventHandler {
         Vec3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
-        Matrix4f positionMatrix = matrixStack.getLast().getPositionMatrix();
+        Matrix4f positionMatrix = matrixStack.getLast().getMatrix();
         mcjty.lib.client.RenderHelper.renderHighLightedBlocksOutline(builder, positionMatrix, c.getX(), c.getY(), c.getZ(), 1.0f, 0.0f, 0.0f, 1.0f);
 
         matrixStack.pop();
