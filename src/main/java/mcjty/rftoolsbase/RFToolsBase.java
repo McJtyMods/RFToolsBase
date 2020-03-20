@@ -60,6 +60,8 @@ public class RFToolsBase implements ModBase {
         // @todo
     }
 
+    public static final String SHIFT_MESSAGE = "<Press Shift>";
+
     public static Item.Properties createStandardProperties() {
         return new Item.Properties().group(setup.getTab());
     }

@@ -1,3 +1,6 @@
+Upcoming:
+- Ported the filter module (for storage, builder, ...)
+
 0.0.12:
 - Updates to latest McJtyLib
 

@@ -10,6 +10,9 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRenderer;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import mcjty.rftoolsbase.modules.infuser.client.GuiMachineInfuser;
+import mcjty.rftoolsbase.modules.various.VariousSetup;
+import mcjty.rftoolsbase.modules.various.client.GuiFilterModule;
+import mcjty.rftoolsbase.modules.various.items.FilterModuleContainer;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -26,11 +29,16 @@ public class ClientRegistration {
     public static void init(FMLClientSetupEvent e) {
         InformationScreenRenderer.register();
         GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
-        ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), ClientRegistration::create);
+        ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), ClientRegistration::createCraftingCardGui);
+        ScreenManager.registerFactory(VariousSetup.CONTAINER_FILTER_MODULE.get(), ClientRegistration::createFilterModuleGui);
         MinecraftForge.EVENT_BUS.addListener(RenderWorldLastEventHandler::tick);
     }
 
-    private static GuiCraftingCard create(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
+    private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
         return new GuiCraftingCard(container, inventory);
+    }
+
+    private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, PlayerInventory inventory, ITextComponent textComponent) {
+        return new GuiFilterModule(container, inventory);
     }
 }
