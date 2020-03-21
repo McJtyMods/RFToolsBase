@@ -4,7 +4,9 @@ import mcjty.lib.McJtyLib;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.items.FilterModuleContainer;
+import mcjty.rftoolsbase.modules.various.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.various.items.FilterModuleItem;
+import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -53,7 +55,7 @@ public class VariousSetup {
         return IForgeContainerType.create((windowId, inv, data) -> {
             PlayerEntity player = McJtyLib.proxy.getClientPlayer();
             FilterModuleContainer container = new FilterModuleContainer(windowId, player.getPosition(), player);
-            container.setupInventories(null, inv);
+            container.setupInventories(new FilterModuleInventory(player), inv);
             return container;
         });
     }

@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.modules.various;
+package mcjty.rftoolsbase.modules.various.items;
 
 import mcjty.lib.api.smartwrench.ISmartWrenchSelector;
 import mcjty.lib.api.smartwrench.SmartWrench;
@@ -8,6 +8,7 @@ import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.various.VariousSetup;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;

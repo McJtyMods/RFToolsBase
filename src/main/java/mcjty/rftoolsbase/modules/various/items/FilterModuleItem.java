@@ -113,7 +113,7 @@ public class FilterModuleItem extends Item {
                         for (int i = 0; i < FILTER_SLOTS; i++) {
                             if (stacks.get(i).isEmpty()) {
                                 stacks.set(i, blockStack);
-                                player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getDisplayName() + " to the filter!"), false);
+                                player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getDisplayName().getFormattedText() + " to the filter!"), false);
                                 FilterModuleInventory.convertItemsToNBT(stack.getTag(), stacks);
                                 break;
                             }
@@ -156,7 +156,7 @@ public class FilterModuleItem extends Item {
                 @Override
                 public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
                     FilterModuleContainer container = new FilterModuleContainer(id, player.getPosition(), player);
-                    container.setupInventories(null, playerInventory);
+                    container.setupInventories(new FilterModuleInventory(player), playerInventory);
                     return container;
                 }
             });

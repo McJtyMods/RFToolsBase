@@ -109,6 +109,17 @@ public class Recipes extends BaseRecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("crafter", InventoryChangeTrigger.Instance.forItems(Items.CRAFTING_TABLE))
                 .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(VariousSetup.FILTER_MODULE.get())
+                .patternLine(" h ")
+                .patternLine("rir")
+                .patternLine(" p ")
+                .key('h', Items.HOPPER)
+                .key('r', Items.REDSTONE)
+                .key('p', Items.PAPER)
+                .key('i', Items.IRON_INGOT)
+                .setGroup("rftools")
+                .addCriterion("hopper", InventoryChangeTrigger.Instance.forItems(Items.HOPPER))
+                .build(consumer);
         build(consumer, ShapedRecipeBuilder.shapedRecipe(InformationScreenSetup.INFORMATION_SCREEN.get())
                         .key('-', Tags.Items.GLASS_PANES)
                         .addCriterion("frame", InventoryChangeTrigger.Instance.forItems(VariousSetup.MACHINE_BASE.get(), Items.REDSTONE)),
