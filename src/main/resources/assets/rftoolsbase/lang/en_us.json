@@ -1,6 +1,7 @@
 {
     "item.rftoolsbase.network_monitor": "RF Network Monitor",
     "item.rftoolsbase.teleport_probe": "Teleporter Probe",
+    "item.rftoolsbase.filter_module": "Filter Module",
     "item.rftoolsbase.developers_delight": "Developers Delight",
     "item.rftoolsbase.shard_wand": "Shard Wand",
     "item.rftoolsbase.orphaning_card": "Orphaning Card",

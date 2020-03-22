@@ -70,7 +70,7 @@ public class FilterModuleItem extends Item {
         }
         if (McJtyLib.proxy.isShiftKeyDown()) {
             list.add(new StringTextComponent(TextFormatting.WHITE + "This filter module is for the Modular Storage block,"));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "the Builder or the Area Scanner."));
+            list.add(new StringTextComponent(TextFormatting.WHITE + "the Builder, the Area Scanner, or the crafter."));
             list.add(new StringTextComponent(TextFormatting.WHITE + "This module can make sure the block only accepts"));
             list.add(new StringTextComponent(TextFormatting.WHITE + "certain types of items"));
             list.add(new StringTextComponent(TextFormatting.YELLOW + "Sneak-right click on an inventory to"));

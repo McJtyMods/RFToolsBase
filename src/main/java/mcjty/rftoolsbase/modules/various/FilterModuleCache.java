@@ -77,6 +77,7 @@ public class FilterModuleCache {
 //                        }
 //                    }
 //                }
+                match = itemMatches(stack, modName);
             } else {
                 match = itemMatches(stack, modName);
             }
