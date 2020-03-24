@@ -209,19 +209,19 @@ public class CraftingCardItem extends Item {
         return tagCompound.getBoolean("strictnbt");
     }
 
-    public static List<ItemStack> getIngredientsGrid(ItemStack card) {
+    public static List<Ingredient> getIngredientsGrid(ItemStack card) {
         CompoundNBT tagCompound = card.getTag();
         if (tagCompound == null) {
             return Collections.emptyList();
         }
         ListNBT bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
-        List<ItemStack> stacks = new ArrayList<>();
+        List<Ingredient> stacks = new ArrayList<>();
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
                 CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
                 ItemStack s = ItemStack.read(nbtTagCompound);
                 if (isInGrid(i)) {
-                    stacks.add(s);
+                    stacks.add(Ingredient.fromStacks(s));
                 }
             }
         }
