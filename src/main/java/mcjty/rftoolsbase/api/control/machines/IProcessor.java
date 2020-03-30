@@ -7,6 +7,7 @@ import mcjty.rftoolsbase.api.control.parameters.IParameter;
 import mcjty.rftoolsbase.api.control.parameters.Inventory;
 import mcjty.rftoolsbase.api.control.parameters.Tuple;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
@@ -268,7 +269,7 @@ public interface IProcessor {
      * Try to request crafting of an item. Returns false if the item
      * could not be requested.
      */
-    boolean requestCraft(@Nonnull ItemStack stack, @Nullable Inventory inventory);
+    boolean requestCraft(@Nonnull Ingredient ingredient, @Nullable Inventory inventory);
 
     /**
      * Get the amount of liquid on a specific tank. Returns 0 if it is not a tank

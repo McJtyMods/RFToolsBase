@@ -125,8 +125,6 @@ public class CraftingCardItem extends Item {
         list.add(new StringTextComponent("This item can be used for auto"));
         list.add(new StringTextComponent("crafting. It stores ingredients"));
         list.add(new StringTextComponent("and end result for a recipe"));
-        boolean strictnbt = CraftingCardItem.isStrictNBT(stack);
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Strict NBT: " + TextFormatting.WHITE + (strictnbt ? "yes" : "no")));
         ItemStack result = getResult(stack);
         if (!result.isEmpty()) {
             if (result.getCount() > 1) {
@@ -199,14 +197,6 @@ public class CraftingCardItem extends Item {
             }
         }
         return true;
-    }
-
-    public static boolean isStrictNBT(ItemStack card) {
-        CompoundNBT tagCompound = card.getTag();
-        if (tagCompound == null) {
-            return false;
-        }
-        return tagCompound.getBoolean("strictnbt");
     }
 
     public static List<Ingredient> getIngredientsGrid(ItemStack card) {

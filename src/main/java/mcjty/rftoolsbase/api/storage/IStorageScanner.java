@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.api.storage;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
@@ -62,6 +63,14 @@ public interface IStorageScanner {
      * If 'maxneeded' is given then the count will stop as soon as we have reached that number
      */
     int countItems(Predicate<ItemStack> matcher, boolean routable, @Nullable Integer maxneeded);
+
+    /**
+     * Return an itemstack that matches the given predicate. This item is not removed from
+     * the scanner. It's a copy of an item that is in control by the scanner.
+     * Return ItemStack.EMPTY if there is no such item
+     */
+    @Nonnull
+    ItemStack getItem(Predicate<ItemStack> matcher, boolean routable);
 
     /**
      * Push the given items into the system (routable inventories only).

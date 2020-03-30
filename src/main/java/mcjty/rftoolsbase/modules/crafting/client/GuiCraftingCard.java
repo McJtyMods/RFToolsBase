@@ -11,17 +11,14 @@ import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.gui.widgets.*;
 import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.tileentity.GenericTileEntity;
-import mcjty.lib.typed.Key;
-import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
-import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
-import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import mcjty.rftoolsbase.setup.CommandHandler;
+import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -66,23 +63,23 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                 .setTooltips("Update the item in the output", "slot to the recipe in the", "3x3 grid")
                 .addButtonEvent(parent -> RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY)))
                 .setLayoutHint(new PositionalLayout.PositionalHint(110, 57, 60, 14)));
-        ToggleButton toggle = new ToggleButton(minecraft, this)
-                .setCheckMarker(true)
-                .setText("NBT")
-                .setTooltips("Enable this if you want", "opcodes like 'get_ingredients'", "to strictly match on NBT")
-                .setLayoutHint(new PositionalLayout.PositionalHint(110, 74, 60, 14));
-        ItemStack heldItem = minecraft.player.getHeldItem(Hand.MAIN_HAND);
-        if (!heldItem.isEmpty()) {
-            toggle.setPressed(CraftingCardItem.isStrictNBT(heldItem));
-        }
-        toggle.addButtonEvent(parent -> {
-            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketUpdateNBTItemCard(
-                    TypedMap.builder()
-                            .put(new Key<>("strictnbt", Type.BOOLEAN), toggle.isPressed())
-                            .build()));
-        });
-
-        toplevel.addChild(toggle);
+        // In 1.15 this no longer makes sense
+//        ToggleButton toggle = new ToggleButton(minecraft, this)
+//                .setCheckMarker(true)
+//                .setText("NBT")
+//                .setTooltips("Enable this if you want", "opcodes like 'get_ingredients'", "to strictly match on NBT")
+//                .setLayoutHint(new PositionalLayout.PositionalHint(110, 74, 60, 14));
+//        ItemStack heldItem = minecraft.player.getHeldItem(Hand.MAIN_HAND);
+//        if (!heldItem.isEmpty()) {
+//            toggle.setPressed(CraftingCardItem.isStrictNBT(heldItem));
+//        }
+//        toggle.addButtonEvent(parent -> {
+//            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketUpdateNBTItemCard(
+//                    TypedMap.builder()
+//                            .put(new Key<>("strictnbt", Type.BOOLEAN), toggle.isPressed())
+//                            .build()));
+//        });
+//        toplevel.addChild(toggle);
 
         for (int y = 0 ; y < GRID_HEIGHT ; y++) {
             for (int x = 0 ; x < GRID_WIDTH ; x++) {
