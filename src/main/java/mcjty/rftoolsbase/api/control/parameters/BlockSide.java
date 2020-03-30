@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.api.control.parameters;
 import net.minecraft.util.Direction;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -36,6 +37,11 @@ public class BlockSide implements Comparable<BlockSide> {
     @Nullable
     public String getNodeName() {
         return nodeName;
+    }
+
+    @Nonnull
+    public String getNodeNameSafe() {
+        return nodeName == null ? "" : nodeName;
     }
 
     public boolean hasNodeName() {
