@@ -4,6 +4,7 @@ import mcjty.lib.api.smartwrench.ISmartWrenchSelector;
 import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.blocks.BaseBlock;
+import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
@@ -25,7 +26,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
@@ -33,9 +33,23 @@ import net.minecraft.world.dimension.DimensionType;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+import static mcjty.lib.builder.TooltipBuilder.*;
+
 public class SmartWrenchItem extends Item implements SmartWrench {
 
     private final SmartWrenchMode mode;
+
+    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+            .info(key("message.rftoolsbase.shiftmessage"))
+            .infoShift(header(), gold(),
+                    parameter("info1", stack -> getMode().getName()),
+                    parameter("info2", stack -> {
+                        GlobalCoordinate b = getCurrentBlock(stack);
+                        if (b != null) {
+                            return BlockPosTools.toString(b.getCoordinate()) + " at " + b.getDimension().getRegistryName().toString();
+                        }
+                        return "<not selected>";
+                    }));
 
     public SmartWrenchItem(SmartWrenchMode mode) {
         super(new Properties()
@@ -109,22 +123,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
     @Override
     public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
         super.addInformation(itemStack, world, list, flags);
-        GlobalCoordinate b = getCurrentBlock(itemStack);
-        if (b != null) {
-            list.add(new StringTextComponent(TextFormatting.GREEN + "Block: " + BlockPosTools.toString(b.getCoordinate()) + " at dimension " + b.getDimension()));
-        }
-        SmartWrenchMode mode = getCurrentMode(itemStack);
-        list.add(new StringTextComponent(TextFormatting.WHITE + "Right-click on air to change mode."));
-        list.add(new StringTextComponent(TextFormatting.GREEN + "Mode: " + mode.getName()));
-        if (mode == SmartWrenchMode.MODE_WRENCH) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "Use as a normal wrench:"));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "    Sneak-right-click to pick up machines."));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "    Right-click to rotate machines."));
-        } else if (mode == SmartWrenchMode.MODE_SELECT) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "Use as a block selector:"));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "    Sneak-right-click select master block."));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "    Right-click to associate blocks with master."));
-        }
+        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list);
     }
 
     public SmartWrenchMode getMode() {

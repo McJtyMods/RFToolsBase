@@ -31,6 +31,29 @@
 
     "_comment": "Messages",
     "message.rftoolsbase.shiftmessage": "<Press Shift>",
-    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards",
-    "message.rftoolsbase.infuser": "@fWith this machine you can improve most other machines\n@fin RFTools in various ways. This needs dimensional\n@fshards.\n@eInfusing bonus: reduced power consumption"
+
+    "message.rftoolsbase.crafting_card.header": "This item can be used for crafting. It stores ingredients and end result for a recipe",
+    "message.rftoolsbase.crafting_card.info": "Item: ",
+
+    "message.rftoolsbase.information_screen.header": "Place this block on a powercell to display information about that cell. Right click with a wrench to change modes",
+    "message.rftoolsbase.information_screen.gold": "This block can also display power information about any block that supports RF/FE",
+
+    "message.rftoolsbase.machine_infuser.header": "With this machine you can improve most other machines in RFTools in various ways. This needs dimensional shards",
+    "message.rftoolsbase.machine_infuser.gold": "Infusing bonus: reduced power consumption",
+
+    "message.rftoolsbase.filter_module.header": "This filter module is for the Modular Storage block, the Builder, the Area Scanner, or the crafter. This module can make sure the block only accepts certain types of items",
+    "message.rftoolsbase.filter_module.gold": "Sneak-right click on an inventory to configure the filter based on contents or sneak-right click on a block to add that block to the filter",
+    "message.rftoolsbase.filter_module.info": "Mode: ",
+
+    "message.rftoolsbase.smartwrench.header": "General Smart Wrench. Right-click on air to change mode",
+    "message.rftoolsbase.smartwrench.gold": "Use as a normal wrench: sneak-right-click to pick up and right-click to rotate",
+    "message.rftoolsbase.smartwrench.info1": "Mode: ",
+    "message.rftoolsbase.smartwrench.info2": "Block: ",
+
+    "message.rftoolsbase.smartwrench_select.header": "General Smart Wrench. Right-click on air to change mode",
+    "message.rftoolsbase.smartwrench_select.gold": "Use as a block selector: sneak-right-click to select master block and right-click to associate blocks with master",
+    "message.rftoolsbase.smartwrench_select.info1": "Mode: ",
+    "message.rftoolsbase.smartwrench_select.info2": "Block: ",
+
+    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards"
 }

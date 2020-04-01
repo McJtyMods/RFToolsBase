@@ -1,5 +1,7 @@
 package mcjty.rftoolsbase.modules.crafting.items;
 
+import mcjty.lib.builder.TooltipBuilder;
+import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.client.util.ITooltipFlag;
@@ -21,7 +23,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -31,10 +32,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static mcjty.lib.builder.TooltipBuilder.header;
+import static mcjty.lib.builder.TooltipBuilder.parameter;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.GRID_WIDTH;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INPUT_SLOTS;
 
-public class CraftingCardItem extends Item {
+public class CraftingCardItem extends Item implements ITooltipSettings {
 
     private static final CraftingInventory CRAFTING_INVENTORY = new CraftingInventory(new Container(null, -1) {
         @Override
@@ -42,6 +45,20 @@ public class CraftingCardItem extends Item {
             return false;
         }
     }, 3, 3);
+
+    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+            .info(header(),
+                    parameter("info", stack -> {
+                        ItemStack result = getResult(stack);
+                        if (!result.isEmpty()) {
+                            if (result.getCount() > 1) {
+                                return result.getDisplayName().getFormattedText() + "(" + result.getCount() + ")";
+                            } else {
+                                return result.getDisplayName().getFormattedText();
+                            }
+                        }
+                        return "<empty>";
+                    }));
 
     public CraftingCardItem() {
         super(new Properties()
@@ -122,18 +139,7 @@ public class CraftingCardItem extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, list, flagIn);
-        list.add(new StringTextComponent("This item can be used for auto"));
-        list.add(new StringTextComponent("crafting. It stores ingredients"));
-        list.add(new StringTextComponent("and end result for a recipe"));
-        ItemStack result = getResult(stack);
-        if (!result.isEmpty()) {
-            if (result.getCount() > 1) {
-                list.add(new StringTextComponent(TextFormatting.BLUE + "Item: " + TextFormatting.WHITE + result.getDisplayName() + "(" +
-                        result.getCount() + ")"));
-            } else {
-                list.add(new StringTextComponent(TextFormatting.BLUE + "Item: " + TextFormatting.WHITE + result.getDisplayName()));
-            }
-        }
+        tooltipBuilder.makeTooltip(getRegistryName(), stack, list);
         // @todo tooltip icons
     }
 

@@ -2,12 +2,12 @@ package mcjty.rftoolsbase;
 
 import mcjty.lib.base.ModBase;
 import mcjty.rftoolsbase.client.ClientInfo;
-import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
 import mcjty.rftoolsbase.modules.various.VariousSetup;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
+import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -59,8 +59,6 @@ public class RFToolsBase implements ModBase {
     public void openManual(PlayerEntity entityPlayer, int i, String s) {
         // @todo
     }
-
-    public static final String SHIFT_MESSAGE = "<Press Shift>";
 
     public static Item.Properties createStandardProperties() {
         return new Item.Properties().group(setup.getTab());

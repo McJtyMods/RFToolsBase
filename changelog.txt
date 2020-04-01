@@ -1,3 +1,6 @@
+Upcoming:
+- Better tooltips
+
 1.0.1-alpha:
 - Ported the filter module (for storage, builder, ...)
 

@@ -1,7 +1,8 @@
 package mcjty.rftoolsbase.modules.various.items;
 
-import mcjty.lib.McJtyLib;
+import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.container.InventoryHelper;
+import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.storage.IModularStorage;
@@ -37,9 +38,36 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.rftoolsbase.modules.various.items.FilterModuleContainer.FILTER_SLOTS;
 
-public class FilterModuleItem extends Item {
+public class FilterModuleItem extends Item implements ITooltipSettings {
+
+    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+            .info(key("message.rftoolsbase.shiftmessage"))
+            .infoShift(header(), gold(),
+                    parameter("info", stack -> {
+                        CompoundNBT tagCompound = stack.getTag();
+                        if (tagCompound != null) {
+                            String blackListMode = tagCompound.getString("blacklistMode");
+                            String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
+                            if (tagCompound.getBoolean("oredictMode")) {
+                                modeLine += ", Oredict";
+                            }
+                            if (tagCompound.getBoolean("damageMode")) {
+                                modeLine += ", Damage";
+                            }
+                            if (tagCompound.getBoolean("nbtMode")) {
+                                modeLine += ", NBT";
+                            }
+                            if (tagCompound.getBoolean("modMode")) {
+                                modeLine += ", Mod";
+                            }
+                            return modeLine;
+                        }
+                        return "<not configured>";
+                    }));
+
 
     public FilterModuleItem() {
         super(new Properties()
@@ -50,34 +78,7 @@ public class FilterModuleItem extends Item {
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
         super.addInformation(itemStack, worldIn, list, flagIn);
-        CompoundNBT tagCompound = itemStack.getTag();
-        if (tagCompound != null) {
-            String blackListMode = tagCompound.getString("blacklistMode");
-            String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
-            if (tagCompound.getBoolean("oredictMode")) {
-                modeLine += ", Oredict";
-            }
-            if (tagCompound.getBoolean("damageMode")) {
-                modeLine += ", Damage";
-            }
-            if (tagCompound.getBoolean("nbtMode")) {
-                modeLine += ", NBT";
-            }
-            if (tagCompound.getBoolean("modMode")) {
-                modeLine += ", Mod";
-            }
-            list.add(new StringTextComponent(TextFormatting.BLUE + modeLine));
-        }
-        if (McJtyLib.proxy.isShiftKeyDown()) {
-            list.add(new StringTextComponent(TextFormatting.WHITE + "This filter module is for the Modular Storage block,"));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "the Builder, the Area Scanner, or the crafter."));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "This module can make sure the block only accepts"));
-            list.add(new StringTextComponent(TextFormatting.WHITE + "certain types of items"));
-            list.add(new StringTextComponent(TextFormatting.YELLOW + "Sneak-right click on an inventory to"));
-            list.add(new StringTextComponent(TextFormatting.YELLOW + "configure the filter based on contents"));
-        } else {
-            list.add(new StringTextComponent(TextFormatting.WHITE + RFToolsBase.SHIFT_MESSAGE));
-        }
+        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list);
     }
 
     @Override

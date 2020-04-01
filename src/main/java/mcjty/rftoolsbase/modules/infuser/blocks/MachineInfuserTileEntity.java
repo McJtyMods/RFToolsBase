@@ -33,6 +33,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+import static mcjty.lib.builder.TooltipBuilder.*;
+
 public class MachineInfuserTileEntity extends GenericTileEntity implements ITickableTileEntity {
 
     public static final int SLOT_SHARDINPUT = 0;
@@ -66,8 +68,8 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         return new BaseBlock(new BlockBuilder()
                 .tileEntitySupplier(MachineInfuserTileEntity::new)
                 .infusable()
-                .info("message.rftoolsbase.shiftmessage")
-                .infoExtended("message.rftoolsbase.infuser"));
+                .info(key("message.rftoolsbase.shiftmessage"))
+                .infoShift(header(), gold()));
     }
 
     @Override
