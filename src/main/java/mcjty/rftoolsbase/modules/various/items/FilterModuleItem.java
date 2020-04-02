@@ -78,7 +78,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings {
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
         super.addInformation(itemStack, worldIn, list, flagIn);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list);
+        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flagIn);
     }
 
     @Override

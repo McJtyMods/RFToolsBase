@@ -123,7 +123,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
     @Override
     public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
         super.addInformation(itemStack, world, list, flags);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list);
+        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 
     public SmartWrenchMode getMode() {

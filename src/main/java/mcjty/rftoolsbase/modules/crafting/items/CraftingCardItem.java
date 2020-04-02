@@ -139,7 +139,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, list, flagIn);
-        tooltipBuilder.makeTooltip(getRegistryName(), stack, list);
+        tooltipBuilder.makeTooltip(getRegistryName(), stack, list, flagIn);
         // @todo tooltip icons
     }
 
