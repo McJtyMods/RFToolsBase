@@ -5,7 +5,6 @@ import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.TooltipBuilder;
-import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -32,6 +31,7 @@ import net.minecraft.world.dimension.DimensionType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Optional;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
@@ -43,13 +43,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info1", stack -> getMode().getName()),
-                    parameter("info2", stack -> {
-                        GlobalCoordinate b = getCurrentBlock(stack);
-                        if (b != null) {
-                            return BlockPosTools.toString(b.getCoordinate()) + " at " + b.getDimension().getRegistryName().toString();
-                        }
-                        return "<not selected>";
-                    }));
+                    parameter("info2", stack -> getCurrentBlock(stack).map(GlobalCoordinate::toString).orElse("<not selected>")));
 
     public SmartWrenchItem(SmartWrenchMode mode) {
         super(new Properties()
@@ -101,8 +95,7 @@ public class SmartWrenchItem extends Item implements SmartWrench {
             }
             SmartWrenchMode mode = getCurrentMode(stack);
             if (mode == SmartWrenchMode.MODE_SELECT) {
-                GlobalCoordinate b = getCurrentBlock(stack);
-                if (b != null) {
+                return getCurrentBlock(stack).map(b -> {
                     if (!b.getDimension().equals(world.getDimension().getType())) {
                         if (player != null) {
                             Logging.message(player, TextFormatting.RED + "The selected block is in another dimension!");
@@ -114,7 +107,8 @@ public class SmartWrenchItem extends Item implements SmartWrench {
                         ISmartWrenchSelector smartWrenchSelector = (ISmartWrenchSelector) te;
                         smartWrenchSelector.selectBlock(player, pos);
                     }
-                }
+                    return ActionResultType.SUCCESS;
+                }).orElse(ActionResultType.SUCCESS);
             }
         }
         return ActionResultType.SUCCESS;
@@ -158,16 +152,17 @@ public class SmartWrenchItem extends Item implements SmartWrench {
         }
     }
 
-    public static GlobalCoordinate getCurrentBlock(ItemStack itemStack) {
+    @Nonnull
+    public static Optional<GlobalCoordinate> getCurrentBlock(ItemStack itemStack) {
         CompoundNBT tagCompound = itemStack.getTag();
         if (tagCompound != null && tagCompound.contains("selectedX")) {
             int x = tagCompound.getInt("selectedX");
             int y = tagCompound.getInt("selectedY");
             int z = tagCompound.getInt("selectedZ");
             String dim = tagCompound.getString("selectedDim");
-            return new GlobalCoordinate(new BlockPos(x, y, z), DimensionType.byName(new ResourceLocation(dim)));
+            return Optional.of(new GlobalCoordinate(new BlockPos(x, y, z), DimensionType.byName(new ResourceLocation(dim))));
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
