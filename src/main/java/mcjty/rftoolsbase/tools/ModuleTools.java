@@ -50,4 +50,23 @@ public class ModuleTools {
         int monitorz = tag.getInt("monitorz");
         return new BlockPos(monitorx, monitory, monitorz);
     }
+
+    public static String getTargetString(ItemStack stack) {
+        CompoundNBT tag = stack.getTag();
+        if (tag != null) {
+            if (tag.contains("monitorx")) {
+                int monitorx = tag.getInt("monitorx");
+                int monitory = tag.getInt("monitory");
+                int monitorz = tag.getInt("monitorz");
+                String monitorname = tag.getString("monitorname");
+                String monitordim = tag.getString("monitordim");
+                if (!monitordim.isEmpty()) {
+                    return monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ", " + monitordim + ")";
+                } else {
+                    return monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ")";
+                }
+            }
+        }
+        return "<unset>";
+    }
 }

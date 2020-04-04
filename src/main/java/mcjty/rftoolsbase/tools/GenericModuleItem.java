@@ -3,11 +3,9 @@ package mcjty.rftoolsbase.tools;
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.rftoolsbase.api.screens.IModuleProvider;
-import mcjty.rftoolsbase.tools.ModuleTools;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
@@ -41,29 +39,6 @@ public abstract class GenericModuleItem extends Item implements IModuleProvider,
 
     public GenericModuleItem(Properties properties) {
         super(properties);
-    }
-
-    protected boolean hasTarget(ItemStack stack) {
-        return ModuleTools.hasModuleTarget(stack);
-    }
-
-    protected String getTargetString(ItemStack stack) {
-        CompoundNBT tag = stack.getTag();
-        if (tag != null) {
-            if (tag.contains("monitorx")) {
-                int monitorx = tag.getInt("monitorx");
-                int monitory = tag.getInt("monitory");
-                int monitorz = tag.getInt("monitorz");
-                String monitorname = tag.getString("monitorname");
-                String monitordim = tag.getString("monitordim");
-                if (!monitordim.isEmpty()) {
-                    return monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ", " + monitordim + ")";
-                } else {
-                    return monitorname + " (at " + monitorx + "," + monitory + "," + monitorz + ")";
-                }
-            }
-        }
-        return "<unset>";
     }
 
     @Override
