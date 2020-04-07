@@ -99,13 +99,11 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     }
 
     private static boolean isInfusable(ItemStack stack) {
-        return getTagCompoundIfInfusable(stack).map(tagCompound -> {
-            return BaseBlock.getInfused(tagCompound) < MachineInfuserConfiguration.MAX_INFUSE.get();
-        }).orElse(false);
+        return getStackIfInfusable(stack).map(s -> BaseBlock.getInfused(s) < MachineInfuserConfiguration.MAX_INFUSE.get()).orElse(false);
     }
 
     @Nonnull
-    private static Optional<CompoundNBT> getTagCompoundIfInfusable(ItemStack stack) {
+    private static Optional<ItemStack> getStackIfInfusable(ItemStack stack) {
         if (stack.isEmpty() || stack.getCount() != 1) {
             return Optional.empty();
         }
@@ -116,16 +114,15 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         }
         Block block = ((BlockItem) item).getBlock();
         if (block instanceof BaseBlock && ((BaseBlock) block).isInfusable()) {
-            return Optional.of(stack.getOrCreateTag());
+            return Optional.of(stack);
         } else {
             return Optional.empty();
         }
     }
 
     private void finishInfusing(ItemStack stack) {
-        getTagCompoundIfInfusable(stack).ifPresent(tagCompound -> {
-            BaseBlock.setInfused(tagCompound, BaseBlock.getInfused(tagCompound)+1);
-            stack.setTag(tagCompound);
+        getStackIfInfusable(stack).ifPresent(s -> {
+            BaseBlock.setInfused(s, BaseBlock.getInfused(s)+1);
         });
     }
 
