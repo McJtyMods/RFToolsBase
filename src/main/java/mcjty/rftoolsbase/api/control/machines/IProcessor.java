@@ -301,7 +301,7 @@ public interface IProcessor {
     /**
      * Find a crafting card that can produce the given item in an inventory
      */
-    ItemStack findCraftingCard(IProgram program, Inventory inventory, ItemStack stack, boolean oredict);
+    ItemStack findCraftingCard(IProgram program, Inventory inventory, ItemStack stack);
 
     /**
      * Send a message to another processor identified by the network identifier item

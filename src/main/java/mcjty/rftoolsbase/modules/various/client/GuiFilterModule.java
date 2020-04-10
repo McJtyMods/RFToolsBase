@@ -30,7 +30,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     private static final ResourceLocation guiElements = new ResourceLocation(RFToolsBase.MODID, "textures/gui/guielements.png");
 
     private ImageChoiceLabel blacklistMode;
-    private ImageChoiceLabel oredictMode;
+    private ImageChoiceLabel commonTagMode;
     private ImageChoiceLabel damageMode;
     private ImageChoiceLabel nbtMode;
     private ImageChoiceLabel modMode;
@@ -49,9 +49,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         blacklistMode.addChoice("Black", "Blacklist items", guiElements, 14 * 16, 32);
         blacklistMode.addChoice("White", "Whitelist items", guiElements, 15 * 16, 32);
 
-        oredictMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(148, 9, 16, 16).setTooltips("Filter based on ore dictionary").addChoiceEvent((parent, newChoice) -> updateSettings());
-        oredictMode.addChoice("Off", "Oredict matching off", guiElements, 10 * 16, 32);
-        oredictMode.addChoice("On", "Oredict matching on", guiElements, 11 * 16, 32);
+        commonTagMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(148, 9, 16, 16).setTooltips("Filter based on common tags").addChoiceEvent((parent, newChoice) -> updateSettings());
+        commonTagMode.addChoice("Off", "Common tag matching off", guiElements, 10 * 16, 32);
+        commonTagMode.addChoice("On", "Common tag matching on", guiElements, 11 * 16, 32);
 
         damageMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(130, 27, 16, 16).setTooltips("Filter ignoring damage").addChoiceEvent((parent, newChoice) -> updateSettings());
         damageMode.addChoice("Off", "Ignore damage", guiElements, 6 * 16, 32);
@@ -68,14 +68,14 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         CompoundNBT tagCompound = Minecraft.getInstance().player.getHeldItem(Hand.MAIN_HAND).getTag();
         if (tagCompound != null) {
             setBlacklistMode(tagCompound.getString("blacklistMode"));
-            oredictMode.setCurrentChoice(tagCompound.getBoolean("oredictMode") ? 1 : 0);
+            commonTagMode.setCurrentChoice(tagCompound.getBoolean("commonTagMode") ? 1 : 0);
             damageMode.setCurrentChoice(tagCompound.getBoolean("damageMode") ? 1 : 0);
             nbtMode.setCurrentChoice(tagCompound.getBoolean("nbtMode") ? 1 : 0);
             modMode.setCurrentChoice(tagCompound.getBoolean("modMode") ? 1 : 0);
         }
 
         Panel toplevel = new Panel(minecraft, this).setLayout(new PositionalLayout()).setBackground(iconLocation)
-                .addChildren(blacklistMode, oredictMode, damageMode, nbtMode, modMode);
+                .addChildren(blacklistMode, commonTagMode, damageMode, nbtMode, modMode);
 
         toplevel.setBounds(new Rectangle(guiLeft, guiTop, xSize, ySize));
 
@@ -95,7 +95,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         RFToolsBaseMessages.INSTANCE.sendToServer(new PacketUpdateNBTItemFilter(
                 TypedMap.builder()
                         .put(new Key<>("blacklistMode", Type.STRING), blacklistMode.getCurrentChoice())
-                        .put(new Key<>("oredictMode", Type.BOOLEAN), oredictMode.getCurrentChoiceIndex() == 1)
+                        .put(new Key<>("commonTagMode", Type.BOOLEAN), commonTagMode.getCurrentChoiceIndex() == 1)
                         .put(new Key<>("damageMode", Type.BOOLEAN), damageMode.getCurrentChoiceIndex() == 1)
                         .put(new Key<>("modMode", Type.BOOLEAN), modMode.getCurrentChoiceIndex() == 1)
                         .put(new Key<>("nbtMode", Type.BOOLEAN), nbtMode.getCurrentChoiceIndex() == 1)

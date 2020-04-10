@@ -20,7 +20,7 @@ public interface IStorageScanner {
      * This can also return null (or EMPTY on 1.11) if there is insufficient energy
      * for the request
      */
-    ItemStack requestItem(ItemStack match, int amount, boolean routable, boolean oredict);
+    ItemStack requestItem(ItemStack match, int amount, boolean routable);
 
     void clearCachedCounts();
 
@@ -38,14 +38,14 @@ public interface IStorageScanner {
      * items available in the system so the returned number can exceed the maximum
      * stacksize of the item
      */
-    int countItems(ItemStack match, boolean routable, boolean oredict);
+    int countItems(ItemStack match, boolean routable);
 
     /**
      * Count the number of items that match in this storage scanner. This counts all the
      * items available in the system so the returned number can exceed the maximum
      * stacksize of the item
      */
-    int countItems(ItemStack match, boolean routable, boolean oredict, @Nullable Integer maxneeded);
+    int countItems(ItemStack match, boolean routable, @Nullable Integer maxneeded);
 
     /**
      * this is used by the screen system to inject a stack when the player clicks on a screen
@@ -56,7 +56,7 @@ public interface IStorageScanner {
      * Give a stack matching the input stack to the player containing either a single
      * item or else a full stack
      */
-    void giveToPlayerFromScreen(ItemStack stack, boolean single, PlayerEntity player, boolean oredict);
+    void giveToPlayerFromScreen(ItemStack stack, boolean single, PlayerEntity player);
 
     /**
      * Count items matching a certain predicate.

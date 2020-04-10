@@ -1,5 +1,6 @@
 Upcoming:
-- Better tooltips
+- Better tooltips for many blocks and items
+- The filter module now supports an alternative for the ore dictionary where it will try to match blocks using common known tags
 
 1.0.1-alpha:
 - Ported the filter module (for storage, builder, ...)

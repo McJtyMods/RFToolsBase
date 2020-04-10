@@ -51,8 +51,8 @@ public class FilterModuleItem extends Item implements ITooltipSettings {
                         if (tagCompound != null) {
                             String blackListMode = tagCompound.getString("blacklistMode");
                             String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
-                            if (tagCompound.getBoolean("oredictMode")) {
-                                modeLine += ", Oredict";
+                            if (tagCompound.getBoolean("commonTagMode")) {
+                                modeLine += ", Tags";
                             }
                             if (tagCompound.getBoolean("damageMode")) {
                                 modeLine += ", Damage";
