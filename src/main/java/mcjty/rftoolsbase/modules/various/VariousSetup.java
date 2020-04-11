@@ -55,7 +55,7 @@ public class VariousSetup {
         return IForgeContainerType.create((windowId, inv, data) -> {
             PlayerEntity player = McJtyLib.proxy.getClientPlayer();
             FilterModuleContainer container = new FilterModuleContainer(windowId, player.getPosition(), player);
-            container.setupInventories(new FilterModuleInventory(player), inv);
+            container.setupInventories(null, inv);
             return container;
         });
     }
