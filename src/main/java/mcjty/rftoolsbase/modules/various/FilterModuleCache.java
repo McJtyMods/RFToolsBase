@@ -1,12 +1,10 @@
 package mcjty.rftoolsbase.modules.various;
 
 import mcjty.lib.varia.ItemStackList;
-import mcjty.lib.varia.ItemStackTools;
+import mcjty.rftoolsbase.modules.various.items.FilterModuleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,7 +12,6 @@ import java.util.Set;
 
 public class FilterModuleCache {
     private boolean matchDamage = true;
-    private boolean commonTagsMode = false;
     private boolean blacklistMode = true;
     private boolean nbtMode = false;
     private boolean modMode = false;
@@ -26,32 +23,15 @@ public class FilterModuleCache {
         CompoundNBT tagCompound = stack.getTag();
         if (tagCompound != null) {
             matchDamage = tagCompound.getBoolean("damageMode");
-            commonTagsMode = tagCompound.getBoolean("commonTagMode");
             nbtMode = tagCompound.getBoolean("nbtMode");
             modMode = tagCompound.getBoolean("modMode");
             blacklistMode = "Black".equals(tagCompound.getString("blacklistMode"));
+
+            FilterModuleInventory inventory = new FilterModuleInventory(stack);
             tags = new HashSet<>();
-            ListNBT bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
-            int cnt = 0;
-            for (int i = 0 ; i < bufferTagList.size() ; i++) {
-                CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-                ItemStack s = ItemStack.read(nbtTagCompound);
-                if (!s.isEmpty()) {
-                    cnt++;
-                }
-            }
-            stacks = ItemStackList.create(cnt);
-            cnt = 0;
-            for (int i = 0 ; i < bufferTagList.size() ; i++) {
-                CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-                ItemStack s = ItemStack.read(nbtTagCompound);
-                if (!s.isEmpty()) {
-                    stacks.set(cnt++, s);
-                    if (commonTagsMode) {
-                        ItemStackTools.addCommonTags(s.getItem().getTags(), tags);
-                    }
-                }
-            }
+            stacks = ItemStackList.create();
+            stacks.addAll(inventory.getStacks());
+            tags.addAll(inventory.getTags());
         } else {
             stacks = ItemStackList.EMPTY;
         }
@@ -65,19 +45,15 @@ public class FilterModuleCache {
                 modName = stack.getItem().getRegistryName().getNamespace();
             }
 
-            if (commonTagsMode) {
-                if (!tags.isEmpty()) {
-                    for (ResourceLocation tag : stack.getItem().getTags()) {
-                        if (tags.contains(tag)) {
-                            match = true;
-                            break;
-                        }
+            if (!tags.isEmpty()) {
+                for (ResourceLocation tag : stack.getItem().getTags()) {
+                    if (tags.contains(tag)) {
+                        match = true;
+                        break;
                     }
                 }
-                if (!match) {
-                    match = itemMatches(stack, modName);
-                }
-            } else {
+            }
+            if (!match) {
                 match = itemMatches(stack, modName);
             }
             return match != blacklistMode;

@@ -10,6 +10,7 @@ import mcjty.rftoolsbase.modules.hud.network.PacketGetHudLog;
 import mcjty.rftoolsbase.modules.hud.network.PacketHudLogReady;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
+import mcjty.rftoolsbase.modules.various.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.various.network.PacketUpdateNBTItemFilter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -46,6 +47,7 @@ public class RFToolsBaseMessages {
         net.registerMessage(id(), PacketGetMonitorLog.class, PacketGetMonitorLog::toBytes, PacketGetMonitorLog::new, PacketGetMonitorLog::handle);
         net.registerMessage(id(), PacketMonitorLogReady.class, PacketMonitorLogReady::toBytes, PacketMonitorLogReady::new, PacketMonitorLogReady::handle);
         net.registerMessage(id(), PacketUpdateNBTItemFilter.class, PacketUpdateNBTItemFilter::toBytes, PacketUpdateNBTItemFilter::new, PacketUpdateNBTItemFilter::handle);
+        net.registerMessage(id(), PacketSyncHandItem.class, PacketSyncHandItem::toBytes, PacketSyncHandItem::new, PacketSyncHandItem::handle);
         net.registerMessage(id(), PacketRequestDataFromServer.class, PacketRequestDataFromServer::toBytes, PacketRequestDataFromServer::new, new ChannelBoundHandler<>(net, PacketRequestDataFromServer::handle));
 
         PacketHandler.registerStandardMessages(id(), net);
