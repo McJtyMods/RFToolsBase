@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.modules.various.client;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
+import mcjty.lib.gui.TagSelectorWindow;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.HorizontalAlignment;
 import mcjty.lib.gui.layout.HorizontalLayout;
@@ -35,6 +36,7 @@ import net.minecraft.util.text.TextFormatting;
 
 import java.awt.*;
 import java.util.List;
+import java.util.Set;
 
 
 public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, FilterModuleContainer> {
@@ -43,6 +45,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/filtermodule.png");
     private static final ResourceLocation guiElements = new ResourceLocation(RFToolsBase.MODID, "textures/gui/guielements.png");
+
+    private final TagSelectorWindow selector = new TagSelectorWindow();
 
     private ImageChoiceLabel blacklistMode;
     private ImageChoiceLabel damageMode;
@@ -111,21 +115,38 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void addTagWindow() {
+        selector.create(window, 10, 10, "both", t -> {
+            if (t != null) {
+                FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
+                inventory.addTag(new ResourceLocation(t));
+                inventory.markDirty();
+                refresh();
+            }
+        }, () -> null, true);
+    }
 
+    private void refresh() {
+        syncStack();
+        fillList();
     }
 
     private void expandToTags() {
         FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
         ItemStack stack = inventory.getStacks().get(list.getSelected() - inventory.getTags().size());
+
+        Set<ResourceLocation> tags = stack.getItem().getTags();
+        if (tags.isEmpty()) {
+            return;
+        }
+
         removeSelection();
 
         inventory = new FilterModuleInventory(Minecraft.getInstance().player);
-        for (ResourceLocation tag : stack.getItem().getTags()) {
+        for (ResourceLocation tag : tags) {
             inventory.addTag(tag);
         }
         inventory.markDirty();
-        syncStack();
-        fillList();
+        refresh();
     }
 
     private void removeSelection() {
@@ -136,8 +157,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
             inventory.removeTag((ResourceLocation)list.getChild(list.getSelected()).getUserObject());
         }
         inventory.markDirty();
-        syncStack();
-        fillList();
+        refresh();
     }
 
     @Override
@@ -204,8 +224,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
                 inventory.addStack(slotIn.getStack());
             }
             inventory.markDirty();
-            syncStack();
-            fillList();
+            refresh();
         }
     }
 
