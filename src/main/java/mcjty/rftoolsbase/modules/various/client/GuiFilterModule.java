@@ -131,6 +131,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void expandToTags() {
+        if (!canExpand()) {
+            return;
+        }
         FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
         ItemStack stack = inventory.getStacks().get(list.getSelected() - inventory.getTags().size());
 
@@ -150,6 +153,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void removeSelection() {
+        if (!canRemove()) {
+            return;
+        }
         FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
         if (list.getSelected() >= inventory.getTags().size()) {
             inventory.removeStack(list.getSelected()-inventory.getTags().size());
@@ -163,8 +169,16 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     @Override
     protected void drawWindow() {
         super.drawWindow();
-        remove.setEnabled(list.getSelected() != -1);
-        expand.setEnabled(list.getSelected() != -1 && list.getChild(list.getSelected()).getUserObject() == null);
+        remove.setEnabled(canRemove());
+        expand.setEnabled(canExpand());
+    }
+
+    private boolean canRemove() {
+        return list.getSelected() != -1;
+    }
+
+    private boolean canExpand() {
+        return list.getSelected() != -1 && list.getChild(list.getSelected()).getUserObject() == null;
     }
 
     private void fillList() {
