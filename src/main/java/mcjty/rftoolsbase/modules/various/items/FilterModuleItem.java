@@ -35,8 +35,11 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
@@ -133,7 +136,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
         return new ActionResult<>(ActionResultType.SUCCESS, stack);
     }
 
-    public static FilterModuleCache getCache(ItemStack stack) {
+    public static Predicate<ItemStack> getCache(ItemStack stack) {
         if (stack.isEmpty()) {
             return null;
         }
@@ -143,25 +146,23 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     @Override
     public List<Pair<ItemStack, Integer>> getItems(ItemStack stack) {
         FilterModuleInventory inventory = new FilterModuleInventory(stack);
-        List<Pair<ItemStack, Integer>> list = new ArrayList<>();
+        Set<Item> itemSet = new HashSet<>();
         for (ItemStack s : inventory.getStacks()) {
-            list.add(Pair.of(s, -2));
+            itemSet.add(s.getItem());
         }
         for (ResourceLocation tag : inventory.getTags()) {
             Tag<Item> itemTag = ItemTags.getCollection().get(tag);
             if (itemTag != null) {
-                for (Item item : itemTag.getAllElements()) {
-                    list.add(Pair.of(new ItemStack(item), -2));
-                }
+                itemSet.addAll(itemTag.getAllElements());
             } else {
                 Tag<Block> blockTag = BlockTags.getCollection().get(tag);
                 if (blockTag != null) {
                     for (Block block : blockTag.getAllElements()) {
-                        list.add(Pair.of(new ItemStack(block), -2));
+                        itemSet.add(block.asItem());
                     }
                 }
             }
         }
-        return list;
+        return itemSet.stream().map(item -> Pair.of(new ItemStack(item), ITooltipExtras.NOAMOUNT)).collect(Collectors.toList());
     }
 }

@@ -9,8 +9,9 @@ import net.minecraft.util.ResourceLocation;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 
-public class FilterModuleCache {
+public class FilterModuleCache implements Predicate<ItemStack> {
     private boolean matchDamage = true;
     private boolean blacklistMode = true;
     private boolean nbtMode = false;
@@ -37,7 +38,8 @@ public class FilterModuleCache {
         }
     }
 
-    public boolean match(ItemStack stack) {
+    @Override
+    public boolean test(ItemStack stack) {
         if (!stack.isEmpty()) {
             boolean match = false;
             String modName = "";

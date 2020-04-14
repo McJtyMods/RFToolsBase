@@ -42,8 +42,8 @@
     "message.rftoolsbase.machine_infuser.header": "With this machine you can improve most other machines in RFTools in various ways. This needs dimensional shards",
     "message.rftoolsbase.machine_infuser.gold": "Infusing bonus: reduced power consumption",
 
-    "message.rftoolsbase.filter_module.header": "This filter module is for the Modular Storage block, the Builder, the Area Scanner, or the crafter. This module can make sure the block only accepts certain types of items",
-    "message.rftoolsbase.filter_module.gold": "Sneak-right click on an inventory to configure the filter based on contents or sneak-right click on a block to add that block to the filter",
+    "message.rftoolsbase.filter_module.header": "This filter module is used in various situations (XNet, storage, builder, crafter, ...). It can make sure the block only accepts certain items",
+    "message.rftoolsbase.filter_module.gold": "Sneak-right click on an inventory to configure based on contents or sneak-right click on a block to add that block to the filter",
     "message.rftoolsbase.filter_module.info": "Mode: ",
 
     "message.rftoolsbase.smartwrench.header": "General Smart Wrench. Right-click on air to change mode",
