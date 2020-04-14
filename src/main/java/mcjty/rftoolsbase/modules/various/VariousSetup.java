@@ -4,7 +4,6 @@ import mcjty.lib.McJtyLib;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.items.FilterModuleContainer;
-import mcjty.rftoolsbase.modules.various.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.various.items.FilterModuleItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import net.minecraft.entity.player.PlayerEntity;

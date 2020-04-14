@@ -5,11 +5,6 @@ import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.TagSelectorWindow;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.HorizontalAlignment;
-import mcjty.lib.gui.layout.HorizontalLayout;
-import mcjty.lib.gui.layout.PositionalLayout;
-import mcjty.lib.gui.widgets.Button;
-import mcjty.lib.gui.widgets.Label;
-import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.gui.widgets.*;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.Key;
@@ -34,9 +29,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Set;
+
+import static mcjty.lib.gui.widgets.Widgets.*;
 
 
 public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, FilterModuleContainer> {
@@ -70,31 +66,28 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     public void init() {
         super.init();
 
-        remove = new Button(minecraft, this).setLayoutHint(5, 106, 50, 15).setTooltips("Remove current selection").setText("Remove")
-                .addButtonEvent(parent -> removeSelection());
-        expand = new Button(minecraft, this).setLayoutHint(5, 121, 50, 15).setTooltips("Expand item to tags").setText("Expand")
-                .addButtonEvent(parent -> expandToTags());
-        addTags = new Button(minecraft, this).setLayoutHint(5, 137, 50, 15).setTooltips("Add tags").setText("Add tags")
-                .addButtonEvent(parent -> addTagWindow());
+        remove = button(5, 106, 50, 15, "Remove").tooltips("Remove current selection").event(this::removeSelection);
+        expand = button(5, 121, 50, 15, "Expand").tooltips("Expand item to tags").event(this::expandToTags);
+        addTags = button(5, 137, 50, 15, "Add tags").tooltips("Add tags").event(this::addTagWindow);
 
-        blacklistMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(5, 152, 16, 16).setTooltips("Black or whitelist mode").addChoiceEvent((parent, newChoice) -> updateSettings());
-        blacklistMode.addChoice("Black", "Blacklist items", guiElements, 14 * 16, 32);
-        blacklistMode.addChoice("White", "Whitelist items", guiElements, 15 * 16, 32);
+        blacklistMode = imageChoice(5, 152, 16, 16).tooltips("Black or whitelist mode").event((newChoice) -> updateSettings());
+        blacklistMode.choice("Black", "Blacklist items", guiElements, 14 * 16, 32);
+        blacklistMode.choice("White", "Whitelist items", guiElements, 15 * 16, 32);
 
-        damageMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(21, 152, 16, 16).setTooltips("Filter ignoring damage").addChoiceEvent((parent, newChoice) -> updateSettings());
-        damageMode.addChoice("Off", "Ignore damage", guiElements, 6 * 16, 32);
-        damageMode.addChoice("On", "Damage must match", guiElements, 7 * 16, 32);
+        damageMode = imageChoice(21, 152, 16, 16).tooltips("Filter ignoring damage").event((newChoice) -> updateSettings());
+        damageMode.choice("Off", "Ignore damage", guiElements, 6 * 16, 32);
+        damageMode.choice("On", "Damage must match", guiElements, 7 * 16, 32);
 
-        nbtMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(5, 168, 16, 16).setTooltips("Filter ignoring NBT").addChoiceEvent((parent, newChoice) -> updateSettings());
-        nbtMode.addChoice("Off", "Ignore NBT", guiElements, 8 * 16, 32);
-        nbtMode.addChoice("On", "NBT must match", guiElements, 9 * 16, 32);
+        nbtMode = imageChoice(5, 168, 16, 16).tooltips("Filter ignoring NBT").event((newChoice) -> updateSettings());
+        nbtMode.choice("Off", "Ignore NBT", guiElements, 8 * 16, 32);
+        nbtMode.choice("On", "NBT must match", guiElements, 9 * 16, 32);
 
-        modMode = new ImageChoiceLabel(minecraft, this).setLayoutHint(21, 168, 16, 16).setTooltips("Filter ignoring mod").addChoiceEvent((parent, newChoice) -> updateSettings());
-        modMode.addChoice("Off", "Don't match on mod", guiElements, 12 * 16, 32);
-        modMode.addChoice("On", "Only mod must match", guiElements, 13 * 16, 32);
+        modMode = imageChoice(21, 168, 16, 16).tooltips("Filter ignoring mod").event((newChoice) -> updateSettings());
+        modMode.choice("Off", "Don't match on mod", guiElements, 12 * 16, 32);
+        modMode.choice("On", "Only mod must match", guiElements, 13 * 16, 32);
 
-        list = new WidgetList(minecraft, this).setLayoutHint(5, 4, 207, 99).setName("list");
-        slider = new Slider(minecraft, this).setLayoutHint(212, 4, 10, 99).setScrollableName("list");
+        list = list(5, 4, 207, 99).name("list");
+        slider = slider(212, 4, 10, 99).scrollableName("list");
 
         CompoundNBT tagCompound = Minecraft.getInstance().player.getHeldItem(Hand.MAIN_HAND).getTag();
         if (tagCompound != null) {
@@ -106,10 +99,10 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
             setBlacklistMode("White");
         }
 
-        Panel toplevel = new Panel(minecraft, this).setLayout(new PositionalLayout()).setBackground(iconLocation)
-                .addChildren(blacklistMode, damageMode, nbtMode, modMode, list, slider, remove, expand, addTags);
+        Panel toplevel = positional().background(iconLocation)
+                .children(blacklistMode, damageMode, nbtMode, modMode, list, slider, remove, expand, addTags);
 
-        toplevel.setBounds(new Rectangle(guiLeft, guiTop, xSize, ySize));
+        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
 
         window = new Window(this, toplevel);
 
@@ -171,8 +164,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     @Override
     protected void drawWindow() {
         super.drawWindow();
-        remove.setEnabled(canRemove());
-        expand.setEnabled(canExpand());
+        remove.enabled(canRemove());
+        expand.enabled(canExpand());
     }
 
     private boolean canRemove() {
@@ -190,32 +183,32 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         for (ResourceLocation tag : inventory.getTags()) {
             Tag<Item> itemTag = ItemTags.getCollection().get(tag);
             if (itemTag != null) {
-                Panel panel = new Panel(minecraft, this).setLayout(new HorizontalLayout().setHorizontalMargin(0).setSpacing(0));
-                panel.setUserObject(itemTag.getId());
-                panel.addChild(new Label(minecraft, this).setText(tag.toString()).setDesiredWidth(120).setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+                Panel panel = horizontal(0, 0);
+                panel.userObject(itemTag.getId());
+                panel.children(label(tag.toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
                 int i = 5;
                 for (Item item : itemTag.getAllElements()) {
-                    BlockRender render = new BlockRender(minecraft, this).setRenderItem(new ItemStack(item));
-                    panel.addChild(render);
+                    BlockRender render = new BlockRender().renderItem(new ItemStack(item));
+                    panel.children(render);
                     i--;
                     if (i <= 0) {
                         break;
                     }
                 }
-                list.addChild(panel);
+                list.children(panel);
             }
         }
 
         for (ItemStack stack : inventory.getStacks()) {
-            Panel panel = new Panel(minecraft, this).setLayout(new HorizontalLayout());
-            BlockRender render = new BlockRender(minecraft, this).setRenderItem(stack);
-            panel.addChild(render);
+            Panel panel = horizontal();
+            BlockRender render = new BlockRender().renderItem(stack);
+            panel.children(render);
             String formattedText = stack.getDisplayName().getFormattedText();
             if (formattedText.length() >= 30) {
                 formattedText = formattedText.substring(0, 28) + "...";
             }
-            panel.addChild(new Label(minecraft, this).setText(formattedText));
-            list.addChild(panel);
+            panel.children(label(formattedText));
+            list.children(panel);
         }
     }
 

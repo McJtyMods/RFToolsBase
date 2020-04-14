@@ -1,7 +1,5 @@
 package mcjty.rftoolsbase.api.xnet.channels;
 
-import mcjty.rftoolsbase.api.teleportation.ITeleportationManager;
-
 import java.util.HashMap;
 import java.util.Map;
 

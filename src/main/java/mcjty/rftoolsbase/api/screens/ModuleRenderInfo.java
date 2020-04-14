@@ -1,9 +1,6 @@
 package mcjty.rftoolsbase.api.screens;
 
-import mcjty.lib.font.TrueTypeFont;
 import net.minecraft.util.math.BlockPos;
-
-import javax.annotation.Nullable;
 
 /**
  * Class containing various things useful for rendering your module. You get an instance of this

@@ -5,10 +5,9 @@ import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
 import mcjty.lib.gui.layout.HorizontalAlignment;
 import mcjty.lib.gui.layout.PositionalLayout;
-import mcjty.lib.gui.widgets.Button;
-import mcjty.lib.gui.widgets.Label;
+import mcjty.lib.gui.widgets.BlockRender;
 import mcjty.lib.gui.widgets.Panel;
-import mcjty.lib.gui.widgets.*;
+import mcjty.lib.gui.widgets.Widgets;
 import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.TypedMap;
@@ -27,11 +26,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static mcjty.lib.gui.widgets.Widgets.button;
+import static mcjty.lib.gui.widgets.Widgets.label;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.*;
 
 
@@ -53,22 +53,20 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     public void init() {
         super.init();
 
-        Panel toplevel = new Panel(minecraft, this).setLayout(new PositionalLayout()).setBackground(iconLocation);
-        toplevel.setBounds(new Rectangle(guiLeft, guiTop, xSize, ySize));
+        Panel toplevel = Widgets.positional().background(iconLocation);
+        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
 
-        toplevel.addChild(new Label(minecraft, this).setText("Regular 3x3 crafting recipe").setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setLayoutHint(new PositionalLayout.PositionalHint(10, 4, 160, 14)));
-        toplevel.addChild(new Label(minecraft, this).setText("or more complicated recipes").setHorizontalAlignment(HorizontalAlignment.ALIGN_LEFT).setLayoutHint(new PositionalLayout.PositionalHint(10, 17, 160, 14)));
-        toplevel.addChild(new Button(minecraft, this)
-                .setText("Update")
-                .setTooltips("Update the item in the output", "slot to the recipe in the", "3x3 grid")
-                .addButtonEvent(parent -> RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY)))
-                .setLayoutHint(new PositionalLayout.PositionalHint(110, 57, 60, 14)));
+        toplevel.children(label("Regular 3x3 crafting recipe").horizontalAlignment(HorizontalAlignment.ALIGN_LEFT).hint(10, 4, 160, 14));
+        toplevel.children(label("or more complicated recipes").horizontalAlignment(HorizontalAlignment.ALIGN_LEFT).hint(10, 17, 160, 14));
+        toplevel.children(button(110, 57, 60, 14, "Update")
+                .tooltips("Update the item in the output", "slot to the recipe in the", "3x3 grid")
+                .event(() -> RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY))));
         // In 1.15 this no longer makes sense
 //        ToggleButton toggle = new ToggleButton(minecraft, this)
 //                .setCheckMarker(true)
 //                .setText("NBT")
 //                .setTooltips("Enable this if you want", "opcodes like 'get_ingredients'", "to strictly match on NBT")
-//                .setLayoutHint(new PositionalLayout.PositionalHint(110, 74, 60, 14));
+//                .setLayoutHint(110, 74, 60, 14);
 //        ItemStack heldItem = minecraft.player.getHeldItem(Hand.MAIN_HAND);
 //        if (!heldItem.isEmpty()) {
 //            toggle.setPressed(CraftingCardItem.isStrictNBT(heldItem));
@@ -94,7 +92,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     private void createDummySlot(Panel toplevel, int idx, PositionalLayout.PositionalHint hint, BlockRenderEvent selectionEvent) {
-        slots[idx] = new BlockRender(minecraft, this) {
+        slots[idx] = new BlockRender() {
 
             @Override
             public List<String> getTooltips() {
@@ -114,7 +112,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 //                            }
                         }
 
-                        return list.stream().map(str -> str.getFormattedText()).collect(Collectors.toList());
+                        return list.stream().map(ITextComponent::getFormattedText).collect(Collectors.toList());
                     } else {
                         return Collections.emptyList();
                     }
@@ -123,10 +121,10 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                 }
             }
         }
-                .setHilightOnHover(true)
-                .setLayoutHint(hint);
-        slots[idx].addSelectionEvent(selectionEvent);
-        toplevel.addChild(slots[idx]);
+                .hilightOnHover(true)
+                .hint(hint);
+        slots[idx].event(selectionEvent);
+        toplevel.children(slots[idx]);
     }
 
     private void updateSlots() {
@@ -135,7 +133,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
             return;
         }
         for (int i = 0 ; i < stacks.size() ; i++) {
-            slots[i].setRenderItem(stacks.get(i));
+            slots[i].renderItem(stacks.get(i));
         }
     }
 
@@ -152,9 +150,9 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     private BlockRenderEvent createSelectionEvent(final int idx) {
         return new BlockRenderEvent() {
             @Override
-            public void select(Widget parent) {
+            public void select() {
                 ItemStack itemstack = minecraft.player.inventory.getItemStack();
-                slots[idx].setRenderItem(itemstack);
+                slots[idx].renderItem(itemstack);
                 ItemStackList stacks = getStacks();
                 if (!stacks.isEmpty()) {
                     stacks.set(idx, itemstack);
@@ -165,7 +163,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
             }
 
             @Override
-            public void doubleClick(Widget parent) {
+            public void doubleClick() {
 
             }
         };

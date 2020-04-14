@@ -3,7 +3,6 @@ package mcjty.rftoolsbase.modules.infuser.client;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
-import mcjty.lib.gui.layout.PositionalLayout;
 import mcjty.lib.gui.widgets.EnergyBar;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.tileentity.GenericEnergyStorage;
@@ -13,7 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.CapabilityEnergy;
 
-import java.awt.Rectangle;
+import static mcjty.lib.gui.widgets.Widgets.positional;
 
 public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEntity, GenericContainer> {
     public static final int INFUSER_WIDTH = 180;
@@ -34,10 +33,10 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     public void init() {
         super.init();
 
-        energyBar = new EnergyBar(getMinecraft(), this).setName("energybar").setVertical().setLayoutHint(10, 7, 8, 54).setShowText(false);
+        energyBar = new EnergyBar().name("energybar").vertical().hint(10, 7, 8, 54).showText(false);
 
-        Panel toplevel = new Panel(getMinecraft(), this).setBackground(iconLocation).setLayout(new PositionalLayout()).addChild(energyBar); //.addChild(arrow);
-        toplevel.setBounds(new Rectangle(guiLeft, guiTop, xSize, ySize));
+        Panel toplevel = positional().background(iconLocation).children(energyBar); //.addChild(arrow);
+        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
 
         window = new Window(this, toplevel);
 
@@ -54,8 +53,8 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         drawWindow();
 
         tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(e -> {
-            energyBar.setMaxValue(((GenericEnergyStorage)e).getCapacity());
-            energyBar.setValue(((GenericEnergyStorage)e).getEnergy());
+            energyBar.maxValue(((GenericEnergyStorage)e).getCapacity());
+            energyBar.value(((GenericEnergyStorage)e).getEnergy());
         });
     }
 }

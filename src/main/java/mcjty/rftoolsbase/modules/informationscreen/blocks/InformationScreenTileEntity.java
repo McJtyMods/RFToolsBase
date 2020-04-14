@@ -47,7 +47,7 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
                 BlockPos offset = getPos().offset(getBlockOrientation().getOpposite());
                 TileEntity te = world.getTileEntity(offset);
                 if (te != null) {
-                    te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(h -> h.tick());
+                    te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(IInformationScreenInfo::tick);
                 }
             }
         }
