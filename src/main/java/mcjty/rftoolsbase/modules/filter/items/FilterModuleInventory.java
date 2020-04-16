@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.modules.various.items;
+package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.varia.ItemStackList;
 import net.minecraft.entity.player.PlayerEntity;

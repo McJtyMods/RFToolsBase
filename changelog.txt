@@ -2,6 +2,7 @@ Upcoming:
 - Better tooltips for many blocks and items
 - The filter module now supports an alternative for the ore dictionary where it will try to match blocks using common known tags
 - The filter module is now unlimited and has full support for tags. It is also whitelist mode by default now
+- The Tablet is back! It now supports four different slots and can switch between them using the '[' and ']' keys (by default)
 
 1.0.1-alpha:
 - Ported the filter module (for storage, builder, ...)

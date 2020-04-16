@@ -2,10 +2,13 @@ package mcjty.rftoolsbase.datagen;
 
 import mcjty.lib.datagen.BaseRecipeProvider;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
+import mcjty.rftoolsbase.modules.filter.FilterSetup;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.tablet.TabletSetup;
 import mcjty.rftoolsbase.modules.various.VariousSetup;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
@@ -109,7 +112,7 @@ public class Recipes extends BaseRecipeProvider {
                 .setGroup("rftools")
                 .addCriterion("crafter", InventoryChangeTrigger.Instance.forItems(Items.CRAFTING_TABLE))
                 .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(VariousSetup.FILTER_MODULE.get())
+        ShapedRecipeBuilder.shapedRecipe(FilterSetup.FILTER_MODULE.get())
                 .patternLine(" h ")
                 .patternLine("rir")
                 .patternLine(" p ")
@@ -124,5 +127,10 @@ public class Recipes extends BaseRecipeProvider {
                         .key('-', Tags.Items.GLASS_PANES)
                         .addCriterion("frame", InventoryChangeTrigger.Instance.forItems(VariousSetup.MACHINE_BASE.get(), Items.REDSTONE)),
                 "---", "rAr");
+        build(consumer, ShapedRecipeBuilder.shapedRecipe(TabletSetup.TABLET.get())
+                        .key('g', Tags.Items.NUGGETS_GOLD)
+                        .key('Q', Tags.Items.STORAGE_BLOCKS_QUARTZ)
+                        .addCriterion("quartz", InventoryChangeTrigger.Instance.forItems(Blocks.QUARTZ_BLOCK)),
+                "geg", "RQR", "gRg");
     }
 }

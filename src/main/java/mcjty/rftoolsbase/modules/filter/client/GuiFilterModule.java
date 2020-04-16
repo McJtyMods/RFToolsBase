@@ -1,4 +1,4 @@
-package mcjty.rftoolsbase.modules.various.client;
+package mcjty.rftoolsbase.modules.filter.client;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
@@ -11,10 +11,10 @@ import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.modules.various.items.FilterModuleContainer;
-import mcjty.rftoolsbase.modules.various.items.FilterModuleInventory;
-import mcjty.rftoolsbase.modules.various.network.PacketSyncHandItem;
-import mcjty.rftoolsbase.modules.various.network.PacketUpdateNBTItemFilter;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
+import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
+import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

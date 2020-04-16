@@ -14,6 +14,8 @@
     "item.rftoolsbase.machine_frame": "Machine Frame",
     "item.rftoolsbase.machine_base": "Machine Base",
     "item.rftoolsbase.crafting_card": "Crafting Card",
+    "item.rftoolsbase.tablet": "Tablet (empty)",
+    "item.rftoolsbase.tablet_filled": "Tablet (filled)",
 
     "block.rftoolsbase.machine_infuser": "Machine Infuser",
     "block.rftoolsbase.security_manager": "Security Manager",
@@ -29,6 +31,8 @@
     "key.categories.rftools": "RFTools",
     "key.debugDumpNBTItem": "Dump NBT for Held Item",
     "key.debugDumpNBTBlock": "Dump NBT for Selected Block",
+    "key.nextDestination": "Cycle to next target",
+    "key.prevDestination": "Cycle to previous target",
 
     "_comment": "Messages",
     "message.rftoolsbase.shiftmessage": "<Press Shift>",
@@ -45,6 +49,12 @@
     "message.rftoolsbase.filter_module.header": "This filter module is used in various situations (XNet, storage, builder, crafter, ...). It can make sure the block only accepts certain items",
     "message.rftoolsbase.filter_module.gold": "Sneak-right click on an inventory to configure based on contents or sneak-right click on a block to add that block to the filter",
     "message.rftoolsbase.filter_module.info": "Mode: ",
+
+    "message.rftoolsbase.tablet.header": "Tablet that can be used to reference remote gui's and information",
+    "message.rftoolsbase.tablet.gold": "Empty tablet: open the gui to combine with a possible tablet information item",
+
+    "message.rftoolsbase.tablet_filled.header": "Tablet that can be used to reference remote gui's and information",
+    "message.rftoolsbase.tablet_filled.gold": "Tablet containing information: right click for information gui, sneak right click for tablet gui",
 
     "message.rftoolsbase.smartwrench.header": "General Smart Wrench. Right-click on air to change mode",
     "message.rftoolsbase.smartwrench.gold": "Use as a normal wrench: sneak-right-click to pick up and right-click to rotate",

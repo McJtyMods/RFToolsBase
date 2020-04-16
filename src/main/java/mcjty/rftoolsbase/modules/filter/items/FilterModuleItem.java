@@ -1,11 +1,11 @@
-package mcjty.rftoolsbase.modules.various.items;
+package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.container.InventoryHelper;
 import mcjty.lib.tooltips.ITooltipExtras;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.modules.various.FilterModuleCache;
+import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;

@@ -1,7 +1,7 @@
-package mcjty.rftoolsbase.modules.various;
+package mcjty.rftoolsbase.modules.filter;
 
 import mcjty.lib.varia.ItemStackList;
-import mcjty.rftoolsbase.modules.various.items.FilterModuleInventory;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;

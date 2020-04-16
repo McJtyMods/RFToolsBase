@@ -1,6 +1,6 @@
-package mcjty.rftoolsbase.modules.various.network;
+package mcjty.rftoolsbase.modules.filter.network;
 
-import mcjty.rftoolsbase.modules.various.items.FilterModuleItem;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;

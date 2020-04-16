@@ -1,10 +1,10 @@
-package mcjty.rftoolsbase.modules.various.network;
+package mcjty.rftoolsbase.modules.filter.network;
 
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
-import mcjty.rftoolsbase.modules.various.items.FilterModuleItem;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;

@@ -3,8 +3,10 @@ package mcjty.rftoolsbase;
 import mcjty.lib.base.ModBase;
 import mcjty.rftoolsbase.client.ClientInfo;
 import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
+import mcjty.rftoolsbase.modules.filter.FilterSetup;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
+import mcjty.rftoolsbase.modules.tablet.TabletSetup;
 import mcjty.rftoolsbase.modules.various.VariousSetup;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.setup.Config;
@@ -16,7 +18,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 
 
 @Mod(RFToolsBase.MODID)
@@ -42,11 +43,10 @@ public class RFToolsBase implements ModBase {
         InformationScreenSetup.register();
         CraftingSetup.register();
         VariousSetup.register();
+        FilterSetup.register();
+        TabletSetup.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLCommonSetupEvent e) -> setup.init(e));
-
-//        Config.loadConfig(Config.CLIENT_CONFIG, FMLPaths.CONFIGDIR.get().resolve("theoneprobe-client.toml"));
-        Config.loadConfig(Config.COMMON_CONFIG, FMLPaths.CONFIGDIR.get().resolve("rftoolsbase-common.toml"));
     }
 
 
