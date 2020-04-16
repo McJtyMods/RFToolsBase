@@ -16,6 +16,7 @@ import mcjty.rftoolsbase.modules.various.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.various.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.various.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
@@ -23,9 +24,11 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.Hand;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 
@@ -183,19 +186,12 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         for (ResourceLocation tag : inventory.getTags()) {
             Tag<Item> itemTag = ItemTags.getCollection().get(tag);
             if (itemTag != null) {
-                Panel panel = horizontal(0, 0);
-                panel.userObject(itemTag.getId());
-                panel.children(label(tag.toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
-                int i = 5;
-                for (Item item : itemTag.getAllElements()) {
-                    BlockRender render = new BlockRender().renderItem(new ItemStack(item));
-                    panel.children(render);
-                    i--;
-                    if (i <= 0) {
-                        break;
-                    }
+                addTagToList(itemTag);
+            } else {
+                Tag<Block> blockTag = BlockTags.getCollection().get(tag);
+                if (blockTag != null) {
+                    addTagToList(blockTag);
                 }
-                list.children(panel);
             }
         }
 
@@ -210,6 +206,22 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
             panel.children(label(formattedText));
             list.children(panel);
         }
+    }
+
+    private <T extends IItemProvider> void addTagToList(Tag<T> tag) {
+        Panel panel = horizontal(0, 0);
+        panel.userObject(tag.getId());
+        panel.children(label(tag.getId().toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+        int i = 5;
+        for (T item : tag.getAllElements()) {
+            BlockRender render = new BlockRender().renderItem(new ItemStack(item));
+            panel.children(render);
+            i--;
+            if (i <= 0) {
+                break;
+            }
+        }
+        list.children(panel);
     }
 
     private void setBlacklistMode(String mode) {
