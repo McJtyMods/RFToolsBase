@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.lib.builder.TooltipBuilder;
-import mcjty.lib.varia.ItemStackTools;
+import mcjty.lib.varia.NBTTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
@@ -43,7 +43,7 @@ public class TabletItem extends Item implements IItemCycler {
     }
 
     public static int getCurrentSlot(ItemStack stack) {
-        return ItemStackTools.getTag(stack).map(tag -> tag.getInt("Current")).orElse(0);
+        return NBTTools.getTag(stack).map(tag -> tag.getInt("Current")).orElse(0);
     }
 
     public static void setCurrentSlot(PlayerEntity player, ItemStack stack, int current) {
@@ -78,7 +78,7 @@ public class TabletItem extends Item implements IItemCycler {
     }
 
     public static ItemStack getContainingItem(ItemStack stack, int slot) {
-        return ItemStackTools.getTag(stack).map(tag -> ItemStack.read(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
+        return NBTTools.getTag(stack).map(tag -> ItemStack.read(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
     }
 
     public static void setContainingItem(PlayerEntity player, Hand hand, int slot, ItemStack containingItem) {
