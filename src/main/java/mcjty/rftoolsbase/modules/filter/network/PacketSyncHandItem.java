@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.modules.filter.network;
 
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
+import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -22,7 +23,7 @@ public class PacketSyncHandItem {
     }
 
     protected boolean isValidItem(ItemStack itemStack) {
-        return itemStack.getItem() instanceof FilterModuleItem;
+        return itemStack.getItem() instanceof FilterModuleItem || itemStack.getItem() instanceof TabletItem;
     }
 
     public void toBytes(PacketBuffer buf) {

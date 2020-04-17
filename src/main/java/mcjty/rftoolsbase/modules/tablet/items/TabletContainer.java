@@ -13,12 +13,12 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 public class TabletContainer extends GenericContainer {
 	private int cardIndex;
 
-	public static final int NUM_SLOTS = 4;
+	public static final int NUM_SLOTS = 6;
 
 	public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(1) {
         @Override
         protected void setup() {
-        	box(SlotDefinition.specific(s -> s.getItem() instanceof ITabletSupport), CONTAINER_CONTAINER, 0, 10, 7, NUM_SLOTS, 1);
+        	box(SlotDefinition.specific(s -> s.getItem() instanceof ITabletSupport), CONTAINER_CONTAINER, 0, 15, 13, NUM_SLOTS, 18+5, 1, 18);
             playerSlots(10, 106);
         }
     };

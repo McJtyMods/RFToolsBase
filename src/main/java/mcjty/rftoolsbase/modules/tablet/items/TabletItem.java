@@ -2,7 +2,6 @@ package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.varia.ItemStackTools;
-import mcjty.lib.varia.NBTTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
@@ -43,18 +42,25 @@ public class TabletItem extends Item implements IItemCycler {
                 .group(RFToolsBase.setup.getTab()));
     }
 
-    public static int getCurrentItem(ItemStack stack) {
+    public static int getCurrentSlot(ItemStack stack) {
         return ItemStackTools.getTag(stack).map(tag -> tag.getInt("Current")).orElse(0);
     }
 
-    public static void setCurrentItem(ItemStack stack, int current) {
+    public static void setCurrentSlot(PlayerEntity player, ItemStack stack, int current) {
         stack.getOrCreateTag().putInt("Current", current);
+        ItemStack containingItem = getContainingItem(stack, current);
+        ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
+        player.setHeldItem(getHand(player), newTablet);
+    }
+
+    private static Hand getHand(PlayerEntity player) {
+        return player.getActiveHand() == null ? Hand.MAIN_HAND : player.getActiveHand();
     }
 
     @Override
     public void cycle(PlayerEntity player, ItemStack stack, boolean next) {
-        int currentItem = getCurrentItem(stack);
-        int tries = 4;
+        int currentItem = getCurrentSlot(stack);
+        int tries = NUM_SLOTS+1;
         while (tries > 0) {
             if (next) {
                 currentItem = (currentItem + 1) % NUM_SLOTS;
@@ -63,7 +69,7 @@ public class TabletItem extends Item implements IItemCycler {
             }
             ItemStack containingItem = getContainingItem(stack, currentItem);
             if (!containingItem.isEmpty()) {
-                setCurrentItem(stack, currentItem);
+                setCurrentSlot(player, stack, currentItem);
                 player.sendStatusMessage(new StringTextComponent("Switched item"), false);
                 return;
             }
@@ -86,14 +92,24 @@ public class TabletItem extends Item implements IItemCycler {
             tag.put("Item" + slot, compound);
         }
 
-        ItemStack newTablet;
-        if (containingItem.isEmpty()) {
-            newTablet = new ItemStack(TabletSetup.TABLET.get());
-        } else {
-            newTablet = new ItemStack(((ITabletSupport)containingItem.getItem()).getInstalledTablet());
-        }
-        newTablet.setTag(stack.getTag());
+        int current = getCurrentSlot(stack);
+        ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
         player.setHeldItem(hand, newTablet);
+    }
+
+    private static ItemStack deriveNewItemstack(int slot, ItemStack containingItem, ItemStack stack, int current) {
+        ItemStack newTablet;
+        if (slot == current) {
+            if (containingItem.isEmpty()) {
+                newTablet = new ItemStack(TabletSetup.TABLET.get());
+            } else {
+                newTablet = new ItemStack(((ITabletSupport) containingItem.getItem()).getInstalledTablet());
+            }
+            newTablet.setTag(stack.getTag());
+        } else {
+            newTablet = stack;
+        }
+        return newTablet;
     }
 
     @Override
@@ -103,7 +119,7 @@ public class TabletItem extends Item implements IItemCycler {
             if (player.isShiftKeyDown()) {
                 openTabletGui(player);
             } else {
-                ItemStack containingItem = getContainingItem(stack, getCurrentItem(stack));
+                ItemStack containingItem = getContainingItem(stack, getCurrentSlot(stack));
                 if (containingItem.isEmpty()) {
                     openTabletGui(player);
                 } else {
