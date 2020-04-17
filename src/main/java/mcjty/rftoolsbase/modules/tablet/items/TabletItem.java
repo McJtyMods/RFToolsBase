@@ -13,6 +13,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
@@ -25,6 +26,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
@@ -53,8 +56,16 @@ public class TabletItem extends Item implements IItemCycler {
         player.setHeldItem(getHand(player), newTablet);
     }
 
-    private static Hand getHand(PlayerEntity player) {
+    public static Hand getHand(PlayerEntity player) {
         return player.getActiveHand() == null ? Hand.MAIN_HAND : player.getActiveHand();
+    }
+
+    @Override
+    public Collection<ItemGroup> getCreativeTabs() {
+        if (this == TabletSetup.TABLET.get()) {
+            return super.getCreativeTabs();
+        }
+        return Collections.emptyList();
     }
 
     @Override
