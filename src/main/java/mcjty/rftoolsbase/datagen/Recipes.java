@@ -24,7 +24,6 @@ public class Recipes extends BaseRecipeProvider {
         add('F', VariousSetup.MACHINE_FRAME.get());
         add('A', VariousSetup.MACHINE_BASE.get());
         add('s', VariousSetup.DIMENSIONALSHARD.get());
-        group("rftools");
     }
 
     @Override
@@ -42,7 +41,6 @@ public class Recipes extends BaseRecipeProvider {
                 .key('G', Items.GLOWSTONE_DUST)
                 .key('i', Items.IRON_INGOT)
                 .key('L', Items.GLASS)
-                .setGroup("rftools")
                 .addCriterion("gold", InventoryChangeTrigger.Instance.forItems(Items.GOLD_INGOT,
                         Items.QUARTZ, Items.REDSTONE, Items.PRISMARINE_SHARD, Items.DIAMOND,
                         Items.EMERALD, Items.GLOWSTONE_DUST, Items.IRON_INGOT, Items.GLASS))
@@ -52,8 +50,7 @@ public class Recipes extends BaseRecipeProvider {
                 .patternLine("sss")
                 .key('g', Items.GOLD_NUGGET)
                 .key('s', Tags.Items.STONE)
-                .setGroup("rftools")
-                .addCriterion("gold", InventoryChangeTrigger.Instance.forItems(Items.GOLD_NUGGET))
+                .addCriterion("gold", hasItem(Items.GOLD_NUGGET))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(VariousSetup.MACHINE_FRAME.get())
                 .patternLine("ili")
@@ -62,7 +59,6 @@ public class Recipes extends BaseRecipeProvider {
                 .key('g', Items.GOLD_NUGGET)
                 .key('i', Items.IRON_INGOT)
                 .key('l', Tags.Items.DYES_BLUE)
-                .setGroup("rftools")
                 .addCriterion("iron_ingot", InventoryChangeTrigger.Instance.forItems(Items.IRON_INGOT, Items.GOLD_NUGGET))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(MachineInfuserSetup.MACHINE_INFUSER.get())
@@ -73,7 +69,6 @@ public class Recipes extends BaseRecipeProvider {
                 .key('s', VariousSetup.DIMENSIONALSHARD.get())
                 .key('d', Items.DIAMOND)
                 .key('M', VariousSetup.MACHINE_FRAME.get())
-                .setGroup("rftools")
                 .addCriterion("machine_frame", InventoryChangeTrigger.Instance.forItems(VariousSetup.MACHINE_FRAME.get(), VariousSetup.DIMENSIONALSHARD.get()))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(VariousSetup.SMARTWRENCH.get())
@@ -82,8 +77,7 @@ public class Recipes extends BaseRecipeProvider {
                 .patternLine("l  ")
                 .key('i', Items.IRON_INGOT)
                 .key('l', Tags.Items.DYES_BLUE)
-                .setGroup("rftools")
-                .addCriterion("iron", InventoryChangeTrigger.Instance.forItems(Items.IRON_INGOT))
+                .addCriterion("iron", hasItem(Items.IRON_INGOT))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(VariousSetup.INFUSED_DIAMOND.get())
                 .patternLine("sss")
@@ -91,8 +85,7 @@ public class Recipes extends BaseRecipeProvider {
                 .patternLine("sss")
                 .key('s', VariousSetup.DIMENSIONALSHARD.get())
                 .key('d', Items.DIAMOND)
-                .setGroup("rftools")
-                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(VariousSetup.DIMENSIONALSHARD.get()))
+                .addCriterion("shard", hasItem(VariousSetup.DIMENSIONALSHARD.get()))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(VariousSetup.INFUSED_ENDERPEARL.get())
                 .patternLine("sss")
@@ -100,8 +93,7 @@ public class Recipes extends BaseRecipeProvider {
                 .patternLine("sss")
                 .key('s', VariousSetup.DIMENSIONALSHARD.get())
                 .key('d', Items.ENDER_PEARL)
-                .setGroup("rftools")
-                .addCriterion("shard", InventoryChangeTrigger.Instance.forItems(VariousSetup.DIMENSIONALSHARD.get()))
+                .addCriterion("shard", hasItem(VariousSetup.DIMENSIONALSHARD.get()))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(CraftingSetup.CRAFTING_CARD.get(), 8)
                 .patternLine("pc")
@@ -109,8 +101,7 @@ public class Recipes extends BaseRecipeProvider {
                 .key('c', Items.CRAFTING_TABLE)
                 .key('r', Items.REDSTONE)
                 .key('p', Items.PAPER)
-                .setGroup("rftools")
-                .addCriterion("crafter", InventoryChangeTrigger.Instance.forItems(Items.CRAFTING_TABLE))
+                .addCriterion("crafter", hasItem(Items.CRAFTING_TABLE))
                 .build(consumer);
         ShapedRecipeBuilder.shapedRecipe(FilterSetup.FILTER_MODULE.get())
                 .patternLine(" h ")
@@ -120,8 +111,7 @@ public class Recipes extends BaseRecipeProvider {
                 .key('r', Items.REDSTONE)
                 .key('p', Items.PAPER)
                 .key('i', Items.IRON_INGOT)
-                .setGroup("rftools")
-                .addCriterion("hopper", InventoryChangeTrigger.Instance.forItems(Items.HOPPER))
+                .addCriterion("hopper", hasItem(Items.HOPPER))
                 .build(consumer);
         build(consumer, ShapedRecipeBuilder.shapedRecipe(InformationScreenSetup.INFORMATION_SCREEN.get())
                         .key('-', Tags.Items.GLASS_PANES)
@@ -130,7 +120,7 @@ public class Recipes extends BaseRecipeProvider {
         build(consumer, ShapedRecipeBuilder.shapedRecipe(TabletSetup.TABLET.get())
                         .key('g', Tags.Items.NUGGETS_GOLD)
                         .key('Q', Tags.Items.STORAGE_BLOCKS_QUARTZ)
-                        .addCriterion("quartz", InventoryChangeTrigger.Instance.forItems(Blocks.QUARTZ_BLOCK)),
+                        .addCriterion("quartz", hasItem(Blocks.QUARTZ_BLOCK)),
                 "geg", "RQR", "gRg");
     }
 }
