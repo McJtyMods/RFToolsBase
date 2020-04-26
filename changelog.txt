@@ -4,6 +4,7 @@ Upcoming:
 - The filter module is now unlimited and has full support for tags. It is also whitelist mode by default now
 - The Tablet is back! It now supports four different slots and can switch between them using the '[' and ']' keys (by default)
 - New tag 'forge:wrench' which the Smart Wrench uses
+- Fixed the recipes for the vanilla recipe book
 
 1.0.1-alpha:
 - Ported the filter module (for storage, builder, ...)
