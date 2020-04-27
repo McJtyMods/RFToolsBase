@@ -34,20 +34,18 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
+import static mcjty.lib.container.ContainerFactory.CONTAINER_CONTAINER;
+import static mcjty.lib.container.SlotDefinition.specific;
 
 public class MachineInfuserTileEntity extends GenericTileEntity implements ITickableTileEntity {
 
     public static final int SLOT_SHARDINPUT = 0;
     public static final int SLOT_MACHINEOUTPUT = 1;
 
-    public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(2) {
-        @Override
-        protected void setup() {
-            slot(SlotDefinition.specific(new ItemStack(VariousSetup.DIMENSIONALSHARD.get())), ContainerFactory.CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24);
-            slot(SlotDefinition.specific(MachineInfuserTileEntity::isInfusable), ContainerFactory.CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24);
-            playerSlots(10, 70);
-        }
-    };
+    public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(2)
+            .slot(specific(new ItemStack(VariousSetup.DIMENSIONALSHARD.get())), CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24)
+            .slot(specific(MachineInfuserTileEntity::isInfusable), CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24)
+            .playerSlots(10, 70);
 
     private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(() -> new NoDirectionItemHander(this, CONTAINER_FACTORY));
     private LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));

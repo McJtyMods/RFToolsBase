@@ -10,18 +10,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
+import static mcjty.lib.container.ContainerFactory.CONTAINER_CONTAINER;
+import static mcjty.lib.container.SlotDefinition.specific;
+
 public class TabletContainer extends GenericContainer {
 	private int cardIndex;
 
 	public static final int NUM_SLOTS = 6;
 
-	public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(1) {
-        @Override
-        protected void setup() {
-        	box(SlotDefinition.specific(s -> s.getItem() instanceof ITabletSupport), CONTAINER_CONTAINER, 0, 15, 13, NUM_SLOTS, 18+5, 1, 18);
-            playerSlots(10, 106);
-        }
-    };
+	public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(1)
+			.box(specific(s -> s.getItem() instanceof ITabletSupport), CONTAINER_CONTAINER, 0, 15, 13, NUM_SLOTS, 18+5, 1, 18)
+            .playerSlots(10, 106);
 
 	public TabletContainer(int id, BlockPos pos, PlayerEntity player) {
 		super(TabletSetup.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY, pos, null);
@@ -30,7 +29,7 @@ public class TabletContainer extends GenericContainer {
 
 	@Override
 	public void setupInventories(IItemHandler itemHandler, PlayerInventory inventory) {
-		addInventory(ContainerFactory.CONTAINER_CONTAINER, itemHandler);
+		addInventory(CONTAINER_CONTAINER, itemHandler);
 		addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
 		generateSlots();
 	}

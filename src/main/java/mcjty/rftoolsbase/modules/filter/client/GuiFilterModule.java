@@ -113,7 +113,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void addTagWindow() {
-        selector.create(window, 10, 10, "both", t -> {
+        selector.create(window, TagSelectorWindow.TYPE_BOTH, t -> {
             if (t != null) {
                 FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
                 inventory.addTag(new ResourceLocation(t));

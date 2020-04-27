@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.builder.TooltipBuilder;
-import mcjty.lib.container.InventoryHelper;
 import mcjty.lib.tooltips.ITooltipExtras;
 import mcjty.lib.tooltips.ITooltipSettings;
+import mcjty.lib.varia.InventoryTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
 import net.minecraft.block.Block;
@@ -90,9 +90,9 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
         if (player.isCrouching()) {
             if (!world.isRemote) {
                 TileEntity te = world.getTileEntity(pos);
-                if (InventoryHelper.isInventory(te)) {
+                if (InventoryTools.isInventory(te)) {
                     FilterModuleInventory inventory = new FilterModuleInventory(stack);
-                    InventoryHelper.getItems(te, s -> true).forEach(inventory::addStack);
+                    InventoryTools.getItems(te, s -> true).forEach(inventory::addStack);
                     inventory.markDirty();
                     player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Stored inventory contents in filter"), false);
                 } else {
