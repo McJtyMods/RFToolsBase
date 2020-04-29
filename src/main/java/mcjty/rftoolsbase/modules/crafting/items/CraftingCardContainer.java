@@ -9,6 +9,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -25,11 +26,11 @@ public class CraftingCardContainer extends GenericContainer {
 
     private int cardIndex;
 
-    public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(0)
-            .playerSlots(10, 116);
+    public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(0)
+            .playerSlots(10, 116));
 
     public CraftingCardContainer(int id, BlockPos pos, PlayerEntity player) {
-        super(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY, pos, null);
+        super(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY.get(), pos, null);
         cardIndex = player.inventory.currentItem;
     }
 

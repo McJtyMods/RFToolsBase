@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -18,12 +19,12 @@ public class TabletContainer extends GenericContainer {
 
 	public static final int NUM_SLOTS = 6;
 
-	public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(1)
+	public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(1)
 			.box(specific(s -> s.getItem() instanceof ITabletSupport), CONTAINER_CONTAINER, 0, 15, 13, NUM_SLOTS, 18+5, 1, 18)
-            .playerSlots(10, 106);
+            .playerSlots(10, 106));
 
 	public TabletContainer(int id, BlockPos pos, PlayerEntity player) {
-		super(TabletSetup.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY, pos, null);
+		super(TabletSetup.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY.get(), pos, null);
 		cardIndex = player.inventory.currentItem;
     }
 

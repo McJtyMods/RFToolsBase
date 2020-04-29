@@ -6,6 +6,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
@@ -14,11 +15,11 @@ public class FilterModuleContainer extends GenericContainer {
 
 	private int cardIndex;
 
-	public static final ContainerFactory CONTAINER_FACTORY = new ContainerFactory(0)
-			.playerSlots(60, 106);
+	public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(0)
+			.playerSlots(60, 106));
 
 	public FilterModuleContainer(int id, BlockPos pos, PlayerEntity player) {
-		super(FilterSetup.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY, pos, null);
+		super(FilterSetup.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY.get(), pos, null);
 		cardIndex = player.inventory.currentItem;
     }
 
