@@ -5,6 +5,7 @@ Upcoming:
 - The Tablet is back! It now supports four different slots and can switch between them using the '[' and ']' keys (by default)
 - New tag 'forge:wrench' which the Smart Wrench uses
 - Fixed the recipes for the vanilla recipe book
+- Moved most of the configs from common to server (so that they are saved with the world and synced to the client)
 
 1.0.1-alpha:
 - Ported the filter module (for storage, builder, ...)

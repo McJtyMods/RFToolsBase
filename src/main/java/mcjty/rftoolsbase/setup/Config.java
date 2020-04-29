@@ -11,10 +11,10 @@ import java.nio.file.Path;
 
 public class Config {
 
-    private static final Builder COMMON_BUILDER = new Builder();
+    private static final Builder SERVER_BUILDER = new Builder();
 //    private static final Builder CLIENT_BUILDER = new Builder();
 
-    public static final ForgeConfigSpec COMMON_CONFIG;
+    public static final ForgeConfigSpec SERVER_CONFIG;
 //    public static final ForgeConfigSpec CLIENT_CONFIG;
 
 
@@ -47,45 +47,45 @@ public class Config {
 
     static {
         setupWorldgenConfig();
-        MachineInfuserConfiguration.init(COMMON_BUILDER);
+        MachineInfuserConfiguration.init(SERVER_BUILDER);
 
-        COMMON_CONFIG = COMMON_BUILDER.build();
+        SERVER_CONFIG = SERVER_BUILDER.build();
     }
 
     private static void setupWorldgenConfig() {
-        COMMON_BUILDER.comment("Dimensional shard ore generation").push(CATEGORY_WORLDGEN);
+        SERVER_BUILDER.comment("Dimensional shard ore generation").push(CATEGORY_WORLDGEN);
 
-        COMMON_BUILDER.comment("Overworld").push(SUB_CATEGORY_OVERWORLD);
-        OVERWORLD_ORE_CHANCES = COMMON_BUILDER
+        SERVER_BUILDER.comment("Overworld").push(SUB_CATEGORY_OVERWORLD);
+        OVERWORLD_ORE_CHANCES = SERVER_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
                 .defineInRange("oreChances", 1, 0, 256);
-        OVERWORLD_ORE_VEINSIZE = COMMON_BUILDER
+        OVERWORLD_ORE_VEINSIZE = SERVER_BUILDER
                 .comment("Max size of veins")
                 .defineInRange("oreVeinsize", 3, 1, 256);
-        OVERWORLD_ORE_MINY = COMMON_BUILDER
+        OVERWORLD_ORE_MINY = SERVER_BUILDER
                 .comment("Min height")
                 .defineInRange("oreMin", 2, 0, 256);
-        OVERWORLD_ORE_MAXY = COMMON_BUILDER
+        OVERWORLD_ORE_MAXY = SERVER_BUILDER
                 .comment("Max height")
                 .defineInRange("oreMax", 40, 0, 256);
-        COMMON_BUILDER.pop();
+        SERVER_BUILDER.pop();
 
-        COMMON_BUILDER.comment("Overworld").push(SUB_CATEGORY_NETHER);
-        NETHER_ORE_CHANCES = COMMON_BUILDER
+        SERVER_BUILDER.comment("Overworld").push(SUB_CATEGORY_NETHER);
+        NETHER_ORE_CHANCES = SERVER_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
                 .defineInRange("oreChances", 8, 0, 256);
-        NETHER_ORE_VEINSIZE = COMMON_BUILDER
+        NETHER_ORE_VEINSIZE = SERVER_BUILDER
                 .comment("Max size of veins")
                 .defineInRange("oreVeinsize", 8, 1, 256);
-        NETHER_ORE_MINY = COMMON_BUILDER
+        NETHER_ORE_MINY = SERVER_BUILDER
                 .comment("Min height")
                 .defineInRange("oreMin", 2, 0, 256);
-        NETHER_ORE_MAXY = COMMON_BUILDER
+        NETHER_ORE_MAXY = SERVER_BUILDER
                 .comment("Max height")
                 .defineInRange("oreMax", 40, 0, 256);
-        COMMON_BUILDER.pop();
+        SERVER_BUILDER.pop();
 
-        COMMON_BUILDER.pop();
+        SERVER_BUILDER.pop();
     }
 
 }
