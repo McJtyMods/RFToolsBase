@@ -48,13 +48,13 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
             .slot(specific(MachineInfuserTileEntity::isInfusable), CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
 
-    private LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(() -> new NoDirectionItemHander(this, CONTAINER_FACTORY.get()));
-    private LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
-    private LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
+    private final LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(() -> new NoDirectionItemHander(this, CONTAINER_FACTORY.get()));
+    private final LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
+    private final LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
             .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), windowId, CONTAINER_FACTORY.get(), getPos(), MachineInfuserTileEntity.this))
             .itemHandler(itemHandler)
             .energyHandler(energyHandler));
-    private LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
+    private final LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
 
     private int infusing = 0;
 
