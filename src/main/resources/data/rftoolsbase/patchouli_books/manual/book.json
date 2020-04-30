@@ -1,6 +1,10 @@
 {
-  "name": "RFTools Base Manual",
-  "landing_text":"RFTools Base",
+  "name": "Technology Guide",
+  "landing_text":"Technology Guide",
   "creative_tab": "rftoolsbase",
+//  "model": "rftoolsbase:manual",
+  "dont_generate_book": true,
+  "custom_book_item": "rftoolsbase:manual",
+  "show_progress": false,
   "version": 1
 }

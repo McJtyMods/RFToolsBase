@@ -5,9 +5,12 @@ import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.various.VariousSetup;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class ModSetup extends DefaultModSetup {
+
+    public static boolean patchouli = false;
 
     public ModSetup() {
         createTab("rftoolsbase", () -> new ItemStack(VariousSetup.SMARTWRENCH.get()));
@@ -23,5 +26,7 @@ public class ModSetup extends DefaultModSetup {
     }
 
     @Override
-    protected void setupModCompat() { }
+    protected void setupModCompat() {
+        patchouli = ModList.get().isLoaded("patchouli");
+    }
 }

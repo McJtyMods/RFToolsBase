@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.modules.various;
 
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.various.items.ManualItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
@@ -31,6 +32,8 @@ public class VariousSetup {
 
     public static final RegistryObject<Item> MACHINE_FRAME = ITEMS.register("machine_frame", () -> new Item(RFToolsBase.createStandardProperties()));
     public static final RegistryObject<Item> MACHINE_BASE = ITEMS.register("machine_base", () -> new Item(RFToolsBase.createStandardProperties()));
+
+    public static final RegistryObject<ManualItem> MANUAL = ITEMS.register("manual", ManualItem::new);
 
     private static Item createItem16() {
         return new Item(new Item.Properties().group(RFToolsBase.setup.getTab()).maxStackSize(16));

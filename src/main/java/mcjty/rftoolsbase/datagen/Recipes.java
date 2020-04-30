@@ -122,5 +122,10 @@ public class Recipes extends BaseRecipeProvider {
                         .key('Q', Tags.Items.STORAGE_BLOCKS_QUARTZ)
                         .addCriterion("quartz", hasItem(Blocks.QUARTZ_BLOCK)),
                 "geg", "RQR", "gRg");
+        build(consumer, ShapedRecipeBuilder.shapedRecipe(VariousSetup.MANUAL.get())
+                        .key('X', Items.BOOK)
+                        .key('g', Tags.Items.NUGGETS_IRON)
+                        .addCriterion("book", hasItem(Items.BOOK)),
+                "Xg", "gg");
     }
 }

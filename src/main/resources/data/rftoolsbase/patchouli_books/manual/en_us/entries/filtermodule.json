@@ -1,0 +1,11 @@
+{
+  "name": "Dimensional Shards",
+  "icon": "rftoolsbase:filter_module",
+  "category": "category_filtermodule",
+  "pages": [
+    {
+      "type": "text",
+      "text": "The Filter Module can filter"
+    }
+  ]
+}

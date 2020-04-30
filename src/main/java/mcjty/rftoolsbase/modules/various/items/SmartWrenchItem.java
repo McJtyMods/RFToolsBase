@@ -5,6 +5,7 @@ import mcjty.lib.api.smartwrench.SmartWrench;
 import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.TooltipBuilder;
+import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -35,7 +36,7 @@ import java.util.Optional;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
-public class SmartWrenchItem extends Item implements SmartWrench {
+public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettings {
 
     private final SmartWrenchMode mode;
 

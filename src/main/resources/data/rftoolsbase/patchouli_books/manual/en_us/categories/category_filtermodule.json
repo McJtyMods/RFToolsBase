@@ -1,0 +1,7 @@
+{
+  "name": "Filter module",
+  "description": "The versatile Filter Module",
+  "parent": "category_rftoolsbase",
+  "icon": "rftoolsbase:filter_module",
+  "sortnum": 20
+}

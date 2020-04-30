@@ -1,0 +1,7 @@
+{
+  "name": "Worldgen",
+  "description": "Everything about worldgen",
+  "parent": "category_rftoolsbase",
+  "icon": "rftoolsbase:dimensionalshard_overworld",
+  "sortnum": 10
+}
