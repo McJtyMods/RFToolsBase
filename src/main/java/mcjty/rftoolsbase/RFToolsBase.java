@@ -11,7 +11,6 @@ import mcjty.rftoolsbase.modules.various.VariousSetup;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -53,11 +52,6 @@ public class RFToolsBase implements ModBase {
     @Override
     public String getModId() {
         return RFToolsBase.MODID;
-    }
-
-    @Override
-    public void openManual(PlayerEntity entityPlayer, int i, String s) {
-        // @todo
     }
 
     public static Item.Properties createStandardProperties() {

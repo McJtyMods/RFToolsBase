@@ -1,0 +1,11 @@
+{
+  "name": "rftoolsbase.entry.tablet",
+  "icon": "rftoolsbase:tablet",
+  "category": "category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.tablet0"
+    }
+  ]
+}

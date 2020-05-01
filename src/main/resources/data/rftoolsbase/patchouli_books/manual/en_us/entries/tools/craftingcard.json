@@ -1,0 +1,17 @@
+{
+  "name": "rftoolsbase.entry.craftingcard",
+  "icon": "rftoolsbase:crafting_card",
+  "category": "category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.craftingcard0"
+    },
+    {
+      "type": "image",
+      "images": [
+        "rftoolsbase:textures/manual/image_craftingcard.png"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "rftoolsbase.entry.dimensionalshards",
+  "icon": "rftoolsbase:dimensionalshard",
+  "category": "category_basics",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.dimensionalshards0"
+    },
+    {
+      "type": "image",
+      "images": [
+        "rftoolsbase:textures/manual/image_ore.png"
+      ]
+    }
+  ]
+}

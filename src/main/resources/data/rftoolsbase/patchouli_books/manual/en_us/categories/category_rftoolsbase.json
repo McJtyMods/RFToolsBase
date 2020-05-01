@@ -1,5 +1,5 @@
 {
-  "name": "RFTools Base",
-  "description": "The base for all RFTools Tech Mods",
+  "name": "rftoolsbase.category.main",
+  "description": "rftoolsbase.category.main",
   "icon": "rftoolsbase:machine_base"
 }

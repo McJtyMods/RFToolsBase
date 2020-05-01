@@ -1,0 +1,11 @@
+{
+  "name": "rftoolsbase.entry.infusing",
+  "icon": "rftoolsbase:machine_infuser",
+  "category": "category_machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.infusing0"
+    }
+  ]
+}

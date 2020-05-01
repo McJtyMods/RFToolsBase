@@ -1,0 +1,11 @@
+{
+  "name": "rftoolsbase.entry.smartwrench",
+  "icon": "rftoolsbase:smartwrench",
+  "category": "category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.smartwrench0"
+    }
+  ]
+}

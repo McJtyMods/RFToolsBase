@@ -3,7 +3,7 @@ package mcjty.rftoolsbase.modules.various.items;
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.compat.patchouli.PatchouliCompatibility;
+import mcjty.lib.compat.patchouli.PatchouliCompatibility;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

@@ -69,5 +69,33 @@
     "message.rftoolsbase.smartwrench_select.info1": "Mode: ",
     "message.rftoolsbase.smartwrench_select.info2": "Block: ",
 
-    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards"
+    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards",
+
+    "rftoolsbase.category.main": "RFTools Base",
+    "rftoolsbase.category.basics": "Basics",
+    "rftoolsbase.category.tools": "Tools",
+    "rftoolsbase.category.machines": "Machines",
+
+    "rftoolsbase.entry.filtermodule": "Filter Module",
+    "rftoolsbase.page.filtermodule0": "The Filter Module is a very versatile item that can be used to whitelist or blacklist items for the machine. Various machines support this module (Builder, Modular Storage, Crafter, ...)",
+
+    "rftoolsbase.entry.smartwrench": "Smart Wrench",
+    "rftoolsbase.page.smartwrench0": "The Smart Wrench can be used to easily remove tech blocks and also select blocks for special functionality",
+
+    "rftoolsbase.entry.dimensionalshards": "Dimensional Shards",
+    "rftoolsbase.page.dimensionalshards0": "Dimensional Shards can be found underground in small clusters in various dimensions. They are very useful for some of the more complicated recipes and you can also use them to infuse machines",
+
+    "rftoolsbase.entry.craftingcard": "Crafting Card",
+    "rftoolsbase.page.craftingcard0": "The Crafting Card is a small item that can hold a recipe. It can be used for regular 3x3 recipes but also for more complex ones. Various machines can use this card",
+
+    "rftoolsbase.entry.tablet": "The Tablet",
+    "rftoolsbase.page.tablet0": "The Tablet can be used to remotely access various machines. Sneak-right click to open the internal tablet gui where you can install up to 6 modules. Right clicking the tablet will give you the gui of the current module. Using the $(k:prevDestination) and $(k:nextDestination) keys you can switch between installed modules",
+
+    "rftoolsbase.entry.infusing": "Infusing",
+    "rftoolsbase.page.infusing0": "By using Dimensional Shards in this machine it is possible to improve the efficiency of a lot of tech machines. They can work faster, give more outpus, use less power, ...",
+
+    "rftoolsbase.entry.information_screen": "Information Screen",
+    "rftoolsbase.page.information_screen0": "The Information Screen is a small screen that can be put adjacent to a machine in order to show some information"
+
+
 }

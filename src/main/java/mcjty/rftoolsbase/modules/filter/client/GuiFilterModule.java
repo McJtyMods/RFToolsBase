@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.modules.filter.client;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
+import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.TagSelectorWindow;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.HorizontalAlignment;
@@ -16,6 +17,7 @@ import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
@@ -60,7 +62,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     private Slider slider;
 
     public GuiFilterModule(FilterModuleContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance, null, container, inventory, /* @todo 1.14 */0, "storfilter");
+        super(RFToolsBase.instance, null, container, inventory, ManualHelper.create("rftoolsbase:tools/filtermodule"));
         xSize = CONTROLLER_WIDTH;
         ySize = CONTROLLER_HEIGHT;
     }

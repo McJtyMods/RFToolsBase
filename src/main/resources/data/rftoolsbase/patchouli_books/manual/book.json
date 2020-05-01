@@ -2,9 +2,9 @@
   "name": "Technology Guide",
   "landing_text":"Technology Guide",
   "creative_tab": "rftoolsbase",
-//  "model": "rftoolsbase:manual",
   "dont_generate_book": true,
   "custom_book_item": "rftoolsbase:manual",
   "show_progress": false,
+  "i18n": true,
   "version": 1
 }

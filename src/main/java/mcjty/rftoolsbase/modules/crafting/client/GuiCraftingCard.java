@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.modules.crafting.client;
 
 import mcjty.lib.gui.GenericGuiContainer;
+import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
 import mcjty.lib.gui.layout.HorizontalAlignment;
@@ -18,6 +19,7 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -44,7 +46,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     private BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
     public GuiCraftingCard(CraftingCardContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance, null, container, inventory, /* @todo 1.14 */0, "craftingcard");
+        super(RFToolsBase.instance, null, container, inventory, ManualHelper.create("rftoolsbase:tools/craftingcard"));
         xSize = WIDTH;
         ySize = HEIGHT;
     }
