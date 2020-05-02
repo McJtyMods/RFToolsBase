@@ -9,6 +9,7 @@ import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.energy.CapabilityEnergy;
@@ -24,7 +25,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
 
     public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance,  /*@todo*/ machineInfuserTileEntity, container, inventory, ManualEntry.EMPTY);
+        super(RFToolsBase.instance,  /*@todo*/ machineInfuserTileEntity, container, inventory, ManualHelper.create("rftoolsbase:machines/infusing"));
 
         xSize = INFUSER_WIDTH;
         ySize = INFUSER_HEIGHT;
