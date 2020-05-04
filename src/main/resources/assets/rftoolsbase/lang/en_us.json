@@ -72,9 +72,13 @@
     "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards",
 
     "rftoolsbase.category.main": "RFTools Base",
+    "rftoolsbase.category.main.description": "RFTools Base is the base mod for all tech based mods",
     "rftoolsbase.category.basics": "Basics",
+    "rftoolsbase.category.basics.description": "Basic information and worldgen",
     "rftoolsbase.category.tools": "Tools",
+    "rftoolsbase.category.tools.description": "Various tools exist that make your life easier for manipulating and configuring the various tech machines",
     "rftoolsbase.category.machines": "Machines",
+    "rftoolsbase.category.machines.description": "All the machines",
 
     "rftoolsbase.entry.filtermodule": "Filter Module",
     "rftoolsbase.page.filtermodule0": "The Filter Module is a very versatile item that can be used to whitelist or blacklist items for the machine. Various machines support this module (Builder, Modular Storage, Crafter, ...)",

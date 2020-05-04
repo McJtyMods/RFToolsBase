@@ -1,6 +1,6 @@
 {
   "name": "rftoolsbase.category.basics",
-  "description": "rftoolsbase.category.basics",
+  "description": "rftoolsbase.category.basics.description",
   "parent": "category_rftoolsbase",
   "icon": "rftoolsbase:dimensionalshard_overworld",
   "sortnum": 10

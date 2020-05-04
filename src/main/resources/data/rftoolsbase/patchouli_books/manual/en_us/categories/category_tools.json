@@ -1,6 +1,6 @@
 {
   "name": "rftoolsbase.category.tools",
-  "description": "rftoolsbase.category.tools",
+  "description": "rftoolsbase.category.tools.description",
   "parent": "category_rftoolsbase",
   "icon": "rftoolsbase:smartwrench",
   "sortnum": 20

@@ -1,6 +1,6 @@
 {
   "name": "rftoolsbase.category.machines",
-  "description": "rftoolsbase.category.machines",
+  "description": "rftoolsbase.category.machines.description",
   "parent": "category_rftoolsbase",
   "icon": "rftoolsbase:machine_infuser",
   "sortnum": 30
