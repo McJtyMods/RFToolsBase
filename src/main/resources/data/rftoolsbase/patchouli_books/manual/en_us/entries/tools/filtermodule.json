@@ -8,10 +8,8 @@
       "text": "rftoolsbase.page.filtermodule0"
     },
     {
-      "type": "image",
-      "images": [
-        "rftoolsbase:textures/manual/image_filter.png"
-      ]
+      "type": "text",
+      "text": "rftoolsbase.page.filtermodule1"
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "name": "rftoolsbase.entry.modules",
+  "icon": "rftoolsbase:filtermodule",
+  "category": "category_basics",
+  "pages": [
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.modules"
+    }
+  ]
+}

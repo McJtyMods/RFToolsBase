@@ -8,10 +8,8 @@
       "text": "rftoolsbase.page.information_screen0"
     },
     {
-      "type": "image",
-      "images": [
-        "rftoolsbase:textures/manual/image_information_screen.png"
-      ]
+      "type": "text",
+      "text": "rftoolsbase.page.information_screen1"
     }
   ]
 }

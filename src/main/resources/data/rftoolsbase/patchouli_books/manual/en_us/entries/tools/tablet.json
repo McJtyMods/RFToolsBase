@@ -6,6 +6,10 @@
     {
       "type": "text",
       "text": "rftoolsbase.page.tablet0"
+    },
+    {
+      "type": "text",
+      "text": "rftoolsbase.page.tablet1"
     }
   ]
 }
