@@ -1,4 +1,4 @@
-Upcoming:
+1.1.0-beta:
 - Better tooltips for many blocks and items
 - The filter module now supports an alternative for the ore dictionary where it will try to match blocks using common known tags
 - The filter module is now unlimited and has full support for tags. It is also whitelist mode by default now
