@@ -51,7 +51,8 @@ public class TabletItem extends Item implements IItemCycler {
         stack.getOrCreateTag().putInt("Current", current);
         ItemStack containingItem = getContainingItem(stack, current);
         ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
-        player.setHeldItem(getHand(player), newTablet);
+        player.inventory.mainInventory.set(player.inventory.currentItem, newTablet);
+//        player.setHeldItem(getHand(player), newTablet);
     }
 
     public static Hand getHand(PlayerEntity player) {
@@ -103,7 +104,8 @@ public class TabletItem extends Item implements IItemCycler {
 
         int current = getCurrentSlot(stack);
         ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
-        player.setHeldItem(hand, newTablet);
+        player.inventory.mainInventory.set(player.inventory.currentItem, newTablet);
+//        player.setHeldItem(hand, newTablet);
     }
 
     private static ItemStack deriveNewItemstack(int slot, ItemStack containingItem, ItemStack stack, int current) {
@@ -169,10 +171,4 @@ public class TabletItem extends Item implements IItemCycler {
         super.addInformation(itemStack, world, list, flags);
         tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flags);
     }
-
-    @Override
-    public int getUseDuration(ItemStack stack) {
-        return 1;
-    }
-
 }
