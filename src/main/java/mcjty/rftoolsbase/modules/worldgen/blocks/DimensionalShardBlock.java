@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -15,13 +14,10 @@ import java.util.Random;
 
 public class DimensionalShardBlock extends Block {
 
-    private final OreType oreType;
-
-    public DimensionalShardBlock(OreType variant) {
+    public DimensionalShardBlock() {
         super(Properties.create(Material.ROCK)
                 .hardnessAndResistance(3.0f, 5.0f)
                 .lightValue(7));
-        this.oreType = variant;
     }
 
     @Nullable
@@ -33,23 +29,6 @@ public class DimensionalShardBlock extends Block {
     @Override
     public int getHarvestLevel(BlockState state) {
         return 2;
-    }
-
-    public enum OreType implements IStringSerializable {
-        ORE_OVERWORLD("overworld"),
-        ORE_NETHER("nether"),
-        ORE_END("end");
-
-        private final String name;
-
-        OreType(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
     }
 
     @Override

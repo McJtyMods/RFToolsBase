@@ -56,10 +56,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     private Button remove;
     private Button expand;
-    private Button addTags;
 
     private WidgetList list;
-    private Slider slider;
 
     public GuiFilterModule(FilterModuleContainer container, PlayerInventory inventory) {
         super(RFToolsBase.instance, null, container, inventory, ManualHelper.create("rftoolsbase:tools/filtermodule"));
@@ -73,7 +71,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
         remove = button(5, 106, 50, 15, "Remove").tooltips("Remove current selection").event(this::removeSelection);
         expand = button(5, 121, 50, 15, "Expand").tooltips("Expand item to tags").event(this::expandToTags);
-        addTags = button(5, 137, 50, 15, "Add tags").tooltips("Add tags").event(this::addTagWindow);
+        Button addTags = button(5, 137, 50, 15, "Add tags").tooltips("Add tags").event(this::addTagWindow);
 
         blacklistMode = imageChoice(5, 152, 16, 16).tooltips("Black or whitelist mode").event((newChoice) -> updateSettings());
         blacklistMode.choice("Black", "Blacklist items", guiElements, 14 * 16, 32);
@@ -92,7 +90,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         modMode.choice("On", "Only mod must match", guiElements, 13 * 16, 32);
 
         list = list(5, 4, 207, 99).name("list");
-        slider = slider(212, 4, 10, 99).scrollableName("list");
+        Slider slider = slider(212, 4, 10, 99).scrollableName("list");
 
         CompoundNBT tagCompound = Minecraft.getInstance().player.getHeldItem(Hand.MAIN_HAND).getTag();
         if (tagCompound != null) {
