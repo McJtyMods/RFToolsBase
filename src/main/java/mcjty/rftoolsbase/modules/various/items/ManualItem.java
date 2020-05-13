@@ -4,6 +4,7 @@ import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.lib.compat.patchouli.PatchouliCompatibility;
+import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -27,7 +28,7 @@ public class ManualItem extends Item implements ITooltipSettings {
             .infoShift(header());
 
     public ManualItem() {
-        super(RFToolsBase.createStandardProperties().maxStackSize(1));
+        super(Registration.createStandardProperties().maxStackSize(1));
     }
 
     @Override

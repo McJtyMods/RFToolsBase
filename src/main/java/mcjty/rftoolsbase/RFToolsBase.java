@@ -2,15 +2,9 @@ package mcjty.rftoolsbase;
 
 import mcjty.lib.base.ModBase;
 import mcjty.rftoolsbase.client.ClientInfo;
-import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
-import mcjty.rftoolsbase.modules.filter.FilterSetup;
-import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
-import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
-import mcjty.rftoolsbase.modules.tablet.TabletSetup;
-import mcjty.rftoolsbase.modules.various.VariousSetup;
-import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
+import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -37,13 +31,7 @@ public class RFToolsBase implements ModBase {
 //        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
 
-        WorldGenSetup.register();
-        MachineInfuserSetup.register();
-        InformationScreenSetup.register();
-        CraftingSetup.register();
-        VariousSetup.register();
-        FilterSetup.register();
-        TabletSetup.register();
+        Registration.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLCommonSetupEvent e) -> setup.init(e));
     }
@@ -54,7 +42,4 @@ public class RFToolsBase implements ModBase {
         return RFToolsBase.MODID;
     }
 
-    public static Item.Properties createStandardProperties() {
-        return new Item.Properties().group(setup.getTab());
-    }
 }
