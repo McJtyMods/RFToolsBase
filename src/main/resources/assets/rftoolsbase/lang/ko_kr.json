@@ -1,0 +1,36 @@
+{
+    "item.rftoolsbase.network_monitor": "RF 네트워크 모니터",
+    "item.rftoolsbase.teleport_probe": "텔레포터 탐사선",
+    "item.rftoolsbase.developers_delight": "개발자의 기쁨",
+    "item.rftoolsbase.shard_wand": "조각 지팡이",
+    "item.rftoolsbase.orphaning_card": "고아 카드",
+    "item.rftoolsbase.security_card": "보안 카드",
+    "item.rftoolsbase.infused_diamond": "주입된 다이아몬드",
+    "item.rftoolsbase.infused_enderpearl": "주입된 엔더 진주",
+    "item.rftoolsbase.smartwrench": "스마트 렌치",
+    "item.rftoolsbase.smartwrench_select": "스마트 렌치 (선택)",
+    "item.rftoolsbase.dimensionalshard": "차원 조각",
+    "item.rftoolsbase.machine_frame": "기계 틀",
+    "item.rftoolsbase.machine_base": "기계 베이스",
+    "item.rftoolsbase.crafting_card": "조합 카드",
+
+    "block.rftoolsbase.machine_infuser": "기계 주입기",
+    "block.rftoolsbase.security_manager": "보안 매니저",
+    "block.rftoolsbase.dimensionalshard_overworld": "차원 조각 광석",
+    "block.rftoolsbase.dimensionalshard_nether": "차원 조각 광석",
+    "block.rftoolsbase.dimensionalshard_end": "차원 조각 광석",
+    "block.rftoolsbase.information_screen": "안내 스크린",
+
+    "_comment": "Creative Tabs",
+    "itemGroup.rftoolsbase": "RF툴즈 베이스",
+
+    "_comment": "Keys",
+    "key.categories.rftools": "RF툴즈",
+    "key.debugDumpNBTItem": "보류 아이템의 NBT 덤프",
+    "key.debugDumpNBTBlock": "선택한 블록에 대한 NBT 덤프",
+
+    "_comment": "Messages",
+    "message.rftoolsbase.shiftmessage": "<Shift 누르기>",
+    "message.rftoolsbase.security_manager": "@a내용: %s 스택\n@f이 블록은 보안 카드를 관리합니다.",
+    "message.rftoolsbase.infuser": "@f이 기계를 사용하면 RFTools의 다른 대부분의 기계를 \n@f다양한 방법으로 개선할 수 있습니다. 차원 조각이 \n@f필요합니다.\n@e주입 보너스: 전력 소비량을 줄입니다."
+}
