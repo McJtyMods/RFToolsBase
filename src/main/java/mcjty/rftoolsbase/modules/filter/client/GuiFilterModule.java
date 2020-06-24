@@ -237,7 +237,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
         if (slotIn != null && !slotIn.getStack().isEmpty()) {
             FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
-            if (McJtyLib.proxy.isShiftKeyDown()) {
+            if (McJtyLib.proxy.isSneaking()) {
                 for (ResourceLocation tag : slotIn.getStack().getItem().getTags()) {
                     inventory.addTag(tag);
                 }

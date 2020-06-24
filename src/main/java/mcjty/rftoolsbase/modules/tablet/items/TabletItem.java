@@ -127,7 +127,7 @@ public class TabletItem extends Item implements IItemCycler {
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (!world.isRemote) {
-            if (player.isShiftKeyDown()) {
+            if (player.isSneaking()) {
                 openTabletGui(player);
             } else {
                 ItemStack containingItem = getContainingItem(stack, getCurrentSlot(stack));
