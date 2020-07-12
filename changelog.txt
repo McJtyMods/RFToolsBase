@@ -1,3 +1,6 @@
+1.1.2-beta:
+- Update for latest McJtyLib
+
 1.1.1-beta:
 - Dependency fix
 
