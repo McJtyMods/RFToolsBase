@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.lib.container.*;
+import mcjty.rftoolsbase.api.compat.JEIRecipeAcceptor;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
 import mcjty.rftoolsbase.modules.tablet.TabletSetup;
 import net.minecraft.entity.player.PlayerEntity;
@@ -27,6 +28,11 @@ public class TabletContainer extends GenericContainer {
 		super(TabletSetup.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY.get(), pos, null);
 		cardIndex = player.inventory.currentItem;
     }
+
+	public JEIRecipeAcceptor getJEIRecipeAcceptor() {
+		return (JEIRecipeAcceptor) getInventory(CONTAINER_INVENTORY);
+	}
+
 
 	@Override
 	public void setupInventories(IItemHandler itemHandler, PlayerInventory inventory) {
