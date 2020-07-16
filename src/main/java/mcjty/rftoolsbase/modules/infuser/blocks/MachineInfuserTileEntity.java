@@ -128,9 +128,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     private void startInfusing() {
         energyHandler.ifPresent(energy -> {
             int defaultCost = MachineInfuserConfiguration.RFPERTICK.get();
-            int rf = infusableHandler.map(h -> {
-                return (int) (defaultCost * (2.0f - h.getInfusedFactor()) / 2.0f);
-            }).orElse(defaultCost);
+            int rf = infusableHandler.map(h -> (int) (defaultCost * (2.0f - h.getInfusedFactor()) / 2.0f)).orElse(defaultCost);
 
             if (energy.getEnergy() < rf) {
                 // Not enough energy.
