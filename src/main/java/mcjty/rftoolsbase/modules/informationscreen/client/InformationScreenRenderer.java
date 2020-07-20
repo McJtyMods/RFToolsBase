@@ -32,7 +32,7 @@ public class InformationScreenRenderer extends TileEntityRenderer<InformationScr
 
         te.getInfo().ifPresent(h -> {
             TypedMap data = te.getClientData();
-            h.render(te.getMode(), matrixStack, buffer, data, orientation, 0,0,0/*@todo 1.15 was x,y,z*/, 0.3f);
+            h.render(te.getMode(), matrixStack, buffer, data, orientation, 0.3f);
         });
     }
 

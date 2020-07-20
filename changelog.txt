@@ -1,3 +1,6 @@
+Upcoming:
+- New 'tick order' system for the endergenic power generator
+
 1.1.2-beta:
 - Update for latest McJtyLib
 

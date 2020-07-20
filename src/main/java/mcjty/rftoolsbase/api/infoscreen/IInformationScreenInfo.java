@@ -37,5 +37,5 @@ public interface IInformationScreenInfo {
     /**
      * Called client-side to actually render the information
      */
-    void render(int mode, MatrixStack matrixStack, IRenderTypeBuffer buffer, @Nonnull TypedMap info, Direction orientation, double x, double y, double z, double scale);
+    void render(int mode, MatrixStack matrixStack, IRenderTypeBuffer buffer, @Nonnull TypedMap info, Direction orientation, double scale);
 }
