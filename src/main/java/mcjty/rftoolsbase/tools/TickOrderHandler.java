@@ -34,12 +34,15 @@ public class TickOrderHandler {
     }
 
     private static Map<DimensionType, List<IOrderTicker>[]> tiles = new HashMap<>();
-
-    private TickOrderHandler() {
-    }
+    private static long ticker = 0;     // To keep track of when a tile was added
 
     public static void clean() {
         tiles.clear();
+    }
+
+    // Return a number that you can use to detect that you have already been added to the queue this tick
+    public static long getTicker() {
+        return ticker;
     }
 
     public static void queue(IOrderTicker tile) {
@@ -48,11 +51,12 @@ public class TickOrderHandler {
             for (Rank rank : Rank.values()) {
                 list[rank.ordinal()] = new ArrayList<>();
             }
+            tiles.put(tile.getDimension(), list);
         }
         tiles.get(tile.getDimension())[tile.getRank().ordinal()].add(tile);
     }
 
-    private static <T extends IOrderTicker> void tickServer(DimensionType dimension, List<T> tileEntities) {
+    private static <T extends IOrderTicker> void tickServer(List<T> tileEntities) {
         for (T tileEntity : tileEntities) {
             tileEntity.tickServer();
         }
@@ -60,10 +64,11 @@ public class TickOrderHandler {
     }
 
     public static void postWorldTick(DimensionType dimension) {
+        ticker++;
         List<IOrderTicker>[] lists = tiles.get(dimension);
         if (lists != null) {
             for (Rank rank : Rank.values()) {
-                tickServer(dimension, lists[rank.ordinal()]);
+                tickServer(lists[rank.ordinal()]);
             }
         }
     }
