@@ -2,17 +2,14 @@ package mcjty.rftoolsbase.modules.infuser.client;
 
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
-import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.widgets.EnergyBar;
 import mcjty.lib.gui.widgets.Panel;
-import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.energy.CapabilityEnergy;
 
 import static mcjty.lib.gui.widgets.Widgets.positional;
 
@@ -53,10 +50,6 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     @Override
     protected void drawGuiContainerBackgroundLayer(float v, int i, int i2) {
         drawWindow();
-
-        tileEntity.getCapability(CapabilityEnergy.ENERGY).ifPresent(e -> {
-            energyBar.maxValue(((GenericEnergyStorage)e).getCapacity());
-            energyBar.value(((GenericEnergyStorage)e).getEnergy());
-        });
+        updateEnergyBar(energyBar);
     }
 }
