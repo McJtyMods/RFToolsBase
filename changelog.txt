@@ -1,4 +1,4 @@
-Upcoming:
+1.1.3-beta:
 - New 'tick order' system for the endergenic power generator
 
 1.1.2-beta:
