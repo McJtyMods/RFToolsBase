@@ -8,6 +8,7 @@ import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class ModSetup extends DefaultModSetup {
@@ -20,9 +21,11 @@ public class ModSetup extends DefaultModSetup {
     @Override
     public void init(FMLCommonSetupEvent e) {
         super.init(e);
-        OreGenerator.init();
+        DeferredWorkQueue.runLater(() -> {
+            OreGenerator.init();
+            CommandHandler.registerCommands();
+        });
         CapabilityMachineInformation.register();
-        CommandHandler.registerCommands();
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
             if (!event.world.isRemote) {
