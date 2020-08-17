@@ -7,9 +7,9 @@ import mcjty.lib.client.CustomRenderTypes;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Matrix4f;
+import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 
 public class RenderWorldLastEventHandler {
@@ -43,7 +43,7 @@ public class RenderWorldLastEventHandler {
 
         matrixStack.push();
 
-        Vec3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+        Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
         Matrix4f positionMatrix = matrixStack.getLast().getMatrix();
