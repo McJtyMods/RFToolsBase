@@ -2,7 +2,6 @@ package mcjty.rftoolsbase.modules.filter.client;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
-import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.TagSelectorWindow;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.HorizontalAlignment;
