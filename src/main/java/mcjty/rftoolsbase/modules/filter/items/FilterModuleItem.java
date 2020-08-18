@@ -102,9 +102,9 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                         FilterModuleInventory inventory = new FilterModuleInventory(stack);
                         inventory.addStack(blockStack);
                         inventory.markDirty();
-                        player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getDisplayName().getFormattedText() + " to the filter!"), false);
+                        player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getDisplayName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     } else {
-                        player.sendStatusMessage(new StringTextComponent(TextFormatting.RED + "Could not add " + blockStack.getDisplayName().getFormattedText() + " to the filter!"), false);
+                        player.sendStatusMessage(new StringTextComponent(TextFormatting.RED + "Could not add " + blockStack.getDisplayName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     }
                 }
             }

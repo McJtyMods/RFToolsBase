@@ -52,9 +52,9 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                         ItemStack result = getResult(stack);
                         if (!result.isEmpty()) {
                             if (result.getCount() > 1) {
-                                return result.getDisplayName().getFormattedText() + "(" + result.getCount() + ")";
+                                return result.getDisplayName().getString() /* was getFormattedText() */ + "(" + result.getCount() + ")";
                             } else {
-                                return result.getDisplayName().getFormattedText();
+                                return result.getDisplayName().getString() /* was getFormattedText() */;
                             }
                         }
                         return "<empty>";

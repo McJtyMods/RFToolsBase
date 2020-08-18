@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.modules.filter.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.TagSelectorWindow;
@@ -164,8 +165,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void drawWindow() {
-        super.drawWindow();
+    protected void drawWindow(MatrixStack matrixStack) {
+        super.drawWindow(matrixStack);
         remove.enabled(canRemove());
         expand.enabled(canExpand());
     }
@@ -198,7 +199,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
             Panel panel = horizontal();
             BlockRender render = new BlockRender().renderItem(stack);
             panel.children(render);
-            String formattedText = stack.getDisplayName().getFormattedText();
+            String formattedText = stack.getDisplayName().getString() /* was getFormattedText() */;
             if (formattedText.length() >= 30) {
                 formattedText = formattedText.substring(0, 28) + "...";
             }

@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.tools;
 
+import mcjty.lib.varia.DimensionId;
 import net.minecraft.world.dimension.DimensionType;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class TickOrderHandler {
     public interface IOrderTicker {
         Rank getRank();
         void tickServer();
-        DimensionType getDimension();
+        DimensionId getDimension();
     }
 
     private static Map<DimensionType, List<IOrderTicker>[]> tiles = new HashMap<>();

@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.modules.crafting.client;
 
 import mcjty.lib.gui.GenericGuiContainer;
-import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
 import mcjty.lib.gui.layout.HorizontalAlignment;
@@ -174,6 +173,6 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     @Override
     protected void drawGuiContainerBackgroundLayer(float v, int i, int i2) {
         updateSlots();
-        drawWindow();
+        drawWindow(xxx);
     }
 }
