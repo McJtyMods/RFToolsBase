@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nullable;
@@ -17,7 +16,7 @@ public class DimensionalShardBlock extends Block {
     public DimensionalShardBlock() {
         super(Properties.create(Material.ROCK)
                 .hardnessAndResistance(3.0f, 5.0f)
-                .lightValue(7));
+                .setLightLevel(value -> 7));
     }
 
     @Nullable
@@ -32,9 +31,8 @@ public class DimensionalShardBlock extends Block {
     }
 
     @Override
-    public void onPlayerDestroy(IWorld iworld, BlockPos pos, BlockState state) {
-        World world = iworld.getWorld();
-        if (world.isRemote) {
+    public void onPlayerDestroy(IWorld world, BlockPos pos, BlockState state) {
+        if (world.isRemote()) {
             for (int i = 0 ; i < 10 ; i++) {
                 world.addParticle(ParticleTypes.FIREWORK, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f);
             }

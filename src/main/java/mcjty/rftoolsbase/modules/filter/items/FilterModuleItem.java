@@ -19,8 +19,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -151,11 +151,11 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             itemSet.add(s.getItem());
         }
         for (ResourceLocation tag : inventory.getTags()) {
-            Tag<Item> itemTag = ItemTags.getCollection().get(tag);
+            ITag<Item> itemTag = ItemTags.getCollection().get(tag);
             if (itemTag != null) {
                 itemSet.addAll(itemTag.getAllElements());
             } else {
-                Tag<Block> blockTag = BlockTags.getCollection().get(tag);
+                ITag<Block> blockTag = BlockTags.getCollection().get(tag);
                 if (blockTag != null) {
                     for (Block block : blockTag.getAllElements()) {
                         itemSet.add(block.asItem());

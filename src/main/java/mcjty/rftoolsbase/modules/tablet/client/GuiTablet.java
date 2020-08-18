@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.tablet.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.gui.GenericGuiContainer;
-import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.gui.widgets.ToggleButton;
@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 
-import static mcjty.lib.gui.widgets.Widgets.button;
 import static mcjty.lib.gui.widgets.Widgets.positional;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
@@ -68,8 +67,8 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(int i, int i2) {
-        super.drawGuiContainerForegroundLayer(i, i2);
+    protected void drawGuiContainerForegroundLayer(MatrixStack stack, int p_230451_2_, int p_230451_3_) {
+        super.drawGuiContainerForegroundLayer(stack, p_230451_2_, p_230451_3_);
         ItemStack heldItem = minecraft.player.getHeldItem(getHand());
         updateActiveButton(TabletItem.getCurrentSlot(heldItem));
     }

@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.modules.infuser.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
@@ -46,10 +47,9 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         energyBar = window.findChild("energybar");
     }
 
-
     @Override
-    protected void drawGuiContainerBackgroundLayer(float v, int i, int i2) {
-        drawWindow(xxx);
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+        drawWindow(matrixStack);
         updateEnergyBar(energyBar);
     }
 }

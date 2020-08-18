@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.modules.crafting.client;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
@@ -113,7 +114,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 //                            }
                         }
 
-                        return list.stream().map(ITextComponent::getFormattedText).collect(Collectors.toList());
+                        // @todo 1.16 used to be getFormattedText
+                        return list.stream().map(ITextComponent::getString).collect(Collectors.toList());
                     } else {
                         return Collections.emptyList();
                     }
@@ -171,8 +173,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float v, int i, int i2) {
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
         updateSlots();
-        drawWindow(xxx);
+        drawWindow(matrixStack);
     }
 }

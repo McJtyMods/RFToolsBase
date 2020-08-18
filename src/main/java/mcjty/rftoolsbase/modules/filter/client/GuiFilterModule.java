@@ -27,11 +27,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.List;
@@ -184,11 +186,11 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list.removeChildren();
 
         for (ResourceLocation tag : inventory.getTags()) {
-            Tag<Item> itemTag = ItemTags.getCollection().get(tag);
+            ITag<Item> itemTag = ItemTags.getCollection().get(tag);
             if (itemTag != null) {
                 addTagToList(itemTag);
             } else {
-                Tag<Block> blockTag = BlockTags.getCollection().get(tag);
+                ITag<Block> blockTag = BlockTags.getCollection().get(tag);
                 if (blockTag != null) {
                     addTagToList(blockTag);
                 }
@@ -208,20 +210,23 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         }
     }
 
-    private <T extends IItemProvider> void addTagToList(Tag<T> tag) {
-        Panel panel = horizontal(0, 0);
-        panel.userObject(tag.getId());
-        panel.children(label(tag.getId().toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
-        int i = 5;
-        for (T item : tag.getAllElements()) {
-            BlockRender render = new BlockRender().renderItem(new ItemStack(item));
-            panel.children(render);
-            i--;
-            if (i <= 0) {
-                break;
+    private <T extends IItemProvider> void addTagToList(ITag<T> tag) {
+        if (tag instanceof ITag.INamedTag) {
+            ITag.INamedTag<T> t = (ITag.INamedTag<T>)(tag);
+            Panel panel = horizontal(0, 0);
+            panel.userObject(t.getName());
+            panel.children(label(t.getName().toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+            int i = 5;
+            for (T item : tag.getAllElements()) {
+                BlockRender render = new BlockRender().renderItem(new ItemStack(item));
+                panel.children(render);
+                i--;
+                if (i <= 0) {
+                    break;
+                }
             }
+            list.children(panel);
         }
-        list.children(panel);
     }
 
     private void setBlacklistMode(String mode) {
@@ -250,10 +255,10 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    public List<String> getTooltipFromItem(ItemStack stack) {
-        List<String> list = super.getTooltipFromItem(stack);
-        list.add(TextFormatting.GOLD + "Click to add to filter");
-        list.add(TextFormatting.GOLD + "Shift-Click to add tags to filter");
+    public List<ITextComponent> getTooltipFromItem(ItemStack p_231151_1_) {
+        List<ITextComponent> list = super.getTooltipFromItem(p_231151_1_);
+        list.add(new StringTextComponent(TextFormatting.GOLD + "Click to add to filter"));
+        list.add(new StringTextComponent(TextFormatting.GOLD + "Shift-Click to add tags to filter"));
         return list;
     }
 

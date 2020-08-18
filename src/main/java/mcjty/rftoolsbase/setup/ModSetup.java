@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.setup.DefaultModSetup;
+import mcjty.lib.varia.DimensionId;
 import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.various.VariousSetup;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
@@ -29,7 +30,7 @@ public class ModSetup extends DefaultModSetup {
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
             if (!event.world.isRemote) {
-                TickOrderHandler.postWorldTick(event.world.getDimension().getType());
+                TickOrderHandler.postWorldTick(DimensionId.fromWorld(event.world));
             }
         });
     }

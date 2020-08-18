@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.commands;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -23,9 +24,9 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = false;
             ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid boolean!");
             if (sender instanceof PlayerEntity) {
-                ((PlayerEntity) sender).sendStatusMessage(component, false);
+                sender.sendStatusMessage(component, false);
             } else {
-                sender.sendMessage(component);
+                sender.sendMessage(component, Util.DUMMY_UUID);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
@@ -41,9 +42,9 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = 0;
             ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid integer!");
             if (sender instanceof PlayerEntity) {
-                ((PlayerEntity) sender).sendStatusMessage(component, false);
+                sender.sendStatusMessage(component, false);
             } else {
-                sender.sendMessage(component);
+                sender.sendMessage(component, Util.DUMMY_UUID);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
@@ -59,9 +60,9 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = 0.0f;
             ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid real number!");
             if (sender instanceof PlayerEntity) {
-                ((PlayerEntity) sender).sendStatusMessage(component, false);
+                sender.sendStatusMessage(component, false);
             } else {
-                sender.sendMessage(component);
+                sender.sendMessage(component, Util.DUMMY_UUID);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
