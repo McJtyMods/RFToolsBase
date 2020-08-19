@@ -6,6 +6,7 @@ import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
+import mcjty.lib.varia.DimensionId;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -28,7 +29,6 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -161,7 +161,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             int y = tagCompound.getInt("selectedY");
             int z = tagCompound.getInt("selectedZ");
             String dim = tagCompound.getString("selectedDim");
-            return Optional.of(new GlobalCoordinate(new BlockPos(x, y, z), DimensionType.byName(new ResourceLocation(dim))));
+            return Optional.of(new GlobalCoordinate(new BlockPos(x, y, z), DimensionId.fromResourceLocation(new ResourceLocation(dim))));
         }
         return Optional.empty();
     }
