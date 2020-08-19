@@ -48,7 +48,7 @@ public class DefaultPowerInformationRenderer {
             long pct = energy * 100 / maxEnergy;
             for (int i = 0 ; i < 100 ; i += 5) {
                 int col = i < pct ? getPercentageColor(i) : 0xff111111;
-                RenderHelper.drawFlatBox(16, (int) (100-i*.8-13), 88 , (int) (100-i*.8+3-13), col, col);
+                RenderHelper.drawFlatBox(matrixStack, 16, (int) (100-i*.8-13), 88 , (int) (100-i*.8+3-13), col, col);
             }
         }
         Minecraft.getInstance().gameRenderer.getLightTexture().enableLightmap();
