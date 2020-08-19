@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.tools;
 
-import net.minecraft.world.dimension.DimensionType;
+import mcjty.lib.varia.DimensionId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +30,10 @@ public class TickOrderHandler {
     public interface IOrderTicker {
         Rank getRank();
         void tickServer();
-        DimensionType getDimension();
+        DimensionId getDimension();
     }
 
-    private static Map<DimensionType, List<IOrderTicker>[]> tiles = new HashMap<>();
+    private static Map<DimensionId, List<IOrderTicker>[]> tiles = new HashMap<>();
     private static long ticker = 0;     // To keep track of when a tile was added
 
     public static void clean() {
@@ -63,7 +63,7 @@ public class TickOrderHandler {
         tileEntities.clear();
     }
 
-    public static void postWorldTick(DimensionType dimension) {
+    public static void postWorldTick(DimensionId dimension) {
         ticker++;
         List<IOrderTicker>[] lists = tiles.get(dimension);
         if (lists != null) {
