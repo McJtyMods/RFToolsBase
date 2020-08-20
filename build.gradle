@@ -183,9 +183,11 @@ curseforge {
             displayName = "${modname} - ${version}"
         }
         relations {
-            optionalLibrary 'baubles'
-            optionalLibrary 'tesla'
-            optionalLibrary 'redstone-flux'
+            relations {
+                optionalLibrary 'redstone-flux'
+                optionalLibrary 'the-one-probe'
+                requiredLibrary 'mcjtylib'
+            }
         }
     }
 }
