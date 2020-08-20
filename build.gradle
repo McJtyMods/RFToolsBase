@@ -183,11 +183,9 @@ curseforge {
             displayName = "${modname} - ${version}"
         }
         relations {
-            relations {
-                optionalLibrary 'redstone-flux'
-                optionalLibrary 'the-one-probe'
-                requiredDependency 'mcjtylib'
-            }
+            optionalLibrary 'redstone-flux'
+            optionalLibrary 'the-one-probe'
+            requiredDependency 'mcjtylib'
         }
     }
 }
