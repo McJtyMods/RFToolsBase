@@ -186,7 +186,7 @@ curseforge {
             relations {
                 optionalLibrary 'redstone-flux'
                 optionalLibrary 'the-one-probe'
-                requiredLibrary 'mcjtylib'
+                requiredDependency 'mcjtylib'
             }
         }
     }
