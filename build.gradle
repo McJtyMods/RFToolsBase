@@ -135,6 +135,43 @@ dependencies {
     //compile "li.cil.oc:OpenComputers:${oc_version}"
 }
 
+task("uploadJars", dependsOn: "reobf") {
+    description = "uploads JARs"
+    if (System.getenv("local_maven") != null) {
+        apply plugin: 'maven'
+        uploadArchives {
+            repositories {
+                mavenDeployer {
+                    repository(url: "file://" + System.getenv("local_maven"))
+                    pom {
+                        groupId = project.group
+                        version = project.version
+                        artifactId = project.archivesBaseName
+                        project {
+                            name project.archivesBaseName
+                            packaging 'jar'
+                            description project.archivesBaseName
+                            issueManagement {
+                                system 'github'
+                                url 'https://github.com/McJtyMods/RFToolsBase/issues'
+                            }
+                            developers {
+                                developer {
+                                    id 'McJty'
+                                    name 'McJty'
+                                    roles {
+                                        role 'developer'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 String getChangelogText() {
     def changelogFile = file('changelog.txt')
     String str = ''
@@ -188,42 +225,4 @@ curseforge {
             requiredDependency 'mcjtylib'
         }
     }
-}
-
-task("uploadJars", dependsOn: "reobf") {
-    description = "uploads JARs"
-    if (System.getenv("local_maven") != null) {
-        apply plugin: 'maven'
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    repository(url: "file://" + System.getenv("local_maven"))
-                    pom {
-                        groupId = project.group
-                        version = project.version
-                        artifactId = project.archivesBaseName
-                        project {
-                            name project.archivesBaseName
-                            packaging 'jar'
-                            description project.archivesBaseName
-                            issueManagement {
-                                system 'github'
-                                url 'https://github.com/McJtyMods/RFToolsBase/issues'
-                            }
-                            developers {
-                                developer {
-                                    id 'McJty'
-                                    name 'McJty'
-                                    roles {
-                                        role 'developer'
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 }
