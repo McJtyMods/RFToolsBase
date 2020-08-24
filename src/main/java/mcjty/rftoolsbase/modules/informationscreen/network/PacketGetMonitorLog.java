@@ -7,6 +7,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -32,13 +33,16 @@ public class PacketGetMonitorLog {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             PlayerEntity player = ctx.getSender();
-            TileEntity te = player.getEntityWorld().getTileEntity(pos);
-            if (te instanceof InformationScreenTileEntity) {
-                InformationScreenTileEntity infoScreen = (InformationScreenTileEntity) te;
-                infoScreen.getInfo().ifPresent(h -> {
-                    PacketMonitorLogReady packet = new PacketMonitorLogReady(pos, h.getInfo(infoScreen.getMode()));
-                    RFToolsBaseMessages.INSTANCE.sendTo(packet, ((ServerPlayerEntity) player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
-                });
+            World world = player.getEntityWorld();
+            if (world.isBlockLoaded(pos)) {
+                TileEntity te = world.getTileEntity(pos);
+                if (te instanceof InformationScreenTileEntity) {
+                    InformationScreenTileEntity infoScreen = (InformationScreenTileEntity) te;
+                    infoScreen.getInfo().ifPresent(h -> {
+                        PacketMonitorLogReady packet = new PacketMonitorLogReady(pos, h.getInfo(infoScreen.getMode()));
+                        RFToolsBaseMessages.INSTANCE.sendTo(packet, ((ServerPlayerEntity) player).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+                    });
+                }
             }
         });
         ctx.setPacketHandled(true);
