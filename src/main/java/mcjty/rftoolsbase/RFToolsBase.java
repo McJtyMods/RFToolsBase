@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase;
 
 import mcjty.rftoolsbase.client.ClientInfo;
+import mcjty.rftoolsbase.setup.ClientSetup;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
@@ -8,7 +9,6 @@ import mcjty.rftoolsbase.tools.TickOrderHandler;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -33,7 +33,8 @@ public class RFToolsBase {
 
         Registration.register();
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLCommonSetupEvent e) -> setup.init(e));
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(setup::init);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLServerStartedEvent e) -> TickOrderHandler.clean());
     }
 }
