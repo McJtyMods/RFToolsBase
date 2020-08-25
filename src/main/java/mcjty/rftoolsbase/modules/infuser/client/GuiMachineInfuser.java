@@ -22,7 +22,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
 
     public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance,  /*@todo*/ machineInfuserTileEntity, container, inventory, ManualHelper.create("rftoolsbase:machines/infusing"));
+        super(  /*@todo*/ machineInfuserTileEntity, container, inventory, ManualHelper.create("rftoolsbase:machines/infusing"));
 
         xSize = INFUSER_WIDTH;
         ySize = INFUSER_HEIGHT;

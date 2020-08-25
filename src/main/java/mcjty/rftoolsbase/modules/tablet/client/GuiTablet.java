@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.modules.tablet.client;
 
 import mcjty.lib.gui.GenericGuiContainer;
-import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.gui.widgets.ToggleButton;
@@ -31,7 +30,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     private ToggleButton[] buttons;
 
     public GuiTablet(TabletContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance, null, container, inventory, ManualHelper.create("rftoolsbase:tools/tablet"));
+        super(null, container, inventory, ManualHelper.create("rftoolsbase:tools/tablet"));
         xSize = TABLET_WIDTH;
         ySize = TABLET_HEIGHT;
     }
