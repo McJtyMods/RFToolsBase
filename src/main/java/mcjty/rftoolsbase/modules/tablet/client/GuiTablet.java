@@ -30,7 +30,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     private ToggleButton[] buttons;
 
     public GuiTablet(TabletContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance, null, container, inventory, ManualHelper.create("rftoolsbase:tools/tablet"));
+        super(null, container, inventory, ManualHelper.create("rftoolsbase:tools/tablet"));
         xSize = TABLET_WIDTH;
         ySize = TABLET_HEIGHT;
     }

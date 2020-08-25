@@ -62,7 +62,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     private WidgetList list;
 
     public GuiFilterModule(FilterModuleContainer container, PlayerInventory inventory) {
-        super(RFToolsBase.instance, null, container, inventory, ManualHelper.create("rftoolsbase:tools/filtermodule"));
+        super(null, container, inventory, ManualHelper.create("rftoolsbase:tools/filtermodule"));
         xSize = CONTROLLER_WIDTH;
         ySize = CONTROLLER_HEIGHT;
     }
