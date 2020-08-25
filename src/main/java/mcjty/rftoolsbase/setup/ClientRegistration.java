@@ -24,6 +24,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -32,14 +33,16 @@ public class ClientRegistration {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent e) {
+        DeferredWorkQueue.runLater(() -> {
+            GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
+            ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), ClientRegistration::createCraftingCardGui);
+            ScreenManager.registerFactory(FilterSetup.CONTAINER_FILTER_MODULE.get(), ClientRegistration::createFilterModuleGui);
+            ScreenManager.registerFactory(TabletSetup.CONTAINER_TABLET.get(), ClientRegistration::createTabletGui);
+        });
         InformationScreenRenderer.register();
-        GenericGuiContainer.register(MachineInfuserSetup.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
-        ScreenManager.registerFactory(CraftingSetup.CONTAINER_CRAFTING_CARD.get(), ClientRegistration::createCraftingCardGui);
-        ScreenManager.registerFactory(FilterSetup.CONTAINER_FILTER_MODULE.get(), ClientRegistration::createFilterModuleGui);
-        ScreenManager.registerFactory(TabletSetup.CONTAINER_TABLET.get(), ClientRegistration::createTabletGui);
         MinecraftForge.EVENT_BUS.addListener(RenderWorldLastEventHandler::tick);
-        KeyBindings.init();
         MinecraftForge.EVENT_BUS.register(new KeyInputHandler());
+        KeyBindings.init();
     }
 
     private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
