@@ -6,7 +6,9 @@ import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -35,7 +37,9 @@ public class RFToolsBase {
         Registration.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(setup::init);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
         MinecraftForge.EVENT_BUS.addListener((FMLServerStartedEvent e) -> TickOrderHandler.clean());
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+        });
     }
 }
