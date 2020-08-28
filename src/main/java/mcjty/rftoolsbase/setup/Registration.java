@@ -2,13 +2,6 @@ package mcjty.rftoolsbase.setup;
 
 
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.modules.crafting.CraftingSetup;
-import mcjty.rftoolsbase.modules.filter.FilterSetup;
-import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
-import mcjty.rftoolsbase.modules.infuser.MachineInfuserSetup;
-import mcjty.rftoolsbase.modules.tablet.TabletSetup;
-import mcjty.rftoolsbase.modules.various.VariousSetup;
-import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.container.ContainerType;
@@ -37,14 +30,6 @@ public class Registration {
         CONTAINERS.register(FMLJavaModLoadingContext.get().getModEventBus());
         SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-
-        WorldGenSetup.register();
-        MachineInfuserSetup.register();
-        InformationScreenSetup.register();
-        CraftingSetup.register();
-        VariousSetup.register();
-        FilterSetup.register();
-        TabletSetup.register();
     }
 
 

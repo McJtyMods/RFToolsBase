@@ -14,7 +14,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 
-import static mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup.TYPE_INFORMATION_SCREEN;
+import static mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule.TYPE_INFORMATION_SCREEN;
 
 public class InformationScreenTileEntity extends GenericTileEntity implements ITickableTileEntity {
 

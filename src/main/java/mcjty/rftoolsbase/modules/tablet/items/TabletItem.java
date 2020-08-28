@@ -5,7 +5,7 @@ import mcjty.lib.varia.NBTTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
-import mcjty.rftoolsbase.modules.tablet.TabletSetup;
+import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -61,7 +61,7 @@ public class TabletItem extends Item implements IItemCycler {
 
     @Override
     public Collection<ItemGroup> getCreativeTabs() {
-        if (this == TabletSetup.TABLET.get()) {
+        if (this == TabletModule.TABLET.get()) {
             return super.getCreativeTabs();
         }
         return Collections.emptyList();
@@ -112,7 +112,7 @@ public class TabletItem extends Item implements IItemCycler {
         ItemStack newTablet;
         if (slot == current) {
             if (containingItem.isEmpty()) {
-                newTablet = new ItemStack(TabletSetup.TABLET.get());
+                newTablet = new ItemStack(TabletModule.TABLET.get());
             } else {
                 newTablet = new ItemStack(((ITabletSupport) containingItem.getItem()).getInstalledTablet());
             }

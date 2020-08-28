@@ -10,7 +10,7 @@ import mcjty.lib.varia.DimensionId;
 import mcjty.lib.varia.GlobalCoordinate;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.modules.various.VariousSetup;
+import mcjty.rftoolsbase.modules.various.VariousModule;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -62,10 +62,10 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             ItemStack newStack;
             if (mode == SmartWrenchMode.MODE_WRENCH) {
                 mode = SmartWrenchMode.MODE_SELECT;
-                newStack = new ItemStack(VariousSetup.SMARTWRENCH_SELECT.get());
+                newStack = new ItemStack(VariousModule.SMARTWRENCH_SELECT.get());
             } else {
                 mode = SmartWrenchMode.MODE_WRENCH;
-                newStack = new ItemStack(VariousSetup.SMARTWRENCH.get());
+                newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
             }
             newStack.setTag(tag);
             player.setHeldItem(hand, newStack);
