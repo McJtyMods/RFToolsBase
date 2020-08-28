@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.lib.container.*;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
-import mcjty.rftoolsbase.modules.tablet.TabletSetup;
+import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -24,7 +24,7 @@ public class TabletContainer extends GenericContainer {
             .playerSlots(10, 106));
 
 	public TabletContainer(int id, BlockPos pos, PlayerEntity player) {
-		super(TabletSetup.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY.get(), pos, null);
+		super(TabletModule.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY.get(), pos, null);
 		cardIndex = player.inventory.currentItem;
     }
 

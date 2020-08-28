@@ -1,6 +1,14 @@
 package mcjty.rftoolsbase;
 
+import mcjty.lib.modules.Modules;
 import mcjty.rftoolsbase.client.ClientInfo;
+import mcjty.rftoolsbase.modules.crafting.CraftingModule;
+import mcjty.rftoolsbase.modules.filter.FilterModule;
+import mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule;
+import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
+import mcjty.rftoolsbase.modules.tablet.TabletModule;
+import mcjty.rftoolsbase.modules.various.VariousModule;
+import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import mcjty.rftoolsbase.setup.ClientSetup;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
@@ -25,20 +33,34 @@ public class RFToolsBase {
 
     @SuppressWarnings("PublicField")
     public static RFToolsBase instance;
+    private Modules modules = new Modules();
     public ClientInfo clientInfo = new ClientInfo();
 
     public RFToolsBase() {
         instance = this;
+        setupModules();
 
-//        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_CONFIG);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+        Config.register(modules);
 
         Registration.register();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(setup::init);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(modules::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLServerStartedEvent e) -> TickOrderHandler.clean());
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(modules::initClient);
         });
     }
+
+    private void setupModules() {
+        modules.register(new CraftingModule());
+        modules.register(new FilterModule());
+        modules.register(new InformationScreenModule());
+        modules.register(new MachineInfuserModule());
+        modules.register(new TabletModule());
+        modules.register(new VariousModule());
+        modules.register(new WorldGenModule());
+    }
+
 }

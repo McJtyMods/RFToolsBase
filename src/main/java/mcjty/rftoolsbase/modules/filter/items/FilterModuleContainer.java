@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.container.*;
-import mcjty.rftoolsbase.modules.filter.FilterSetup;
+import mcjty.rftoolsbase.modules.filter.FilterModule;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
@@ -19,7 +19,7 @@ public class FilterModuleContainer extends GenericContainer {
 			.playerSlots(60, 106));
 
 	public FilterModuleContainer(int id, BlockPos pos, PlayerEntity player) {
-		super(FilterSetup.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY.get(), pos, null);
+		super(FilterModule.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY.get(), pos, null);
 		cardIndex = player.inventory.currentItem;
     }
 

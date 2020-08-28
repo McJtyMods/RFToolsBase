@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.modules.informationscreen.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import mcjty.lib.typed.TypedMap;
-import mcjty.rftoolsbase.modules.informationscreen.InformationScreenSetup;
+import mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
@@ -37,6 +37,6 @@ public class InformationScreenRenderer extends TileEntityRenderer<InformationScr
     }
 
     public static void register() {
-        ClientRegistry.bindTileEntityRenderer(InformationScreenSetup.TYPE_INFORMATION_SCREEN.get(), InformationScreenRenderer::new);
+        ClientRegistry.bindTileEntityRenderer(InformationScreenModule.TYPE_INFORMATION_SCREEN.get(), InformationScreenRenderer::new);
     }
 }

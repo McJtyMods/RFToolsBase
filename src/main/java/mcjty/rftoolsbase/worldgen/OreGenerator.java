@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.worldgen;
 
-import mcjty.rftoolsbase.modules.worldgen.WorldGenSetup;
-import mcjty.rftoolsbase.setup.Config;
+import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
+import mcjty.rftoolsbase.modules.worldgen.config.WorldGenConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.biome.Biome;
@@ -24,31 +24,31 @@ public class OreGenerator {
     public static void init() {
         for (Biome biome : ForgeRegistries.BIOMES) {
 
-            int overworldChances = Config.OVERWORLD_ORE_CHANCES.get();
+            int overworldChances = WorldGenConfig.OVERWORLD_ORE_CHANCES.get();
             if (overworldChances > 0) {
                 biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE
-                        .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenSetup.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
-                                Config.OVERWORLD_ORE_VEINSIZE.get()))
+                        .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
+                                WorldGenConfig.OVERWORLD_ORE_VEINSIZE.get()))
                         .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(
                                 overworldChances,
-                                Config.OVERWORLD_ORE_MINY.get(),
+                                WorldGenConfig.OVERWORLD_ORE_MINY.get(),
                                 0,
-                                Config.OVERWORLD_ORE_MAXY.get() - Config.OVERWORLD_ORE_MINY.get())))
+                                WorldGenConfig.OVERWORLD_ORE_MAXY.get() - WorldGenConfig.OVERWORLD_ORE_MINY.get())))
                 );
             }
 
 
-            int netherChances = Config.NETHER_ORE_CHANCES.get();
+            int netherChances = WorldGenConfig.NETHER_ORE_CHANCES.get();
             if (netherChances > 0) {
                 ConfiguredFeature<OreFeatureConfig, ?> netherFeature = Feature.ORE
-                        .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenSetup.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
-                                Config.NETHER_ORE_VEINSIZE.get()));
+                        .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
+                                WorldGenConfig.NETHER_ORE_VEINSIZE.get()));
                 biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, new DimensionCompositeFeature(netherFeature, DimensionType.THE_NETHER)
                         .withPlacement(Placement.COUNT_RANGE.configure(new CountRangeConfig(
                                 overworldChances,
-                                Config.NETHER_ORE_MINY.get(),
+                                WorldGenConfig.NETHER_ORE_MINY.get(),
                                 0,
-                                Config.NETHER_ORE_MAXY.get() - Config.NETHER_ORE_MINY.get())))
+                                WorldGenConfig.NETHER_ORE_MAXY.get() - WorldGenConfig.NETHER_ORE_MINY.get())))
                 );
             }
 //            ConfiguredFeature<?> featureEnd = Biome.createDecoratedFeature(Feature.ORE,
