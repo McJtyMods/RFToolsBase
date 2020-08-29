@@ -47,7 +47,7 @@ public class RFToolsBase {
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(setup::init);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(modules::init);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener((FMLServerStartedEvent e) -> TickOrderHandler.clean());
+        MinecraftForge.EVENT_BUS.addListener((FMLServerStartedEvent e) -> TickOrderHandler.clean());
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
             FMLJavaModLoadingContext.get().getModEventBus().addListener(modules::initClient);
