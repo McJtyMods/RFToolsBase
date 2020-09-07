@@ -6,8 +6,8 @@ import mcjty.lib.gui.Window;
 import mcjty.lib.gui.widgets.EnergyBar;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
-import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
@@ -21,8 +21,8 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
 
-    public GuiMachineInfuser(MachineInfuserTileEntity machineInfuserTileEntity, GenericContainer container, PlayerInventory inventory) {
-        super(  /*@todo*/ machineInfuserTileEntity, container, inventory, ManualHelper.create("rftoolsbase:machines/infusing"));
+    public GuiMachineInfuser(MachineInfuserTileEntity te, GenericContainer container, PlayerInventory inventory) {
+        super(te, container, inventory, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());
 
         xSize = INFUSER_WIDTH;
         ySize = INFUSER_HEIGHT;

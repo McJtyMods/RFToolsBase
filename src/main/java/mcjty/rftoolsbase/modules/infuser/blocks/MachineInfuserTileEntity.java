@@ -15,6 +15,7 @@ import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItem;
@@ -66,6 +67,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         return new BaseBlock(new BlockBuilder()
                 .tileEntitySupplier(MachineInfuserTileEntity::new)
                 .infusable()
+                .manualEntry(ManualHelper.create("rftoolsbase:machines/infusing"))
                 .info(key("message.rftoolsbase.shiftmessage"))
                 .infoShift(header(), gold()));
     }

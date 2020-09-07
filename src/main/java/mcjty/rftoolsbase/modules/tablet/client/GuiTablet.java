@@ -10,13 +10,11 @@ import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 
-import static mcjty.lib.gui.widgets.Widgets.button;
 import static mcjty.lib.gui.widgets.Widgets.positional;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
@@ -30,7 +28,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     private ToggleButton[] buttons;
 
     public GuiTablet(TabletContainer container, PlayerInventory inventory) {
-        super(null, container, inventory, ManualHelper.create("rftoolsbase:tools/tablet"));
+        super(null, container, inventory, TabletItem.MANUAL);
         xSize = TABLET_WIDTH;
         ySize = TABLET_HEIGHT;
     }

@@ -1,11 +1,13 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.builder.TooltipBuilder;
+import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipExtras;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.InventoryTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -45,6 +47,7 @@ import static mcjty.lib.builder.TooltipBuilder.*;
 
 public class FilterModuleItem extends Item implements ITooltipSettings, ITooltipExtras {
 
+    public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/filtermodule");
     private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
@@ -72,6 +75,11 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
         super(new Properties()
                 .maxStackSize(1)
                 .group(RFToolsBase.setup.getTab()));
+    }
+
+    @Override
+    public ManualEntry getManualEntry() {
+        return MANUAL;
     }
 
     @Override

@@ -1,11 +1,14 @@
 package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.lib.builder.TooltipBuilder;
+import mcjty.lib.gui.ManualEntry;
+import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.NBTTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
 import mcjty.rftoolsbase.modules.tablet.TabletModule;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -31,11 +34,18 @@ import java.util.List;
 import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
-public class TabletItem extends Item implements IItemCycler {
+public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
+
+    public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/tablet");
 
     private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold());
+
+    @Override
+    public ManualEntry getManualEntry() {
+        return MANUAL;
+    }
 
     public TabletItem() {
         super(new Properties()
