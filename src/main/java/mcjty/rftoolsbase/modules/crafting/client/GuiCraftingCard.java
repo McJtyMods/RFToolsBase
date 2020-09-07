@@ -19,7 +19,6 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -46,7 +45,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     private BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
     public GuiCraftingCard(CraftingCardContainer container, PlayerInventory inventory) {
-        super(null, container, inventory, ManualHelper.create("rftoolsbase:tools/craftingcard"));
+        super(null, container, inventory, CraftingCardItem.MANUAL);
         xSize = WIDTH;
         ySize = HEIGHT;
     }

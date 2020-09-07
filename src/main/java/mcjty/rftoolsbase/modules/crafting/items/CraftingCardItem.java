@@ -1,9 +1,11 @@
 package mcjty.rftoolsbase.modules.crafting.items;
 
 import mcjty.lib.builder.TooltipBuilder;
+import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -39,12 +41,18 @@ import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INP
 
 public class CraftingCardItem extends Item implements ITooltipSettings {
 
+    public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/craftingcard");
     private static final CraftingInventory CRAFTING_INVENTORY = new CraftingInventory(new Container(null, -1) {
         @Override
         public boolean canInteractWith(PlayerEntity playerIn) {
             return false;
         }
     }, 3, 3);
+
+    @Override
+    public ManualEntry getManualEntry() {
+        return MANUAL;
+    }
 
     private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
             .info(header(),

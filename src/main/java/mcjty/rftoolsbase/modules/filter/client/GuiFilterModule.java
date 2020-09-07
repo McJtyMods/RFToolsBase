@@ -14,10 +14,10 @@ import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerInventory;
@@ -62,7 +62,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     private WidgetList list;
 
     public GuiFilterModule(FilterModuleContainer container, PlayerInventory inventory) {
-        super(null, container, inventory, ManualHelper.create("rftoolsbase:tools/filtermodule"));
+        super(null, container, inventory, FilterModuleItem.MANUAL);
         xSize = CONTROLLER_WIDTH;
         ySize = CONTROLLER_HEIGHT;
     }
