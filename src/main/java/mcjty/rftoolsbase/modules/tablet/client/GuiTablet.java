@@ -8,13 +8,16 @@ import mcjty.lib.gui.widgets.ToggleButton;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
+import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
 import static mcjty.lib.gui.widgets.Widgets.positional;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
@@ -32,6 +35,14 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
         super(null, container, inventory, TabletItem.MANUAL);
         xSize = TABLET_WIDTH;
         ySize = TABLET_HEIGHT;
+    }
+
+    public static void register() {
+        ScreenManager.registerFactory(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
+    }
+
+    private static GuiTablet createTabletGui(TabletContainer container, PlayerInventory inventory, ITextComponent textComponent) {
+        return new GuiTablet(container, inventory);
     }
 
     @Override

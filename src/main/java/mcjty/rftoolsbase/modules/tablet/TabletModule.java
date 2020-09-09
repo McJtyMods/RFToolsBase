@@ -1,16 +1,12 @@
 package mcjty.rftoolsbase.modules.tablet;
 
-import mcjty.lib.McJtyLib;
 import mcjty.lib.modules.IModule;
 import mcjty.rftoolsbase.modules.tablet.client.GuiTablet;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItemHandler;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -28,7 +24,7 @@ public class TabletModule implements IModule {
 
     private static ContainerType<TabletContainer> createTabletContainer() {
         return IForgeContainerType.create((windowId, inv, data) -> {
-            PlayerEntity player = McJtyLib.proxy.getClientPlayer();
+            PlayerEntity player = inv.player;
             TabletContainer container = new TabletContainer(windowId, player.getPosition(), player);
             container.setupInventories(new TabletItemHandler(player), inv);
             return container;
@@ -42,11 +38,7 @@ public class TabletModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(CONTAINER_TABLET.get(), TabletModule::createTabletGui);
-    }
-
-    private static GuiTablet createTabletGui(TabletContainer container, PlayerInventory inventory, ITextComponent textComponent) {
-        return new GuiTablet(container, inventory);
+        GuiTablet.register();
     }
 
     @Override

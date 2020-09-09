@@ -12,6 +12,7 @@ import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.filter.FilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
@@ -20,6 +21,7 @@ import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Slot;
@@ -65,6 +67,15 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         super(null, container, inventory, FilterModuleItem.MANUAL);
         xSize = CONTROLLER_WIDTH;
         ySize = CONTROLLER_HEIGHT;
+    }
+
+    public static void register() {
+        ScreenManager.registerFactory(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
+    }
+
+    private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, PlayerInventory inventory, ITextComponent
+            textComponent) {
+        return new GuiFilterModule(container, inventory);
     }
 
     @Override

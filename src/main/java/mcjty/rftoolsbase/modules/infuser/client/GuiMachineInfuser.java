@@ -29,6 +29,10 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         ySize = INFUSER_HEIGHT;
     }
 
+    public static void register() {
+        register(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
+    }
+
     @Override
     public void init() {
         super.init();
