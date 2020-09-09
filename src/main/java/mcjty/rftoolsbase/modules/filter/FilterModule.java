@@ -5,12 +5,10 @@ import mcjty.lib.modules.IModule;
 import mcjty.rftoolsbase.modules.filter.client.GuiFilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
-import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -39,11 +37,9 @@ public class FilterModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        ScreenManager.registerFactory(CONTAINER_FILTER_MODULE.get(), FilterModule::createFilterModuleGui);
-    }
-
-    private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, PlayerInventory inventory, ITextComponent textComponent) {
-        return new GuiFilterModule(container, inventory);
+        DeferredWorkQueue.runLater(() -> {
+            GuiFilterModule.register();
+        });
     }
 
     @Override

@@ -2,13 +2,11 @@ package mcjty.rftoolsbase.modules.infuser;
 
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.container.GenericContainer;
-import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.modules.IModule;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import mcjty.rftoolsbase.modules.infuser.client.GuiMachineInfuser;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -33,7 +31,7 @@ public class MachineInfuserModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        GenericGuiContainer.register(CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
+        GuiMachineInfuser.register();
     }
 
     @Override

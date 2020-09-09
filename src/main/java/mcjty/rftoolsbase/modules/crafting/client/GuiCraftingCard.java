@@ -13,11 +13,13 @@ import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.crafting.CraftingModule;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -47,6 +49,14 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         super(null, container, inventory, CraftingCardItem.MANUAL);
         xSize = WIDTH;
         ySize = HEIGHT;
+    }
+
+    public static void register() {
+        ScreenManager.registerFactory(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
+    }
+
+    private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
+        return new GuiCraftingCard(container, inventory);
     }
 
     @Override
