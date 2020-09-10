@@ -1,6 +1,6 @@
 {
-  "name": "rftoolsbase.category.basics",
-  "description": "rftoolsbase.category.basics.description",
+  "name": "Basics",
+  "description": "Basic information and worldgen",
   "parent": "category_rftoolsbase",
   "icon": "rftoolsbase:dimensionalshard_overworld",
   "sortnum": 10

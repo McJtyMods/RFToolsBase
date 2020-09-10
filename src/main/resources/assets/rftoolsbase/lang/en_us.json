@@ -69,42 +69,5 @@
     "message.rftoolsbase.smartwrench_select.info1": "Mode: ",
     "message.rftoolsbase.smartwrench_select.info2": "Block: ",
 
-    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards",
-
-    "rftoolsbase.category.main": "RFTools Base",
-    "rftoolsbase.category.main.description": "RFTools Base is the base mod for all tech based mods",
-    "rftoolsbase.category.basics": "Basics",
-    "rftoolsbase.category.basics.description": "Basic information and worldgen",
-    "rftoolsbase.category.tools": "Tools",
-    "rftoolsbase.category.tools.description": "Various tools exist that make your life easier for manipulating and configuring the various tech machines",
-    "rftoolsbase.category.machines": "Machines",
-    "rftoolsbase.category.machines.description": "All the machines",
-
-    "rftoolsbase.entry.filtermodule": "Filter Module",
-    "rftoolsbase.page.filtermodule0": "The Filter Module is a very versatile item that can be used to whitelist or blacklist items for the machine. Various machines support this module (Builder, Modular Storage, Crafter, ...)$(br2)Blocks, items, and tags are supported. You can blacklist or whilelist and also require mathing on NBT and damage",
-    "rftoolsbase.page.filtermodule1": "$(5)Sneak right click$() on an inventory (like a chest) to add all items/block in that inventory to the filter.$(br)$(5)Sneak right click$() on a block in the world to add that block to the filter.$(br2)In the GUI of the filter module you can also add tags or convert a block/item to the corresponding tags",
-
-    "rftoolsbase.entry.smartwrench": "Smart Wrench",
-    "rftoolsbase.page.smartwrench0": "The Smart Wrench can be used to easily remove tech blocks and also select blocks for special functionality$(br2)Use as a normal wrench: $(5)Sneak right click$() to pick up and $(5)right click$() to rotate.$(br2)$(5)Right click$() in the air to change mode",
-    "rftoolsbase.page.smartwrench1": "If the wrench is in select mode then it can be used to perform specialized operations on (for example) blocks like the Shield Projector",
-
-    "rftoolsbase.entry.dimensionalshards": "Dimensional Shards",
-    "rftoolsbase.page.dimensionalshards0": "Dimensional Shards can be found underground in small clusters in various dimensions. They are very useful for some of the more complicated recipes and you can also use them to infuse machines. Infusing machines can give them various bonuses, usually related to efficiency",
-
-    "rftoolsbase.entry.modules": "Modules",
-    "rftoolsbase.page.modules0": "Various machines in the RFTools tech mods support modules. These are items that can be inserted in the machine to modify or provide functionalities. In most cases (when a machine supports modules) you can just right click with the module on the machine to insert it",
-
-    "rftoolsbase.entry.craftingcard": "Crafting Card",
-    "rftoolsbase.page.craftingcard0": "The Crafting Card is an item that can hold a recipe. It can be used for regular 3x3 recipes but also for more complex shapes. Various machines can use this card.$(br2)Note that stored recipes don't actually have to be valid. This card can also serve as a general way to represent 'inputs' and an 'output'",
-
-    "rftoolsbase.entry.tablet": "The Tablet",
-    "rftoolsbase.page.tablet0": "The Tablet can be used to remotely access various machines. $(5)Sneak right click$() to open the internal tablet gui where you can install up to 6 modules. Right clicking the tablet will give you the gui of the current module. Using the $(k:prevDestination) and $(k:nextDestination) keys you can switch between installed modules",
-    "rftoolsbase.page.tablet1": "Note that to be able to access the remote machine it will have to be near enough or chunkloaded. If it is properly chunkloaded then the tablet will also work from another dimension",
-
-    "rftoolsbase.entry.infusing": "Infusing",
-    "rftoolsbase.page.infusing0": "By using Dimensional Shards in this machine it is possible to improve the efficiency of a lot of tech machines. They can work faster, give more outpus, use less power, ...$(br2)$(5)Infusing$() the infuser will cause it to use less power",
-
-    "rftoolsbase.entry.information_screen": "Information Screen",
-    "rftoolsbase.page.information_screen0": "The Information Screen is a small screen that can be put adjacent to a machine in order to show some information. By default this screen will show energy information but some machines (like the PowerCells from RFTools Power) have additional viewing options",
-    "rftoolsbase.page.information_screen1": "Using a wrench on the Information Screen will toggle display mode (if supported by the attached machine("
+    "message.rftoolsbase.security_manager": "@aContents: %s stacks\n@fThis block manages your security cards"
 }

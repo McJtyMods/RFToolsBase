@@ -1,5 +1,5 @@
 {
-  "name": "rftoolsbase.category.main",
-  "description": "rftoolsbase.category.main.description",
+  "name": "RFTools Base",
+  "description": "RFTools Base is the base mod for all mods in the RFTools family in addition to Deep Resonance and XNet",
   "icon": "rftoolsbase:machine_base"
 }
