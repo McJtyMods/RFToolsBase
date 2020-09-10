@@ -1,15 +1,15 @@
 {
-  "name": "rftoolsbase.entry.smartwrench",
+  "name": "Smart Wrench",
   "icon": "rftoolsbase:smartwrench",
   "category": "category_tools",
   "pages": [
     {
       "type": "text",
-      "text": "rftoolsbase.page.smartwrench0"
+      "text": "The Smart Wrench can be used to easily remove tech blocks and also select blocks for special functionality$(br2)Use as a normal wrench: $(5)Sneak right click$() to pick up and $(5)right click$() to rotate.$(br2)$(5)Right click$() in the air to change mode"
     },
     {
       "type": "text",
-      "text": "rftoolsbase.page.smartwrench1"
+      "text": "If the wrench is in select mode then it can be used to perform specialized operations on (for example) blocks like the Shield Projector"
     }
   ]
 }
