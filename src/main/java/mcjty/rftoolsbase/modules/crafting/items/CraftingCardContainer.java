@@ -37,11 +37,11 @@ public class CraftingCardContainer extends GenericContainer {
     @Override
     public void setupInventories(IItemHandler itemHandler, PlayerInventory inventory) {
         addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
-        generateSlots();
+        generateSlots(inventory.player);
     }
 
     @Override
-    protected Slot createSlot(SlotFactory slotFactory, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
+    protected Slot createSlot(SlotFactory slotFactory, PlayerEntity playerEntity, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
         if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
             return new BaseSlot(inventories.get(slotFactory.getInventoryName()), null, slotFactory.getIndex(), slotFactory.getX(), slotFactory.getY()) {
                 @Override
@@ -51,7 +51,7 @@ public class CraftingCardContainer extends GenericContainer {
                 }
             };
         } else {
-            return super.createSlot(slotFactory, inventory, index, x, y, slotType);
+            return super.createSlot(slotFactory, playerEntity, inventory, index, x, y, slotType);
         }
     }
 
