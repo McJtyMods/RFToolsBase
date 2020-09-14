@@ -7,6 +7,7 @@ import mcjty.lib.api.infusable.DefaultInfusable;
 import mcjty.lib.api.infusable.IInfusable;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.BlockBuilder;
+import mcjty.lib.container.AutomationFilterItemHander;
 import mcjty.lib.container.ContainerFactory;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.container.NoDirectionItemHander;
@@ -44,16 +45,19 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public static final int SLOT_MACHINEOUTPUT = 1;
 
     public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(2)
-            .slot(specific(new ItemStack(VariousModule.DIMENSIONALSHARD.get())), CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24)
-            .slot(specific(MachineInfuserTileEntity::isInfusable), CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24)
+            .slot(specific(new ItemStack(VariousModule.DIMENSIONALSHARD.get())).in(), CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24)
+            .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
 
-    private final LazyOptional<NoDirectionItemHander> itemHandler = LazyOptional.of(() -> new NoDirectionItemHander(this, CONTAINER_FACTORY.get()));
-    private final LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get()));
+    private final NoDirectionItemHander items = new NoDirectionItemHander(this, CONTAINER_FACTORY.get());
+    private final LazyOptional<AutomationFilterItemHander> itemHandler = LazyOptional.of(() -> new AutomationFilterItemHander(items));
+
+    private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
+    private final LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> energyStorage);
     private final LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
             .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), windowId, CONTAINER_FACTORY.get(), getPos(), MachineInfuserTileEntity.this))
-            .itemHandler(itemHandler)
-            .energyHandler(energyHandler));
+            .itemHandler(() -> items)
+            .energyHandler(() -> energyStorage));
     private final LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
 
     private int infusing = 0;
@@ -80,22 +84,20 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     }
 
     private void tickServer() {
-        itemHandler.ifPresent(h -> {
-            if (infusing > 0) {
-                infusing--;
-                if (infusing == 0) {
-                    ItemStack outputStack = h.getStackInSlot(1);
-                    finishInfusing(outputStack);
-                }
-                markDirtyQuick();
-            } else {
-                ItemStack inputStack = h.getStackInSlot(0);
-                ItemStack outputStack = h.getStackInSlot(1);
-                if (!inputStack.isEmpty() && inputStack.getItem() == VariousModule.DIMENSIONALSHARD.get() && isInfusable(outputStack)) {
-                    startInfusing();
-                }
+        if (infusing > 0) {
+            infusing--;
+            if (infusing == 0) {
+                ItemStack outputStack = items.getStackInSlot(1);
+                finishInfusing(outputStack);
             }
-        });
+            markDirtyQuick();
+        } else {
+            ItemStack inputStack = items.getStackInSlot(0);
+            ItemStack outputStack = items.getStackInSlot(1);
+            if (!inputStack.isEmpty() && inputStack.getItem() == VariousModule.DIMENSIONALSHARD.get() && isInfusable(outputStack)) {
+                startInfusing();
+            }
+        }
     }
 
     private static boolean isInfusable(ItemStack stack) {
@@ -127,25 +129,21 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     }
 
     private void startInfusing() {
-        energyHandler.ifPresent(energy -> {
-            int defaultCost = MachineInfuserConfiguration.RFPERTICK.get();
-            int rf = infusableHandler.map(h -> (int) (defaultCost * (2.0f - h.getInfusedFactor()) / 2.0f)).orElse(defaultCost);
+        int defaultCost = MachineInfuserConfiguration.RFPERTICK.get();
+        int rf = infusableHandler.map(h -> (int) (defaultCost * (2.0f - h.getInfusedFactor()) / 2.0f)).orElse(defaultCost);
 
-            if (energy.getEnergy() < rf) {
-                // Not enough energy.
-                return;
-            }
-            energy.consumeEnergy(rf);
+        if (energyStorage.getEnergy() < rf) {
+            // Not enough energy.
+            return;
+        }
+        energyStorage.consumeEnergy(rf);
 
-            itemHandler.ifPresent(h -> {
-                h.getStackInSlot(0).split(1);
-                if (h.getStackInSlot(0).isEmpty()) {
-                    h.setStackInSlot(0, ItemStack.EMPTY);
-                }
-            });
-            infusing = 5;
-            markDirtyQuick();
-        });
+        items.getStackInSlot(0).split(1);
+        if (items.getStackInSlot(0).isEmpty()) {
+            items.setStackInSlot(0, ItemStack.EMPTY);
+        }
+        infusing = 5;
+        markDirtyQuick();
     }
 
 
