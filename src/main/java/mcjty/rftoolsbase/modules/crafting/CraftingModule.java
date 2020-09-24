@@ -9,7 +9,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -38,7 +37,7 @@ public class CraftingModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        DeferredWorkQueue.runLater(() -> {
+        event.enqueueWork(() -> {
             GuiCraftingCard.register();
         });
     }
