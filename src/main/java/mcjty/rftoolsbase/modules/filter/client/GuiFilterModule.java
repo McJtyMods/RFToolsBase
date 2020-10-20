@@ -28,9 +28,7 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.*;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -199,11 +197,11 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         for (ResourceLocation tag : inventory.getTags()) {
             ITag<Item> itemTag = ItemTags.getCollection().get(tag);
             if (itemTag != null) {
-                addTagToList(itemTag);
+                addTagToList(itemTag, tag);
             } else {
                 ITag<Block> blockTag = BlockTags.getCollection().get(tag);
                 if (blockTag != null) {
-                    addTagToList(blockTag);
+                    addTagToList(blockTag, tag);
                 }
             }
         }
@@ -221,23 +219,20 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         }
     }
 
-    private <T extends IItemProvider> void addTagToList(ITag<T> tag) {
-        if (tag instanceof ITag.INamedTag) {
-            ITag.INamedTag<T> t = (ITag.INamedTag<T>)(tag);
-            Panel panel = horizontal(0, 0);
-            panel.userObject(t.getName());
-            panel.children(label(t.getName().toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
-            int i = 5;
-            for (T item : tag.getAllElements()) {
-                BlockRender render = new BlockRender().renderItem(new ItemStack(item));
-                panel.children(render);
-                i--;
-                if (i <= 0) {
-                    break;
-                }
+    private <T extends IItemProvider> void addTagToList(ITag<T> tag, ResourceLocation id) {
+        Panel panel = horizontal(0, 0);
+        panel.userObject(id);
+        panel.children(label(id.toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
+        int i = 5;
+        for (T item : tag.getAllElements()) {
+            BlockRender render = new BlockRender().renderItem(new ItemStack(item));
+            panel.children(render);
+            i--;
+            if (i <= 0) {
+                break;
             }
-            list.children(panel);
         }
+        list.children(panel);
     }
 
     private void setBlacklistMode(String mode) {
