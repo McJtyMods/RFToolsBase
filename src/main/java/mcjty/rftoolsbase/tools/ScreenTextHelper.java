@@ -6,6 +6,7 @@ import mcjty.rftoolsbase.api.screens.ModuleRenderInfo;
 import mcjty.rftoolsbase.api.screens.TextAlign;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.fonts.Font;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
@@ -123,8 +124,8 @@ public class ScreenTextHelper implements ITextRenderHelper {
         FontRenderer renderer;
         if (truetype) {
             if (trueTypeRenderer == null) {
-                // @todo 1.16
-//                trueTypeRenderer = Minecraft.getInstance().getFontResourceManager().getFontRenderer(new ResourceLocation("rftoolsutility", "ubuntu"));
+                Font font = Minecraft.getInstance().fontResourceMananger.field_238546_d_.get(new ResourceLocation("rftoolsutility", "ubuntu"));
+                ScreenTextHelper.trueTypeRenderer = new FontRenderer(resourceLocation -> font);
             }
             renderer = trueTypeRenderer;
         } else {
