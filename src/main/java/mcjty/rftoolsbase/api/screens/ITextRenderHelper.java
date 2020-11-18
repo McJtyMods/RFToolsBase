@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.api.screens;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * This text render helper knows how to render text in vanilla
