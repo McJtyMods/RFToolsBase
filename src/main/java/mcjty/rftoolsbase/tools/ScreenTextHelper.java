@@ -9,6 +9,9 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScreenTextHelper implements ITextRenderHelper {
 
     private boolean large = false;
@@ -18,6 +21,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
     private int textx;
     private String text;
     private boolean truetype = false;
+    private ResourceLocation fontId;
 
     public int getTextx() {
         return textx;
@@ -64,7 +68,8 @@ public class ScreenTextHelper implements ITextRenderHelper {
         }
         dirty = false;
         truetype = renderInfo.truetype;
-        FontRenderer renderer = getFontRenderer(truetype);
+        fontId = renderInfo.fontId;
+        FontRenderer renderer = getFontRenderer(truetype, fontId);
 
         textx = large ? 4 : 7;
         if (truetype) {
@@ -87,11 +92,11 @@ public class ScreenTextHelper implements ITextRenderHelper {
 
     @Override
     public void renderText(MatrixStack matrixStack, IRenderTypeBuffer buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
-        renderScaled(matrixStack, buffer, text, textx + x, y, color, truetype, renderInfo.getLightmapValue());
+        renderScaled(fontId, matrixStack, buffer, text, textx + x, y, color, truetype, renderInfo.getLightmapValue());
     }
 
-    public static void renderScaled(MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
-        FontRenderer renderer = getFontRenderer(truetype);
+    public static void renderScaled(ResourceLocation fontId, MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
+        FontRenderer renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
             matrixStack.push();
             matrixStack.scale(.5f, .5f, .5f);
@@ -103,8 +108,8 @@ public class ScreenTextHelper implements ITextRenderHelper {
         }
     }
 
-    public static void renderScaledTrimmed(MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
-        FontRenderer renderer = getFontRenderer(truetype);
+    public static void renderScaledTrimmed(ResourceLocation fontId, MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
+        FontRenderer renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
             matrixStack.push();
             matrixStack.scale(.5f, .5f, .5f);
@@ -117,19 +122,17 @@ public class ScreenTextHelper implements ITextRenderHelper {
         }
     }
 
-    private static FontRenderer trueTypeRenderer = null;
+    private static Map<ResourceLocation, FontRenderer> trueTypeRenderer = new HashMap<>();
 
-    private static FontRenderer getFontRenderer(boolean truetype) {
-        FontRenderer renderer;
+    private static FontRenderer getFontRenderer(boolean truetype, ResourceLocation fontId) {
         if (truetype) {
             if (!trueTypeRenderer.containsKey(fontId)) {
                 trueTypeRenderer.put(fontId, Minecraft.getInstance().getFontResourceManager().getFontRenderer(new ResourceLocation("rftoolsutility", "ubuntu")));
             }
-            renderer = trueTypeRenderer;
+            return trueTypeRenderer.get(fontId);
         } else {
-            renderer = Minecraft.getInstance().fontRenderer;
+            return Minecraft.getInstance().fontRenderer;
         }
-        return renderer;
     }
 
 }

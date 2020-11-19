@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.api.screens;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 /**
@@ -23,15 +24,19 @@ public class ModuleRenderInfo {
     // True if this should be rendered with truetype
     public final boolean truetype;
 
+    // The fontId to use for truetype rendering
+    public final ResourceLocation fontId;
+
     private final boolean fullbright;
 
-    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright) {
+    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright, ResourceLocation fontId) {
         this.factor = factor;
         this.pos = pos;
         this.hitx = hitx;
         this.hity = hity;
         this.truetype = truetype;
         this.fullbright = fullbright;
+        this.fontId = fontId;
     }
 
     public int getLightmapValue() {
