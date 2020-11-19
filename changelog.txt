@@ -1,4 +1,4 @@
-Upcoming:
+1.15-1.1.8:
 - Fixed truetype rendering
 
 1.15-1.1.7:
