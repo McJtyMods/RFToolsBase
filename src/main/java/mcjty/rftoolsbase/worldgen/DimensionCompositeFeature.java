@@ -20,10 +20,11 @@ public class DimensionCompositeFeature<F extends IFeatureConfig> extends Configu
         this.dimension = dimension;
     }
 
+
     @Override
-    public boolean func_242765_a(ISeedReader reader, ChunkGenerator generator, Random random, BlockPos pos) {
+    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random random, BlockPos pos) {
         if (DimensionId.fromWorld(reader.getWorld()).equals(dimension)) {
-            return super.func_242765_a(reader, generator, random, pos);
+            return super.generate(reader, generator, random, pos);
         }
         return false;
     }

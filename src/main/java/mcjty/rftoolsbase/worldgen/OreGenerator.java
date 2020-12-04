@@ -37,7 +37,7 @@ public class OreGenerator {
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
 
         ConfiguredFeature<OreFeatureConfig, ?> overworldFeature = Feature.ORE
-                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.field_241882_a, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
+                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
                         WorldGenConfig.OVERWORLD_ORE_VEINSIZE.get()));
         OVERWORLD_SHARDS = new DimensionCompositeFeature(overworldFeature, DimensionId.overworld())
                 .withPlacement(Registration.COUNT_PLACEMENT.get().configure(new CountPlacementConfig(
@@ -48,7 +48,7 @@ public class OreGenerator {
         Registry.register(registry, new ResourceLocation(RFToolsBase.MODID, "dimshard_overworld"), OVERWORLD_SHARDS);
 
         ConfiguredFeature<OreFeatureConfig, ?> netherFeature = Feature.ORE
-                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.field_241884_c, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
+                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_NETHER, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
                         WorldGenConfig.NETHER_ORE_VEINSIZE.get()));
         NETHER_SHARDS = new DimensionCompositeFeature(netherFeature, DimensionId.nether())
                 .withPlacement(Registration.COUNT_PLACEMENT.get().configure(new CountPlacementConfig(
