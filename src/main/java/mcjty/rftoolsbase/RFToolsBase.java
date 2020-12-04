@@ -15,9 +15,11 @@ import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
@@ -45,13 +47,14 @@ public class RFToolsBase {
 
         Registration.register();
 
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(setup::init);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(modules::init);
+        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
+        modbus.addListener(setup::init);
+        modbus.addListener(modules::init);
         MinecraftForge.EVENT_BUS.addListener((FMLServerStartedEvent e) -> TickOrderHandler.clean());
         MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGenerator::onBiomeLoadingEvent);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientSetup::init);
-            FMLJavaModLoadingContext.get().getModEventBus().addListener(modules::initClient);
+            modbus.addListener(ClientSetup::init);
+            modbus.addListener(modules::initClient);
         });
     }
 

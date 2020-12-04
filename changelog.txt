@@ -1,6 +1,6 @@
 Upcoming:
 - Re-added some XNet API classes
-- Started adding of dimensional shard oregen back
+- Dimensional shards now generate properly in the overworld, end, and nether
 
 1.16-2.0.7:
 - Fixed truetype rendering

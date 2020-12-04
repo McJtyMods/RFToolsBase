@@ -21,9 +21,12 @@ public class ModSetup extends DefaultModSetup {
     public void init(FMLCommonSetupEvent e) {
         super.init(e);
         e.enqueueWork(() -> {
-            OreGenerator.init();
             CommandHandler.registerCommands();
         });
+
+        // Needs to be here: after registration of everything and after reading config
+        OreGenerator.registerConfiguredFeatures();
+
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
             if (!event.world.isRemote) {
