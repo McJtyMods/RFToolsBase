@@ -1,5 +1,6 @@
 Upcoming:
 - Re-added some XNet API classes
+- Made dimensional shard oregen slightly more common in the overworld
 
 1.15-1.1.8:
 - Fixed truetype rendering

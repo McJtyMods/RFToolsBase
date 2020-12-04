@@ -24,10 +24,10 @@ public class WorldGenConfig {
         Config.SERVER_BUILDER.comment("Overworld").push(SUB_CATEGORY_OVERWORLD);
         OVERWORLD_ORE_CHANCES = Config.SERVER_BUILDER
                 .comment("Number of times to try generate the ore (set to 0 to disable)")
-                .defineInRange("oreChances", 1, 0, 256);
+                .defineInRange("oreChances", 2, 0, 256);
         OVERWORLD_ORE_VEINSIZE = Config.SERVER_BUILDER
                 .comment("Max size of veins")
-                .defineInRange("oreVeinsize", 3, 1, 256);
+                .defineInRange("oreVeinsize", 5, 1, 256);
         OVERWORLD_ORE_MINY = Config.SERVER_BUILDER
                 .comment("Min height")
                 .defineInRange("oreMin", 2, 0, 256);
