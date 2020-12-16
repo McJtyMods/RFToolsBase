@@ -1,3 +1,6 @@
+Upcoming:
+- Dimensional shard ore is now attached to the forge:ores tag
+
 1.16-2.0.8:
 - Re-added some XNet API classes
 - Dimensional shards now generate properly in the overworld, end, and nether
