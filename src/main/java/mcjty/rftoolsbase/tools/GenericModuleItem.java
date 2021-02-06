@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -16,7 +17,7 @@ import static mcjty.lib.builder.TooltipBuilder.*;
 
 public abstract class GenericModuleItem extends Item implements IModuleProvider, ITooltipSettings {
 
-    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(),
                     gold(this::hasGoldMessage),
@@ -44,6 +45,6 @@ public abstract class GenericModuleItem extends Item implements IModuleProvider,
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
         super.addInformation(itemStack, world, list, flag);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flag);
+        tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flag);
     }
 }

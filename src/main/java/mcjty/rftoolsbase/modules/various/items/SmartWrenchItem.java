@@ -29,6 +29,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -40,7 +41,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
 
     private final SmartWrenchMode mode;
 
-    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info1", stack -> getMode().getName()),
@@ -118,7 +119,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     @Override
     public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
         super.addInformation(itemStack, world, list, flags);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flags);
+        tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 
     public SmartWrenchMode getMode() {

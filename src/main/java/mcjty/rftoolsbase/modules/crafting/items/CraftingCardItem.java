@@ -27,6 +27,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
@@ -54,7 +55,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         return MANUAL;
     }
 
-    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
             .info(header(),
                     parameter("info", stack -> {
                         ItemStack result = getResult(stack);
@@ -147,7 +148,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, list, flagIn);
-        tooltipBuilder.makeTooltip(getRegistryName(), stack, list, flagIn);
+        tooltipBuilder.get().makeTooltip(getRegistryName(), stack, list, flagIn);
         // @todo tooltip icons
     }
 

@@ -25,6 +25,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.Collection;
@@ -38,7 +39,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/tablet");
 
-    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold());
 
@@ -179,6 +180,6 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     @Override
     public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
         super.addInformation(itemStack, world, list, flags);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flags);
+        tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 }

@@ -33,6 +33,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -48,7 +49,7 @@ import static mcjty.lib.builder.TooltipBuilder.*;
 public class FilterModuleItem extends Item implements ITooltipSettings, ITooltipExtras {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/filtermodule");
-    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info", stack -> {
@@ -85,7 +86,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     @Override
     public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
         super.addInformation(itemStack, worldIn, list, flagIn);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flagIn);
+        tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flagIn);
     }
 
     @Override

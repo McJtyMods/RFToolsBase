@@ -15,6 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Lazy;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ import static mcjty.lib.builder.TooltipBuilder.key;
 
 public class ManualItem extends Item implements ITooltipSettings {
 
-    private final TooltipBuilder tooltipBuilder = new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header());
 
@@ -42,6 +43,6 @@ public class ManualItem extends Item implements ITooltipSettings {
     @Override
     public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
         super.addInformation(itemStack, world, list, flags);
-        tooltipBuilder.makeTooltip(getRegistryName(), itemStack, list, flags);
+        tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 }
