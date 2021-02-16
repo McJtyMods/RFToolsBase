@@ -10,20 +10,22 @@ import net.minecraftforge.fml.config.ModConfig;
 public class Config {
 
     public static final Builder SERVER_BUILDER = new Builder();
+    public static final Builder COMMON_BUILDER = new Builder();
 //    private static final Builder CLIENT_BUILDER = new Builder();
 
     public static ForgeConfigSpec SERVER_CONFIG;
+    public static ForgeConfigSpec COMMON_CONFIG;
 //    public static ForgeConfigSpec CLIENT_CONFIG;
 
-
-    public static String CATEGORY_GENERAL = "general";
 
     public static void register(Modules modules) {
         modules.initConfig();
 
         SERVER_CONFIG = SERVER_BUILDER.build();
+        COMMON_CONFIG = COMMON_BUILDER.build();
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
     }
 
 }

@@ -1,3 +1,6 @@
+Upcoming:
+- Moved oregen config for dimensional shards from SERVER to COMMON so it can be configured
+
 1.16-2.0.9:
 - Dimensional shard ore is now attached to the forge:ores tag
 
