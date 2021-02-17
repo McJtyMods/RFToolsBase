@@ -1,4 +1,4 @@
-Upcoming:
+1.16-2.0.10:
 - Moved oregen config for dimensional shards from SERVER to COMMON so it can be configured
 
 1.16-2.0.9:
