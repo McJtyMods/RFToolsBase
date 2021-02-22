@@ -22,10 +22,9 @@ public class ModSetup extends DefaultModSetup {
         super.init(e);
         e.enqueueWork(() -> {
             CommandHandler.registerCommands();
+            // Needs to be here: after registration of everything and after reading config
+            OreGenerator.registerConfiguredFeatures();
         });
-
-        // Needs to be here: after registration of everything and after reading config
-        OreGenerator.registerConfiguredFeatures();
 
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
