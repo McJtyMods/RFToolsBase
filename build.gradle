@@ -105,7 +105,7 @@ dependencies {
     if (findProject(':TheOneProbe') != null) {
         compile project(':TheOneProbe')
     } else {
-        compile fg.deobf(project.dependencies.create("mcjty.theoneprobe:TheOneProbe-${top_version}") {
+        compile fg.deobf(project.dependencies.create("mcjty.theoneprobe:workspace:${top_version}") {
             transitive = false
         })
     }
@@ -118,7 +118,7 @@ dependencies {
     }
     //deobfCompile "mezz.jei:jei_${jei_version}"
     //deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}"
-    //deobfCompile "mcjty.theoneprobe:TheOneProbe-${top_version}"
+    //deobfCompile "mcjty.theoneprobe:workspace:${top_version}"
     //deobfCompile "cofh:RedstoneFlux:${redstoneflux_version}"
     //deobfCompile "com.github.mcjty:intwheel:${intwheel_version}"
     //deobfCompile "com.github.mcjty:mcjtylib:${mcjtylib_version}"
