@@ -76,7 +76,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
         if (truetype) {
             width *= 2;
         }
-        text = renderer.func_238412_a_(line, (large ? (width / 8) : (width / 4)) - textx);
+        text = renderer.trimStringToWidth(line, (large ? (width / 8) : (width / 4)) - textx);
 //            int w = large ? 58 : 115;
         int w = large ? (int) (width / 8.8f) : (int) (width / 4.45f);
         switch (align) {
@@ -114,11 +114,11 @@ public class ScreenTextHelper implements ITextRenderHelper {
         if (truetype) {
             matrixStack.push();
             matrixStack.scale(.5f, .5f, .5f);
-            text = renderer.func_238412_a_(text, maxwidth * 2);
+            text = renderer.trimStringToWidth(text, maxwidth * 2);
             renderer.renderString(text, x * 2, y * 2, color, false, matrixStack.getLast().getMatrix(), buffer, false, 0, lightmapValue);
             matrixStack.pop();
         } else {
-            text = renderer.func_238412_a_(text, maxwidth);
+            text = renderer.trimStringToWidth(text, maxwidth);
             renderer.renderString(text, x * 2, y * 2, color, false, matrixStack.getLast().getMatrix(), buffer, false, 0, lightmapValue);
         }
     }
@@ -128,7 +128,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
     private static FontRenderer getFontRenderer(boolean truetype, ResourceLocation fontId) {
         if (truetype) {
             if (!trueTypeRenderer.containsKey(fontId)) {
-                Font font = Minecraft.getInstance().fontResourceMananger.field_238546_d_.get(fontId);
+                Font font = Minecraft.getInstance().fontResourceMananger.idToFontMap.get(fontId);
                         //new ResourceLocation("rftoolsutility", "ubuntu"));
                 trueTypeRenderer.put(fontId, new FontRenderer(resourceLocation -> font));
             }
