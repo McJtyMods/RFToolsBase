@@ -17,14 +17,14 @@ public class PacketItemNBTToServer {
     private CompoundNBT tagCompound;
 
     public void toBytes(PacketBuffer buf) {
-        buf.writeCompoundTag(tagCompound);
+        buf.writeNbt(tagCompound);
     }
 
     public PacketItemNBTToServer() {
     }
 
     public PacketItemNBTToServer(PacketBuffer buf) {
-        tagCompound = buf.readCompoundTag();
+        tagCompound = buf.readNbt();
     }
 
     public PacketItemNBTToServer(CompoundNBT tagCompound) {
@@ -35,7 +35,7 @@ public class PacketItemNBTToServer {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             PlayerEntity player = ctx.getSender();
-            ItemStack heldItem = player.getHeldItem(Hand.MAIN_HAND);
+            ItemStack heldItem = player.getItemInHand(Hand.MAIN_HAND);
             if (heldItem.isEmpty()) {
                 return;
             }

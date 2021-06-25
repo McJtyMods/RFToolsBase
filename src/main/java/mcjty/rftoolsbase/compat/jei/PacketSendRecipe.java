@@ -34,12 +34,12 @@ public class PacketSendRecipe {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             PlayerEntity player = ctx.getSender();
-            World world = player.getEntityWorld();
+            World world = player.getCommandSenderWorld();
             // Handle tablet version
-            ItemStack mainhand = player.getHeldItemMainhand();
+            ItemStack mainhand = player.getMainHandItem();
             if (!mainhand.isEmpty() && mainhand.getItem() == CraftingModule.CRAFTING_CARD.get()) {
-                if (player.openContainer instanceof CraftingCardContainer) {
-                    CraftingCardContainer craftingCardContainer = (CraftingCardContainer) player.openContainer;
+                if (player.containerMenu instanceof CraftingCardContainer) {
+                    CraftingCardContainer craftingCardContainer = (CraftingCardContainer) player.containerMenu;
                     craftingCardContainer.setGridContents(player, stacks);
                 }
             }

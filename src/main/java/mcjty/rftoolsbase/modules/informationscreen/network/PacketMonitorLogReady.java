@@ -43,7 +43,7 @@ public class PacketMonitorLogReady {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = McJtyLib.proxy.getClientWorld().getTileEntity(pos);
+            TileEntity te = McJtyLib.proxy.getClientWorld().getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity) {
                 InformationScreenTileEntity info = (InformationScreenTileEntity) te;
                 info.setClientData(data);

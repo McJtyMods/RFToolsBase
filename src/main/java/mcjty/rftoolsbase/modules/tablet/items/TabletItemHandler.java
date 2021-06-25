@@ -19,7 +19,7 @@ public class TabletItemHandler implements IItemHandlerModifiable {
     }
 
     private ItemStack getTablet() {
-        return player.getHeldItem(Hand.MAIN_HAND);
+        return player.getItemInHand(Hand.MAIN_HAND);
     }
 
     @Override

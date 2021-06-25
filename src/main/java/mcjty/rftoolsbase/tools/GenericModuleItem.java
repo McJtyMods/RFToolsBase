@@ -15,6 +15,8 @@ import java.util.List;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class GenericModuleItem extends Item implements IModuleProvider, ITooltipSettings {
 
     private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
@@ -43,8 +45,8 @@ public abstract class GenericModuleItem extends Item implements IModuleProvider,
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
-        super.addInformation(itemStack, world, list, flag);
+    public void appendHoverText(ItemStack itemStack, @Nullable World world, List<ITextComponent> list, ITooltipFlag flag) {
+        super.appendHoverText(itemStack, world, list, flag);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flag);
     }
 }

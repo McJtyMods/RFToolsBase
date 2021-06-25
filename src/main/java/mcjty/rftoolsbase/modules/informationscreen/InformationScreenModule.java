@@ -20,7 +20,7 @@ public class InformationScreenModule implements IModule {
 
     public static final RegistryObject<Block> INFORMATION_SCREEN = BLOCKS.register("information_screen", InformationScreenBlock::new);
     public static final RegistryObject<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", () -> new BlockItem(INFORMATION_SCREEN.get(), Registration.createStandardProperties()));
-    public static final RegistryObject<TileEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> TileEntityType.Builder.create(InformationScreenTileEntity::new, INFORMATION_SCREEN.get()).build(null));
+    public static final RegistryObject<TileEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> TileEntityType.Builder.of(InformationScreenTileEntity::new, INFORMATION_SCREEN.get()).build(null));
 
     @Override
     public void init(FMLCommonSetupEvent event) {

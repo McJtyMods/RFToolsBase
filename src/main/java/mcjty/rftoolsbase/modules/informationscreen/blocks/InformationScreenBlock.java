@@ -32,10 +32,10 @@ public class InformationScreenBlock extends BaseBlock {
                 .tileEntitySupplier(InformationScreenTileEntity::new));
     }
 
-    public static final VoxelShape BLOCK_NORTH = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 1F);
-    public static final VoxelShape BLOCK_SOUTH = Block.makeCuboidShape(0.0F, 0.0F, 15F, 16.0F, 16.0F, 16.0F);
-    public static final VoxelShape BLOCK_WEST = Block.makeCuboidShape(0.0F, 0.0F, 0.0F, 1F, 16.0F, 16.0F);
-    public static final VoxelShape BLOCK_EAST = Block.makeCuboidShape(15F, 0.0F, 0.0F, 16.0F, 16.0F, 16.0F);
+    public static final VoxelShape BLOCK_NORTH = Block.box(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 1F);
+    public static final VoxelShape BLOCK_SOUTH = Block.box(0.0F, 0.0F, 15F, 16.0F, 16.0F, 16.0F);
+    public static final VoxelShape BLOCK_WEST = Block.box(0.0F, 0.0F, 0.0F, 1F, 16.0F, 16.0F);
+    public static final VoxelShape BLOCK_EAST = Block.box(15F, 0.0F, 0.0F, 16.0F, 16.0F, 16.0F);
 
     @SuppressWarnings("deprecation")
     @Override
@@ -55,13 +55,13 @@ public class InformationScreenBlock extends BaseBlock {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
-        ActionResultType rc = super.onBlockActivated(state, world, pos, player, hand, result);
+    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+        ActionResultType rc = super.use(state, world, pos, player, hand, result);
         if (rc != ActionResultType.SUCCESS) {
             // We just pass along the block activation to the block behind it so that we can open the gui of that
-            BlockPos offset = pos.offset(OrientationTools.getOrientationHoriz(state).getOpposite());
-            result = new BlockRayTraceResult(result.getHitVec(), result.getFace(), offset, result.isInside());
-            return world.getBlockState(offset).onBlockActivated(world, player, hand, result);
+            BlockPos offset = pos.relative(OrientationTools.getOrientationHoriz(state).getOpposite());
+            result = new BlockRayTraceResult(result.getLocation(), result.getDirection(), offset, result.isInside());
+            return world.getBlockState(offset).use(world, player, hand, result);
         }
         return rc;
     }
@@ -74,8 +74,8 @@ public class InformationScreenBlock extends BaseBlock {
 
     @Override
     protected boolean wrenchUse(World world, BlockPos pos, Direction side, PlayerEntity player) {
-        if (!world.isRemote) {
-            TileEntity te = world.getTileEntity(pos);
+        if (!world.isClientSide) {
+            TileEntity te = world.getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity) {
                 InformationScreenTileEntity monitor = (InformationScreenTileEntity) te;
                 monitor.toggleMode();
@@ -95,7 +95,7 @@ public class InformationScreenBlock extends BaseBlock {
     @SuppressWarnings("deprecation")
     @Override
     @Nonnull
-    public BlockRenderType getRenderType(BlockState state) {
+    public BlockRenderType getRenderShape(BlockState state) {
         return BlockRenderType.MODEL;
     }
 }

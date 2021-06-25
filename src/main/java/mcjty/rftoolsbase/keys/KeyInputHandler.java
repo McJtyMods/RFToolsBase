@@ -10,9 +10,9 @@ public class KeyInputHandler {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if (KeyBindings.porterNextDestination.isPressed()) {
+        if (KeyBindings.porterNextDestination.consumeClick()) {
             RFToolsBaseMessages.sendToServer(CommandHandler.CMD_CYCLE_DESTINATION, TypedMap.builder().put(CommandHandler.PARAM_NEXT, true));
-        } else if (KeyBindings.porterPrevDestination.isPressed()) {
+        } else if (KeyBindings.porterPrevDestination.consumeClick()) {
             RFToolsBaseMessages.sendToServer(CommandHandler.CMD_CYCLE_DESTINATION, TypedMap.builder().put(CommandHandler.PARAM_NEXT, false));
         }
     }

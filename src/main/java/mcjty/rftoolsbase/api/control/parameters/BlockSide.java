@@ -93,7 +93,7 @@ public class BlockSide implements Comparable<BlockSide> {
     public String getStringRepresentation() {
         Direction facing = getSide();
 
-        String s = facing == null ? "" : StringUtils.left(facing.getString().toUpperCase(), 1);
+        String s = facing == null ? "" : StringUtils.left(facing.getSerializedName().toUpperCase(), 1);
         if (getNodeName() == null) {
             return s;
         } else {

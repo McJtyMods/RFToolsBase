@@ -16,8 +16,8 @@ public class BlockTags extends BlockTagsProvider {
     }
 
     @Override
-    protected void registerTags() {
-        getOrCreateBuilder(Tags.Blocks.ORES)
+    protected void addTags() {
+        tag(Tags.Blocks.ORES)
                 .add(WorldGenModule.DIMENSIONAL_SHARD_END.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get());
     }
 

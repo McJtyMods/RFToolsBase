@@ -24,8 +24,8 @@ public class FilterModuleInventory {
     private final Supplier<ItemStack> filterGetter;
 
     public FilterModuleInventory(PlayerEntity player) {
-        filterGetter = () -> player.getHeldItem(Hand.MAIN_HAND);
-        CompoundNBT tagCompound = player.getHeldItem(Hand.MAIN_HAND).getOrCreateTag();
+        filterGetter = () -> player.getItemInHand(Hand.MAIN_HAND);
+        CompoundNBT tagCompound = player.getItemInHand(Hand.MAIN_HAND).getOrCreateTag();
         convertFromNBT(tagCompound);
     }
 
@@ -39,7 +39,7 @@ public class FilterModuleInventory {
         ListNBT itemList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < itemList.size(); i++) {
             CompoundNBT compound = itemList.getCompound(i);
-            ItemStack s = ItemStack.read(compound);
+            ItemStack s = ItemStack.of(compound);
             if (!s.isEmpty()) {
                 stacks.add(s);
             }
@@ -99,7 +99,7 @@ public class FilterModuleInventory {
             for (ItemStack stack : stacks) {
                 CompoundNBT nbtTagCompound = new CompoundNBT();
                 if (!stack.isEmpty()) {
-                    stack.write(nbtTagCompound);
+                    stack.save(nbtTagCompound);
                 }
                 itemList.add(nbtTagCompound);
             }

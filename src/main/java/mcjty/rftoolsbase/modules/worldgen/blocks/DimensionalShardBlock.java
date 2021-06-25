@@ -11,12 +11,14 @@ import net.minecraftforge.common.ToolType;
 import javax.annotation.Nullable;
 import java.util.Random;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class DimensionalShardBlock extends Block {
 
     public DimensionalShardBlock() {
-        super(Properties.create(Material.ROCK)
-                .hardnessAndResistance(3.0f, 5.0f)
-                .setLightLevel(value -> 7));
+        super(Properties.of(Material.STONE)
+                .strength(3.0f, 5.0f)
+                .lightLevel(value -> 7));
     }
 
     @Nullable
@@ -31,8 +33,8 @@ public class DimensionalShardBlock extends Block {
     }
 
     @Override
-    public void onPlayerDestroy(IWorld world, BlockPos pos, BlockState state) {
-        if (world.isRemote()) {
+    public void destroy(IWorld world, BlockPos pos, BlockState state) {
+        if (world.isClientSide()) {
             for (int i = 0 ; i < 10 ; i++) {
                 world.addParticle(ParticleTypes.FIREWORK, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f);
             }

@@ -25,8 +25,8 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     public GuiMachineInfuser(MachineInfuserTileEntity te, GenericContainer container, PlayerInventory inventory) {
         super(te, container, inventory, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());
 
-        xSize = INFUSER_WIDTH;
-        ySize = INFUSER_HEIGHT;
+        imageWidth = INFUSER_WIDTH;
+        imageHeight = INFUSER_HEIGHT;
     }
 
     public static void register() {
@@ -40,7 +40,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         energyBar = new EnergyBar().name("energybar").vertical().hint(10, 7, 8, 54).showText(false);
 
         Panel toplevel = positional().background(iconLocation).children(energyBar); //.addChild(arrow);
-        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
+        toplevel.bounds(leftPos, topPos, imageWidth, imageHeight);
 
         window = new Window(this, toplevel);
 
@@ -52,7 +52,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         drawWindow(matrixStack);
         updateEnergyBar(energyBar);
     }

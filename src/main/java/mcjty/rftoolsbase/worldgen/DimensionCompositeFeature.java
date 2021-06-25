@@ -22,9 +22,9 @@ public class DimensionCompositeFeature<F extends IFeatureConfig> extends Configu
 
 
     @Override
-    public boolean generate(ISeedReader reader, ChunkGenerator generator, Random random, BlockPos pos) {
-        if (DimensionId.fromWorld(reader.getWorld()).equals(dimension)) {
-            return super.generate(reader, generator, random, pos);
+    public boolean place(ISeedReader reader, ChunkGenerator generator, Random random, BlockPos pos) {
+        if (DimensionId.fromWorld(reader.getLevel()).equals(dimension)) {
+            return super.place(reader, generator, random, pos);
         }
         return false;
     }

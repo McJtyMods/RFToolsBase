@@ -24,9 +24,9 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = false;
             ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid boolean!");
             if (sender instanceof PlayerEntity) {
-                sender.sendStatusMessage(component, false);
+                sender.displayClientMessage(component, false);
             } else {
-                sender.sendMessage(component, Util.DUMMY_UUID);
+                sender.sendMessage(component, Util.NIL_UUID);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
@@ -42,9 +42,9 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = 0;
             ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid integer!");
             if (sender instanceof PlayerEntity) {
-                sender.sendStatusMessage(component, false);
+                sender.displayClientMessage(component, false);
             } else {
-                sender.sendMessage(component, Util.DUMMY_UUID);
+                sender.sendMessage(component, Util.NIL_UUID);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
@@ -60,9 +60,9 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = 0.0f;
             ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid real number!");
             if (sender instanceof PlayerEntity) {
-                sender.sendStatusMessage(component, false);
+                sender.displayClientMessage(component, false);
             } else {
-                sender.sendMessage(component, Util.DUMMY_UUID);
+                sender.sendMessage(component, Util.NIL_UUID);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;

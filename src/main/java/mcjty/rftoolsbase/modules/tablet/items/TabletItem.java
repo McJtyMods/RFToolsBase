@@ -35,6 +35,8 @@ import java.util.List;
 import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
+import net.minecraft.item.Item.Properties;
+
 public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/tablet");
@@ -50,8 +52,8 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
     public TabletItem() {
         super(new Properties()
-                .maxStackSize(1)
-                .group(RFToolsBase.setup.getTab()));
+                .stacksTo(1)
+                .tab(RFToolsBase.setup.getTab()));
     }
 
     public static int getCurrentSlot(ItemStack stack) {
@@ -62,12 +64,12 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
         stack.getOrCreateTag().putInt("Current", current);
         ItemStack containingItem = getContainingItem(stack, current);
         ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
-        player.inventory.mainInventory.set(player.inventory.currentItem, newTablet);
+        player.inventory.items.set(player.inventory.selected, newTablet);
 //        player.setHeldItem(getHand(player), newTablet);
     }
 
     public static Hand getHand(PlayerEntity player) {
-        return player.getActiveHand() == null ? Hand.MAIN_HAND : player.getActiveHand();
+        return player.getUsedItemHand() == null ? Hand.MAIN_HAND : player.getUsedItemHand();
     }
 
     @Override
@@ -91,7 +93,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
             ItemStack containingItem = getContainingItem(stack, currentItem);
             if (!containingItem.isEmpty()) {
                 setCurrentSlot(player, stack, currentItem);
-                player.sendStatusMessage(new StringTextComponent("Switched item"), false);
+                player.displayClientMessage(new StringTextComponent("Switched item"), false);
                 return;
             }
             tries--;
@@ -99,23 +101,23 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     public static ItemStack getContainingItem(ItemStack stack, int slot) {
-        return NBTTools.getTag(stack).map(tag -> ItemStack.read(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
+        return NBTTools.getTag(stack).map(tag -> ItemStack.of(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
     }
 
     public static void setContainingItem(PlayerEntity player, Hand hand, int slot, ItemStack containingItem) {
-        ItemStack stack = player.getHeldItem(hand);
+        ItemStack stack = player.getItemInHand(hand);
         CompoundNBT tag = stack.getOrCreateTag();
         if (containingItem.isEmpty()) {
             tag.remove("Item" + slot);
         } else {
             CompoundNBT compound = new CompoundNBT();
-            containingItem.write(compound);
+            containingItem.save(compound);
             tag.put("Item" + slot, compound);
         }
 
         int current = getCurrentSlot(stack);
         ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
-        player.inventory.mainInventory.set(player.inventory.currentItem, newTablet);
+        player.inventory.items.set(player.inventory.selected, newTablet);
 //        player.setHeldItem(hand, newTablet);
     }
 
@@ -135,10 +137,10 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
-            if (player.isSneaking()) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
+            if (player.isShiftKeyDown()) {
                 openTabletGui(player);
             } else {
                 ItemStack containingItem = getContainingItem(stack, getCurrentSlot(stack));
@@ -165,7 +167,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
             @Override
             public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-                TabletContainer container = new TabletContainer(id, player.getPosition(), player);
+                TabletContainer container = new TabletContainer(id, player.blockPosition(), player);
                 container.setupInventories(new TabletItemHandler(player), playerInventory);
                 return container;
             }
@@ -178,8 +180,8 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
-        super.addInformation(itemStack, world, list, flags);
+    public void appendHoverText(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
+        super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 }

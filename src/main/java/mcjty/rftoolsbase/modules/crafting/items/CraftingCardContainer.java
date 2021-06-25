@@ -31,7 +31,7 @@ public class CraftingCardContainer extends GenericContainer {
 
     public CraftingCardContainer(int id, BlockPos pos, PlayerEntity player) {
         super(CraftingModule.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY.get(), pos, null);
-        cardIndex = player.inventory.currentItem;
+        cardIndex = player.inventory.selected;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class CraftingCardContainer extends GenericContainer {
         if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
             return new BaseSlot(inventories.get(slotFactory.getInventoryName()), null, slotFactory.getIndex(), slotFactory.getX(), slotFactory.getY()) {
                 @Override
-                public boolean canTakeStack(PlayerEntity player) {
+                public boolean mayPickup(PlayerEntity player) {
                     // We don't want to take the stack from this slot.
                     return false;
                 }
@@ -56,7 +56,7 @@ public class CraftingCardContainer extends GenericContainer {
     }
 
     public void setGridContents(PlayerEntity player, List<ItemStack> stacks) {
-        ItemStack craftingCard = player.getHeldItem(Hand.MAIN_HAND);
+        ItemStack craftingCard = player.getItemInHand(Hand.MAIN_HAND);
         ItemStackList s = ItemStackList.create(INPUT_SLOTS + 1);
         int x = 0;
         int y = 0;

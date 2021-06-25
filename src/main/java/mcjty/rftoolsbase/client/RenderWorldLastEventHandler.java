@@ -38,19 +38,19 @@ public class RenderWorldLastEventHandler {
         }
 
         MatrixStack matrixStack = evt.getMatrixStack();
-        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().getRenderTypeBuffers().getBufferSource();
+        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().renderBuffers().bufferSource();
         IVertexBuilder builder = buffer.getBuffer(CustomRenderTypes.OVERLAY_LINES);
 
-        matrixStack.push();
+        matrixStack.pushPose();
 
-        Vector3d projectedView = Minecraft.getInstance().gameRenderer.getActiveRenderInfo().getProjectedView();
+        Vector3d projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
-        Matrix4f positionMatrix = matrixStack.getLast().getMatrix();
+        Matrix4f positionMatrix = matrixStack.last().pose();
         mcjty.lib.client.RenderHelper.renderHighLightedBlocksOutline(builder, positionMatrix, c.getX(), c.getY(), c.getZ(), 1.0f, 0.0f, 0.0f, 1.0f);
 
-        matrixStack.pop();
+        matrixStack.popPose();
         RenderSystem.disableDepthTest();
-        buffer.finish(CustomRenderTypes.OVERLAY_LINES);
+        buffer.endBatch(CustomRenderTypes.OVERLAY_LINES);
     }
 }

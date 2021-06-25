@@ -33,12 +33,12 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
 
     public GuiTablet(TabletContainer container, PlayerInventory inventory) {
         super(null, container, inventory, TabletItem.MANUAL);
-        xSize = TABLET_WIDTH;
-        ySize = TABLET_HEIGHT;
+        imageWidth = TABLET_WIDTH;
+        imageHeight = TABLET_HEIGHT;
     }
 
     public static void register() {
-        ScreenManager.registerFactory(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
+        ScreenManager.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
     }
 
     private static GuiTablet createTabletGui(TabletContainer container, PlayerInventory inventory, ITextComponent textComponent) {
@@ -58,7 +58,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
             toplevel.children(buttons[i]);
         }
 
-        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
+        toplevel.bounds(leftPos, topPos, imageWidth, imageHeight);
         window = new Window(this, toplevel);
     }
 
@@ -69,22 +69,22 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     }
 
     private Hand getHand() {
-        if (minecraft.player == null || minecraft.player.getActiveHand() == null) {
+        if (minecraft.player == null || minecraft.player.getUsedItemHand() == null) {
             return Hand.MAIN_HAND;
         } else {
-            return minecraft.player.getActiveHand();
+            return minecraft.player.getUsedItemHand();
         }
     }
 
     @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack stack, int p_230451_2_, int p_230451_3_) {
-        super.drawGuiContainerForegroundLayer(stack, p_230451_2_, p_230451_3_);
-        ItemStack heldItem = minecraft.player.getHeldItem(getHand());
+    protected void renderLabels(MatrixStack stack, int p_230451_2_, int p_230451_3_) {
+        super.renderLabels(stack, p_230451_2_, p_230451_3_);
+        ItemStack heldItem = minecraft.player.getItemInHand(getHand());
         updateActiveButton(TabletItem.getCurrentSlot(heldItem));
     }
 
     private void setActive(int i) {
-        ItemStack heldItem = minecraft.player.getHeldItem(getHand());
+        ItemStack heldItem = minecraft.player.getItemInHand(getHand());
         TabletItem.setCurrentSlot(minecraft.player, heldItem, i);
         updateActiveButton(i);
         syncStack();

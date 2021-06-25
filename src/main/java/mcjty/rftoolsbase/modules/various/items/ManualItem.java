@@ -29,20 +29,20 @@ public class ManualItem extends Item implements ITooltipSettings {
             .infoShift(header());
 
     public ManualItem() {
-        super(Registration.createStandardProperties().maxStackSize(1));
+        super(Registration.createStandardProperties().stacksTo(1));
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (!worldIn.isRemote) {
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if (!worldIn.isClientSide) {
             PatchouliCompatibility.openBookGUI((ServerPlayerEntity) playerIn, new ResourceLocation(RFToolsBase.MODID, "manual"));
         }
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+        return super.use(worldIn, playerIn, handIn);
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
-        super.addInformation(itemStack, world, list, flags);
+    public void appendHoverText(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
+        super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 }

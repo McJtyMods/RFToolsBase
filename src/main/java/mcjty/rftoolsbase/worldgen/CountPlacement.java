@@ -13,7 +13,7 @@ public class CountPlacement extends SimplePlacement<CountPlacementConfig> {
     }
 
     @Override
-    public Stream<BlockPos> getPositions(Random random, CountPlacementConfig config, BlockPos pos) {
+    public Stream<BlockPos> place(Random random, CountPlacementConfig config, BlockPos pos) {
         Stream.Builder<BlockPos> builder = Stream.builder();
         for (int i = 0 ; i < config.tries ; i++) {
             int x = pos.getX();

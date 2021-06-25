@@ -76,17 +76,17 @@ public class ScreenTextHelper implements ITextRenderHelper {
         if (truetype) {
             width *= 2;
         }
-        text = renderer.trimStringToWidth(line, (large ? (width / 8) : (width / 4)) - textx);
+        text = renderer.plainSubstrByWidth(line, (large ? (width / 8) : (width / 4)) - textx);
 //            int w = large ? 58 : 115;
         int w = large ? (int) (width / 8.8f) : (int) (width / 4.45f);
         switch (align) {
             case ALIGN_LEFT:
                 break;
             case ALIGN_CENTER:
-                textx += (w - renderer.getStringWidth(text)) / 2;
+                textx += (w - renderer.width(text)) / 2;
                 break;
             case ALIGN_RIGHT:
-                textx += w - renderer.getStringWidth(text);
+                textx += w - renderer.width(text);
                 break;
         }
     }
@@ -99,27 +99,27 @@ public class ScreenTextHelper implements ITextRenderHelper {
     public static void renderScaled(ResourceLocation fontId, MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
         FontRenderer renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
             // @todo 1.15 check if the 0xff000000 | is needed
-            renderer.renderString(text, x * 2, y * 2, 0xff000000 | color, false, matrixStack.getLast().getMatrix(), buffer, false, 0, lightmapValue);
-            matrixStack.pop();
+            renderer.drawInBatch(text, x * 2, y * 2, 0xff000000 | color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
+            matrixStack.popPose();
         } else {
-            renderer.renderString(text, x, y, 0xff000000 | color, false, matrixStack.getLast().getMatrix(), buffer, false, 0, lightmapValue);
+            renderer.drawInBatch(text, x, y, 0xff000000 | color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
         }
     }
 
     public static void renderScaledTrimmed(ResourceLocation fontId, MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
         FontRenderer renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
-            matrixStack.push();
+            matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
-            text = renderer.trimStringToWidth(text, maxwidth * 2);
-            renderer.renderString(text, x * 2, y * 2, color, false, matrixStack.getLast().getMatrix(), buffer, false, 0, lightmapValue);
-            matrixStack.pop();
+            text = renderer.plainSubstrByWidth(text, maxwidth * 2);
+            renderer.drawInBatch(text, x * 2, y * 2, color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
+            matrixStack.popPose();
         } else {
-            text = renderer.trimStringToWidth(text, maxwidth);
-            renderer.renderString(text, x * 2, y * 2, color, false, matrixStack.getLast().getMatrix(), buffer, false, 0, lightmapValue);
+            text = renderer.plainSubstrByWidth(text, maxwidth);
+            renderer.drawInBatch(text, x * 2, y * 2, color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
         }
     }
 
@@ -128,13 +128,13 @@ public class ScreenTextHelper implements ITextRenderHelper {
     private static FontRenderer getFontRenderer(boolean truetype, ResourceLocation fontId) {
         if (truetype) {
             if (!trueTypeRenderer.containsKey(fontId)) {
-                Font font = Minecraft.getInstance().fontResourceMananger.idToFontMap.get(fontId);
+                Font font = Minecraft.getInstance().fontManager.fontSets.get(fontId);
                         //new ResourceLocation("rftoolsutility", "ubuntu"));
                 trueTypeRenderer.put(fontId, new FontRenderer(resourceLocation -> font));
             }
             return trueTypeRenderer.get(fontId);
         } else {
-            return Minecraft.getInstance().fontRenderer;
+            return Minecraft.getInstance().font;
         }
     }
 

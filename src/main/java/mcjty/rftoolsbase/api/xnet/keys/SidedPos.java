@@ -35,7 +35,7 @@ public class SidedPos implements Comparable<SidedPos> {
 
     @Override
     public String toString() {
-        return "SidedPos{" + BlockPosTools.toString(pos) + "/" + side.getString() + "}";
+        return "SidedPos{" + BlockPosTools.toString(pos) + "/" + side.getSerializedName() + "}";
     }
 
     @Override

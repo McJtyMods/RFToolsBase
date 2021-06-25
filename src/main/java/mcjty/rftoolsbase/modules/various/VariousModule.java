@@ -28,13 +28,13 @@ public class VariousModule implements IModule {
     public static final RegistryObject<ManualItem> MANUAL = ITEMS.register("manual", ManualItem::new);
 
     private static Item createItem16() {
-        return new Item(new Item.Properties().group(RFToolsBase.setup.getTab()).maxStackSize(16));
+        return new Item(new Item.Properties().tab(RFToolsBase.setup.getTab()).stacksTo(16));
     }
 
     private static Item createDimensionalShard() {
         return new Item(new Item.Properties()
-                .maxStackSize(64)
-                .group(RFToolsBase.setup.getTab()));
+                .stacksTo(64)
+                .tab(RFToolsBase.setup.getTab()));
     }
 
     @Override

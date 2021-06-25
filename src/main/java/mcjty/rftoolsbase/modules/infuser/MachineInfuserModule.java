@@ -21,7 +21,7 @@ public class MachineInfuserModule implements IModule {
 
     public static final RegistryObject<BaseBlock> MACHINE_INFUSER = BLOCKS.register("machine_infuser", MachineInfuserTileEntity::createBlock);
     public static final RegistryObject<Item> MACHINE_INFUSER_ITEM = ITEMS.register("machine_infuser", () -> new BlockItem(MACHINE_INFUSER.get(), Registration.createStandardProperties()));
-    public static final RegistryObject<TileEntityType<?>> TYPE_MACHINE_INFUSER = TILES.register("machine_infuser", () -> TileEntityType.Builder.create(MachineInfuserTileEntity::new, MACHINE_INFUSER.get()).build(null));
+    public static final RegistryObject<TileEntityType<?>> TYPE_MACHINE_INFUSER = TILES.register("machine_infuser", () -> TileEntityType.Builder.of(MachineInfuserTileEntity::new, MACHINE_INFUSER.get()).build(null));
     public static final RegistryObject<ContainerType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 
     @Override

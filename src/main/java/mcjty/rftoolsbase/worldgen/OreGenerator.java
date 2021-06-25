@@ -37,10 +37,10 @@ public class OreGenerator {
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
 
         ConfiguredFeature<OreFeatureConfig, ?> overworldFeature = Feature.ORE
-                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().getDefaultState(),
+                .configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                         WorldGenConfig.OVERWORLD_ORE_VEINSIZE.get()));
         OVERWORLD_SHARDS = new DimensionCompositeFeature(overworldFeature, DimensionId.overworld())
-                .withPlacement(Registration.COUNT_PLACEMENT.get().configure(new CountPlacementConfig(
+                .decorated(Registration.COUNT_PLACEMENT.get().configured(new CountPlacementConfig(
                         WorldGenConfig.OVERWORLD_ORE_MINY.get(),
                         0,
                         WorldGenConfig.OVERWORLD_ORE_MAXY.get() - WorldGenConfig.OVERWORLD_ORE_MINY.get(),
@@ -48,10 +48,10 @@ public class OreGenerator {
         Registry.register(registry, new ResourceLocation(RFToolsBase.MODID, "dimshard_overworld"), OVERWORLD_SHARDS);
 
         ConfiguredFeature<OreFeatureConfig, ?> netherFeature = Feature.ORE
-                .withConfiguration(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_NETHER, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().getDefaultState(),
+                .configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHER_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().defaultBlockState(),
                         WorldGenConfig.NETHER_ORE_VEINSIZE.get()));
         NETHER_SHARDS = new DimensionCompositeFeature(netherFeature, DimensionId.nether())
-                .withPlacement(Registration.COUNT_PLACEMENT.get().configure(new CountPlacementConfig(
+                .decorated(Registration.COUNT_PLACEMENT.get().configured(new CountPlacementConfig(
                         WorldGenConfig.NETHER_ORE_MINY.get(),
                         0,
                         WorldGenConfig.NETHER_ORE_MAXY.get() - WorldGenConfig.NETHER_ORE_MINY.get(),
@@ -59,10 +59,10 @@ public class OreGenerator {
         Registry.register(registry, new ResourceLocation(RFToolsBase.MODID, "dimshard_nether"), NETHER_SHARDS);
 
         ConfiguredFeature<OreFeatureConfig, ?> endFeature = Feature.ORE
-                .withConfiguration(new OreFeatureConfig(ENDSTONE_TEST, WorldGenModule.DIMENSIONAL_SHARD_END.get().getDefaultState(),
+                .configured(new OreFeatureConfig(ENDSTONE_TEST, WorldGenModule.DIMENSIONAL_SHARD_END.get().defaultBlockState(),
                         WorldGenConfig.END_ORE_VEINSIZE.get()));
         END_SHARDS = new DimensionCompositeFeature(endFeature, DimensionId.end())
-                .withPlacement(Registration.COUNT_PLACEMENT.get().configure(new CountPlacementConfig(
+                .decorated(Registration.COUNT_PLACEMENT.get().configured(new CountPlacementConfig(
                         WorldGenConfig.END_ORE_MINY.get(),
                         0,
                         WorldGenConfig.END_ORE_MAXY.get() - WorldGenConfig.END_ORE_MINY.get(),
@@ -72,11 +72,11 @@ public class OreGenerator {
 
     public static void onBiomeLoadingEvent(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.NETHER) {
-            event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, NETHER_SHARDS);
+            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, NETHER_SHARDS);
         } else if (event.getCategory() == Biome.Category.THEEND) {
-            event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, END_SHARDS);
+            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, END_SHARDS);
         } else {
-            event.getGeneration().withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, OVERWORLD_SHARDS);
+            event.getGeneration().addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, OVERWORLD_SHARDS);
         }
     }
 }

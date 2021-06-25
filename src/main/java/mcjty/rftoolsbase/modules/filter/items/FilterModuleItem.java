@@ -46,6 +46,8 @@ import java.util.stream.Collectors;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
+import net.minecraft.item.Item.Properties;
+
 public class FilterModuleItem extends Item implements ITooltipSettings, ITooltipExtras {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/filtermodule");
@@ -74,8 +76,8 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
 
     public FilterModuleItem() {
         super(new Properties()
-                .maxStackSize(1)
-                .group(RFToolsBase.setup.getTab()));
+                .stacksTo(1)
+                .tab(RFToolsBase.setup.getTab()));
     }
 
     @Override
@@ -84,48 +86,48 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-        super.addInformation(itemStack, worldIn, list, flagIn);
+    public void appendHoverText(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+        super.appendHoverText(itemStack, worldIn, list, flagIn);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flagIn);
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
+    public ActionResultType useOn(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
         Hand hand = context.getHand();
-        World world = context.getWorld();
-        ItemStack stack = player.getHeldItem(hand);
-        BlockPos pos = context.getPos();
+        World world = context.getLevel();
+        ItemStack stack = player.getItemInHand(hand);
+        BlockPos pos = context.getClickedPos();
         if (player.isCrouching()) {
-            if (!world.isRemote) {
-                TileEntity te = world.getTileEntity(pos);
+            if (!world.isClientSide) {
+                TileEntity te = world.getBlockEntity(pos);
                 if (InventoryTools.isInventory(te)) {
                     FilterModuleInventory inventory = new FilterModuleInventory(stack);
                     InventoryTools.getItems(te, s -> true).forEach(inventory::addStack);
                     inventory.markDirty();
-                    player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Stored inventory contents in filter"), false);
+                    player.displayClientMessage(new StringTextComponent(TextFormatting.GREEN + "Stored inventory contents in filter"), false);
                 } else {
                     BlockState state = world.getBlockState(pos);
-                    ItemStack blockStack = state.getBlock().getItem(world, pos, state);
+                    ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state);
                     if (!blockStack.isEmpty()) {
                         FilterModuleInventory inventory = new FilterModuleInventory(stack);
                         inventory.addStack(blockStack);
                         inventory.markDirty();
-                        player.sendStatusMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getDisplayName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.displayClientMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     } else {
-                        player.sendStatusMessage(new StringTextComponent(TextFormatting.RED + "Could not add " + blockStack.getDisplayName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.displayClientMessage(new StringTextComponent(TextFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     }
                 }
             }
             return ActionResultType.SUCCESS;
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                 @Override
                 public ITextComponent getDisplayName() {
@@ -134,7 +136,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
 
                 @Override
                 public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-                    FilterModuleContainer container = new FilterModuleContainer(id, player.getPosition(), player);
+                    FilterModuleContainer container = new FilterModuleContainer(id, player.blockPosition(), player);
                     container.setupInventories(null, playerInventory);
                     return container;
                 }
@@ -160,13 +162,13 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             itemSet.add(s.getItem());
         }
         for (ResourceLocation tag : inventory.getTags()) {
-            ITag<Item> itemTag = ItemTags.getCollection().get(tag);
+            ITag<Item> itemTag = ItemTags.getAllTags().getTag(tag);
             if (itemTag != null) {
-                itemSet.addAll(itemTag.getAllElements());
+                itemSet.addAll(itemTag.getValues());
             } else {
-                ITag<Block> blockTag = BlockTags.getCollection().get(tag);
+                ITag<Block> blockTag = BlockTags.getAllTags().getTag(tag);
                 if (blockTag != null) {
-                    for (Block block : blockTag.getAllElements()) {
+                    for (Block block : blockTag.getValues()) {
                         itemSet.add(block.asItem());
                     }
                 }

@@ -23,7 +23,7 @@ public class Inventory extends BlockSide {
     }
 
     public String serialize() {
-        return "#" + (hasNodeName() ? getNodeName() : "-") + "#" + getSide().getString() + "#" + (intSide == null ? "-" : intSide.getString()) + "#";
+        return "#" + (hasNodeName() ? getNodeName() : "-") + "#" + getSide().getSerializedName() + "#" + (intSide == null ? "-" : intSide.getSerializedName()) + "#";
     }
 
     public static Inventory deserialize(String s) {
@@ -45,11 +45,11 @@ public class Inventory extends BlockSide {
 
     @Override
     public String getStringRepresentation() {
-        String s = StringUtils.left(getSide().getString().toUpperCase(), 1);
+        String s = StringUtils.left(getSide().getSerializedName().toUpperCase(), 1);
         if (getIntSide() == null) {
             s += "/*";
         } else {
-            String is = StringUtils.left(getIntSide().getString().toUpperCase(), 1);
+            String is = StringUtils.left(getIntSide().getSerializedName().toUpperCase(), 1);
             s += "/" + is;
         }
         if (getNodeName() == null) {

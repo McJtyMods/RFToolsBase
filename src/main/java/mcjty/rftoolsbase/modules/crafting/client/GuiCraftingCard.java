@@ -48,12 +48,12 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     public GuiCraftingCard(CraftingCardContainer container, PlayerInventory inventory) {
         super(null, container, inventory, CraftingCardItem.MANUAL);
-        xSize = WIDTH;
-        ySize = HEIGHT;
+        imageWidth = WIDTH;
+        imageHeight = HEIGHT;
     }
 
     public static void register() {
-        ScreenManager.registerFactory(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
+        ScreenManager.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
     }
 
     private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
@@ -65,7 +65,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         super.init();
 
         Panel toplevel = Widgets.positional().background(iconLocation);
-        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
+        toplevel.bounds(leftPos, topPos, imageWidth, imageHeight);
 
         toplevel.children(label("Regular 3x3 crafting recipe").horizontalAlignment(HorizontalAlignment.ALIGN_LEFT).hint(10, 4, 160, 14));
         toplevel.children(label("or more complicated recipes").horizontalAlignment(HorizontalAlignment.ALIGN_LEFT).hint(10, 17, 160, 14));
@@ -111,8 +111,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                 if (s instanceof ItemStack) {
                     ItemStack stack = (ItemStack) s;
                     if (!stack.isEmpty()) {
-                        ITooltipFlag flag = this.mc.gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL;
-                        List<ITextComponent> list = stack.getTooltip(this.mc.player, flag);
+                        ITooltipFlag flag = this.mc.options.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL;
+                        List<ITextComponent> list = stack.getTooltipLines(this.mc.player, flag);
 
                         // @todo 1.14
                         for (int i = 0; i < list.size(); ++i) {
@@ -151,7 +151,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     @Nonnull
     private ItemStackList getStacks() {
-        ItemStack cardItem = minecraft.player.getHeldItem(Hand.MAIN_HAND);
+        ItemStack cardItem = minecraft.player.getItemInHand(Hand.MAIN_HAND);
         ItemStackList stacks = ItemStackList.EMPTY;
         if (!cardItem.isEmpty() && cardItem.getItem() instanceof CraftingCardItem) {
             stacks = CraftingCardItem.getStacksFromItem(cardItem);
@@ -163,12 +163,12 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         return new BlockRenderEvent() {
             @Override
             public void select() {
-                ItemStack itemstack = minecraft.player.inventory.getItemStack();
+                ItemStack itemstack = minecraft.player.inventory.getCarried();
                 slots[idx].renderItem(itemstack);
                 ItemStackList stacks = getStacks();
                 if (!stacks.isEmpty()) {
                     stacks.set(idx, itemstack);
-                    ItemStack cardItem = minecraft.player.getHeldItem(Hand.MAIN_HAND);
+                    ItemStack cardItem = minecraft.player.getItemInHand(Hand.MAIN_HAND);
                     CraftingCardItem.putStacksInItem(cardItem, stacks);
                     RFToolsBaseMessages.INSTANCE.sendToServer(new PacketItemNBTToServer(cardItem.getTag()));
                 }
@@ -182,7 +182,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         updateSlots();
         drawWindow(matrixStack);
     }

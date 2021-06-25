@@ -25,7 +25,7 @@ public class PacketHudLogReady {
 
     public PacketHudLogReady(PacketBuffer buf) {
         pos = buf.readBlockPos();
-        command = buf.readString(32767);
+        command = buf.readUtf(32767);
         list = NetworkTools.readStringList(buf);
     }
 
@@ -38,14 +38,14 @@ public class PacketHudLogReady {
 
     public void toBytes(PacketBuffer buf) {
         buf.writeBlockPos(pos);
-        buf.writeString(command);
+        buf.writeUtf(command);
         NetworkTools.writeStringList(buf, list);
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = McJtyLib.proxy.getClientWorld().getTileEntity(pos);
+            TileEntity te = McJtyLib.proxy.getClientWorld().getBlockEntity(pos);
             if(!(te instanceof IClientCommandHandler)) {
                 Logging.log("TileEntity is not a ClientCommandHandler!");
                 return;

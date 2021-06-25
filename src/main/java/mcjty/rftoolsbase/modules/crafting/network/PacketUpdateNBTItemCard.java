@@ -41,7 +41,7 @@ public class PacketUpdateNBTItemCard {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             PlayerEntity playerEntity = ctx.getSender();
-            ItemStack heldItem = playerEntity.getHeldItem(Hand.MAIN_HAND);
+            ItemStack heldItem = playerEntity.getItemInHand(Hand.MAIN_HAND);
             if (heldItem.isEmpty()) {
                 return;
             }

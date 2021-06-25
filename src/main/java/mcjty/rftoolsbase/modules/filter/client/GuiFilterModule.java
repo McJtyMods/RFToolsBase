@@ -63,12 +63,12 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     public GuiFilterModule(FilterModuleContainer container, PlayerInventory inventory) {
         super(null, container, inventory, FilterModuleItem.MANUAL);
-        xSize = CONTROLLER_WIDTH;
-        ySize = CONTROLLER_HEIGHT;
+        imageWidth = CONTROLLER_WIDTH;
+        imageHeight = CONTROLLER_HEIGHT;
     }
 
     public static void register() {
-        ScreenManager.registerFactory(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
+        ScreenManager.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
     }
 
     private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, PlayerInventory inventory, ITextComponent
@@ -103,7 +103,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list = list(5, 4, 207, 99).name("list");
         Slider slider = slider(212, 4, 10, 99).scrollableName("list");
 
-        CompoundNBT tagCompound = Minecraft.getInstance().player.getHeldItem(Hand.MAIN_HAND).getTag();
+        CompoundNBT tagCompound = Minecraft.getInstance().player.getItemInHand(Hand.MAIN_HAND).getTag();
         if (tagCompound != null) {
             setBlacklistMode(tagCompound.getString("blacklistMode"));
             damageMode.setCurrentChoice(tagCompound.getBoolean("damageMode") ? 1 : 0);
@@ -116,7 +116,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         Panel toplevel = positional().background(iconLocation)
                 .children(blacklistMode, damageMode, nbtMode, modMode, list, slider, remove, expand, addTags);
 
-        toplevel.bounds(guiLeft, guiTop, xSize, ySize);
+        toplevel.bounds(leftPos, topPos, imageWidth, imageHeight);
 
         window = new Window(this, toplevel);
 
@@ -195,11 +195,11 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list.removeChildren();
 
         for (ResourceLocation tag : inventory.getTags()) {
-            ITag<Item> itemTag = ItemTags.getCollection().get(tag);
+            ITag<Item> itemTag = ItemTags.getAllTags().getTag(tag);
             if (itemTag != null) {
                 addTagToList(itemTag, tag);
             } else {
-                ITag<Block> blockTag = BlockTags.getCollection().get(tag);
+                ITag<Block> blockTag = BlockTags.getAllTags().getTag(tag);
                 if (blockTag != null) {
                     addTagToList(blockTag, tag);
                 }
@@ -210,7 +210,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
             Panel panel = horizontal();
             BlockRender render = new BlockRender().renderItem(stack);
             panel.children(render);
-            String formattedText = stack.getDisplayName().getString() /* was getFormattedText() */;
+            String formattedText = stack.getHoverName().getString() /* was getFormattedText() */;
             if (formattedText.length() >= 30) {
                 formattedText = formattedText.substring(0, 28) + "...";
             }
@@ -224,7 +224,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         panel.userObject(id);
         panel.children(label(id.toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
         int i = 5;
-        for (T item : tag.getAllElements()) {
+        for (T item : tag.getValues()) {
             BlockRender render = new BlockRender().renderItem(new ItemStack(item));
             panel.children(render);
             i--;
@@ -245,15 +245,15 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) {
-        if (slotIn != null && !slotIn.getStack().isEmpty()) {
+    protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) {
+        if (slotIn != null && !slotIn.getItem().isEmpty()) {
             FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
             if (McJtyLib.proxy.isSneaking()) {
-                for (ResourceLocation tag : slotIn.getStack().getItem().getTags()) {
+                for (ResourceLocation tag : slotIn.getItem().getItem().getTags()) {
                     inventory.addTag(tag);
                 }
             } else {
-                inventory.addStack(slotIn.getStack());
+                inventory.addStack(slotIn.getItem());
             }
             inventory.markDirty();
             refresh();

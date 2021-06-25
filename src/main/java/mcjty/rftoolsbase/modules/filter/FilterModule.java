@@ -23,7 +23,7 @@ public class FilterModule implements IModule {
     private static ContainerType<FilterModuleContainer> createFilterModuleContainer() {
         return IForgeContainerType.create((windowId, inv, data) -> {
             PlayerEntity player = McJtyLib.proxy.getClientPlayer();
-            FilterModuleContainer container = new FilterModuleContainer(windowId, player.getPosition(), player);
+            FilterModuleContainer container = new FilterModuleContainer(windowId, player.blockPosition(), player);
             container.setupInventories(null, inv);
             return container;
         });

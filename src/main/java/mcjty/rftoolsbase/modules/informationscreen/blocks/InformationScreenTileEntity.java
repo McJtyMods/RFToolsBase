@@ -30,7 +30,7 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
     }
 
     public Direction getBlockOrientation() {
-        BlockState state = world.getBlockState(pos);
+        BlockState state = level.getBlockState(worldPosition);
         if (state.getBlock() instanceof InformationScreenBlock) {
             return OrientationTools.getOrientationHoriz(state);
         } else {
@@ -40,12 +40,12 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
 
     @Override
     public void tick() {
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             cnt--;
             if (cnt <= 0) {
                 cnt = 10;
-                BlockPos offset = getPos().offset(getBlockOrientation().getOpposite());
-                TileEntity te = world.getTileEntity(offset);
+                BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
+                TileEntity te = level.getBlockEntity(offset);
                 if (te != null) {
                     te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(IInformationScreenInfo::tick);
                 }
@@ -106,8 +106,8 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
     }
 
     public LazyOptional<IInformationScreenInfo> getInfo() {
-        BlockPos offset = getPos().offset(getBlockOrientation().getOpposite());
-        TileEntity te = world.getTileEntity(offset);
+        BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
+        TileEntity te = level.getBlockEntity(offset);
         if (te != null) {
             LazyOptional<IInformationScreenInfo> capability = te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY);
             if (capability.isPresent()) {

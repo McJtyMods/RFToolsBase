@@ -28,7 +28,7 @@ public class ModSetup extends DefaultModSetup {
 
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
-            if (!event.world.isRemote) {
+            if (!event.world.isClientSide) {
                 TickOrderHandler.postWorldTick(DimensionId.fromWorld(event.world));
             }
         });

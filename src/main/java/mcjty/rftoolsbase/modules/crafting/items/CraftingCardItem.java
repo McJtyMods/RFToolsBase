@@ -40,12 +40,14 @@ import static mcjty.lib.builder.TooltipBuilder.parameter;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.GRID_WIDTH;
 import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INPUT_SLOTS;
 
+import net.minecraft.item.Item.Properties;
+
 public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/craftingcard");
     private static final CraftingInventory CRAFTING_INVENTORY = new CraftingInventory(new Container(null, -1) {
         @Override
-        public boolean canInteractWith(PlayerEntity playerIn) {
+        public boolean stillValid(PlayerEntity playerIn) {
             return false;
         }
     }, 3, 3);
@@ -61,9 +63,9 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                         ItemStack result = getResult(stack);
                         if (!result.isEmpty()) {
                             if (result.getCount() > 1) {
-                                return result.getDisplayName().getString() /* was getFormattedText() */ + "(" + result.getCount() + ")";
+                                return result.getHoverName().getString() /* was getFormattedText() */ + "(" + result.getCount() + ")";
                             } else {
-                                return result.getDisplayName().getString() /* was getFormattedText() */;
+                                return result.getHoverName().getString() /* was getFormattedText() */;
                             }
                         }
                         return "<empty>";
@@ -71,9 +73,9 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public CraftingCardItem() {
         super(new Properties()
-                .group(RFToolsBase.setup.getTab())
-                .defaultMaxDamage(0)
-                .maxStackSize(1));
+                .tab(RFToolsBase.setup.getTab())
+                .defaultDurability(0)
+                .stacksTo(1));
     }
 
     @Nullable
@@ -96,7 +98,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
             for (int x = 0 ; x < 3 ; x++) {
                 int idx = y*3+x;
                 int idxCard = y*GRID_WIDTH + x;
-                CRAFTING_INVENTORY.setInventorySlotContents(idx, stacks.get(idxCard));
+                CRAFTING_INVENTORY.setItem(idx, stacks.get(idxCard));
             }
         }
         return findRecipeInternal(world, CRAFTING_INVENTORY, type);
@@ -108,12 +110,12 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
             for (int x = 0 ; x < 3 ; x++) {
                 int idx = y*3+x;
                 int idxCard = y*GRID_WIDTH + x;
-                CRAFTING_INVENTORY.setInventorySlotContents(idx, stacks.get(idxCard));
+                CRAFTING_INVENTORY.setItem(idx, stacks.get(idxCard));
             }
         }
         IRecipe recipe = findRecipeInternal(world, CRAFTING_INVENTORY, IRecipeType.CRAFTING);
         if (recipe != null) {
-            ItemStack stack = recipe.getCraftingResult(CRAFTING_INVENTORY);
+            ItemStack stack = recipe.assemble(CRAFTING_INVENTORY);
             stacks.set(INPUT_SLOTS, stack);
         } else {
             stacks.set(INPUT_SLOTS, ItemStack.EMPTY);
@@ -127,7 +129,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         ListNBT bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-            stacks.set(i, ItemStack.read(nbtTagCompound));
+            stacks.set(i, ItemStack.of(nbtTagCompound));
         }
         return stacks;
     }
@@ -138,7 +140,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         for (ItemStack stack : stacks) {
             CompoundNBT nbtTagCompound = new CompoundNBT();
             if (!stack.isEmpty()) {
-                stack.write(nbtTagCompound);
+                stack.save(nbtTagCompound);
             }
             bufferTagList.add(nbtTagCompound);
         }
@@ -146,19 +148,19 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, list, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, list, flagIn);
         tooltipBuilder.get().makeTooltip(getRegistryName(), stack, list, flagIn);
         // @todo tooltip icons
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
         if (hand != Hand.MAIN_HAND) {
             return new ActionResult<>(ActionResultType.PASS, stack);
         }
-        if (!world.isRemote) {
+        if (!world.isClientSide) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                 @Override
                 public ITextComponent getDisplayName() {
@@ -167,7 +169,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
 
                 @Override
                 public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
-                    CraftingCardContainer container = new CraftingCardContainer(id, player.getPosition(), player);
+                    CraftingCardContainer container = new CraftingCardContainer(id, player.blockPosition(), player);
                     container.setupInventories(null, playerInventory);
                     return container;
                 }
@@ -184,7 +186,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         }
         ListNBT bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
         CompoundNBT nbtTagCompound = bufferTagList.getCompound(CraftingCardContainer.SLOT_OUT);
-        return ItemStack.read(nbtTagCompound);
+        return ItemStack.of(nbtTagCompound);
     }
 
     private static boolean isInGrid(int index) {
@@ -203,7 +205,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
                 CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-                ItemStack s = ItemStack.read(nbtTagCompound);
+                ItemStack s = ItemStack.of(nbtTagCompound);
                 if (!s.isEmpty()) {
                     if (!isInGrid(i)) {
                         return false;
@@ -224,9 +226,9 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
                 CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-                ItemStack s = ItemStack.read(nbtTagCompound);
+                ItemStack s = ItemStack.of(nbtTagCompound);
                 if (isInGrid(i)) {
-                    stacks.add(Ingredient.fromStacks(s));
+                    stacks.add(Ingredient.of(s));
                 }
             }
         }
@@ -243,7 +245,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
                 CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-                ItemStack s = ItemStack.read(nbtTagCompound);
+                ItemStack s = ItemStack.of(nbtTagCompound);
                 if (!s.isEmpty()) {
                     stacks.add(s);
                 }
@@ -265,9 +267,9 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
                 CompoundNBT nbtTagCompound = bufferTagList.getCompound(i);
-                ItemStack s = ItemStack.read(nbtTagCompound);
+                ItemStack s = ItemStack.of(nbtTagCompound);
                 if (!s.isEmpty()) {
-                    stacks.add(Ingredient.fromStacks(s));
+                    stacks.add(Ingredient.of(s));
                 }
             }
         }

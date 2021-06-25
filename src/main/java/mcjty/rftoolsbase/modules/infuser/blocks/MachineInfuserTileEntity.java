@@ -55,7 +55,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
     private final LazyOptional<GenericEnergyStorage> energyHandler = LazyOptional.of(() -> energyStorage);
     private final LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
-            .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), windowId, CONTAINER_FACTORY.get(), getPos(), MachineInfuserTileEntity.this))
+            .containerSupplier((windowId,player) -> new GenericContainer(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), windowId, CONTAINER_FACTORY.get(), getBlockPos(), MachineInfuserTileEntity.this))
             .itemHandler(() -> items)
             .energyHandler(() -> energyStorage));
     private final LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
@@ -78,7 +78,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
 
     @Override
     public void tick() {
-        if (!world.isRemote) {
+        if (!level.isClientSide) {
             tickServer();
         }
     }
@@ -155,8 +155,8 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
 
     @Nonnull
     @Override
-    public CompoundNBT write(CompoundNBT tagCompound) {
-        super.write(tagCompound);
+    public CompoundNBT save(CompoundNBT tagCompound) {
+        super.save(tagCompound);
         getOrCreateInfo(tagCompound).putInt("infusing", infusing);
         return tagCompound;
     }

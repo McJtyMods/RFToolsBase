@@ -27,23 +27,23 @@ public class DefaultPowerInformationRenderer {
         long energy = data.getOptional(DefaultPowerInformationScreenInfo.ENERGY).orElse(0L);
         long maxEnergy = data.getOptional(DefaultPowerInformationScreenInfo.MAXENERGY).orElse(0L);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translatef(0.5F, 0.75F, 0.5F);
-        GlStateManager.rotatef(-getHudAngle(orientation), 0.0F, 1.0F, 0.0F);
-        GlStateManager.translatef(0.0F, -0.2500F, -0.4375F + 0.9f);
+        GlStateManager._pushMatrix();
+        GlStateManager._translatef(0.5F, 0.75F, 0.5F);
+        GlStateManager._rotatef(-getHudAngle(orientation), 0.0F, 1.0F, 0.0F);
+        GlStateManager._translatef(0.0F, -0.2500F, -0.4375F + 0.9f);
 
-        net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
-        Minecraft.getInstance().gameRenderer.getLightTexture().disableLightmap();
-        GlStateManager.disableBlend();
-        GlStateManager.disableLighting();
+        net.minecraft.client.renderer.RenderHelper.turnOff();
+        Minecraft.getInstance().gameRenderer.lightTexture().turnOffLightLayer();
+        GlStateManager._disableBlend();
+        GlStateManager._disableLighting();
 
         if (maxEnergy > 0) {
 //            int mode = infoscreen.getMode();
-            GlStateManager.translatef(-0.5F, 0.5F, 0.07F);
+            GlStateManager._translatef(-0.5F, 0.5F, 0.07F);
             float f3 = 0.0075F;
-            GlStateManager.scaled(f3 * scale, -f3 * scale, f3);
-            GlStateManager.normal3f(0.0F, 0.0F, 1.0F);
-            GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager._scaled(f3 * scale, -f3 * scale, f3);
+            GlStateManager._normal3f(0.0F, 0.0F, 1.0F);
+            GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
             long pct = energy * 100 / maxEnergy;
             for (int i = 0 ; i < 100 ; i += 5) {
@@ -51,21 +51,21 @@ public class DefaultPowerInformationRenderer {
                 RenderHelper.drawFlatBox(matrixStack, 16, (int) (100-i*.8-13), 88 , (int) (100-i*.8+3-13), col, col);
             }
         }
-        Minecraft.getInstance().gameRenderer.getLightTexture().enableLightmap();
+        Minecraft.getInstance().gameRenderer.lightTexture().turnOnLightLayer();
 
 //        RenderHelper.enableStandardItemLighting();
-        GlStateManager.enableLighting();
-        GlStateManager.enableBlend();
-        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager._enableLighting();
+        GlStateManager._enableBlend();
+        GlStateManager._blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        GlStateManager.popMatrix();
+        GlStateManager._popMatrix();
     }
 
     public static void renderDefault(MatrixStack matrixStack, IRenderTypeBuffer buffer, TypedMap data, Direction orientation, double scale) {
         List<String> log = getLog(data);
         HudRenderHelper.HudPlacement hudPlacement = HudRenderHelper.HudPlacement.HUD_FRONT;
         HudRenderHelper.HudOrientation hudOrientation = HudRenderHelper.HudOrientation.HUD_SOUTH;
-        HudRenderHelper.renderHud(matrixStack, buffer, log, hudPlacement, hudOrientation, orientation, - orientation.getXOffset() * .95, 0, - orientation.getZOffset() * .95, (float) (1.0f + scale));
+        HudRenderHelper.renderHud(matrixStack, buffer, log, hudPlacement, hudOrientation, orientation, - orientation.getStepX() * .95, 0, - orientation.getStepZ() * .95, (float) (1.0f + scale));
     }
 
     private static List<String> getLog(TypedMap data) {

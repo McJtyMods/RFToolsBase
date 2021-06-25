@@ -25,7 +25,7 @@ public class TabletModule implements IModule {
     private static ContainerType<TabletContainer> createTabletContainer() {
         return IForgeContainerType.create((windowId, inv, data) -> {
             PlayerEntity player = inv.player;
-            TabletContainer container = new TabletContainer(windowId, player.getPosition(), player);
+            TabletContainer container = new TabletContainer(windowId, player.blockPosition(), player);
             container.setupInventories(new TabletItemHandler(player), inv);
             return container;
         });

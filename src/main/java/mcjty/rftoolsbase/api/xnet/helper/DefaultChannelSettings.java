@@ -10,7 +10,7 @@ public class DefaultChannelSettings {
     protected boolean checkRedstone(World world, AbstractConnectorSettings settings, BlockPos extractorPos) {
         RSMode rsMode = settings.getRsMode();
         if (rsMode != RSMode.IGNORED) {
-            IConnectorTile connector = (IConnectorTile) world.getTileEntity(extractorPos);
+            IConnectorTile connector = (IConnectorTile) world.getBlockEntity(extractorPos);
             if (rsMode == RSMode.PULSE) {
                 int prevPulse = settings.getPrevPulse();
                 settings.setPrevPulse(connector.getPulseCounter());

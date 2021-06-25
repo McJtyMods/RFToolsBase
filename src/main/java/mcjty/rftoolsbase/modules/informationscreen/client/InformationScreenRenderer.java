@@ -22,7 +22,7 @@ public class InformationScreenRenderer extends TileEntityRenderer<InformationScr
     public void render(InformationScreenTileEntity te, float v, MatrixStack matrixStack, IRenderTypeBuffer buffer, int i, int i1) {
         long t = System.currentTimeMillis();
         if (t - te.getLastUpdateTime() > 250) {
-            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetMonitorLog(te.getPos()));
+            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetMonitorLog(te.getBlockPos()));
             te.setLastUpdateTime(t);
         }
         Direction orientation = te.getBlockOrientation();

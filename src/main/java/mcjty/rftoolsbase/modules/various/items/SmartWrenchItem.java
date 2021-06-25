@@ -37,6 +37,8 @@ import java.util.Optional;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
+import net.minecraft.item.Item.Properties;
+
 public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettings {
 
     private final SmartWrenchMode mode;
@@ -49,15 +51,15 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
 
     public SmartWrenchItem(SmartWrenchMode mode) {
         super(new Properties()
-                .maxStackSize(1)
-                .group(RFToolsBase.setup.getTab()));
+                .stacksTo(1)
+                .tab(RFToolsBase.setup.getTab()));
         this.mode = mode;
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-        ItemStack stack = player.getHeldItem(hand);
-        if (!world.isRemote) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide) {
             SmartWrenchMode mode = getCurrentMode(stack);
             CompoundNBT tag = stack.getTag();
             ItemStack newStack;
@@ -69,28 +71,28 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                 newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
             }
             newStack.setTag(tag);
-            player.setHeldItem(hand, newStack);
+            player.setItemInHand(hand, newStack);
             Logging.message(player, TextFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
         }
-        return super.onItemRightClick(world, player, hand);
+        return super.use(world, player, hand);
     }
 
     @Override
     @Nonnull
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World world = context.getWorld();
-        if (!world.isRemote) {
+    public ActionResultType useOn(ItemUseContext context) {
+        World world = context.getLevel();
+        if (!world.isClientSide) {
             PlayerEntity player = context.getPlayer();
             Hand hand = context.getHand();
-            ItemStack stack = context.getItem();
-            BlockPos pos = context.getPos();
+            ItemStack stack = context.getItemInHand();
+            BlockPos pos = context.getClickedPos();
 
-            if (player != null && player.isSneaking()) {
+            if (player != null && player.isShiftKeyDown()) {
                 // Make sure the block get activated if it is a BaseBlockNew
                 BlockState state = world.getBlockState(pos);
                 Block block = state.getBlock();
                 if (block instanceof BaseBlock) {
-                    if (state.onBlockActivated(world, player, hand, new BlockRayTraceResult(context.getHitVec(), context.getFace(), pos, context.isInside())) == ActionResultType.SUCCESS) {
+                    if (state.use(world, player, hand, new BlockRayTraceResult(context.getClickLocation(), context.getClickedFace(), pos, context.isInside())) == ActionResultType.SUCCESS) {
                         return ActionResultType.SUCCESS;
                     }
                 }
@@ -104,7 +106,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                         }
                         return ActionResultType.FAIL;
                     }
-                    TileEntity te = world.getTileEntity(b.getCoordinate());
+                    TileEntity te = world.getBlockEntity(b.getCoordinate());
                     if (te instanceof ISmartWrenchSelector) {
                         ISmartWrenchSelector smartWrenchSelector = (ISmartWrenchSelector) te;
                         smartWrenchSelector.selectBlock(player, pos);
@@ -117,8 +119,8 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     @Override
-    public void addInformation(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
-        super.addInformation(itemStack, world, list, flags);
+    public void appendHoverText(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
+        super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
 

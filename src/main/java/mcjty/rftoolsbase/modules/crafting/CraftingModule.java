@@ -24,7 +24,7 @@ public class CraftingModule implements IModule {
     private static ContainerType<CraftingCardContainer> createCraftingContainer() {
         return IForgeContainerType.create((windowId, inv, data) -> {
             PlayerEntity player = McJtyLib.proxy.getClientPlayer();
-            CraftingCardContainer container = new CraftingCardContainer(windowId, player.getPosition(), player);
+            CraftingCardContainer container = new CraftingCardContainer(windowId, player.blockPosition(), player);
             container.setupInventories(null, inv);
             return container;
         });

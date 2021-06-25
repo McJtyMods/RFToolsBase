@@ -15,11 +15,11 @@ public class PacketSyncHandItem {
     public ItemStack stack;
 
     public PacketSyncHandItem(PacketBuffer buf) {
-        stack = buf.readItemStack();
+        stack = buf.readItem();
     }
 
     public PacketSyncHandItem(PlayerEntity player) {
-        this.stack = player.getHeldItem(Hand.MAIN_HAND);
+        this.stack = player.getItemInHand(Hand.MAIN_HAND);
     }
 
     protected boolean isValidItem(ItemStack itemStack) {
@@ -27,14 +27,14 @@ public class PacketSyncHandItem {
     }
 
     public void toBytes(PacketBuffer buf) {
-        buf.writeItemStack(stack);
+        buf.writeItem(stack);
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             PlayerEntity playerEntity = ctx.getSender();
-            ItemStack heldItem = playerEntity.getHeldItem(Hand.MAIN_HAND);
+            ItemStack heldItem = playerEntity.getItemInHand(Hand.MAIN_HAND);
             if (heldItem.isEmpty()) {
                 return;
             }
@@ -45,7 +45,7 @@ public class PacketSyncHandItem {
             if (!isValidItem(stack)) {
                 return;
             }
-            playerEntity.setHeldItem(Hand.MAIN_HAND, stack);
+            playerEntity.setItemInHand(Hand.MAIN_HAND, stack);
         });
         ctx.setPacketHandled(true);
     }

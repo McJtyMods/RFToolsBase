@@ -20,7 +20,7 @@ public class FilterModuleContainer extends GenericContainer {
 
 	public FilterModuleContainer(int id, BlockPos pos, PlayerEntity player) {
 		super(FilterModule.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY.get(), pos, null);
-		cardIndex = player.inventory.currentItem;
+		cardIndex = player.inventory.selected;
     }
 
 	@Override
@@ -34,7 +34,7 @@ public class FilterModuleContainer extends GenericContainer {
 		if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
 			return new BaseSlot(inventories.get(slotFactory.getInventoryName()), te, slotFactory.getIndex(), slotFactory.getX(), slotFactory.getY()) {
 				@Override
-				public boolean canTakeStack(PlayerEntity player) {
+				public boolean mayPickup(PlayerEntity player) {
 					// We don't want to take the stack from this slot.
 					return false;
 				}

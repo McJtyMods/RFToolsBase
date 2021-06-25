@@ -18,17 +18,17 @@ public class CommandHandler {
 
     public static void registerCommands() {
         McJtyLib.registerCommand(RFToolsBase.MODID, CMD_TESTRECIPE, (player, arguments) -> {
-            ItemStack heldItem = player.getHeldItem(Hand.MAIN_HAND);
+            ItemStack heldItem = player.getItemInHand(Hand.MAIN_HAND);
             if (heldItem.isEmpty()) {
                 return false;
             }
             if (heldItem.getItem() instanceof CraftingCardItem) {
-                CraftingCardItem.testRecipe(player.getEntityWorld(), heldItem);
+                CraftingCardItem.testRecipe(player.getCommandSenderWorld(), heldItem);
             }
             return true;
         });
         McJtyLib.registerCommand(RFToolsBase.MODID, CMD_CYCLE_DESTINATION, (player, arguments) -> {
-            ItemStack heldItem = player.getHeldItem(player.getActiveHand() == null ? Hand.MAIN_HAND : player.getActiveHand());
+            ItemStack heldItem = player.getItemInHand(player.getUsedItemHand() == null ? Hand.MAIN_HAND : player.getUsedItemHand());
             if (heldItem.getItem() instanceof IItemCycler) {
                 ((IItemCycler) heldItem.getItem()).cycle(player, heldItem, arguments.get(PARAM_NEXT));
             }
