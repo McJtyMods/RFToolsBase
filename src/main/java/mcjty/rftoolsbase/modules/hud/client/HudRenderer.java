@@ -20,7 +20,7 @@ public class HudRenderer {
         List<String> log = support.getClientLog();
         long t = System.currentTimeMillis();
         if (t - support.getLastUpdateTime() > 250) {
-            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetHudLog(support.getBlockPos()));
+            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetHudLog(support.getHudPos()));
             support.setLastUpdateTime(t);
         }
         Direction orientation = support.getBlockOrientation();
