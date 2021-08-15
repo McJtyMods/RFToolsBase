@@ -45,7 +45,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public static final int SLOT_MACHINEOUTPUT = 1;
 
     public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(2)
-            .slot(specific(new ItemStack(VariousModule.DIMENSIONALSHARD.get())).in(), CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24)
+            .slot(specific(stack -> MachineInfuserModule.MACHINE_INFUSER_CATALYSTS.contains(stack.getItem())).in(), CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24)
             .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
 
@@ -94,7 +94,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
         } else {
             ItemStack inputStack = items.getStackInSlot(0);
             ItemStack outputStack = items.getStackInSlot(1);
-            if (!inputStack.isEmpty() && inputStack.getItem() == VariousModule.DIMENSIONALSHARD.get() && isInfusable(outputStack)) {
+            if (!inputStack.isEmpty() && MachineInfuserModule.MACHINE_INFUSER_CATALYSTS.contains(inputStack.getItem()) && isInfusable(outputStack)) {
                 startInfusing();
             }
         }
