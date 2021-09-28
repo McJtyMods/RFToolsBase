@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.api.screens;
 
+import mcjty.lib.client.RenderHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
@@ -40,6 +41,6 @@ public class ModuleRenderInfo {
     }
 
     public int getLightmapValue() {
-        return fullbright ? 0xf000f0 : 140;
+        return fullbright ? RenderHelper.MAX_BRIGHTNESS : 140;
     }
 }
