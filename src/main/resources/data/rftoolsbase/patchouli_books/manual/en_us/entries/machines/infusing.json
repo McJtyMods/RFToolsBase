@@ -5,7 +5,42 @@
   "pages": [
     {
       "type": "text",
-      "text": "By using Dimensional Shards in this machine it is possible to improve the efficiency of a lot of tech machines. They can work faster, give more outpus, use less power, ...$(br2)$(5)Infusing$() the infuser will cause it to use less power"
+      "text": "The $(item)Machine Infuser$() uses $(l:rftoolsbase:basics/dimensional_shards)Dimensional Shards$() to $(thing)improve the efficiency$() of a lot of machines. For most things, infusing them will reduce their power requirements. Some devices will have additional benefits from infusion. $(br2)$(thing)Infusing$() the Infuser will cause it to use less power."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:machine_infuser",
+      "text": "See overleaf for additional uses for the Machine Infuser, depending on what other mods you have installed."
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsutility",
+      "title": "RFTools Utility",
+      "text": "$(li)$(l:rftoolsutility:machines/environmental)Environmental Controller$() $(li)$(l:rftoolsutility:machines/dialing_device)Dialing Device$() $(li)$(l:rftoolsutility:machines/matter_receiver)Matter Receiver$() $(li)$(l:rftoolsutility:machines/matter_transmitter)Matter Transmitter$() (+Speed) $(li)$()Spawner$() $(li)$()Matter Beamer$() (+Speed, -Items Needed) $(li)$(l:rftoolsutility:machines/screen_controller)Screen Controller$() (+Range) $(li)$(l:rftoolsutility:machines/crafter)Crafter$()"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsstorage",
+      "title": "RFTools Storage",
+      "text": "$(li)$(l:rftoolsstorage:scanner/scanner)Storage Scanner$()"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolspower",
+      "title": "RFTools Power",
+      "text": "$(li)$(l:rftoolspower:powergeneration/coalgenerator)Coal Generator$() $(li)$(l:rftoolspower:powergeneration/endergenic)Endergenic$() (+Power Generated, less powerloss while holding pearls) $(li)$(l:rftoolspower:powerstorage/dimensionalcell)Dimensional Cell$() (- Cost of extracting RF long distance, +  RF/t output) $(li)$(l:rftoolspower:powergeneration/blazingagitator)Blazing Agitator$() (+Blazing Rod Quality) $(li)$(l:rftoolspower:powergeneration/blazinggenerator)Blazing Generator$() (+Power Generated)"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsdim",
+      "title": "RFTools Dimensions",
+      "text": "$(li)$(l:rftoolsdim:dimlets/researcher)Researcher$() (+Speed) $(li)$(l:rftoolsdim:dimensions/dimension_builder)Dimension Builder$() (+Speed)"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsbuilder",
+      "title": "RFTools Builder",
+      "text": "$(li)$(l:rftoolsbuilder:shield/shield_intro)Shield Projector$() (+Damage) $(li)$(l:rftoolsbuilder:builder/builder_intro)Builder$() (+Speed)"
     }
   ]
 }
