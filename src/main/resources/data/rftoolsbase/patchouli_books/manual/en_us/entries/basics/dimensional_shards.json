@@ -11,7 +11,7 @@
   "pages": [
     {
       "type": "text",
-      "text": "$(item)Dimensional Shard Ore$() can be found underground in small clusters in various dimensions. It is effected by $(thing)Fortune$(), and drops $(item)Dimensional Shards$() when broken. $(br2)These are used in several more complicated recipes, and can also be used to $(l:rftoolsbase:machines/infusing)infuse machines$()."
+      "text": "$(item)Dimensional Shard Ore$() can be found underground in small clusters in various dimensions. It is affected by $(thing)Fortune$(), and drops $(item)Dimensional Shards$() when broken. $(br2)These are used in several more complicated recipes, and can also be used to $(l:rftoolsbase:machines/infusing)infuse machines$()."
     },
     {
       "type": "image",
