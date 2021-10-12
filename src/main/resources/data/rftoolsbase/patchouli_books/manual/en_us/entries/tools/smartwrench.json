@@ -5,11 +5,12 @@
   "pages": [
     {
       "type": "text",
-      "text": "The Smart Wrench can be used to easily remove tech blocks and also select blocks for special functionality$(br2)Use as a normal wrench: $(5)Sneak right click$() to pick up and $(5)right click$() to rotate.$(br2)$(5)Right click$() in the air to change mode"
+      "text": "The Smart Wrench can be used to easily remove tech blocks and also select blocks for special functionality. $(br2)Use as a normal wrench: $(5)Sneak right click$() to pick up and $(5)right click$() to rotate.$(br2)$(5)Right click$() in the air to change mode"
     },
     {
-      "type": "text",
-      "text": "If the wrench is in select mode then it can be used to perform specialized operations on (for example) blocks like the Shield Projector"
+      "type": "crafting",
+      "recipe": "rftoolsbase:smartwrench",
+      "text": "If the wrench is in $(thing)Select Mode$(), then it can be used to perform specialized operations on (for example) blocks like the Shield Projector."
     }
   ]
 }
