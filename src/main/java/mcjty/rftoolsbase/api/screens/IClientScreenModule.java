@@ -1,11 +1,11 @@
 package mcjty.rftoolsbase.api.screens;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import mcjty.lib.varia.DimensionId;
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -79,7 +79,7 @@ public interface IClientScreenModule<T extends IModuleData> {
      * @param dim the dimension for the screen this module is in
      * @param pos the position of the screen
      */
-    void setupFromNBT(CompoundNBT tagCompound, DimensionId dim, BlockPos pos);
+    void setupFromNBT(CompoundNBT tagCompound, RegistryKey<World> dim, BlockPos pos);
 
     // Return true if this module needs server data.
     boolean needsServerData();
