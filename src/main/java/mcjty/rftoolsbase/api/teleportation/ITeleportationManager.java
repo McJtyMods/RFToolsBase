@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.api.teleportation;
 
 import mcjty.lib.varia.DimensionId;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -28,10 +29,10 @@ public interface ITeleportationManager {
     /**
      * Teleport a player to a dimension at the given spot.
      */
-    void teleportPlayer(PlayerEntity player, DimensionId dimension, BlockPos location);
+    void teleportPlayer(PlayerEntity player, RegistryKey<World> dimension, BlockPos location);
 
     /**
      * Remove all destinations in a dimension.
      */
-    void removeReceiverDestinations(World world, DimensionId dim);
+    void removeReceiverDestinations(World world, RegistryKey<World> dim);
 }

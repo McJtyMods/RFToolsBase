@@ -6,8 +6,7 @@ import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
-import mcjty.lib.varia.DimensionId;
-import mcjty.lib.varia.GlobalCoordinate;
+import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
@@ -20,12 +19,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.GlobalPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -37,8 +35,6 @@ import java.util.Optional;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
-import net.minecraft.item.Item.Properties;
-
 public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettings {
 
     private final SmartWrenchMode mode;
@@ -47,7 +43,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info1", stack -> getMode().getName()),
-                    parameter("info2", stack -> getCurrentBlock(stack).map(GlobalCoordinate::toString).orElse("<not selected>")));
+                    parameter("info2", stack -> getCurrentBlock(stack).map(BlockPosTools::toString).orElse("<not selected>")));
 
     public SmartWrenchItem(SmartWrenchMode mode) {
         super(new Properties()
@@ -100,13 +96,13 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             SmartWrenchMode mode = getCurrentMode(stack);
             if (mode == SmartWrenchMode.MODE_SELECT) {
                 return getCurrentBlock(stack).map(b -> {
-                    if (!b.getDimension().equals(DimensionId.fromWorld(world))) {
+                    if (!b.dimension().equals(world.dimension())) {
                         if (player != null) {
                             Logging.message(player, TextFormatting.RED + "The selected block is in another dimension!");
                         }
                         return ActionResultType.FAIL;
                     }
-                    TileEntity te = world.getBlockEntity(b.getCoordinate());
+                    TileEntity te = world.getBlockEntity(b.pos());
                     if (te instanceof ISmartWrenchSelector) {
                         ISmartWrenchSelector smartWrenchSelector = (ISmartWrenchSelector) te;
                         smartWrenchSelector.selectBlock(player, pos);
@@ -140,7 +136,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
         return SmartWrenchMode.MODE_WRENCH;
     }
 
-    public static void setCurrentBlock(ItemStack itemStack, GlobalCoordinate c) {
+    public static void setCurrentBlock(ItemStack itemStack, GlobalPos c) {
         CompoundNBT tagCompound = itemStack.getOrCreateTag();
 
         if (c == null) {
@@ -149,22 +145,22 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             tagCompound.remove("selectedZ");
             tagCompound.remove("selectedDim");
         } else {
-            tagCompound.putInt("selectedX", c.getCoordinate().getX());
-            tagCompound.putInt("selectedY", c.getCoordinate().getY());
-            tagCompound.putInt("selectedZ", c.getCoordinate().getZ());
-            tagCompound.putString("selectedDim", c.getDimension().getRegistryName().toString());
+            tagCompound.putInt("selectedX", c.pos().getX());
+            tagCompound.putInt("selectedY", c.pos().getY());
+            tagCompound.putInt("selectedZ", c.pos().getZ());
+            tagCompound.putString("selectedDim", c.dimension().location().toString());
         }
     }
 
     @Nonnull
-    public static Optional<GlobalCoordinate> getCurrentBlock(ItemStack itemStack) {
+    public static Optional<GlobalPos> getCurrentBlock(ItemStack itemStack) {
         CompoundNBT tagCompound = itemStack.getTag();
         if (tagCompound != null && tagCompound.contains("selectedX")) {
             int x = tagCompound.getInt("selectedX");
             int y = tagCompound.getInt("selectedY");
             int z = tagCompound.getInt("selectedZ");
             String dim = tagCompound.getString("selectedDim");
-            return Optional.of(new GlobalCoordinate(new BlockPos(x, y, z), DimensionId.fromResourceLocation((new ResourceLocation(dim)))));
+            return Optional.of(GlobalPos.of(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dim)), new BlockPos(x, y, z)));
         }
         return Optional.empty();
     }

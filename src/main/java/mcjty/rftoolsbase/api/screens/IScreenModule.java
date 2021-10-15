@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.api.screens;
 
-import mcjty.lib.varia.DimensionId;
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -30,7 +30,7 @@ public interface IScreenModule<T extends IModuleData> {
      * @param dim the dimension for the screen this module is in
      * @param pos the position of the screen
      */
-    void setupFromNBT(CompoundNBT tagCompound, DimensionId dim, BlockPos pos);
+    void setupFromNBT(CompoundNBT tagCompound, RegistryKey<World> dim, BlockPos pos);
 
     /**
      * How much RF/tick this module consumes
