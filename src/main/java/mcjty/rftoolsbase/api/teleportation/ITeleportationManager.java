@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.api.teleportation;
 
-import mcjty.lib.varia.DimensionId;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
