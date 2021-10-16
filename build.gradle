@@ -187,6 +187,18 @@ curseforge {
     }
 }
 
+task apiJar(type: Jar) {
+    classifier = "api"
+    from(sourceSets.main.output) {
+        include "mcjty/rftoolsbase/api/**"
+    }
+}
+
+artifacts {
+    archives apiJar
+}
+
+
 publishing {
     publications.create('mavenJava', MavenPublication) {
         from components.java
