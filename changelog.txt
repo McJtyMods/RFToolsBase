@@ -1,3 +1,6 @@
+Upcoming:
+- Update to McJtyLib
+
 1.16-2.0.11:
 - Small fix for mojang mappings
 

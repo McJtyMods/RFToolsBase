@@ -187,40 +187,87 @@ curseforge {
     }
 }
 
-task("uploadJars", dependsOn: "reobf") {
-    description = "uploads JARs"
-    if (System.getenv("local_maven") != null) {
-        apply plugin: 'maven'
-        uploadArchives {
-            repositories {
-                mavenDeployer {
-                    repository(url: "file://" + System.getenv("local_maven"))
-                    pom {
-                        groupId = project.group
-                        version = project.version
-                        artifactId = project.archivesBaseName
-                        project {
-                            name project.archivesBaseName
-                            packaging 'jar'
-                            description project.archivesBaseName
-                            issueManagement {
-                                system 'github'
-                                url 'https://github.com/McJtyMods/RFToolsBase/issues'
-                            }
-                            developers {
-                                developer {
-                                    id 'McJty'
-                                    name 'McJty'
-                                    roles {
-                                        role 'developer'
-                                    }
-                                }
-                            }
-                        }
-                    }
+artifacts {
+    archives apiJar
+}
+
+publishing {
+    publications.create('mavenJava', MavenPublication) {
+        from components.java
+        artifact apiJar
+
+        artifactId = project.archivesBaseName
+        pom {
+            name = 'RFToolsBase'
+            description = 'Base mod for all McJty tech mods'
+            scm {
+                url = 'https://github.com/McJtyMods/RFToolsBase'
+                connection = 'scm:git:git@github.com:McJtyMods/RFToolsBase.git'
+                developerConnection = 'scm:git:git@github.com:McJtyMods/RFToolsBase.git'
+            }
+            issueManagement {
+                system = 'github'
+                url = 'https://github.com/McJtyMods/RFToolsBase/issues'
+            }
+            licenses {
+                license {
+                    name = 'MIT'
+                    distribution = 'repo'
+                }
+            }
+            developers {
+                developer {
+                    id = 'McJty'
+                    name = 'McJty'
+                    roles = ['developer']
                 }
             }
         }
     }
-
+    repositories {
+        if (System.getenv('local_maven') != null) {
+            maven {
+                name = 'local'
+                url = 'file://' + System.getenv('local_maven')
+            }
+        }
+    }
 }
+
+
+//task("uploadJars", dependsOn: "reobf") {
+//    description = "uploads JARs"
+//    if (System.getenv("local_maven") != null) {
+//        apply plugin: 'maven'
+//        uploadArchives {
+//            repositories {
+//                mavenDeployer {
+//                    repository(url: "file://" + System.getenv("local_maven"))
+//                    pom {
+//                        groupId = project.group
+//                        version = project.version
+//                        artifactId = project.archivesBaseName
+//                        project {
+//                            name project.archivesBaseName
+//                            packaging 'jar'
+//                            description project.archivesBaseName
+//                            issueManagement {
+//                                system 'github'
+//                                url 'https://github.com/McJtyMods/RFToolsBase/issues'
+//                            }
+//                            developers {
+//                                developer {
+//                                    id 'McJty'
+//                                    name 'McJty'
+//                                    roles {
+//                                        role 'developer'
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
