@@ -9,8 +9,7 @@
     },
     {
       "type": "crafting",
-      "recipe": "rftoolsbase:machine_frame",
-      "recipe2": "rftoolsbase:machine_base"
+      "recipe": "rftoolsbase:machine_frame"
     }
   ]
 }
