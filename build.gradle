@@ -187,10 +187,6 @@ curseforge {
     }
 }
 
-artifacts {
-    archives apiJar
-}
-
 publishing {
     publications.create('mavenJava', MavenPublication) {
         from components.java
