@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.tools;
 
-import mcjty.lib.varia.DimensionId;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
 
@@ -65,7 +64,7 @@ public class TickOrderHandler {
         tileEntities.clear();
     }
 
-    public static void postWorldTick(DimensionId dimension) {
+    public static void postWorldTick(RegistryKey<World> dimension) {
         ticker++;
         List<IOrderTicker>[] lists = tiles.get(dimension);
         if (lists != null) {

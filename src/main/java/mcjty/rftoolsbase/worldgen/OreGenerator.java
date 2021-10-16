@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.worldgen;
 
-import mcjty.lib.varia.DimensionId;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import mcjty.rftoolsbase.modules.worldgen.config.WorldGenConfig;
@@ -10,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -39,7 +39,7 @@ public class OreGenerator {
         ConfiguredFeature<OreFeatureConfig, ?> overworldFeature = Feature.ORE
                 .configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                         WorldGenConfig.OVERWORLD_ORE_VEINSIZE.get()));
-        OVERWORLD_SHARDS = new DimensionCompositeFeature(overworldFeature, DimensionId.overworld())
+        OVERWORLD_SHARDS = new DimensionCompositeFeature(overworldFeature, World.OVERWORLD)
                 .decorated(Registration.COUNT_PLACEMENT.get().configured(new CountPlacementConfig(
                         WorldGenConfig.OVERWORLD_ORE_MINY.get(),
                         0,
@@ -50,7 +50,7 @@ public class OreGenerator {
         ConfiguredFeature<OreFeatureConfig, ?> netherFeature = Feature.ORE
                 .configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHER_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().defaultBlockState(),
                         WorldGenConfig.NETHER_ORE_VEINSIZE.get()));
-        NETHER_SHARDS = new DimensionCompositeFeature(netherFeature, DimensionId.nether())
+        NETHER_SHARDS = new DimensionCompositeFeature(netherFeature, World.NETHER)
                 .decorated(Registration.COUNT_PLACEMENT.get().configured(new CountPlacementConfig(
                         WorldGenConfig.NETHER_ORE_MINY.get(),
                         0,
@@ -61,7 +61,7 @@ public class OreGenerator {
         ConfiguredFeature<OreFeatureConfig, ?> endFeature = Feature.ORE
                 .configured(new OreFeatureConfig(ENDSTONE_TEST, WorldGenModule.DIMENSIONAL_SHARD_END.get().defaultBlockState(),
                         WorldGenConfig.END_ORE_VEINSIZE.get()));
-        END_SHARDS = new DimensionCompositeFeature(endFeature, DimensionId.end())
+        END_SHARDS = new DimensionCompositeFeature(endFeature, World.END)
                 .decorated(Registration.COUNT_PLACEMENT.get().configured(new CountPlacementConfig(
                         WorldGenConfig.END_ORE_MINY.get(),
                         0,

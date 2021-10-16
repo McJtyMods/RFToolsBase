@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.setup.DefaultModSetup;
-import mcjty.lib.varia.DimensionId;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
@@ -29,7 +28,7 @@ public class ModSetup extends DefaultModSetup {
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
             if (!event.world.isClientSide) {
-                TickOrderHandler.postWorldTick(DimensionId.fromWorld(event.world));
+                TickOrderHandler.postWorldTick(event.world.dimension());
             }
         });
     }
