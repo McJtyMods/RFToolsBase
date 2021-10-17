@@ -8,7 +8,7 @@ import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.Logging;
-import mcjty.lib.varia.WorldTools;
+import mcjty.lib.varia.LevelTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import net.minecraft.block.Block;
@@ -162,7 +162,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             int y = tagCompound.getInt("selectedY");
             int z = tagCompound.getInt("selectedZ");
             String dim = tagCompound.getString("selectedDim");
-            return Optional.of(GlobalPos.of(WorldTools.getId(dim), new BlockPos(x, y, z)));
+            return Optional.of(GlobalPos.of(LevelTools.getId(dim), new BlockPos(x, y, z)));
         }
         return Optional.empty();
     }
