@@ -8,6 +8,7 @@ import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.Logging;
+import mcjty.lib.varia.WorldTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import net.minecraft.block.Block;
@@ -19,11 +20,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.GlobalPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -160,7 +162,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             int y = tagCompound.getInt("selectedY");
             int z = tagCompound.getInt("selectedZ");
             String dim = tagCompound.getString("selectedDim");
-            return Optional.of(GlobalPos.of(RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(dim)), new BlockPos(x, y, z)));
+            return Optional.of(GlobalPos.of(WorldTools.getId(dim), new BlockPos(x, y, z)));
         }
         return Optional.empty();
     }
