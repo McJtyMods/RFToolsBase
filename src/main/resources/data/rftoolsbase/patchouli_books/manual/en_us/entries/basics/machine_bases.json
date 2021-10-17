@@ -9,7 +9,7 @@
     },
     {
       "type": "text",
-      "text": "When you place one of these machines, the direction it faces is determined by $(thing)which edge of the block your cursor is closest to.$(). $(br2)It may help to imagine an X on the side of the block you are placing the machine on, then think about which 'quarter' of the X you're looking at. $(br2)The output will be facing this direction and the input will come from the opposite direction."
+      "text": "When you place one of these machines, the direction it faces is determined by $(thing)which edge of the block your cursor is closest to$(). $(br2)It may help to imagine an X on the side of the block you are placing the machine on, then think about which 'quarter' of the X you're looking at. $(br2)The output will be facing this direction and the input will come from the opposite direction."
     },
     {
       "type": "text",
