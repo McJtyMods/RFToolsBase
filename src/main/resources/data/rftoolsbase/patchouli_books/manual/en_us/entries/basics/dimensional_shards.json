@@ -2,16 +2,62 @@
   "name": "Dimensional Shards",
   "icon": "rftoolsbase:dimensionalshard",
   "category": "category_basics",
+  "extra_recipe_mappings":[
+    ["rftoolsbase:dimensionalshard",0],
+    ["rftoolsbase:dimensionalshard_overworld",0],
+    ["rftoolsbase:dimensionalshard_nether",0],
+    ["rftoolsbase:dimensionalshard_end",0]
+    ],
   "pages": [
     {
       "type": "text",
-      "text": "Dimensional Shards can be found underground in small clusters in various dimensions. They are very useful for some of the more complicated recipes and you can also use them to infuse machines. Infusing machines can give them various bonuses, usually related to efficiency"
+      "text": "$(item)Dimensional Shard Ore$() can be found underground in small clusters in various dimensions. It is affected by $(thing)Fortune$(), and drops $(item)Dimensional Shards$() when broken. $(br2)These are used in several more complicated recipes, and can also be used to $(l:rftoolsbase:machines/infusing)infuse machines$()."
     },
     {
       "type": "image",
       "images": [
         "rftoolsbase:textures/manual/image_ore.png"
-      ]
+      ],
+      "text": "Some Dimensional Shard Ore underground in the Overworld."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:infused_diamond",
+      "recipe2": "rftoolsbase:infused_enderpearl"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsdim",
+      "text": "$(item)Dimensional Shards$() can also be used for the creation of a variety of $(item)Decorative Blocks$()."
+    },
+
+    {
+      "type": "text",
+      "flag": "!mod:rftoolsdim",
+      "text": "If you had RFTools Dimensions, you could make some pretty cool decorative blocks, but you can't, oh well :("
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_blank_block",
+      "recipe2": "rftoolsdim:dimensional_block"
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_small_blocks",
+      "recipe2": "rftoolsdim:dimensional_cross_block"
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_pattern1_block",
+      "recipe2": "rftoolsdim:dimensional_pattern2_block"
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_cross2_block"
     }
   ]
 }

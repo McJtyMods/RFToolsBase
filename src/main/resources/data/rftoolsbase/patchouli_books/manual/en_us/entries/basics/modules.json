@@ -1,6 +1,6 @@
 {
   "name": "Modules",
-  "icon": "rftoolsbase:filtermodule",
+  "icon": "rftoolsbase:filter_module",
   "category": "category_basics",
   "pages": [
     {

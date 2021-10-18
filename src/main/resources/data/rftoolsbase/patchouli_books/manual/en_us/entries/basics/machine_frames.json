@@ -1,0 +1,15 @@
+{
+  "name": "Machine Frames",
+  "icon": "rftoolsbase:machine_frame",
+  "category": "category_basics",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Every machine or device needs some sort of housing, a $(thing)frame$(), if you will. These do nothing on their own, but are a ubiquitous crafting ingredient."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:machine_frame"
+    }
+  ]
+}

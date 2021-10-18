@@ -1,6 +1,6 @@
 {
   "name": "Technology Guide",
-  "landing_text": "Technology Guide",
+  "landing_text": "This manual is your guide to all things McJty, from the RFTools Suite to xNet, Deep Resonance, and (probably) beyond! $(br)If you find a bug, please report it $(l:rftoolsbase:basics/bugs)here.$()",
   "creative_tab": "rftoolsbase",
   "dont_generate_book": true,
   "custom_book_item": "rftoolsbase:manual",
