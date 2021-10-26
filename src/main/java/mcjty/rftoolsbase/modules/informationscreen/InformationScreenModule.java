@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.modules.informationscreen;
 
 import mcjty.lib.modules.IModule;
-import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenBlock;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRenderer;
@@ -24,7 +23,6 @@ public class InformationScreenModule implements IModule {
 
     @Override
     public void init(FMLCommonSetupEvent event) {
-        CapabilityMachineInformation.register();
     }
 
     @Override

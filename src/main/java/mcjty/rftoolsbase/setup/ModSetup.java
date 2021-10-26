@@ -1,6 +1,8 @@
 package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.setup.DefaultModSetup;
+import mcjty.rftoolsbase.api.infoscreen.CapabilityInformationScreenInfo;
+import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
@@ -24,6 +26,9 @@ public class ModSetup extends DefaultModSetup {
             // Needs to be here: after registration of everything and after reading config
             OreGenerator.registerConfiguredFeatures();
         });
+
+        CapabilityMachineInformation.register();
+        CapabilityInformationScreenInfo.register();
 
         RFToolsBaseMessages.registerMessages("rftoolsbase");
         MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {

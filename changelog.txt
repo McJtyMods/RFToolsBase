@@ -1,5 +1,6 @@
 Upcoming:
 - Update to McJtyLib
+- Fix information screen capability (the information screen was broken)
 
 1.16-2.0.11:
 - Small fix for mojang mappings
