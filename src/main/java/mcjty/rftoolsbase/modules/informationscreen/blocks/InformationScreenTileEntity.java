@@ -89,6 +89,12 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
         infoTag.putByte("mode", (byte) mode);
     }
 
+    @Override
+    public void writeClientDataToNBT(CompoundNBT tagCompound) {
+        CompoundNBT infoTag = getOrCreateInfo(tagCompound);
+        infoTag.putByte("mode", (byte) mode);
+    }
+
     public void setClientData(TypedMap power) {
         this.clientData = power;
     }
