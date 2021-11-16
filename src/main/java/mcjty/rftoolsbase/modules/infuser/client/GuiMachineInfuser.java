@@ -51,9 +51,13 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
         energyBar = window.findChild("energybar");
     }
 
+    private void updateFields() {
+        updateEnergyBar(energyBar);
+    }
+
     @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+        updateFields();
         drawWindow(matrixStack);
-        updateEnergyBar(energyBar);
     }
 }
