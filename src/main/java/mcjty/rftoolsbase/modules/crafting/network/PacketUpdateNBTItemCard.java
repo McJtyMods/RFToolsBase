@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class PacketUpdateNBTItemCard {
 
-    public TypedMap args;
+    private TypedMap args;
 
     public PacketUpdateNBTItemCard() {
     }

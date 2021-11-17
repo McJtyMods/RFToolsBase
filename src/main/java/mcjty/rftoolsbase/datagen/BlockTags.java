@@ -4,10 +4,10 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeBlockTagsProvider;
+
+import javax.annotation.Nonnull;
 
 public class BlockTags extends BlockTagsProvider {
 
@@ -22,6 +22,7 @@ public class BlockTags extends BlockTagsProvider {
     }
 
     @Override
+    @Nonnull
     public String getName() {
         return "RFToolsBase Tags";
     }

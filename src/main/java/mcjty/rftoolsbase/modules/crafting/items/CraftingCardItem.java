@@ -30,6 +30,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +48,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/craftingcard");
     private static final CraftingInventory CRAFTING_INVENTORY = new CraftingInventory(new Container(null, -1) {
         @Override
-        public boolean stillValid(PlayerEntity playerIn) {
+        public boolean stillValid(@Nonnull PlayerEntity playerIn) {
             return false;
         }
     }, 3, 3);
@@ -79,7 +80,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     @Nullable
-    private static IRecipe findRecipeInternal(World world, CraftingInventory inv, IRecipeType type) {
+    private static IRecipe findRecipeInternal(World world, CraftingInventory inv, IRecipeType<?> type) {
         for (IRecipe r : world.getRecipeManager().getRecipes()) {
             if (r != null && type.equals(r.getType()) && r.matches(inv, world)) {
                 return r;
@@ -92,7 +93,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
      * If the recipe in this card is valid then this will return the matching IRecipe
      */
     @Nullable
-    public static IRecipe findRecipe(World world, ItemStack craftingCard, IRecipeType type) {
+    public static IRecipe findRecipe(World world, ItemStack craftingCard, IRecipeType<?> type) {
         ItemStackList stacks = getStacksFromItem(craftingCard);
         for (int y = 0 ; y < 3 ; y++) {
             for (int x = 0 ; x < 3 ; x++) {
@@ -148,14 +149,15 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+    public void appendHoverText(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, list, flagIn);
         tooltipBuilder.get().makeTooltip(getRegistryName(), stack, list, flagIn);
         // @todo tooltip icons
     }
 
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    @Nonnull
+    public ActionResult<ItemStack> use(@Nonnull World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (hand != Hand.MAIN_HAND) {
             return new ActionResult<>(ActionResultType.PASS, stack);
@@ -163,12 +165,13 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         if (!world.isClientSide) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
                 @Override
+                @Nonnull
                 public ITextComponent getDisplayName() {
                     return new StringTextComponent("Crafting Card");
                 }
 
                 @Override
-                public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+                public Container createMenu(int id, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
                     CraftingCardContainer container = new CraftingCardContainer(id, player.blockPosition(), player);
                     container.setupInventories(null, playerInventory);
                     return container;

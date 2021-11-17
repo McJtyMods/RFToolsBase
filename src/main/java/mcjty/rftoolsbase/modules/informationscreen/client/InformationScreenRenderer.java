@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.Direction;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
+import javax.annotation.Nonnull;
+
 public class InformationScreenRenderer extends TileEntityRenderer<InformationScreenTileEntity> {
 
     public InformationScreenRenderer(TileEntityRendererDispatcher dispatcher) {
@@ -19,7 +21,7 @@ public class InformationScreenRenderer extends TileEntityRenderer<InformationScr
     }
 
     @Override
-    public void render(InformationScreenTileEntity te, float v, MatrixStack matrixStack, IRenderTypeBuffer buffer, int i, int i1) {
+    public void render(InformationScreenTileEntity te, float v, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
         long t = System.currentTimeMillis();
         if (t - te.getLastUpdateTime() > 250) {
             RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetMonitorLog(te.getBlockPos()));

@@ -15,6 +15,7 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.item.Items;
 import net.minecraftforge.common.Tags;
 
+import javax.annotation.Nonnull;
 import java.util.function.Consumer;
 
 public class Recipes extends BaseRecipeProvider {
@@ -27,7 +28,7 @@ public class Recipes extends BaseRecipeProvider {
     }
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(VariousModule.DIMENSIONALSHARD.get())
                 .pattern("deg")
                 .pattern("irG")

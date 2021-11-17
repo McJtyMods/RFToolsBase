@@ -36,6 +36,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Set;
 
@@ -71,6 +72,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         ScreenManager.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
     }
 
+    @Nonnull
     private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, PlayerInventory inventory, ITextComponent
             textComponent) {
         return new GuiFilterModule(container, inventory);
@@ -245,8 +247,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) {
-        if (slotIn != null && !slotIn.getItem().isEmpty()) {
+    protected void slotClicked(@Nonnull Slot slotIn, int slotId, int mouseButton, @Nonnull ClickType type) {
+        if (!slotIn.getItem().isEmpty()) {
             FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
             if (McJtyLib.proxy.isSneaking()) {
                 for (ResourceLocation tag : slotIn.getItem().getItem().getTags()) {
@@ -260,8 +262,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         }
     }
 
+    @Nonnull
     @Override
-    public List<ITextComponent> getTooltipFromItem(ItemStack p_231151_1_) {
+    public List<ITextComponent> getTooltipFromItem(@Nonnull ItemStack p_231151_1_) {
         List<ITextComponent> list = super.getTooltipFromItem(p_231151_1_);
         list.add(new StringTextComponent(TextFormatting.GOLD + "Click to add to filter"));
         list.add(new StringTextComponent(TextFormatting.GOLD + "Shift-Click to add tags to filter"));

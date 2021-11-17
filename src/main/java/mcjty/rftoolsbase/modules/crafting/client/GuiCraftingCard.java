@@ -56,6 +56,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         ScreenManager.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
     }
 
+    @Nonnull
     private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
         return new GuiCraftingCard(container, inventory);
     }
@@ -182,7 +183,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull MatrixStack matrixStack, float partialTicks, int x, int y) {
         updateSlots();
         drawWindow(matrixStack);
     }

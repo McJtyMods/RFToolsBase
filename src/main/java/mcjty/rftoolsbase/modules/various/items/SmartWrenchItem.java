@@ -54,8 +54,9 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
         this.mode = mode;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             SmartWrenchMode mode = getCurrentMode(stack);
@@ -117,7 +118,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
+    public void appendHoverText(@Nonnull ItemStack itemStack, World world, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flags) {
         super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
@@ -168,7 +169,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     @Override
-    public int getUseDuration(ItemStack stack) {
+    public int getUseDuration(@Nonnull ItemStack stack) {
         return 1;
     }
 

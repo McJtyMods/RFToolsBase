@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.placement.SimplePlacement;
 
+import javax.annotation.Nonnull;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -13,7 +14,8 @@ public class CountPlacement extends SimplePlacement<CountPlacementConfig> {
     }
 
     @Override
-    public Stream<BlockPos> place(Random random, CountPlacementConfig config, BlockPos pos) {
+    @Nonnull
+    public Stream<BlockPos> place(@Nonnull Random random, CountPlacementConfig config, @Nonnull BlockPos pos) {
         Stream.Builder<BlockPos> builder = Stream.builder();
         for (int i = 0 ; i < config.tries ; i++) {
             int x = pos.getX();

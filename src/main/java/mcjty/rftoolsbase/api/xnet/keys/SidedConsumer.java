@@ -39,15 +39,15 @@ public class SidedConsumer {
 
         SidedConsumer that = (SidedConsumer) o;
 
-        if (consumerId != null ? !consumerId.equals(that.consumerId) : that.consumerId != null) return false;
+        if (!consumerId.equals(that.consumerId)) return false;
         return side == that.side;
 
     }
 
     @Override
     public int hashCode() {
-        int result = consumerId != null ? consumerId.hashCode() : 0;
-        result = 31 * result + (side != null ? side.hashCode() : 0);
+        int result = consumerId.hashCode();
+        result = 31 * result + side.hashCode();
         return result;
     }
 

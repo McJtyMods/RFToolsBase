@@ -40,7 +40,7 @@ public class InformationScreenBlock extends BaseBlock {
     @SuppressWarnings("deprecation")
     @Override
     @Nonnull
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
         Direction side = OrientationTools.getOrientationHoriz(state);
         switch (side) {
             case NORTH:
@@ -54,8 +54,9 @@ public class InformationScreenBlock extends BaseBlock {
         }
     }
 
+    @Nonnull
     @Override
-    public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult result) {
+    public ActionResultType use(@Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult result) {
         ActionResultType rc = super.use(state, world, pos, player, hand, result);
         if (rc != ActionResultType.SUCCESS) {
             // We just pass along the block activation to the block behind it so that we can open the gui of that
@@ -95,7 +96,7 @@ public class InformationScreenBlock extends BaseBlock {
     @SuppressWarnings("deprecation")
     @Override
     @Nonnull
-    public BlockRenderType getRenderShape(BlockState state) {
+    public BlockRenderType getRenderShape(@Nonnull BlockState state) {
         return BlockRenderType.MODEL;
     }
 }

@@ -21,7 +21,7 @@ public class BlockSide implements Comparable<BlockSide> {
     }
 
     @Override
-    public int compareTo(BlockSide blockSide) {
+    public int compareTo(@Nonnull BlockSide blockSide) {
         if (nodeName == null && blockSide.nodeName != null) {
             return -1;
         }

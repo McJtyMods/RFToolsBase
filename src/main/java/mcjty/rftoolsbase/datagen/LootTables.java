@@ -7,6 +7,8 @@ import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import net.minecraft.data.DataGenerator;
 
+import javax.annotation.Nonnull;
+
 public class LootTables extends BaseLootTableProvider {
 
     public LootTables(DataGenerator dataGeneratorIn) {
@@ -22,6 +24,7 @@ public class LootTables extends BaseLootTableProvider {
         lootTables.put(InformationScreenModule.INFORMATION_SCREEN.get(), createSimpleTable("informationscreen", InformationScreenModule.INFORMATION_SCREEN.get()));
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "RFToolsBase LootTables";

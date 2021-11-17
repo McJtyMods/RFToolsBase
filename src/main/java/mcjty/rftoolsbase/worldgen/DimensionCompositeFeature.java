@@ -24,7 +24,7 @@ public class DimensionCompositeFeature<F extends IFeatureConfig> extends Configu
 
 
     @Override
-    public boolean place(ISeedReader reader, ChunkGenerator generator, Random random, BlockPos pos) {
+    public boolean place(ISeedReader reader, @Nonnull ChunkGenerator generator, @Nonnull Random random, @Nonnull BlockPos pos) {
         if (Objects.equals(dimension, reader.getLevel().dimension())) {
             return super.place(reader, generator, random, pos);
         }

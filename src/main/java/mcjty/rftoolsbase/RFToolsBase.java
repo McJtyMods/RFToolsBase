@@ -15,7 +15,6 @@ import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -32,11 +31,11 @@ public class RFToolsBase {
     public static final String MODID = "rftoolsbase";
 
     @SuppressWarnings("PublicField")
-    public static ModSetup setup = new ModSetup();
+    public static final ModSetup setup = new ModSetup();
 
     @SuppressWarnings("PublicField")
     public static RFToolsBase instance;
-    private Modules modules = new Modules();
+    private final Modules modules = new Modules();
     public ClientInfo clientInfo = new ClientInfo();
 
     public RFToolsBase() {

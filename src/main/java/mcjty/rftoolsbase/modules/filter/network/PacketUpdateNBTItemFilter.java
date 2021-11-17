@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class PacketUpdateNBTItemFilter {
 
-    public TypedMap args;
+    private TypedMap args;
 
     public PacketUpdateNBTItemFilter(PacketBuffer buf) {
         args = TypedMapTools.readArguments(buf);

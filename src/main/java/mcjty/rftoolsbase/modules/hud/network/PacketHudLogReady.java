@@ -16,9 +16,9 @@ import java.util.function.Supplier;
 
 public class PacketHudLogReady {
 
-    public BlockPos pos;
-    public List<String> list;
-    public String command;
+    private BlockPos pos;
+    private List<String> list;
+    private String command;
 
     public PacketHudLogReady() {
     }

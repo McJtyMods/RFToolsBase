@@ -153,7 +153,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
 
     @Nonnull
     @Override
-    public CompoundNBT save(CompoundNBT tagCompound) {
+    public CompoundNBT save(@Nonnull CompoundNBT tagCompound) {
         super.save(tagCompound);
         getOrCreateInfo(tagCompound).putInt("infusing", infusing);
         return tagCompound;

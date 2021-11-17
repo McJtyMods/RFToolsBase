@@ -37,6 +37,8 @@ import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
 import net.minecraft.item.Item.Properties;
 
+import javax.annotation.Nonnull;
+
 public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/tablet");
@@ -136,8 +138,9 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
         return newTablet;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             if (player.isShiftKeyDown()) {
@@ -160,13 +163,14 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
     private void openTabletGui(PlayerEntity player) {
         NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+            @Nonnull
             @Override
             public ITextComponent getDisplayName() {
                 return new StringTextComponent("Tablet");
             }
 
             @Override
-            public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+            public Container createMenu(int id, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
                 TabletContainer container = new TabletContainer(id, player.blockPosition(), player);
                 container.setupInventories(new TabletItemHandler(player), playerInventory);
                 return container;
@@ -180,7 +184,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, World world, List<ITextComponent> list, ITooltipFlag flags) {
+    public void appendHoverText(@Nonnull ItemStack itemStack, World world, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flags) {
         super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }

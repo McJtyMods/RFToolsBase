@@ -8,6 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.common.ToolType;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
@@ -23,17 +24,17 @@ public class DimensionalShardBlock extends Block {
 
     @Nullable
     @Override
-    public ToolType getHarvestTool(BlockState state) {
+    public ToolType getHarvestTool(@Nonnull BlockState state) {
         return ToolType.PICKAXE;
     }
 
     @Override
-    public int getHarvestLevel(BlockState state) {
+    public int getHarvestLevel(@Nonnull BlockState state) {
         return 2;
     }
 
     @Override
-    public void destroy(IWorld world, BlockPos pos, BlockState state) {
+    public void destroy(IWorld world, @Nonnull BlockPos pos, @Nonnull BlockState state) {
         if (world.isClientSide()) {
             for (int i = 0 ; i < 10 ; i++) {
                 world.addParticle(ParticleTypes.FIREWORK, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f);

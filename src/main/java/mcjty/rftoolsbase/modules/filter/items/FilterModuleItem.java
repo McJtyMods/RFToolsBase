@@ -37,6 +37,7 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
@@ -86,11 +87,12 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     }
 
     @Override
-    public void appendHoverText(ItemStack itemStack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+    public void appendHoverText(@Nonnull ItemStack itemStack, @Nullable World worldIn, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flagIn) {
         super.appendHoverText(itemStack, worldIn, list, flagIn);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flagIn);
     }
 
+    @Nonnull
     @Override
     public ActionResultType useOn(ItemUseContext context) {
         PlayerEntity player = context.getPlayer();
@@ -124,18 +126,20 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
         return super.useOn(context);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+                @Nonnull
                 @Override
                 public ITextComponent getDisplayName() {
                     return new StringTextComponent("Filter Module");
                 }
 
                 @Override
-                public Container createMenu(int id, PlayerInventory playerInventory, PlayerEntity player) {
+                public Container createMenu(int id, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
                     FilterModuleContainer container = new FilterModuleContainer(id, player.blockPosition(), player);
                     container.setupInventories(null, playerInventory);
                     return container;

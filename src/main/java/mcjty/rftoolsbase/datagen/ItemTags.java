@@ -7,6 +7,8 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
+import javax.annotation.Nonnull;
+
 public class ItemTags extends ItemTagsProvider {
 
     public ItemTags(DataGenerator generator, ExistingFileHelper helper) {
@@ -19,6 +21,7 @@ public class ItemTags extends ItemTagsProvider {
                 .add(WorldGenModule.DIMENSIONAL_SHARD_END_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD_ITEM.get());
     }
 
+    @Nonnull
     @Override
     public String getName() {
         return "RFToolsBase Tags";

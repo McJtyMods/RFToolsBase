@@ -12,6 +12,8 @@ import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 import static mcjty.lib.gui.widgets.Widgets.positional;
 
 public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEntity, GenericContainer> {
@@ -56,7 +58,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     }
 
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull MatrixStack matrixStack, float partialTicks, int x, int y) {
         updateFields();
         drawWindow(matrixStack);
     }

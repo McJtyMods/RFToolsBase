@@ -28,7 +28,8 @@ public class CommandHandler {
             return true;
         });
         McJtyLib.registerCommand(RFToolsBase.MODID, CMD_CYCLE_DESTINATION, (player, arguments) -> {
-            ItemStack heldItem = player.getItemInHand(player.getUsedItemHand() == null ? Hand.MAIN_HAND : player.getUsedItemHand());
+            player.getUsedItemHand();
+            ItemStack heldItem = player.getItemInHand(player.getUsedItemHand());
             if (heldItem.getItem() instanceof IItemCycler) {
                 ((IItemCycler) heldItem.getItem()).cycle(player, heldItem, arguments.get(PARAM_NEXT));
             }

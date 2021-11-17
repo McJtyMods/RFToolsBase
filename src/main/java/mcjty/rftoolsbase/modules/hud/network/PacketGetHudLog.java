@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 
 public class PacketGetHudLog {
 
-    public static String CMD_GETHUDLOG = "getHudLog";
-    public static String CLIENTCMD_GETHUDLOG = "getHudLog";
+    public static final String CMD_GETHUDLOG = "getHudLog";
+    public static final String CLIENTCMD_GETHUDLOG = "getHudLog";
 
     protected BlockPos pos;
     protected TypedMap params;

@@ -9,6 +9,7 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,14 @@ public class RFToolsBaseJeiPlugin implements IModPlugin {
         RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendRecipe(items));
     }
 
+    @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
         return new ResourceLocation(RFToolsBase.MODID, "rftoolsbase");
     }
 
     @Override
-    public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+    public void registerRecipeTransferHandlers(@Nonnull IRecipeTransferRegistration registration) {
         CraftingCardRecipeTransferHandler.register(registration);
     }
 }

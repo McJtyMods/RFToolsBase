@@ -19,6 +19,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
+import javax.annotation.Nonnull;
+
 import static mcjty.lib.gui.widgets.Widgets.positional;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
@@ -41,6 +43,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
         ScreenManager.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
     }
 
+    @Nonnull
     private static GuiTablet createTabletGui(TabletContainer container, PlayerInventory inventory, ITextComponent textComponent) {
         return new GuiTablet(container, inventory);
     }
@@ -77,7 +80,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     }
 
     @Override
-    protected void renderLabels(MatrixStack stack, int p_230451_2_, int p_230451_3_) {
+    protected void renderLabels(@Nonnull MatrixStack stack, int p_230451_2_, int p_230451_3_) {
         super.renderLabels(stack, p_230451_2_, p_230451_3_);
         ItemStack heldItem = minecraft.player.getItemInHand(getHand());
         updateActiveButton(TabletItem.getCurrentSlot(heldItem));
