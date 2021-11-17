@@ -54,6 +54,9 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     }
 
     private void updateFields() {
+        if (window == null) {
+            return;
+        }
         updateEnergyBar(energyBar);
     }
 
