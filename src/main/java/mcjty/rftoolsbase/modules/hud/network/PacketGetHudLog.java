@@ -1,8 +1,7 @@
 package mcjty.rftoolsbase.modules.hud.network;
 
-import mcjty.lib.network.ICommandHandler;
 import mcjty.lib.network.TypedMapTools;
-import mcjty.lib.typed.Type;
+import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.Logging;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
@@ -18,8 +17,7 @@ import java.util.function.Supplier;
 
 public class PacketGetHudLog {
 
-    public static final String CMD_GETHUDLOG = "getHudLog";
-    public static final String CLIENTCMD_GETHUDLOG = "getHudLog";
+    public static final String COMMAND_GETHUDLOG = "getHudLog";
 
     protected BlockPos pos;
     protected TypedMap params;
@@ -48,14 +46,13 @@ public class PacketGetHudLog {
             World world = ctx.getSender().getCommandSenderWorld();
             if (world.hasChunkAt(pos)) {
                 TileEntity te = world.getBlockEntity(pos);
-                if (!(te instanceof ICommandHandler)) {
-                    Logging.log("TileEntity is not a CommandHandler!");
-                    return;
+                if (te instanceof GenericTileEntity) {
+                    List<String > list = ((GenericTileEntity) te).executeServerCommandList(COMMAND_GETHUDLOG, ctx.getSender(), TypedMap.EMPTY, String.class);
+                    RFToolsBaseMessages.INSTANCE.sendTo(new PacketHudLogReady(pos, COMMAND_GETHUDLOG, list),
+                            ctx.getSender().connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                } else {
+                    Logging.log("Command " + COMMAND_GETHUDLOG + " was not handled!");
                 }
-                ICommandHandler commandHandler = (ICommandHandler) te;
-                List<String> list = commandHandler.executeWithResultList(CMD_GETHUDLOG, params, Type.STRING);
-                RFToolsBaseMessages.INSTANCE.sendTo(new PacketHudLogReady(pos, CLIENTCMD_GETHUDLOG, list),
-                        ctx.getSender().connection.connection, NetworkDirection.PLAY_TO_CLIENT);
             }
         });
         ctx.setPacketHandled(true);
