@@ -6,8 +6,6 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
-import mcjty.rftoolsbase.modules.hud.network.PacketGetHudLog;
-import mcjty.rftoolsbase.modules.hud.network.PacketHudLogReady;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
@@ -39,8 +37,6 @@ public class RFToolsBaseMessages {
 
         INSTANCE = net;
 
-        net.registerMessage(id(), PacketGetHudLog.class, PacketGetHudLog::toBytes, PacketGetHudLog::new, PacketGetHudLog::handle);
-        net.registerMessage(id(), PacketHudLogReady.class, PacketHudLogReady::toBytes, PacketHudLogReady::new, PacketHudLogReady::handle);
         net.registerMessage(id(), PacketItemNBTToServer.class, PacketItemNBTToServer::toBytes, PacketItemNBTToServer::new, PacketItemNBTToServer::handle);
         net.registerMessage(id(), PacketUpdateNBTItemCard.class, PacketUpdateNBTItemCard::toBytes, PacketUpdateNBTItemCard::new, PacketUpdateNBTItemCard::handle);
         net.registerMessage(id(), PacketSendRecipe.class, PacketSendRecipe::toBytes, PacketSendRecipe::new, PacketSendRecipe::handle);
