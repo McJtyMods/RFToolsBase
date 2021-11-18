@@ -16,7 +16,6 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 import java.util.List;
 
 public class CraftingCardContainer extends GenericContainer {
-    public static final String CONTAINER_INVENTORY = "container";
 
     public static final int SLOT_INPUT = 0;
     public static final int GRID_WIDTH = 5;

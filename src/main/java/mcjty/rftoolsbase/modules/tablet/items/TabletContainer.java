@@ -20,7 +20,7 @@ public class TabletContainer extends GenericContainer {
 	public static final int NUM_SLOTS = 6;
 
 	public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(1)
-			.box(specific(s -> s.getItem() instanceof ITabletSupport), CONTAINER_CONTAINER, 0, 15, 13, NUM_SLOTS, 18+5, 1, 18)
+			.box(specific(s -> s.getItem() instanceof ITabletSupport), 0, 15, 13, NUM_SLOTS, 18+5, 1, 18)
             .playerSlots(10, 106));
 
 	public TabletContainer(int id, BlockPos pos, PlayerEntity player) {

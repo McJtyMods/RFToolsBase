@@ -11,7 +11,6 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class FilterModuleContainer extends GenericContainer {
-    public static final String CONTAINER_INVENTORY = "container";
 
 	private int cardIndex;
 

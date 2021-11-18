@@ -39,8 +39,8 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     public static final int SLOT_MACHINEOUTPUT = 1;
 
     public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(2)
-            .slot(specific(new ItemStack(VariousModule.DIMENSIONALSHARD.get())).in(), CONTAINER_CONTAINER, SLOT_SHARDINPUT, 64, 24)
-            .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), CONTAINER_CONTAINER, SLOT_MACHINEOUTPUT, 118, 24)
+            .slot(specific(VariousModule.DIMENSIONALSHARD.get()).in(), SLOT_SHARDINPUT, 64, 24)
+            .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
 
     @Cap(type = CapType.ITEMS_AUTOMATION)
