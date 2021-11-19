@@ -1,4 +1,3 @@
-* Sequencer cycleBits get cleared on world load
 * Timer: annoying to change the time. It resets to 1
 
 
