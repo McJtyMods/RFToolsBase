@@ -1,4 +1,5 @@
 * Sequencer cycleBits get cleared on world load
+* Timer: annoying to change the time. It resets to 1
 
 
 * Security system in RFTools Base: move code from GenericRFToolsBlock to a capability perhaps?
