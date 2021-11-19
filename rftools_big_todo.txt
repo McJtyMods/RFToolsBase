@@ -1,4 +1,4 @@
-* Modular storage gui wrong?
+* Sequencer cycleBits get cleared on world load
 
 
 * Security system in RFTools Base: move code from GenericRFToolsBlock to a capability perhaps?
