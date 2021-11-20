@@ -1,6 +1,7 @@
-* Timer: annoying to change the time. It resets to 1
+* Timer: annoying to change the time. It resets to 1 (maybe use 'Apply' button)?
 * Top driver for spawner is missing
 * Gui HUD is not bright enough (for builder for example)
+
 
 * Security system in RFTools Base: move code from GenericRFToolsBlock to a capability perhaps?
 * Check if all itemHandler/energyHandler is properly persisted
