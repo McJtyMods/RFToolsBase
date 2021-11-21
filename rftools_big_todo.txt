@@ -3,6 +3,7 @@
 * Gui HUD is not bright enough (for builder for example)
 * Test the tablet!
 * Test power monitor
+* Test env controller
 
 
 * Security system in RFTools Base: move code from GenericRFToolsBlock to a capability perhaps?
