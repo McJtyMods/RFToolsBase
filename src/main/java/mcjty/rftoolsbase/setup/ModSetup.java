@@ -28,7 +28,7 @@ public class ModSetup extends DefaultModSetup {
             CommandHandler.registerCommands();
             // Needs to be here: after registration of everything and after reading config
             OreGenerator.registerConfiguredFeatures();
-            McJtyLib.registerCommandInfo(Hud.COMMAND_GETHUDLOG, String.class, buf -> buf.readUtf(32767), PacketBuffer::writeUtf);
+            McJtyLib.registerListCommandInfo(Hud.COMMAND_GETHUDLOG, String.class, buf -> buf.readUtf(32767), PacketBuffer::writeUtf);
         });
 
         CapabilityMachineInformation.register();
