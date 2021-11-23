@@ -1,6 +1,4 @@
-* Timer: annoying to change the time. It resets to 1 (maybe use 'Apply' button)?
-* Gui HUD is not bright enough (for builder for example)
-* Test env controller
+* Add back the dimension editor
 
 
 * Security system in RFTools Base: move code from GenericRFToolsBlock to a capability perhaps?
