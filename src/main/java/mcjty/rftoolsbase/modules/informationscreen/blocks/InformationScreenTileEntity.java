@@ -76,15 +76,15 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
     }
 
     @Override
-    protected void readInfo(CompoundNBT tagCompound) {
-        super.readInfo(tagCompound);
+    protected void loadInfo(CompoundNBT tagCompound) {
+        super.loadInfo(tagCompound);
         CompoundNBT info = tagCompound.getCompound("Info");
         mode = info.getByte("mode");
     }
 
     @Override
-    protected void writeInfo(CompoundNBT tagCompound) {
-        super.writeInfo(tagCompound);
+    protected void saveInfo(CompoundNBT tagCompound) {
+        super.saveInfo(tagCompound);
         CompoundNBT infoTag = getOrCreateInfo(tagCompound);
         infoTag.putByte("mode", (byte) mode);
     }
