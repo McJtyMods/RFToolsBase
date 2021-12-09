@@ -11,7 +11,7 @@ import mcjty.lib.container.GenericItemHandler;
 import mcjty.lib.tileentity.Cap;
 import mcjty.lib.tileentity.CapType;
 import mcjty.lib.tileentity.GenericEnergyStorage;
-import mcjty.lib.tileentity.GenericTileEntity;
+import mcjty.lib.tileentity.TickingTileEntity;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
@@ -22,7 +22,6 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -33,7 +32,7 @@ import static mcjty.lib.api.container.DefaultContainerProvider.container;
 import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.lib.container.SlotDefinition.specific;
 
-public class MachineInfuserTileEntity extends GenericTileEntity implements ITickableTileEntity {
+public class MachineInfuserTileEntity extends TickingTileEntity {
 
     public static final int SLOT_SHARDINPUT = 0;
     public static final int SLOT_MACHINEOUTPUT = 1;
@@ -76,13 +75,7 @@ public class MachineInfuserTileEntity extends GenericTileEntity implements ITick
     }
 
     @Override
-    public void tick() {
-        if (!level.isClientSide) {
-            tickServer();
-        }
-    }
-
-    private void tickServer() {
+    public void tickServer() {
         if (infusing > 0) {
             infusing--;
             if (infusing == 0) {

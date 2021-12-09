@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.modules.informationscreen.blocks;
 
 import mcjty.lib.tileentity.GenericTileEntity;
+import mcjty.lib.tileentity.TickingTileEntity;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.EnergyTools;
 import mcjty.lib.varia.OrientationTools;
@@ -16,7 +17,7 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import static mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule.TYPE_INFORMATION_SCREEN;
 
-public class InformationScreenTileEntity extends GenericTileEntity implements ITickableTileEntity {
+public class InformationScreenTileEntity extends TickingTileEntity {
 
     private int mode = 0;
     private int cnt = 0;
@@ -39,16 +40,14 @@ public class InformationScreenTileEntity extends GenericTileEntity implements IT
     }
 
     @Override
-    public void tick() {
-        if (!level.isClientSide) {
-            cnt--;
-            if (cnt <= 0) {
-                cnt = 10;
-                BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
-                TileEntity te = level.getBlockEntity(offset);
-                if (te != null) {
-                    te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(IInformationScreenInfo::tick);
-                }
+    public void tickServer() {
+        cnt--;
+        if (cnt <= 0) {
+            cnt = 10;
+            BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
+            TileEntity te = level.getBlockEntity(offset);
+            if (te != null) {
+                te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(IInformationScreenInfo::tick);
             }
         }
     }

@@ -30,7 +30,7 @@ public class TickOrderHandler {
 
     public interface IOrderTicker {
         Rank getRank();
-        void tickServer();
+        void tickOnServer();
         RegistryKey<World> getDimension();
     }
 
@@ -59,7 +59,7 @@ public class TickOrderHandler {
 
     private static <T extends IOrderTicker> void tickServer(List<T> tileEntities) {
         for (T tileEntity : tileEntities) {
-            tileEntity.tickServer();
+            tileEntity.tickOnServer();
         }
         tileEntities.clear();
     }
