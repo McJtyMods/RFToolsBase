@@ -89,13 +89,13 @@ public class InformationScreenTileEntity extends TickingTileEntity {
     }
 
     @Override
-    public void writeClientDataToNBT(CompoundNBT tagCompound) {
+    public void saveClientDataToNBT(CompoundNBT tagCompound) {
         CompoundNBT infoTag = getOrCreateInfo(tagCompound);
         infoTag.putByte("mode", (byte) mode);
     }
 
     @Override
-    public void readClientDataFromNBT(CompoundNBT tagCompound) {
+    public void loadClientDataFromNBT(CompoundNBT tagCompound) {
         CompoundNBT info = tagCompound.getCompound("Info");
         mode = info.getByte("mode");
     }
