@@ -1,3 +1,6 @@
+1.16-2.1.1:
+- Updated to latest version of McJtyLib
+
 1.16-2.1.0:
 - Updated to latest version of McJtyLib
 - Fix information screen capability (the information screen was broken)
