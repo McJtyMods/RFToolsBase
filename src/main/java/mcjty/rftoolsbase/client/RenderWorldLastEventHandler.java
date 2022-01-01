@@ -37,7 +37,7 @@ public class RenderWorldLastEventHandler {
             return;
         }
 
-        PoseStack matrixStack = evt.getMatrixStack();
+        PoseStack matrixStack = evt.getPoseStack();
         MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
         VertexConsumer builder = buffer.getBuffer(CustomRenderTypes.OVERLAY_LINES);
 

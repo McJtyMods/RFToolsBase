@@ -1,18 +1,16 @@
 package mcjty.rftoolsbase.modules.informationscreen.blocks;
 
-import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.tileentity.TickingTileEntity;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.EnergyTools;
 import mcjty.lib.varia.OrientationTools;
 import mcjty.rftoolsbase.api.infoscreen.CapabilityInformationScreenInfo;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.LazyOptional;
 
 import static mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule.TYPE_INFORMATION_SCREEN;
@@ -26,8 +24,8 @@ public class InformationScreenTileEntity extends TickingTileEntity {
     // Client side information
     private TypedMap clientData;
 
-    public InformationScreenTileEntity() {
-        super(TYPE_INFORMATION_SCREEN.get());
+    public InformationScreenTileEntity(BlockPos pos, BlockState state) {
+        super(TYPE_INFORMATION_SCREEN.get(), pos, state);
     }
 
     public Direction getBlockOrientation() {

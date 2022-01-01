@@ -1,10 +1,9 @@
 package mcjty.rftoolsbase.commands;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.util.Util;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
+import net.minecraft.world.entity.player.Player;
 
 public abstract class AbstractRfToolsCommand implements RfToolsCommand {
 

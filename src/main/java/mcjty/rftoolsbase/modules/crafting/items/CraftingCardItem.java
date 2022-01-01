@@ -6,6 +6,7 @@ import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.tools.ManualHelper;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -26,7 +27,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -125,7 +125,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     public static ItemStackList getStacksFromItem(ItemStack craftingCard) {
         CompoundTag tagCompound = craftingCard.getOrCreateTag();
         ItemStackList stacks = ItemStackList.create(INPUT_SLOTS+1);
-        ListTag bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
             stacks.set(i, ItemStack.of(nbtTagCompound));
@@ -185,7 +185,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         if (tagCompound == null) {
             return ItemStack.EMPTY;
         }
-        ListTag bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         CompoundTag nbtTagCompound = bufferTagList.getCompound(CraftingCardContainer.SLOT_OUT);
         return ItemStack.of(nbtTagCompound);
     }
@@ -202,7 +202,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         if (tagCompound == null) {
             return false;
         }
-        ListTag bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
                 CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
@@ -222,7 +222,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         if (tagCompound == null) {
             return Collections.emptyList();
         }
-        ListTag bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         List<Ingredient> stacks = new ArrayList<>();
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
@@ -241,7 +241,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         if (tagCompound == null) {
             return Collections.emptyList();
         }
-        ListTag bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         List<ItemStack> stacks = new ArrayList<>();
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {
@@ -263,7 +263,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         if (tagCompound == null) {
             return Collections.emptyList();
         }
-        ListTag bufferTagList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         List<Ingredient> stacks = new ArrayList<>();
         for (int i = 0 ; i < bufferTagList.size() ; i++) {
             if (i < INPUT_SLOTS) {

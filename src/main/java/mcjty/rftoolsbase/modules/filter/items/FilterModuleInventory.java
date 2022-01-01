@@ -1,14 +1,14 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.varia.ItemStackList;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.HashSet;
@@ -36,7 +36,7 @@ public class FilterModuleInventory {
     }
 
     private void convertFromNBT(CompoundTag tagCompound) {
-        ListTag itemList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+        ListTag itemList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
         for (int i = 0; i < itemList.size(); i++) {
             CompoundTag compound = itemList.getCompound(i);
             ItemStack s = ItemStack.of(compound);
@@ -44,7 +44,7 @@ public class FilterModuleInventory {
                 stacks.add(s);
             }
         }
-        ListTag tagList = tagCompound.getList("Tags", Constants.NBT.TAG_STRING);
+        ListTag tagList = tagCompound.getList("Tags", Tag.TAG_STRING);
         for (int i = 0 ; i < tagList.size() ; i++) {
             String s = tagList.getString(i);
             tags.add(new ResourceLocation(s));

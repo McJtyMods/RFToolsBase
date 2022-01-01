@@ -164,7 +164,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         return new BlockRenderEvent() {
             @Override
             public void select() {
-                ItemStack itemstack = minecraft.player.inventory.getCarried();
+                ItemStack itemstack = minecraft.player.getInventory().getSelected();    // @todo 1.18 is this right? Was getCarried()
                 slots[idx].renderItem(itemstack);
                 ItemStackList stacks = getStacks();
                 if (!stacks.isEmpty()) {
