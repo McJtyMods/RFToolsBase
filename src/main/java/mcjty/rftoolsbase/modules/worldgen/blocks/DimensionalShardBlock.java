@@ -1,18 +1,18 @@
 package mcjty.rftoolsbase.modules.worldgen.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.ToolType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class DimensionalShardBlock extends Block {
 
@@ -34,7 +34,7 @@ public class DimensionalShardBlock extends Block {
     }
 
     @Override
-    public void destroy(IWorld world, @Nonnull BlockPos pos, @Nonnull BlockState state) {
+    public void destroy(LevelAccessor world, @Nonnull BlockPos pos, @Nonnull BlockState state) {
         if (world.isClientSide()) {
             for (int i = 0 ; i < 10 ; i++) {
                 world.addParticle(ParticleTypes.FIREWORK, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f, rand.nextGaussian() / 3.0f);

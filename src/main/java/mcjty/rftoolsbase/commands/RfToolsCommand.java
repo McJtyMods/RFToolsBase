@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.commands;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public interface RfToolsCommand {
     public String getHelp();
@@ -19,5 +19,5 @@ public interface RfToolsCommand {
     public String getCommand();
 
     // @todo 1.14
-    public void execute(PlayerEntity sender, String[] args);
+    public void execute(Player sender, String[] args);
 }

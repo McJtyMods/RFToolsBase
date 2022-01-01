@@ -7,8 +7,8 @@ import mezz.jei.api.gui.ingredient.IGuiIngredient;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +29,7 @@ public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler
     @SuppressWarnings("deprecation")
     @Nullable
     @Override
-    public IRecipeTransferError transferRecipe(@Nonnull CraftingCardContainer craftingCardContainer, IRecipeLayout recipeLayout, @Nonnull PlayerEntity playerEntity, boolean maxTransfer, boolean doTransfer) {
+    public IRecipeTransferError transferRecipe(@Nonnull CraftingCardContainer craftingCardContainer, IRecipeLayout recipeLayout, @Nonnull Player playerEntity, boolean maxTransfer, boolean doTransfer) {
         Map<Integer, ? extends IGuiIngredient<ItemStack>> guiIngredients = recipeLayout.getItemStacks().getGuiIngredients();
 
         if (doTransfer) {

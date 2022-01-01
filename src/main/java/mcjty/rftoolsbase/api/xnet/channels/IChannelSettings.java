@@ -3,7 +3,7 @@ package mcjty.rftoolsbase.api.xnet.channels;
 import com.google.gson.JsonObject;
 import mcjty.rftoolsbase.api.xnet.gui.IEditorGui;
 import mcjty.rftoolsbase.api.xnet.gui.IndicatorIcon;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -13,9 +13,9 @@ import java.util.Map;
  */
 public interface IChannelSettings {
 
-    void readFromNBT(CompoundNBT tag);
+    void readFromNBT(CompoundTag tag);
 
-    void writeToNBT(CompoundNBT tag);
+    void writeToNBT(CompoundTag tag);
 
     /**
      * Write the channel settings to json. The default implementation does nothing.

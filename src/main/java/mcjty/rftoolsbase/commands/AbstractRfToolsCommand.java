@@ -1,14 +1,14 @@
 package mcjty.rftoolsbase.commands;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
 
 public abstract class AbstractRfToolsCommand implements RfToolsCommand {
 
-    protected String fetchString(PlayerEntity sender, String[] args, int index, String defaultValue) {
+    protected String fetchString(Player sender, String[] args, int index, String defaultValue) {
         try {
             return args[index];
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -16,13 +16,13 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
         }
     }
 
-    protected boolean fetchBool(PlayerEntity sender, String[] args, int index, boolean defaultValue) {
+    protected boolean fetchBool(Player sender, String[] args, int index, boolean defaultValue) {
         boolean value;
         try {
             value = Boolean.valueOf(args[index]);
         } catch (NumberFormatException e) {
             value = false;
-            ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid boolean!");
+            Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid boolean!");
             if (sender != null) {
                 sender.displayClientMessage(component, false);
             }
@@ -32,13 +32,13 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
         return value;
     }
 
-    protected int fetchInt(PlayerEntity sender, String[] args, int index, int defaultValue) {
+    protected int fetchInt(Player sender, String[] args, int index, int defaultValue) {
         int value;
         try {
             value = Integer.parseInt(args[index]);
         } catch (NumberFormatException e) {
             value = 0;
-            ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid integer!");
+            Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid integer!");
             if (sender != null) {
                 sender.displayClientMessage(component, false);
             }
@@ -48,13 +48,13 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
         return value;
     }
 
-    protected float fetchFloat(PlayerEntity sender, String[] args, int index, float defaultValue) {
+    protected float fetchFloat(Player sender, String[] args, int index, float defaultValue) {
         float value;
         try {
             value = Float.parseFloat(args[index]);
         } catch (NumberFormatException e) {
             value = 0.0f;
-            ITextComponent component = new StringTextComponent(TextFormatting.RED + "Parameter is not a valid real number!");
+            Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid real number!");
             if (sender != null) {
                 sender.displayClientMessage(component, false);
             }

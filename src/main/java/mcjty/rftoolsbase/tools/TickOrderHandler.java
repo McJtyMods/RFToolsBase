@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.tools;
 
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,10 +31,10 @@ public class TickOrderHandler {
     public interface IOrderTicker {
         Rank getRank();
         void tickOnServer();
-        RegistryKey<World> getDimension();
+        ResourceKey<Level> getDimension();
     }
 
-    private static Map<RegistryKey<World>, List<IOrderTicker>[]> tiles = new HashMap<>();
+    private static Map<ResourceKey<Level>, List<IOrderTicker>[]> tiles = new HashMap<>();
     private static long ticker = 0;     // To keep track of when a tile was added
 
     public static void clean() {
@@ -64,7 +64,7 @@ public class TickOrderHandler {
         tileEntities.clear();
     }
 
-    public static void postWorldTick(RegistryKey<World> dimension) {
+    public static void postWorldTick(ResourceKey<Level> dimension) {
         ticker++;
         List<IOrderTicker>[] lists = tiles.get(dimension);
         if (lists != null) {

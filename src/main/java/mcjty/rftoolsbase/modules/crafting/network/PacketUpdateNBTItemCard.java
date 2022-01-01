@@ -5,12 +5,12 @@ import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.InteractionHand;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -21,7 +21,7 @@ public class PacketUpdateNBTItemCard {
     public PacketUpdateNBTItemCard() {
     }
 
-    public PacketUpdateNBTItemCard(PacketBuffer buf) {
+    public PacketUpdateNBTItemCard(FriendlyByteBuf buf) {
         args = TypedMapTools.readArguments(buf);
     }
 
@@ -33,15 +33,15 @@ public class PacketUpdateNBTItemCard {
         return itemStack.getItem() instanceof CraftingCardItem;
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         TypedMapTools.writeArguments(buf, args);
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            PlayerEntity playerEntity = ctx.getSender();
-            ItemStack heldItem = playerEntity.getItemInHand(Hand.MAIN_HAND);
+            Player playerEntity = ctx.getSender();
+            ItemStack heldItem = playerEntity.getItemInHand(InteractionHand.MAIN_HAND);
             if (heldItem.isEmpty()) {
                 return;
             }
@@ -49,7 +49,7 @@ public class PacketUpdateNBTItemCard {
             if (!isValidItem(heldItem)) {
                 return;
             }
-            CompoundNBT tagCompound = heldItem.getOrCreateTag();
+            CompoundTag tagCompound = heldItem.getOrCreateTag();
             for (Key<?> akey : args.getKeys()) {
                 String key = akey.getName();
                 if (Type.STRING.equals(akey.getType())) {

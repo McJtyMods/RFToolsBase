@@ -5,16 +5,16 @@ import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.lib.compat.patchouli.PatchouliCompatibility;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.Nonnull;
@@ -35,15 +35,15 @@ public class ManualItem extends Item implements ITooltipSettings {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World worldIn, @Nonnull PlayerEntity playerIn, @Nonnull Hand handIn) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, @Nonnull Player playerIn, @Nonnull InteractionHand handIn) {
         if (!worldIn.isClientSide) {
-            PatchouliCompatibility.openBookGUI((ServerPlayerEntity) playerIn, new ResourceLocation(RFToolsBase.MODID, "manual"));
+            PatchouliCompatibility.openBookGUI((ServerPlayer) playerIn, new ResourceLocation(RFToolsBase.MODID, "manual"));
         }
         return super.use(worldIn, playerIn, handIn);
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, World world, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flags) {
+    public void appendHoverText(@Nonnull ItemStack itemStack, Level world, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
         super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }

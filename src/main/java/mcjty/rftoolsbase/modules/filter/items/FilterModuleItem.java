@@ -8,33 +8,33 @@ import mcjty.lib.varia.InventoryTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
 import mcjty.rftoolsbase.tools.ManualHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ITag;
+import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -47,8 +47,6 @@ import java.util.stream.Collectors;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 
-import net.minecraft.item.Item.Properties;
-
 public class FilterModuleItem extends Item implements ITooltipSettings, ITooltipExtras {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/filtermodule");
@@ -56,7 +54,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info", stack -> {
-                        CompoundNBT tagCompound = stack.getTag();
+                        CompoundTag tagCompound = stack.getTag();
                         if (tagCompound != null) {
                             String blackListMode = tagCompound.getString("blacklistMode");
                             String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
@@ -87,27 +85,27 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, @Nullable World worldIn, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flagIn) {
+    public void appendHoverText(@Nonnull ItemStack itemStack, @Nullable Level worldIn, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(itemStack, worldIn, list, flagIn);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flagIn);
     }
 
     @Nonnull
     @Override
-    public ActionResultType useOn(ItemUseContext context) {
-        PlayerEntity player = context.getPlayer();
-        Hand hand = context.getHand();
-        World world = context.getLevel();
+    public InteractionResult useOn(UseOnContext context) {
+        Player player = context.getPlayer();
+        InteractionHand hand = context.getHand();
+        Level world = context.getLevel();
         ItemStack stack = player.getItemInHand(hand);
         BlockPos pos = context.getClickedPos();
         if (player.isCrouching()) {
             if (!world.isClientSide) {
-                TileEntity te = world.getBlockEntity(pos);
+                BlockEntity te = world.getBlockEntity(pos);
                 if (InventoryTools.isInventory(te)) {
                     FilterModuleInventory inventory = new FilterModuleInventory(stack);
                     InventoryTools.getItems(te, s -> true).forEach(inventory::addStack);
                     inventory.markDirty();
-                    player.displayClientMessage(new StringTextComponent(TextFormatting.GREEN + "Stored inventory contents in filter"), false);
+                    player.displayClientMessage(new TextComponent(ChatFormatting.GREEN + "Stored inventory contents in filter"), false);
                 } else {
                     BlockState state = world.getBlockState(pos);
                     ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state);
@@ -115,40 +113,40 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                         FilterModuleInventory inventory = new FilterModuleInventory(stack);
                         inventory.addStack(blockStack);
                         inventory.markDirty();
-                        player.displayClientMessage(new StringTextComponent(TextFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.displayClientMessage(new TextComponent(ChatFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     } else {
-                        player.displayClientMessage(new StringTextComponent(TextFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.displayClientMessage(new TextComponent(ChatFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     }
                 }
             }
-            return ActionResultType.SUCCESS;
+            return InteractionResult.SUCCESS;
         }
         return super.useOn(context);
     }
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, new INamedContainerProvider() {
+            NetworkHooks.openGui((ServerPlayer) player, new MenuProvider() {
                 @Nonnull
                 @Override
-                public ITextComponent getDisplayName() {
-                    return new StringTextComponent("Filter Module");
+                public Component getDisplayName() {
+                    return new TextComponent("Filter Module");
                 }
 
                 @Override
-                public Container createMenu(int id, @Nonnull PlayerInventory playerInventory, @Nonnull PlayerEntity player) {
+                public AbstractContainerMenu createMenu(int id, @Nonnull Inventory playerInventory, @Nonnull Player player) {
                     FilterModuleContainer container = new FilterModuleContainer(id, player.blockPosition(), player);
                     container.setupInventories(null, playerInventory);
                     return container;
                 }
             });
 
-            return new ActionResult<>(ActionResultType.SUCCESS, stack);
+            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
         }
-        return new ActionResult<>(ActionResultType.SUCCESS, stack);
+        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
     }
 
     public static Predicate<ItemStack> getCache(ItemStack stack) {
@@ -166,11 +164,11 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             itemSet.add(s.getItem());
         }
         for (ResourceLocation tag : inventory.getTags()) {
-            ITag<Item> itemTag = ItemTags.getAllTags().getTag(tag);
+            Tag<Item> itemTag = ItemTags.getAllTags().getTag(tag);
             if (itemTag != null) {
                 itemSet.addAll(itemTag.getValues());
             } else {
-                ITag<Block> blockTag = BlockTags.getAllTags().getTag(tag);
+                Tag<Block> blockTag = BlockTags.getAllTags().getTag(tag);
                 if (blockTag != null) {
                     for (Block block : blockTag.getValues()) {
                         itemSet.add(block.asItem());

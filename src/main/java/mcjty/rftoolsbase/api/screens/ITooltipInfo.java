@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.screens;
 
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
  * have support for tooltips (for things like WAILA, TOP, ...)
  */
 public interface ITooltipInfo {
-    List<String> getInfo(World world, int x, int y);
+    List<String> getInfo(Level world, int x, int y);
 }

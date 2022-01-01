@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.api.infoscreen;
 
-import net.minecraft.nbt.INBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.Tag;
+import net.minecraft.core.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -14,12 +14,12 @@ public class CapabilityInformationScreenInfo {
     public static void register() {
         CapabilityManager.INSTANCE.register(IInformationScreenInfo.class, new Capability.IStorage<IInformationScreenInfo>() {
             @Override
-            public INBT writeNBT(Capability<IInformationScreenInfo> capability, IInformationScreenInfo instance, Direction side) {
+            public Tag writeNBT(Capability<IInformationScreenInfo> capability, IInformationScreenInfo instance, Direction side) {
                 throw new UnsupportedOperationException();
             }
 
             @Override
-            public void readNBT(Capability<IInformationScreenInfo> capability, IInformationScreenInfo instance, Direction side, INBT nbt) {
+            public void readNBT(Capability<IInformationScreenInfo> capability, IInformationScreenInfo instance, Direction side, Tag nbt) {
                 throw new UnsupportedOperationException();
             }
         }, () -> {

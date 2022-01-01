@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.api.storage;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,13 +50,13 @@ public interface IStorageScanner {
     /**
      * this is used by the screen system to inject a stack when the player clicks on a screen
      */
-    ItemStack injectStackFromScreen(ItemStack stack, PlayerEntity player);
+    ItemStack injectStackFromScreen(ItemStack stack, Player player);
 
     /**
      * Give a stack matching the input stack to the player containing either a single
      * item or else a full stack
      */
-    void giveToPlayerFromScreen(ItemStack stack, boolean single, PlayerEntity player);
+    void giveToPlayerFromScreen(ItemStack stack, boolean single, Player player);
 
     /**
      * Count items matching a certain predicate.

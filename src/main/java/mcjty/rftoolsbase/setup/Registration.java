@@ -4,14 +4,14 @@ package mcjty.rftoolsbase.setup;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.worldgen.CountPlacement;
 import mcjty.rftoolsbase.worldgen.CountPlacementConfig;
-import net.minecraft.block.Block;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.gen.placement.Placement;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,11 +22,11 @@ public class Registration {
 
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
-    public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MODID);
-    public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, MODID);
+    public static final DeferredRegister<MenuType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, MODID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, MODID);
-    public static final DeferredRegister<Placement<?>> DECORATORS = DeferredRegister.create(ForgeRegistries.DECORATORS, MODID);
+    public static final DeferredRegister<FeatureDecorator<?>> DECORATORS = DeferredRegister.create(ForgeRegistries.DECORATORS, MODID);
 
     public static void register() {
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -38,7 +38,7 @@ public class Registration {
         DECORATORS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Placement<CountPlacementConfig>> COUNT_PLACEMENT = DECORATORS.register("count_placement",
+    public static final RegistryObject<FeatureDecorator<CountPlacementConfig>> COUNT_PLACEMENT = DECORATORS.register("count_placement",
             () -> new CountPlacement(CountPlacementConfig.CODEC));
 
     public static Item.Properties createStandardProperties() {

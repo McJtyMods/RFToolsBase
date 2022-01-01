@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.api.screens;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 
 /**
  * Implement this interface on your screen module (typically the module
@@ -21,6 +21,6 @@ public interface IScreenModuleUpdater {
      * @param player can be null in case button is released. Beware of that!
      * @return a new tagCompound or null if no change needed
      */
-    CompoundNBT update(CompoundNBT tagCompound, World world, PlayerEntity player);
+    CompoundTag update(CompoundTag tagCompound, Level world, Player player);
 
 }

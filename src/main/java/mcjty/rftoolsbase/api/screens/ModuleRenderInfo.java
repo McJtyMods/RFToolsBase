@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.api.screens;
 
 import mcjty.lib.client.RenderHelper;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 
 /**
  * Class containing various things useful for rendering your module. You get an instance of this

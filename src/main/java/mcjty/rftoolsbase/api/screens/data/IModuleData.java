@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.screens.data;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * Implement this interface for data that you want to send from
@@ -15,5 +15,5 @@ public interface IModuleData {
      */
     String getId();
 
-    void writeToBuf(PacketBuffer buf);
+    void writeToBuf(FriendlyByteBuf buf);
 }

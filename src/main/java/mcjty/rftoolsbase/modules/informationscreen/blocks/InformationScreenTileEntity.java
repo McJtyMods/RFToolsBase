@@ -7,12 +7,12 @@ import mcjty.lib.varia.EnergyTools;
 import mcjty.lib.varia.OrientationTools;
 import mcjty.rftoolsbase.api.infoscreen.CapabilityInformationScreenInfo;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 
 import static mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule.TYPE_INFORMATION_SCREEN;
@@ -45,7 +45,7 @@ public class InformationScreenTileEntity extends TickingTileEntity {
         if (cnt <= 0) {
             cnt = 10;
             BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
-            TileEntity te = level.getBlockEntity(offset);
+            BlockEntity te = level.getBlockEntity(offset);
             if (te != null) {
                 te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(IInformationScreenInfo::tick);
             }
@@ -75,28 +75,28 @@ public class InformationScreenTileEntity extends TickingTileEntity {
     }
 
     @Override
-    protected void loadInfo(CompoundNBT tagCompound) {
+    protected void loadInfo(CompoundTag tagCompound) {
         super.loadInfo(tagCompound);
-        CompoundNBT info = tagCompound.getCompound("Info");
+        CompoundTag info = tagCompound.getCompound("Info");
         mode = info.getByte("mode");
     }
 
     @Override
-    protected void saveInfo(CompoundNBT tagCompound) {
+    protected void saveInfo(CompoundTag tagCompound) {
         super.saveInfo(tagCompound);
-        CompoundNBT infoTag = getOrCreateInfo(tagCompound);
+        CompoundTag infoTag = getOrCreateInfo(tagCompound);
         infoTag.putByte("mode", (byte) mode);
     }
 
     @Override
-    public void saveClientDataToNBT(CompoundNBT tagCompound) {
-        CompoundNBT infoTag = getOrCreateInfo(tagCompound);
+    public void saveClientDataToNBT(CompoundTag tagCompound) {
+        CompoundTag infoTag = getOrCreateInfo(tagCompound);
         infoTag.putByte("mode", (byte) mode);
     }
 
     @Override
-    public void loadClientDataFromNBT(CompoundNBT tagCompound) {
-        CompoundNBT info = tagCompound.getCompound("Info");
+    public void loadClientDataFromNBT(CompoundTag tagCompound) {
+        CompoundTag info = tagCompound.getCompound("Info");
         mode = info.getByte("mode");
     }
 
@@ -118,7 +118,7 @@ public class InformationScreenTileEntity extends TickingTileEntity {
 
     public LazyOptional<IInformationScreenInfo> getInfo() {
         BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
-        TileEntity te = level.getBlockEntity(offset);
+        BlockEntity te = level.getBlockEntity(offset);
         if (te != null) {
             LazyOptional<IInformationScreenInfo> capability = te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY);
             if (capability.isPresent()) {

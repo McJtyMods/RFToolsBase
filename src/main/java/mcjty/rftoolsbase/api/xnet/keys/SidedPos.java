@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.api.xnet.keys;
 
 import mcjty.lib.varia.BlockPosTools;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nonnull;
 

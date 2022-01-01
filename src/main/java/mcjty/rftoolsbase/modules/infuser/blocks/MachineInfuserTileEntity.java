@@ -16,12 +16,12 @@ import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
-import net.minecraft.block.Block;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -49,7 +49,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
 
     @Cap(type = CapType.CONTAINER)
-    private final LazyOptional<INamedContainerProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
+    private final LazyOptional<MenuProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
             .containerSupplier(container(MachineInfuserModule.CONTAINER_MACHINE_INFUSER, CONTAINER_FACTORY,this))
             .itemHandler(() -> items)
             .energyHandler(() -> energyStorage)
@@ -140,13 +140,13 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
 
     @Override
-    public void load(CompoundNBT tagCompound) {
+    public void load(CompoundTag tagCompound) {
         super.load(tagCompound);
         infusing = tagCompound.getCompound("Info").getInt("infusing");
     }
 
     @Override
-    public void saveAdditional(@Nonnull CompoundNBT tagCompound) {
+    public void saveAdditional(@Nonnull CompoundTag tagCompound) {
         super.saveAdditional(tagCompound);
         getOrCreateInfo(tagCompound).putInt("infusing", infusing);
     }

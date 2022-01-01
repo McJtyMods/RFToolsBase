@@ -1,13 +1,13 @@
 package mcjty.rftoolsbase.api.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * This interface represents the client-side module. This will be called with
@@ -59,7 +59,7 @@ public interface IClientScreenModule<T extends IModuleData> {
      * @param buffer
      * @param renderInfo
      */
-    void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, IModuleRenderHelper renderHelper, FontRenderer fontRenderer, int currenty, T screenData, ModuleRenderInfo renderInfo);
+    void render(PoseStack matrixStack, MultiBufferSource buffer, IModuleRenderHelper renderHelper, Font fontRenderer, int currenty, T screenData, ModuleRenderInfo renderInfo);
 
     /**
      * For interactive modules you can implement this to detect if your module was clickedd
@@ -69,7 +69,7 @@ public interface IClientScreenModule<T extends IModuleData> {
      * @param y
      * @param clicked
      */
-    void mouseClick(World world, int x, int y, boolean clicked);
+    void mouseClick(Level world, int x, int y, boolean clicked);
 
     /**
      * This is called when your module is being instantiated from a saved world
@@ -79,7 +79,7 @@ public interface IClientScreenModule<T extends IModuleData> {
      * @param dim the dimension for the screen this module is in
      * @param pos the position of the screen
      */
-    void setupFromNBT(CompoundNBT tagCompound, RegistryKey<World> dim, BlockPos pos);
+    void setupFromNBT(CompoundTag tagCompound, ResourceKey<Level> dim, BlockPos pos);
 
     // Return true if this module needs server data.
     boolean needsServerData();

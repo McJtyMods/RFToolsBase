@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.modules.tablet.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.widgets.Panel;
@@ -12,12 +12,12 @@ import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nonnull;
 
@@ -33,18 +33,18 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
 
     private ToggleButton[] buttons;
 
-    public GuiTablet(TabletContainer container, PlayerInventory inventory) {
+    public GuiTablet(TabletContainer container, Inventory inventory) {
         super(null, container, inventory, TabletItem.MANUAL);
         imageWidth = TABLET_WIDTH;
         imageHeight = TABLET_HEIGHT;
     }
 
     public static void register() {
-        ScreenManager.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
+        MenuScreens.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
     }
 
     @Nonnull
-    private static GuiTablet createTabletGui(TabletContainer container, PlayerInventory inventory, ITextComponent textComponent) {
+    private static GuiTablet createTabletGui(TabletContainer container, Inventory inventory, Component textComponent) {
         return new GuiTablet(container, inventory);
     }
 
@@ -71,16 +71,16 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
         }
     }
 
-    private Hand getHand() {
+    private InteractionHand getHand() {
         if (minecraft.player == null || minecraft.player.getUsedItemHand() == null) {
-            return Hand.MAIN_HAND;
+            return InteractionHand.MAIN_HAND;
         } else {
             return minecraft.player.getUsedItemHand();
         }
     }
 
     @Override
-    protected void renderLabels(@Nonnull MatrixStack stack, int p_230451_2_, int p_230451_3_) {
+    protected void renderLabels(@Nonnull PoseStack stack, int p_230451_2_, int p_230451_3_) {
         super.renderLabels(stack, p_230451_2_, p_230451_3_);
         ItemStack heldItem = minecraft.player.getItemInHand(getHand());
         updateActiveButton(TabletItem.getCurrentSlot(heldItem));

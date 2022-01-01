@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.api.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.rftoolsbase.api.screens.data.IModuleDataContents;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.MultiBufferSource;
 
 import javax.annotation.Nonnull;
 
@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 public interface IModuleRenderHelper {
 
     @Deprecated
-    void renderLevel(MatrixStack matrixStack, IRenderTypeBuffer buffer, FontRenderer fontRenderer, int xoffset, int currenty, IModuleDataContents screenData, String label, boolean hidebar, boolean hidetext, boolean showpct, boolean showdiff,
+    void renderLevel(PoseStack matrixStack, MultiBufferSource buffer, Font fontRenderer, int xoffset, int currenty, IModuleDataContents screenData, String label, boolean hidebar, boolean hidetext, boolean showpct, boolean showdiff,
                      int poscolor, int negcolor,
                      int gradient1, int gradient2, FormatStyle formatStyle);
 
@@ -42,7 +42,7 @@ public interface IModuleRenderHelper {
      * @param renderInfo
      * @param text
      */
-    void renderText(MatrixStack matrixStack, IRenderTypeBuffer buffer, int x, int y, int color, @Nonnull ModuleRenderInfo renderInfo, String text);
+    void renderText(PoseStack matrixStack, MultiBufferSource buffer, int x, int y, int color, @Nonnull ModuleRenderInfo renderInfo, String text);
 
     /**
      * Simple text render. This version does not support size or alignment. Use ITextRenderHelper
@@ -56,5 +56,5 @@ public interface IModuleRenderHelper {
      * @param text
      * @param maxwidth Use 512 for full screen width
      */
-    void renderTextTrimmed(MatrixStack matrixStack, IRenderTypeBuffer buffer, int x, int y, int color, @Nonnull ModuleRenderInfo renderInfo, String text, int maxwidth);
+    void renderTextTrimmed(PoseStack matrixStack, MultiBufferSource buffer, int x, int y, int color, @Nonnull ModuleRenderInfo renderInfo, String text, int maxwidth);
 }

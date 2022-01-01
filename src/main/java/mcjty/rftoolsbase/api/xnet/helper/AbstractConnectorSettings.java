@@ -7,8 +7,8 @@ import mcjty.rftoolsbase.api.xnet.channels.Color;
 import mcjty.rftoolsbase.api.xnet.channels.IConnectorSettings;
 import mcjty.rftoolsbase.api.xnet.channels.RSMode;
 import mcjty.rftoolsbase.api.xnet.gui.IEditorGui;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -169,7 +169,7 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
     }
 
     @Override
-    public void readFromNBT(CompoundNBT tag) {
+    public void readFromNBT(CompoundTag tag) {
         rsMode = RSMode.values()[tag.getByte("rsMode")];
         prevPulse = tag.getInt("prevPulse");
         colors[0] = Color.values()[tag.getByte("color0")];
@@ -183,7 +183,7 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
     }
 
     @Override
-    public void writeToNBT(CompoundNBT tag) {
+    public void writeToNBT(CompoundTag tag) {
         tag.putByte("rsMode", (byte) rsMode.ordinal());
         tag.putInt("prevPulse", prevPulse);
         tag.putByte("color0", (byte) colors[0].ordinal());

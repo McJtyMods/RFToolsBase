@@ -1,26 +1,26 @@
 package mcjty.rftoolsbase.modules.informationscreen.blocks;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
 import mcjty.rftoolsbase.modules.informationscreen.client.DefaultPowerInformationRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
 import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nonnull;
 
 public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo{
 
-    private final TileEntity tileEntity;
+    private final BlockEntity tileEntity;
 
     public static final Key<Long> ENERGY = new Key<>("energy", Type.LONG);
     public static final Key<Long> MAXENERGY = new Key<>("maxenergy", Type.LONG);
 
-    public DefaultPowerInformationScreenInfo(TileEntity tileEntity) {
+    public DefaultPowerInformationScreenInfo(BlockEntity tileEntity) {
         this.tileEntity = tileEntity;
     }
 
@@ -46,7 +46,7 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     }
 
     @Override
-    public void render(int mode, MatrixStack matrixStack, IRenderTypeBuffer buffer, @Nonnull TypedMap data, Direction orientation, double scale) {
+    public void render(int mode, PoseStack matrixStack, MultiBufferSource buffer, @Nonnull TypedMap data, Direction orientation, double scale) {
         if (mode == MODE_POWER) {
             DefaultPowerInformationRenderer.renderDefault(matrixStack, buffer, data, orientation, scale);
         } else {

@@ -4,10 +4,10 @@ import mcjty.lib.McJtyLib;
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -16,7 +16,7 @@ public class PacketMonitorLogReady {
     private BlockPos pos;
     private TypedMap data;
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
         if (data != null) {
             buf.writeBoolean(true);
@@ -26,7 +26,7 @@ public class PacketMonitorLogReady {
         }
     }
 
-    public PacketMonitorLogReady(PacketBuffer buf) {
+    public PacketMonitorLogReady(FriendlyByteBuf buf) {
         pos = buf.readBlockPos();
         if (buf.readBoolean()) {
             data = TypedMapTools.readArguments(buf);
@@ -43,7 +43,7 @@ public class PacketMonitorLogReady {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = McJtyLib.proxy.getClientWorld().getBlockEntity(pos);
+            BlockEntity te = McJtyLib.proxy.getClientWorld().getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity) {
                 InformationScreenTileEntity info = (InformationScreenTileEntity) te;
                 info.setClientData(data);

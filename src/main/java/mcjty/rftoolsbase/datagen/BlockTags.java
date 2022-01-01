@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.datagen;
 
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;

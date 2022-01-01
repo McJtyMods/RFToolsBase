@@ -1,14 +1,14 @@
 package mcjty.rftoolsbase.worldgen;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.placement.SimplePlacement;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.placement.SimpleFeatureDecorator;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class CountPlacement extends SimplePlacement<CountPlacementConfig> {
+public class CountPlacement extends SimpleFeatureDecorator<CountPlacementConfig> {
     public CountPlacement(Codec<CountPlacementConfig> codec) {
         super(codec);
     }

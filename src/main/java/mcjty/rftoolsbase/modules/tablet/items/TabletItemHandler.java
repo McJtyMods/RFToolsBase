@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.rftoolsbase.api.various.ITabletSupport;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
@@ -12,19 +12,19 @@ import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
 public class TabletItemHandler implements IItemHandlerModifiable {
 
-    private final PlayerEntity player;
+    private final Player player;
 
-    public TabletItemHandler(PlayerEntity player) {
+    public TabletItemHandler(Player player) {
         this.player = player;
     }
 
     private ItemStack getTablet() {
-        return player.getItemInHand(Hand.MAIN_HAND);
+        return player.getItemInHand(InteractionHand.MAIN_HAND);
     }
 
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
-        TabletItem.setContainingItem(player, Hand.MAIN_HAND, slot, stack);
+        TabletItem.setContainingItem(player, InteractionHand.MAIN_HAND, slot, stack);
     }
 
     @Override

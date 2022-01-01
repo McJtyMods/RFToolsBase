@@ -11,24 +11,24 @@ import mcjty.lib.varia.Logging;
 import mcjty.lib.varia.LevelTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.GlobalPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Lazy;
 
 import javax.annotation.Nonnull;
@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettings {
 
@@ -56,11 +58,11 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> use(World world, PlayerEntity player, @Nonnull Hand hand) {
+    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             SmartWrenchMode mode = getCurrentMode(stack);
-            CompoundNBT tag = stack.getTag();
+            CompoundTag tag = stack.getTag();
             ItemStack newStack;
             if (mode == SmartWrenchMode.MODE_WRENCH) {
                 mode = SmartWrenchMode.MODE_SELECT;
@@ -71,18 +73,18 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
             }
             newStack.setTag(tag);
             player.setItemInHand(hand, newStack);
-            Logging.message(player, TextFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
+            Logging.message(player, ChatFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
         }
         return super.use(world, player, hand);
     }
 
     @Override
     @Nonnull
-    public ActionResultType useOn(ItemUseContext context) {
-        World world = context.getLevel();
+    public InteractionResult useOn(UseOnContext context) {
+        Level world = context.getLevel();
         if (!world.isClientSide) {
-            PlayerEntity player = context.getPlayer();
-            Hand hand = context.getHand();
+            Player player = context.getPlayer();
+            InteractionHand hand = context.getHand();
             ItemStack stack = context.getItemInHand();
             BlockPos pos = context.getClickedPos();
 
@@ -91,8 +93,8 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                 BlockState state = world.getBlockState(pos);
                 Block block = state.getBlock();
                 if (block instanceof BaseBlock) {
-                    if (state.use(world, player, hand, new BlockRayTraceResult(context.getClickLocation(), context.getClickedFace(), pos, context.isInside())) == ActionResultType.SUCCESS) {
-                        return ActionResultType.SUCCESS;
+                    if (state.use(world, player, hand, new BlockHitResult(context.getClickLocation(), context.getClickedFace(), pos, context.isInside())) == InteractionResult.SUCCESS) {
+                        return InteractionResult.SUCCESS;
                     }
                 }
             }
@@ -101,24 +103,24 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                 return getCurrentBlock(stack).map(b -> {
                     if (!b.dimension().equals(world.dimension())) {
                         if (player != null) {
-                            Logging.message(player, TextFormatting.RED + "The selected block is in another dimension!");
+                            Logging.message(player, ChatFormatting.RED + "The selected block is in another dimension!");
                         }
-                        return ActionResultType.FAIL;
+                        return InteractionResult.FAIL;
                     }
-                    TileEntity te = world.getBlockEntity(b.pos());
+                    BlockEntity te = world.getBlockEntity(b.pos());
                     if (te instanceof ISmartWrenchSelector) {
                         ISmartWrenchSelector smartWrenchSelector = (ISmartWrenchSelector) te;
                         smartWrenchSelector.selectBlock(player, pos);
                     }
-                    return ActionResultType.SUCCESS;
-                }).orElse(ActionResultType.SUCCESS);
+                    return InteractionResult.SUCCESS;
+                }).orElse(InteractionResult.SUCCESS);
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, World world, @Nonnull List<ITextComponent> list, @Nonnull ITooltipFlag flags) {
+    public void appendHoverText(@Nonnull ItemStack itemStack, Level world, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
         super.appendHoverText(itemStack, world, list, flags);
         tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flags);
     }
@@ -140,7 +142,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     public static void setCurrentBlock(ItemStack itemStack, GlobalPos c) {
-        CompoundNBT tagCompound = itemStack.getOrCreateTag();
+        CompoundTag tagCompound = itemStack.getOrCreateTag();
 
         if (c == null) {
             tagCompound.remove("selectedX");
@@ -157,7 +159,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
 
     @Nonnull
     public static Optional<GlobalPos> getCurrentBlock(ItemStack itemStack) {
-        CompoundNBT tagCompound = itemStack.getTag();
+        CompoundTag tagCompound = itemStack.getTag();
         if (tagCompound != null && tagCompound.contains("selectedX")) {
             int x = tagCompound.getInt("selectedX");
             int y = tagCompound.getInt("selectedY");

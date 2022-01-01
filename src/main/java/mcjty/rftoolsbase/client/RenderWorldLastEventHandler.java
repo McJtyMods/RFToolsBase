@@ -1,26 +1,26 @@
 package mcjty.rftoolsbase.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import mcjty.lib.client.CustomRenderTypes;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.math.Matrix4f;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderLevelLastEvent;
 
 public class RenderWorldLastEventHandler {
 
     private static long lastTime = 0;
 
-    public static void tick(RenderWorldLastEvent evt) {
+    public static void tick(RenderLevelLastEvent evt) {
         renderHilightedBlock(evt);
     }
 
-    private static void renderHilightedBlock(RenderWorldLastEvent evt) {
+    private static void renderHilightedBlock(RenderLevelLastEvent evt) {
         BlockPos c = RFToolsBase.instance.clientInfo.getHilightedBlock();
         if (c == null) {
             return;
@@ -37,13 +37,13 @@ public class RenderWorldLastEventHandler {
             return;
         }
 
-        MatrixStack matrixStack = evt.getMatrixStack();
-        IRenderTypeBuffer.Impl buffer = Minecraft.getInstance().renderBuffers().bufferSource();
-        IVertexBuilder builder = buffer.getBuffer(CustomRenderTypes.OVERLAY_LINES);
+        PoseStack matrixStack = evt.getMatrixStack();
+        MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
+        VertexConsumer builder = buffer.getBuffer(CustomRenderTypes.OVERLAY_LINES);
 
         matrixStack.pushPose();
 
-        Vector3d projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
+        Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
         Matrix4f positionMatrix = matrixStack.last().pose();

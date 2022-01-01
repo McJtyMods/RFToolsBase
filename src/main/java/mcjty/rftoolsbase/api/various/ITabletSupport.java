@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.api.various;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -15,5 +15,5 @@ public interface ITabletSupport {
     Item getInstalledTablet();
 
     /// Open the gui for this item
-    void openGui(@Nonnull PlayerEntity player, @Nonnull ItemStack tabletItem, @Nonnull ItemStack containingItem);
+    void openGui(@Nonnull Player player, @Nonnull ItemStack tabletItem, @Nonnull ItemStack containingItem);
 }

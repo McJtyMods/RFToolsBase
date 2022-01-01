@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.modules.crafting.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
@@ -20,13 +20,13 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -46,18 +46,18 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     private BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
-    public GuiCraftingCard(CraftingCardContainer container, PlayerInventory inventory) {
+    public GuiCraftingCard(CraftingCardContainer container, Inventory inventory) {
         super(null, container, inventory, CraftingCardItem.MANUAL);
         imageWidth = WIDTH;
         imageHeight = HEIGHT;
     }
 
     public static void register() {
-        ScreenManager.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
+        MenuScreens.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
     }
 
     @Nonnull
-    private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, PlayerInventory inventory, ITextComponent textComponent) {
+    private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, Inventory inventory, Component textComponent) {
         return new GuiCraftingCard(container, inventory);
     }
 
@@ -112,8 +112,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                 if (s instanceof ItemStack) {
                     ItemStack stack = (ItemStack) s;
                     if (!stack.isEmpty()) {
-                        ITooltipFlag flag = this.mc.options.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL;
-                        List<ITextComponent> list = stack.getTooltipLines(this.mc.player, flag);
+                        TooltipFlag flag = this.mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL;
+                        List<Component> list = stack.getTooltipLines(this.mc.player, flag);
 
                         // @todo 1.14
                         for (int i = 0; i < list.size(); ++i) {
@@ -125,7 +125,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                         }
 
                         // @todo 1.16 used to be getFormattedText
-                        return list.stream().map(ITextComponent::getString).collect(Collectors.toList());
+                        return list.stream().map(Component::getString).collect(Collectors.toList());
                     } else {
                         return Collections.emptyList();
                     }
@@ -152,7 +152,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     @Nonnull
     private ItemStackList getStacks() {
-        ItemStack cardItem = minecraft.player.getItemInHand(Hand.MAIN_HAND);
+        ItemStack cardItem = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStackList stacks = ItemStackList.EMPTY;
         if (!cardItem.isEmpty() && cardItem.getItem() instanceof CraftingCardItem) {
             stacks = CraftingCardItem.getStacksFromItem(cardItem);
@@ -169,7 +169,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                 ItemStackList stacks = getStacks();
                 if (!stacks.isEmpty()) {
                     stacks.set(idx, itemstack);
-                    ItemStack cardItem = minecraft.player.getItemInHand(Hand.MAIN_HAND);
+                    ItemStack cardItem = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
                     CraftingCardItem.putStacksInItem(cardItem, stacks);
                     RFToolsBaseMessages.INSTANCE.sendToServer(new PacketItemNBTToServer(cardItem.getTag()));
                 }
@@ -183,7 +183,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     @Override
-    protected void renderBg(@Nonnull MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull PoseStack matrixStack, float partialTicks, int x, int y) {
         updateSlots();
         drawWindow(matrixStack);
     }

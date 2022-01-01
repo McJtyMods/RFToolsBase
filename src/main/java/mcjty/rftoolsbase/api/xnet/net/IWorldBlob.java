@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.api.xnet.net;
 
 import mcjty.rftoolsbase.api.xnet.keys.ConsumerId;
 import mcjty.rftoolsbase.api.xnet.keys.NetworkId;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

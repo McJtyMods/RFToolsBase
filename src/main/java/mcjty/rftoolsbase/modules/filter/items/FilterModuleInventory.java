@@ -1,13 +1,13 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.varia.ItemStackList;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -23,28 +23,28 @@ public class FilterModuleInventory {
 
     private final Supplier<ItemStack> filterGetter;
 
-    public FilterModuleInventory(PlayerEntity player) {
-        filterGetter = () -> player.getItemInHand(Hand.MAIN_HAND);
-        CompoundNBT tagCompound = player.getItemInHand(Hand.MAIN_HAND).getOrCreateTag();
+    public FilterModuleInventory(Player player) {
+        filterGetter = () -> player.getItemInHand(InteractionHand.MAIN_HAND);
+        CompoundTag tagCompound = player.getItemInHand(InteractionHand.MAIN_HAND).getOrCreateTag();
         convertFromNBT(tagCompound);
     }
 
     public FilterModuleInventory(ItemStack filterItem) {
         filterGetter = () -> filterItem;
-        CompoundNBT tagCompound = filterItem.getOrCreateTag();
+        CompoundTag tagCompound = filterItem.getOrCreateTag();
         convertFromNBT(tagCompound);
     }
 
-    private void convertFromNBT(CompoundNBT tagCompound) {
-        ListNBT itemList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
+    private void convertFromNBT(CompoundTag tagCompound) {
+        ListTag itemList = tagCompound.getList("Items", Constants.NBT.TAG_COMPOUND);
         for (int i = 0; i < itemList.size(); i++) {
-            CompoundNBT compound = itemList.getCompound(i);
+            CompoundTag compound = itemList.getCompound(i);
             ItemStack s = ItemStack.of(compound);
             if (!s.isEmpty()) {
                 stacks.add(s);
             }
         }
-        ListNBT tagList = tagCompound.getList("Tags", Constants.NBT.TAG_STRING);
+        ListTag tagList = tagCompound.getList("Tags", Constants.NBT.TAG_STRING);
         for (int i = 0 ; i < tagList.size() ; i++) {
             String s = tagList.getString(i);
             tags.add(new ResourceLocation(s));
@@ -93,11 +93,11 @@ public class FilterModuleInventory {
     public void markDirty() {
         ItemStack heldItem = filterGetter.get();
         if (!heldItem.isEmpty()) {
-            CompoundNBT tagCompound = heldItem.getOrCreateTag();
+            CompoundTag tagCompound = heldItem.getOrCreateTag();
 
-            ListNBT itemList = new ListNBT();
+            ListTag itemList = new ListTag();
             for (ItemStack stack : stacks) {
-                CompoundNBT nbtTagCompound = new CompoundNBT();
+                CompoundTag nbtTagCompound = new CompoundTag();
                 if (!stack.isEmpty()) {
                     stack.save(nbtTagCompound);
                 }
@@ -105,9 +105,9 @@ public class FilterModuleInventory {
             }
             tagCompound.put("Items", itemList);
 
-            ListNBT tagList = new ListNBT();
+            ListTag tagList = new ListTag();
             for (ResourceLocation tag : tags) {
-                tagList.add(StringNBT.valueOf(tag.toString()));
+                tagList.add(StringTag.valueOf(tag.toString()));
             }
             tagCompound.put("Tags", tagList);
         }

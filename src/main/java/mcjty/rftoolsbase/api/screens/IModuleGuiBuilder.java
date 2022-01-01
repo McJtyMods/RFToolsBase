@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.api.screens;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.Level;
 
 /**
  * A builder to help create gui's for your screen modules. The 'tagname' parameter is what will
@@ -23,9 +23,9 @@ import net.minecraft.world.World;
  */
 public interface IModuleGuiBuilder {
 
-    CompoundNBT getCurrentData();
+    CompoundTag getCurrentData();
 
-    World getWorld();
+    Level getWorld();
 
     IModuleGuiBuilder label(String text);
 

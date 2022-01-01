@@ -2,9 +2,9 @@ package mcjty.rftoolsbase.worldgen;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.level.levelgen.feature.configurations.DecoratorConfiguration;
 
-public class CountPlacementConfig implements IPlacementConfig {
+public class CountPlacementConfig implements DecoratorConfiguration {
 
     public static final Codec<CountPlacementConfig> CODEC = RecordCodecBuilder.create((instance) -> {
         return instance.group(

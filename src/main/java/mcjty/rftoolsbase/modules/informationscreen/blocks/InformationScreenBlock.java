@@ -4,20 +4,20 @@ import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.blocks.RotationType;
 import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.varia.OrientationTools;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
@@ -40,7 +40,7 @@ public class InformationScreenBlock extends BaseBlock {
     @SuppressWarnings("deprecation")
     @Override
     @Nonnull
-    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull IBlockReader worldIn, @Nonnull BlockPos pos, @Nonnull ISelectionContext context) {
+    public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter worldIn, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
         Direction side = OrientationTools.getOrientationHoriz(state);
         switch (side) {
             case NORTH:
@@ -56,27 +56,27 @@ public class InformationScreenBlock extends BaseBlock {
 
     @Nonnull
     @Override
-    public ActionResultType use(@Nonnull BlockState state, World world, @Nonnull BlockPos pos, @Nonnull PlayerEntity player, @Nonnull Hand hand, @Nonnull BlockRayTraceResult result) {
-        ActionResultType rc = super.use(state, world, pos, player, hand, result);
-        if (rc != ActionResultType.SUCCESS) {
+    public InteractionResult use(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult result) {
+        InteractionResult rc = super.use(state, world, pos, player, hand, result);
+        if (rc != InteractionResult.SUCCESS) {
             // We just pass along the block activation to the block behind it so that we can open the gui of that
             BlockPos offset = pos.relative(OrientationTools.getOrientationHoriz(state).getOpposite());
-            result = new BlockRayTraceResult(result.getLocation(), result.getDirection(), offset, result.isInside());
+            result = new BlockHitResult(result.getLocation(), result.getDirection(), offset, result.isInside());
             return world.getBlockState(offset).use(world, player, hand, result);
         }
         return rc;
     }
 
     @Override
-    protected boolean openGui(World world, int x, int y, int z, PlayerEntity player) {
+    protected boolean openGui(Level world, int x, int y, int z, Player player) {
         // This block does not have a gui
         return false;
     }
 
     @Override
-    protected boolean wrenchUse(World world, BlockPos pos, Direction side, PlayerEntity player) {
+    protected boolean wrenchUse(Level world, BlockPos pos, Direction side, Player player) {
         if (!world.isClientSide) {
-            TileEntity te = world.getBlockEntity(pos);
+            BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity) {
                 InformationScreenTileEntity monitor = (InformationScreenTileEntity) te;
                 monitor.toggleMode();
@@ -96,7 +96,7 @@ public class InformationScreenBlock extends BaseBlock {
     @SuppressWarnings("deprecation")
     @Override
     @Nonnull
-    public BlockRenderType getRenderShape(@Nonnull BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(@Nonnull BlockState state) {
+        return RenderShape.MODEL;
     }
 }

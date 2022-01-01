@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.client;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 /**
  * This class holds information on client-side only which are global to the mod.

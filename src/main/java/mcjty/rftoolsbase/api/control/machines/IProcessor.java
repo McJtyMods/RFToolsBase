@@ -6,10 +6,10 @@ import mcjty.rftoolsbase.api.control.parameters.BlockSide;
 import mcjty.rftoolsbase.api.control.parameters.IParameter;
 import mcjty.rftoolsbase.api.control.parameters.Inventory;
 import mcjty.rftoolsbase.api.control.parameters.Tuple;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
@@ -187,7 +187,7 @@ public interface IProcessor {
      * the BlockSide itself is null then the postion is the position of the processor or node itself
      */
     @Nullable
-    TileEntity getTileEntityAt(@Nullable BlockSide inv);
+    BlockEntity getTileEntityAt(@Nullable BlockSide inv);
 
     /**
      * Get the block position at a specific side of a networked block. If the side in

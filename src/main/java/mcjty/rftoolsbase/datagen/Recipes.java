@@ -7,12 +7,12 @@ import mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.block.Blocks;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.item.Items;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nonnull;
@@ -28,7 +28,7 @@ public class Recipes extends BaseRecipeProvider {
     }
 
     @Override
-    protected void buildShapelessRecipes(@Nonnull Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(@Nonnull Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(VariousModule.DIMENSIONALSHARD.get())
                 .pattern("deg")
                 .pattern("irG")
@@ -42,7 +42,7 @@ public class Recipes extends BaseRecipeProvider {
                 .define('G', Items.GLOWSTONE_DUST)
                 .define('i', Items.IRON_INGOT)
                 .define('L', Items.GLASS)
-                .unlockedBy("gold", InventoryChangeTrigger.Instance.hasItems(Items.GOLD_INGOT,
+                .unlockedBy("gold", InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT,
                         Items.QUARTZ, Items.REDSTONE, Items.PRISMARINE_SHARD, Items.DIAMOND,
                         Items.EMERALD, Items.GLOWSTONE_DUST, Items.IRON_INGOT, Items.GLASS))
                 .save(consumer);
@@ -60,7 +60,7 @@ public class Recipes extends BaseRecipeProvider {
                 .define('g', Items.GOLD_NUGGET)
                 .define('i', Items.IRON_INGOT)
                 .define('l', Tags.Items.DYES_BLUE)
-                .unlockedBy("iron_ingot", InventoryChangeTrigger.Instance.hasItems(Items.IRON_INGOT, Items.GOLD_NUGGET))
+                .unlockedBy("iron_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT, Items.GOLD_NUGGET))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(MachineInfuserModule.MACHINE_INFUSER.get())
                 .pattern("srs")
@@ -70,7 +70,7 @@ public class Recipes extends BaseRecipeProvider {
                 .define('s', VariousModule.DIMENSIONALSHARD.get())
                 .define('d', Items.DIAMOND)
                 .define('M', VariousModule.MACHINE_FRAME.get())
-                .unlockedBy("machine_frame", InventoryChangeTrigger.Instance.hasItems(VariousModule.MACHINE_FRAME.get(), VariousModule.DIMENSIONALSHARD.get()))
+                .unlockedBy("machine_frame", InventoryChangeTrigger.TriggerInstance.hasItems(VariousModule.MACHINE_FRAME.get(), VariousModule.DIMENSIONALSHARD.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(VariousModule.SMARTWRENCH.get())
                 .pattern("  i")
@@ -116,7 +116,7 @@ public class Recipes extends BaseRecipeProvider {
                 .save(consumer);
         build(consumer, ShapedRecipeBuilder.shaped(InformationScreenModule.INFORMATION_SCREEN.get())
                         .define('-', Tags.Items.GLASS_PANES)
-                        .unlockedBy("frame", InventoryChangeTrigger.Instance.hasItems(VariousModule.MACHINE_BASE.get(), Items.REDSTONE)),
+                        .unlockedBy("frame", InventoryChangeTrigger.TriggerInstance.hasItems(VariousModule.MACHINE_BASE.get(), Items.REDSTONE)),
                 "---", "rAr");
         build(consumer, ShapedRecipeBuilder.shaped(TabletModule.TABLET.get())
                         .define('g', Tags.Items.NUGGETS_GOLD)

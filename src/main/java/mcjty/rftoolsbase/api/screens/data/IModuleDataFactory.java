@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.screens.data;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 
 /**
  * A CONTAINER_FACTORY for IModuleData. You need to register an implementation of this to
@@ -8,5 +8,5 @@ import net.minecraft.network.PacketBuffer;
  */
 public interface IModuleDataFactory<T extends IModuleData> {
 
-    T createData(PacketBuffer buf);
+    T createData(FriendlyByteBuf buf);
 }

@@ -3,11 +3,11 @@ package mcjty.rftoolsbase.compat.jei;
 import mcjty.lib.network.NetworkTools;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -15,14 +15,14 @@ import java.util.function.Supplier;
 public class PacketSendRecipe {
     private List<ItemStack> stacks;
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         NetworkTools.writeItemStackList(buf, stacks);
     }
 
     public PacketSendRecipe() {
     }
 
-    public PacketSendRecipe(PacketBuffer buf) {
+    public PacketSendRecipe(FriendlyByteBuf buf) {
         stacks = NetworkTools.readItemStackList(buf);
     }
 
@@ -33,8 +33,8 @@ public class PacketSendRecipe {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            PlayerEntity player = ctx.getSender();
-            World world = player.getCommandSenderWorld();
+            Player player = ctx.getSender();
+            Level world = player.getCommandSenderWorld();
             // Handle tablet version
             ItemStack mainhand = player.getMainHandItem();
             if (!mainhand.isEmpty() && mainhand.getItem() == CraftingModule.CRAFTING_CARD.get()) {

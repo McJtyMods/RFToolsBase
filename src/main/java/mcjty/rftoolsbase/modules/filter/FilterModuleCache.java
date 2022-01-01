@@ -2,9 +2,9 @@ package mcjty.rftoolsbase.modules.filter;
 
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -21,7 +21,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
 
     // Parameter is the filter item.
     public FilterModuleCache(ItemStack stack) {
-        CompoundNBT tagCompound = stack.getTag();
+        CompoundTag tagCompound = stack.getTag();
         if (tagCompound != null) {
             matchDamage = tagCompound.getBoolean("damageMode");
             nbtMode = tagCompound.getBoolean("nbtMode");

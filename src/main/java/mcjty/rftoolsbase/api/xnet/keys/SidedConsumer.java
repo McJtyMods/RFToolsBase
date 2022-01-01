@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.xnet.keys;
 
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 
 import javax.annotation.Nonnull;
 

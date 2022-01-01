@@ -4,7 +4,7 @@ import mcjty.rftoolsbase.api.xnet.channels.IChannelType;
 import mcjty.rftoolsbase.api.xnet.channels.IConnectable;
 import mcjty.rftoolsbase.api.xnet.channels.IConsumerProvider;
 import mcjty.rftoolsbase.api.xnet.net.IWorldBlob;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
@@ -33,5 +33,5 @@ public interface IXNet {
     /**
      * Get the world blob for a given dimension
      */
-    IWorldBlob getWorldBlob(World world);
+    IWorldBlob getWorldBlob(Level world);
 }

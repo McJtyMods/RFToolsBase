@@ -4,9 +4,9 @@ import mcjty.rftoolsbase.api.xnet.keys.ConsumerId;
 import mcjty.rftoolsbase.api.xnet.keys.NetworkId;
 import mcjty.rftoolsbase.api.xnet.keys.SidedConsumer;
 import mcjty.rftoolsbase.api.xnet.keys.SidedPos;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,7 +19,7 @@ import java.util.function.Predicate;
  */
 public interface IControllerContext {
 
-    World getControllerWorld();
+    Level getControllerWorld();
 
     NetworkId getNetworkId();
 

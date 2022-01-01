@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.api.xnet.channels;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,8 +22,8 @@ public interface IConnectable {
      * @param tileEntity a tile entity at this block position. Can be null if there is no tile entity here
      * @param facing the direction (as seen from the connector) towards your block
      */
-    ConnectResult canConnect(@Nonnull IBlockReader access, @Nonnull BlockPos connectorPos, @Nonnull BlockPos blockPos,
-                             @Nullable TileEntity tileEntity,
+    ConnectResult canConnect(@Nonnull BlockGetter access, @Nonnull BlockPos connectorPos, @Nonnull BlockPos blockPos,
+                             @Nullable BlockEntity tileEntity,
                              @Nonnull Direction facing);
 
     enum ConnectResult {

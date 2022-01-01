@@ -1,27 +1,27 @@
 package mcjty.rftoolsbase.modules.informationscreen.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.util.Direction;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.core.Direction;
+import net.minecraftforge.client.ClientRegistry;
 
 import javax.annotation.Nonnull;
 
-public class InformationScreenRenderer extends TileEntityRenderer<InformationScreenTileEntity> {
+public class InformationScreenRenderer extends BlockEntityRenderer<InformationScreenTileEntity> {
 
-    public InformationScreenRenderer(TileEntityRendererDispatcher dispatcher) {
+    public InformationScreenRenderer(BlockEntityRenderDispatcher dispatcher) {
         super(dispatcher);
     }
 
     @Override
-    public void render(InformationScreenTileEntity te, float v, @Nonnull MatrixStack matrixStack, @Nonnull IRenderTypeBuffer buffer, int i, int i1) {
+    public void render(InformationScreenTileEntity te, float v, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i, int i1) {
         long t = System.currentTimeMillis();
         if (t - te.getLastUpdateTime() > 250) {
             RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetMonitorLog(te.getBlockPos()));

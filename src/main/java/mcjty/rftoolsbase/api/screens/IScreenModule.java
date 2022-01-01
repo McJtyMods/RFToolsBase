@@ -1,11 +1,11 @@
 package mcjty.rftoolsbase.api.screens;
 
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * This is the server side implementation of your module. This will be called
@@ -20,7 +20,7 @@ public interface IScreenModule<T extends IModuleData> {
      * Get the data that can be used client side to help render this module.
      * If you don't need data from the server side you can return null here.
      */
-    T getData(IScreenDataHelper helper, World worldObj, long millis);
+    T getData(IScreenDataHelper helper, Level worldObj, long millis);
 
     /**
      * This is called when your module is being instantiated from a saved world
@@ -30,7 +30,7 @@ public interface IScreenModule<T extends IModuleData> {
      * @param dim the dimension for the screen this module is in
      * @param pos the position of the screen
      */
-    void setupFromNBT(CompoundNBT tagCompound, RegistryKey<World> dim, BlockPos pos);
+    void setupFromNBT(CompoundTag tagCompound, ResourceKey<Level> dim, BlockPos pos);
 
     /**
      * How much RF/tick this module consumes
@@ -46,7 +46,7 @@ public interface IScreenModule<T extends IModuleData> {
      * @param clicked
      * @param player
      */
-    void mouseClick(World world, int x, int y, boolean clicked, PlayerEntity player);
+    void mouseClick(Level world, int x, int y, boolean clicked, Player player);
 
     /**
      * @return Whether this module needs a screen controller to work,

@@ -6,8 +6,8 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.items.ManualItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 

@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.dimension;
 
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 /**
  * Get a reference to an implementation of this interface by calling:
@@ -15,7 +15,7 @@ public interface IDimensionManager {
      * @param id
      * @return
      */
-    boolean isRFToolsDimension(World world, int id);
+    boolean isRFToolsDimension(Level world, int id);
 
     /**
      * Return the power left in the current dimension. Returns -1 if it is not
@@ -25,7 +25,7 @@ public interface IDimensionManager {
      * @param id
      * @return
      */
-    long getCurrentRF(World world, int id);
+    long getCurrentRF(Level world, int id);
 
     /**
      * Get the dimension information. If the id doesn't represent an RFTools
@@ -35,5 +35,5 @@ public interface IDimensionManager {
      * @param id
      * @return
      */
-    IDimensionInformation getDimensionInformation(World world, int id);
+    IDimensionInformation getDimensionInformation(Level world, int id);
 }

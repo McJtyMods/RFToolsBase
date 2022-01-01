@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.xnet.gui;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class IndicatorIcon {
     private final ResourceLocation image;

@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.modules.infuser.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
@@ -9,8 +9,8 @@ import mcjty.lib.gui.widgets.Panel;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
@@ -24,7 +24,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
 
-    public GuiMachineInfuser(MachineInfuserTileEntity te, GenericContainer container, PlayerInventory inventory) {
+    public GuiMachineInfuser(MachineInfuserTileEntity te, GenericContainer container, Inventory inventory) {
         super(te, container, inventory, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());
 
         imageWidth = INFUSER_WIDTH;
@@ -61,7 +61,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     }
 
     @Override
-    protected void renderBg(@Nonnull MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull PoseStack matrixStack, float partialTicks, int x, int y) {
         updateFields();
         drawWindow(matrixStack);
     }

@@ -1,9 +1,9 @@
 package mcjty.rftoolsbase.api.teleportation;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 /**
  * Get a reference to an implementation of this interface by calling:
@@ -16,22 +16,22 @@ public interface ITeleportationManager {
      * If not this will return null. Note that a receiver without name will return an empty string ("")
      * and not null.
      */
-    String getReceiverName(World world, BlockPos pos);
+    String getReceiverName(Level world, BlockPos pos);
 
     /**
      * Create a receiver at a position. Returns false if this fails for whatever reason.
      * If power == -1 the receiver will be powered completely. Otherwise it will get
      * the specified power (capped at the maximum possible power).
      */
-    boolean createReceiver(World world, BlockPos pos, String name, int power);
+    boolean createReceiver(Level world, BlockPos pos, String name, int power);
 
     /**
      * Teleport a player to a dimension at the given spot.
      */
-    void teleportPlayer(PlayerEntity player, RegistryKey<World> dimension, BlockPos location);
+    void teleportPlayer(Player player, ResourceKey<Level> dimension, BlockPos location);
 
     /**
      * Remove all destinations in a dimension.
      */
-    void removeReceiverDestinations(World world, RegistryKey<World> dim);
+    void removeReceiverDestinations(Level world, ResourceKey<Level> dim);
 }

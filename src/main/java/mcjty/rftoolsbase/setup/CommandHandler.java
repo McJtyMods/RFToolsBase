@@ -6,8 +6,8 @@ import mcjty.lib.typed.Type;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
 
 public class CommandHandler {
 
@@ -18,7 +18,7 @@ public class CommandHandler {
 
     public static void registerCommands() {
         McJtyLib.registerCommand(RFToolsBase.MODID, CMD_TESTRECIPE, (player, arguments) -> {
-            ItemStack heldItem = player.getItemInHand(Hand.MAIN_HAND);
+            ItemStack heldItem = player.getItemInHand(InteractionHand.MAIN_HAND);
             if (heldItem.isEmpty()) {
                 return false;
             }

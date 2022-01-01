@@ -1,23 +1,23 @@
 package mcjty.rftoolsbase.modules.hud.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.client.HudRenderHelper;
 import mcjty.lib.network.PacketGetListFromServer;
 import mcjty.rftoolsbase.api.client.IHudSupport;
 import mcjty.rftoolsbase.modules.hud.Hud;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.util.Direction;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.core.Direction;
 
 import java.util.List;
 
 public class HudRenderer {
 
-    public static void renderHud(MatrixStack matrixStack, IRenderTypeBuffer buffer, IHudSupport hudSupport) {
+    public static void renderHud(PoseStack matrixStack, MultiBufferSource buffer, IHudSupport hudSupport) {
         renderHud(matrixStack, buffer, hudSupport, 0.0f, false);
     }
 
-    public static void renderHud(MatrixStack matrixStack, IRenderTypeBuffer buffer, IHudSupport support, float scale, boolean faceVert) {
+    public static void renderHud(PoseStack matrixStack, MultiBufferSource buffer, IHudSupport support, float scale, boolean faceVert) {
         List<String> log = support.getClientLog();
         long t = System.currentTimeMillis();
         if (t - support.getLastUpdateTime() > 250) {

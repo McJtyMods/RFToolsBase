@@ -3,12 +3,12 @@ package mcjty.rftoolsbase.modules.crafting.items;
 import mcjty.lib.container.*;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
@@ -28,23 +28,23 @@ public class CraftingCardContainer extends GenericContainer {
     public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(0)
             .playerSlots(10, 116));
 
-    public CraftingCardContainer(int id, BlockPos pos, PlayerEntity player) {
+    public CraftingCardContainer(int id, BlockPos pos, Player player) {
         super(CraftingModule.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY.get(), pos, null);
         cardIndex = player.inventory.selected;
     }
 
     @Override
-    public void setupInventories(IItemHandler itemHandler, PlayerInventory inventory) {
+    public void setupInventories(IItemHandler itemHandler, Inventory inventory) {
         addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
         generateSlots(inventory.player);
     }
 
     @Override
-    protected Slot createSlot(SlotFactory slotFactory, PlayerEntity playerEntity, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
+    protected Slot createSlot(SlotFactory slotFactory, Player playerEntity, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
         if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
             return new BaseSlot(inventories.get(slotFactory.getInventoryName()), null, slotFactory.getIndex(), slotFactory.getX(), slotFactory.getY()) {
                 @Override
-                public boolean mayPickup(PlayerEntity player) {
+                public boolean mayPickup(Player player) {
                     // We don't want to take the stack from this slot.
                     return false;
                 }
@@ -54,8 +54,8 @@ public class CraftingCardContainer extends GenericContainer {
         }
     }
 
-    public void setGridContents(PlayerEntity player, List<ItemStack> stacks) {
-        ItemStack craftingCard = player.getItemInHand(Hand.MAIN_HAND);
+    public void setGridContents(Player player, List<ItemStack> stacks) {
+        ItemStack craftingCard = player.getItemInHand(InteractionHand.MAIN_HAND);
         ItemStackList s = ItemStackList.create(INPUT_SLOTS + 1);
         int x = 0;
         int y = 0;

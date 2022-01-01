@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.api.xnet.gui;
 
 import mcjty.rftoolsbase.api.xnet.channels.RSMode;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public interface IEditorGui {
 

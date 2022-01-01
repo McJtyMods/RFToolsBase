@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.control.parameters;
 
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;

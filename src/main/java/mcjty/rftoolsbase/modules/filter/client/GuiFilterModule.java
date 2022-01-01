@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.modules.filter.client;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.TagSelectorWindow;
@@ -19,22 +19,22 @@ import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.*;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -62,18 +62,18 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     private WidgetList list;
 
-    public GuiFilterModule(FilterModuleContainer container, PlayerInventory inventory) {
+    public GuiFilterModule(FilterModuleContainer container, Inventory inventory) {
         super(null, container, inventory, FilterModuleItem.MANUAL);
         imageWidth = CONTROLLER_WIDTH;
         imageHeight = CONTROLLER_HEIGHT;
     }
 
     public static void register() {
-        ScreenManager.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
+        MenuScreens.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
     }
 
     @Nonnull
-    private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, PlayerInventory inventory, ITextComponent
+    private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, Inventory inventory, Component
             textComponent) {
         return new GuiFilterModule(container, inventory);
     }
@@ -105,7 +105,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list = list(5, 4, 207, 99).name("list");
         Slider slider = slider(212, 4, 10, 99).scrollableName("list");
 
-        CompoundNBT tagCompound = Minecraft.getInstance().player.getItemInHand(Hand.MAIN_HAND).getTag();
+        CompoundTag tagCompound = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getTag();
         if (tagCompound != null) {
             setBlacklistMode(tagCompound.getString("blacklistMode"));
             damageMode.setCurrentChoice(tagCompound.getBoolean("damageMode") ? 1 : 0);
@@ -178,7 +178,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void drawWindow(MatrixStack matrixStack) {
+    protected void drawWindow(PoseStack matrixStack) {
         super.drawWindow(matrixStack);
         remove.enabled(canRemove());
         expand.enabled(canExpand());
@@ -197,11 +197,11 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list.removeChildren();
 
         for (ResourceLocation tag : inventory.getTags()) {
-            ITag<Item> itemTag = ItemTags.getAllTags().getTag(tag);
+            Tag<Item> itemTag = ItemTags.getAllTags().getTag(tag);
             if (itemTag != null) {
                 addTagToList(itemTag, tag);
             } else {
-                ITag<Block> blockTag = BlockTags.getAllTags().getTag(tag);
+                Tag<Block> blockTag = BlockTags.getAllTags().getTag(tag);
                 if (blockTag != null) {
                     addTagToList(blockTag, tag);
                 }
@@ -221,7 +221,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         }
     }
 
-    private <T extends IItemProvider> void addTagToList(ITag<T> tag, ResourceLocation id) {
+    private <T extends ItemLike> void addTagToList(Tag<T> tag, ResourceLocation id) {
         Panel panel = horizontal(0, 0);
         panel.userObject(id);
         panel.children(label(id.toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
@@ -264,10 +264,10 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     @Nonnull
     @Override
-    public List<ITextComponent> getTooltipFromItem(@Nonnull ItemStack p_231151_1_) {
-        List<ITextComponent> list = super.getTooltipFromItem(p_231151_1_);
-        list.add(new StringTextComponent(TextFormatting.GOLD + "Click to add to filter"));
-        list.add(new StringTextComponent(TextFormatting.GOLD + "Shift-Click to add tags to filter"));
+    public List<Component> getTooltipFromItem(@Nonnull ItemStack p_231151_1_) {
+        List<Component> list = super.getTooltipFromItem(p_231151_1_);
+        list.add(new TextComponent(ChatFormatting.GOLD + "Click to add to filter"));
+        list.add(new TextComponent(ChatFormatting.GOLD + "Shift-Click to add tags to filter"));
         return list;
     }
 

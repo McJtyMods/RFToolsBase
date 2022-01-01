@@ -1,14 +1,14 @@
 package mcjty.rftoolsbase.tools;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.rftoolsbase.api.screens.ITextRenderHelper;
 import mcjty.rftoolsbase.api.screens.ModuleRenderInfo;
 import mcjty.rftoolsbase.api.screens.TextAlign;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.fonts.Font;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.font.FontSet;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +70,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
         dirty = false;
         truetype = renderInfo.truetype;
         fontId = renderInfo.fontId;
-        FontRenderer renderer = getFontRenderer(truetype, fontId);
+        Font renderer = getFontRenderer(truetype, fontId);
 
         textx = large ? 4 : 7;
         if (truetype) {
@@ -92,12 +92,12 @@ public class ScreenTextHelper implements ITextRenderHelper {
     }
 
     @Override
-    public void renderText(MatrixStack matrixStack, IRenderTypeBuffer buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
+    public void renderText(PoseStack matrixStack, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
         renderScaled(fontId, matrixStack, buffer, text, textx + x, y, color, truetype, renderInfo.getLightmapValue());
     }
 
-    public static void renderScaled(ResourceLocation fontId, MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
-        FontRenderer renderer = getFontRenderer(truetype, fontId);
+    public static void renderScaled(ResourceLocation fontId, PoseStack matrixStack, MultiBufferSource buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
+        Font renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
             matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
@@ -109,8 +109,8 @@ public class ScreenTextHelper implements ITextRenderHelper {
         }
     }
 
-    public static void renderScaledTrimmed(ResourceLocation fontId, MatrixStack matrixStack, IRenderTypeBuffer buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
-        FontRenderer renderer = getFontRenderer(truetype, fontId);
+    public static void renderScaledTrimmed(ResourceLocation fontId, PoseStack matrixStack, MultiBufferSource buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
+        Font renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
             matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
@@ -123,14 +123,14 @@ public class ScreenTextHelper implements ITextRenderHelper {
         }
     }
 
-    private static Map<ResourceLocation, FontRenderer> trueTypeRenderer = new HashMap<>();
+    private static Map<ResourceLocation, Font> trueTypeRenderer = new HashMap<>();
 
-    private static FontRenderer getFontRenderer(boolean truetype, ResourceLocation fontId) {
+    private static Font getFontRenderer(boolean truetype, ResourceLocation fontId) {
         if (truetype) {
             if (!trueTypeRenderer.containsKey(fontId)) {
-                Font font = Minecraft.getInstance().fontManager.fontSets.get(fontId);
+                FontSet font = Minecraft.getInstance().fontManager.fontSets.get(fontId);
                         //new ResourceLocation("rftoolsutility", "ubuntu"));
-                trueTypeRenderer.put(fontId, new FontRenderer(resourceLocation -> font));
+                trueTypeRenderer.put(fontId, new Font(resourceLocation -> font));
             }
             return trueTypeRenderer.get(fontId);
         } else {

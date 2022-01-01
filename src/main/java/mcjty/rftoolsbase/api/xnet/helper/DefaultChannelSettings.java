@@ -2,12 +2,12 @@ package mcjty.rftoolsbase.api.xnet.helper;
 
 import mcjty.rftoolsbase.api.xnet.channels.RSMode;
 import mcjty.rftoolsbase.api.xnet.tiles.IConnectorTile;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class DefaultChannelSettings {
 
-    protected boolean checkRedstone(World world, AbstractConnectorSettings settings, BlockPos extractorPos) {
+    protected boolean checkRedstone(Level world, AbstractConnectorSettings settings, BlockPos extractorPos) {
         RSMode rsMode = settings.getRsMode();
         if (rsMode != RSMode.IGNORED) {
             IConnectorTile connector = (IConnectorTile) world.getBlockEntity(extractorPos);

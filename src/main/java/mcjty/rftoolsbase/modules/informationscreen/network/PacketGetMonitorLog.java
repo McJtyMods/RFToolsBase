@@ -2,14 +2,14 @@ package mcjty.rftoolsbase.modules.informationscreen.network;
 
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -17,11 +17,11 @@ public class PacketGetMonitorLog {
 
     private BlockPos pos;
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
     }
 
-    public PacketGetMonitorLog(PacketBuffer buf) {
+    public PacketGetMonitorLog(FriendlyByteBuf buf) {
         pos = buf.readBlockPos();
     }
 
@@ -32,15 +32,15 @@ public class PacketGetMonitorLog {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            PlayerEntity player = ctx.getSender();
-            World world = player.getCommandSenderWorld();
+            Player player = ctx.getSender();
+            Level world = player.getCommandSenderWorld();
             if (world.hasChunkAt(pos)) {
-                TileEntity te = world.getBlockEntity(pos);
+                BlockEntity te = world.getBlockEntity(pos);
                 if (te instanceof InformationScreenTileEntity) {
                     InformationScreenTileEntity infoScreen = (InformationScreenTileEntity) te;
                     infoScreen.getInfo().ifPresent(h -> {
                         PacketMonitorLogReady packet = new PacketMonitorLogReady(pos, h.getInfo(infoScreen.getMode()));
-                        RFToolsBaseMessages.INSTANCE.sendTo(packet, ((ServerPlayerEntity) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                        RFToolsBaseMessages.INSTANCE.sendTo(packet, ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                     });
                 }
             }
