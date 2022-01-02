@@ -7,10 +7,10 @@ import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItemHandler;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
@@ -23,7 +23,7 @@ public class TabletModule implements IModule {
     public static final RegistryObject<TabletItem> TABLET_FILLED = ITEMS.register("tablet_filled", TabletItem::new);
 
     private static MenuType<TabletContainer> createTabletContainer() {
-        return IForgeContainerType.create((windowId, inv, data) -> {
+        return IForgeMenuType.create((windowId, inv, data) -> {
             Player player = inv.player;
             TabletContainer container = new TabletContainer(windowId, player.blockPosition(), player);
             container.setupInventories(new TabletItemHandler(player), inv);

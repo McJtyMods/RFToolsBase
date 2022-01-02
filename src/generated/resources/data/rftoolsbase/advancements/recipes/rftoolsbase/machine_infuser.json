@@ -11,10 +11,14 @@
       "conditions": {
         "items": [
           {
-            "item": "rftoolsbase:machine_frame"
+            "items": [
+              "rftoolsbase:machine_frame"
+            ]
           },
           {
-            "item": "rftoolsbase:dimensionalshard"
+            "items": [
+              "rftoolsbase:dimensionalshard"
+            ]
           }
         ]
       }

@@ -16,12 +16,14 @@ import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -60,8 +62,8 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
     private int infusing = 0;
 
-    public MachineInfuserTileEntity() {
-        super(MachineInfuserModule.TYPE_MACHINE_INFUSER.get());
+    public MachineInfuserTileEntity(BlockPos pos, BlockState state) {
+        super(MachineInfuserModule.TYPE_MACHINE_INFUSER.get(), pos, state);
     }
 
     public static BaseBlock createBlock() {

@@ -11,10 +11,14 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:iron_ingot"
+            "items": [
+              "minecraft:iron_ingot"
+            ]
           },
           {
-            "item": "minecraft:gold_nugget"
+            "items": [
+              "minecraft:gold_nugget"
+            ]
           }
         ]
       }

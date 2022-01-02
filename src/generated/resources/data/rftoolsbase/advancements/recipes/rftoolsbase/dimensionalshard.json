@@ -11,31 +11,49 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:gold_ingot"
+            "items": [
+              "minecraft:gold_ingot"
+            ]
           },
           {
-            "item": "minecraft:quartz"
+            "items": [
+              "minecraft:quartz"
+            ]
           },
           {
-            "item": "minecraft:redstone"
+            "items": [
+              "minecraft:redstone"
+            ]
           },
           {
-            "item": "minecraft:prismarine_shard"
+            "items": [
+              "minecraft:prismarine_shard"
+            ]
           },
           {
-            "item": "minecraft:diamond"
+            "items": [
+              "minecraft:diamond"
+            ]
           },
           {
-            "item": "minecraft:emerald"
+            "items": [
+              "minecraft:emerald"
+            ]
           },
           {
-            "item": "minecraft:glowstone_dust"
+            "items": [
+              "minecraft:glowstone_dust"
+            ]
           },
           {
-            "item": "minecraft:iron_ingot"
+            "items": [
+              "minecraft:iron_ingot"
+            ]
           },
           {
-            "item": "minecraft:glass"
+            "items": [
+              "minecraft:glass"
+            ]
           }
         ]
       }

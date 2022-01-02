@@ -9,33 +9,32 @@ import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
 import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.network.NetworkHooks;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
-
-import javax.annotation.Nonnull;
 
 public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
@@ -64,7 +63,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
         stack.getOrCreateTag().putInt("Current", current);
         ItemStack containingItem = getContainingItem(stack, current);
         ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
-        player.inventory.items.set(player.inventory.selected, newTablet);
+        player.getInventory().items.set(player.getInventory().selected, newTablet);
 //        player.setHeldItem(getHand(player), newTablet);
     }
 
@@ -117,7 +116,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
 
         int current = getCurrentSlot(stack);
         ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
-        player.inventory.items.set(player.inventory.selected, newTablet);
+        player.getInventory().items.set(player.getInventory().selected, newTablet);
 //        player.setHeldItem(hand, newTablet);
     }
 

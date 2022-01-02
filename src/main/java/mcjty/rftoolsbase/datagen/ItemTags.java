@@ -1,18 +1,19 @@
 package mcjty.rftoolsbase.datagen;
 
+import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 
 import javax.annotation.Nonnull;
 
 public class ItemTags extends ItemTagsProvider {
 
-    public ItemTags(DataGenerator generator, ExistingFileHelper helper) {
-        super(generator, new ForgeBlockTagsProvider(generator, helper));
+    public ItemTags(DataGenerator generator, BlockTagsProvider blockTags, ExistingFileHelper helper) {
+        super(generator, blockTags, RFToolsBase.MODID, helper);
     }
 
     @Override

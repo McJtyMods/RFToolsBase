@@ -11,10 +11,14 @@
       "conditions": {
         "items": [
           {
-            "item": "rftoolsbase:machine_base"
+            "items": [
+              "rftoolsbase:machine_base"
+            ]
           },
           {
-            "item": "minecraft:redstone"
+            "items": [
+              "minecraft:redstone"
+            ]
           }
         ]
       }

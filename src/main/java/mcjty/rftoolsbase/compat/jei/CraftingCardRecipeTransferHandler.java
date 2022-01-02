@@ -9,12 +9,12 @@ import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Map;
 
-public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler<CraftingCardContainer> {
+public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler<CraftingCardContainer, CraftingRecipe> {
 
     public static void register(IRecipeTransferRegistration transferRegistry) {
         transferRegistry.addRecipeTransferHandler(new CraftingCardRecipeTransferHandler(), VanillaRecipeCategoryUid.CRAFTING);
@@ -26,10 +26,15 @@ public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler
         return CraftingCardContainer.class;
     }
 
-    @SuppressWarnings("deprecation")
-    @Nullable
+
     @Override
-    public IRecipeTransferError transferRecipe(@Nonnull CraftingCardContainer craftingCardContainer, IRecipeLayout recipeLayout, @Nonnull Player playerEntity, boolean maxTransfer, boolean doTransfer) {
+    public Class<CraftingRecipe> getRecipeClass() {
+        return CraftingRecipe.class;
+    }
+
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public IRecipeTransferError transferRecipe(CraftingCardContainer container, CraftingRecipe recipe, IRecipeLayout recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
         Map<Integer, ? extends IGuiIngredient<ItemStack>> guiIngredients = recipeLayout.getItemStacks().getGuiIngredients();
 
         if (doTransfer) {

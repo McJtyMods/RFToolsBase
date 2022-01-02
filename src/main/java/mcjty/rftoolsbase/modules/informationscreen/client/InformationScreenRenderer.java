@@ -8,16 +8,15 @@ import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.core.Direction;
-import net.minecraftforge.client.ClientRegistry;
 
 import javax.annotation.Nonnull;
 
-public class InformationScreenRenderer extends BlockEntityRenderer<InformationScreenTileEntity> {
+public class InformationScreenRenderer implements BlockEntityRenderer<InformationScreenTileEntity> {
 
-    public InformationScreenRenderer(BlockEntityRenderDispatcher dispatcher) {
-        super(dispatcher);
+    public InformationScreenRenderer(BlockEntityRendererProvider.Context dispatcher) {
     }
 
     @Override
@@ -39,6 +38,6 @@ public class InformationScreenRenderer extends BlockEntityRenderer<InformationSc
     }
 
     public static void register() {
-        ClientRegistry.bindTileEntityRenderer(InformationScreenModule.TYPE_INFORMATION_SCREEN.get(), InformationScreenRenderer::new);
+        BlockEntityRenderers.register(InformationScreenModule.TYPE_INFORMATION_SCREEN.get(), InformationScreenRenderer::new);
     }
 }

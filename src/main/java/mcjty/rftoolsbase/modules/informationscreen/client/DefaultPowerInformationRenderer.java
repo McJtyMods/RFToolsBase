@@ -1,16 +1,12 @@
 package mcjty.rftoolsbase.modules.informationscreen.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import mcjty.lib.client.HudRenderHelper;
-import mcjty.lib.client.RenderHelper;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.DefaultPowerInformationScreenInfo;
-import net.minecraft.client.Minecraft;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
-import net.minecraft.ChatFormatting;
-import org.lwjgl.opengl.GL11;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -27,38 +23,37 @@ public class DefaultPowerInformationRenderer {
         long energy = data.getOptional(DefaultPowerInformationScreenInfo.ENERGY).orElse(0L);
         long maxEnergy = data.getOptional(DefaultPowerInformationScreenInfo.MAXENERGY).orElse(0L);
 
-        GlStateManager._pushMatrix();
-        GlStateManager._translatef(0.5F, 0.75F, 0.5F);
-        GlStateManager._rotatef(-getHudAngle(orientation), 0.0F, 1.0F, 0.0F);
-        GlStateManager._translatef(0.0F, -0.2500F, -0.4375F + 0.9f);
-
-        com.mojang.blaze3d.platform.Lighting.turnOff();
-        Minecraft.getInstance().gameRenderer.lightTexture().turnOffLightLayer();
-        GlStateManager._disableBlend();
-        GlStateManager._disableLighting();
-
-        if (maxEnergy > 0) {
-//            int mode = infoscreen.getMode();
-            GlStateManager._translatef(-0.5F, 0.5F, 0.07F);
-            float f3 = 0.0075F;
-            GlStateManager._scaled(f3 * scale, -f3 * scale, f3);
-            GlStateManager._normal3f(0.0F, 0.0F, 1.0F);
-            GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-            long pct = energy * 100 / maxEnergy;
-            for (int i = 0 ; i < 100 ; i += 5) {
-                int col = i < pct ? getPercentageColor(i) : 0xff111111;
-                RenderHelper.drawFlatBox(matrixStack, 16, (int) (100-i*.8-13), 88 , (int) (100-i*.8+3-13), col, col);
-            }
-        }
-        Minecraft.getInstance().gameRenderer.lightTexture().turnOnLightLayer();
-
-//        RenderHelper.enableStandardItemLighting();
-        GlStateManager._enableLighting();
-        GlStateManager._enableBlend();
-        GlStateManager._blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-        GlStateManager._popMatrix();
+        // @todo 1.18
+//        GlStateManager._pushMatrix();
+//        GlStateManager._translatef(0.5F, 0.75F, 0.5F);
+//        GlStateManager._rotatef(-getHudAngle(orientation), 0.0F, 1.0F, 0.0F);
+//        GlStateManager._translatef(0.0F, -0.2500F, -0.4375F + 0.9f);
+//
+//        com.mojang.blaze3d.platform.Lighting.turnOff();
+//        Minecraft.getInstance().gameRenderer.lightTexture().turnOffLightLayer();
+//        GlStateManager._disableBlend();
+//        GlStateManager._disableLighting();
+//
+//        if (maxEnergy > 0) {
+//            GlStateManager._translatef(-0.5F, 0.5F, 0.07F);
+//            float f3 = 0.0075F;
+//            GlStateManager._scaled(f3 * scale, -f3 * scale, f3);
+//            GlStateManager._normal3f(0.0F, 0.0F, 1.0F);
+//            GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
+//
+//            long pct = energy * 100 / maxEnergy;
+//            for (int i = 0 ; i < 100 ; i += 5) {
+//                int col = i < pct ? getPercentageColor(i) : 0xff111111;
+//                RenderHelper.drawFlatBox(matrixStack, 16, (int) (100-i*.8-13), 88 , (int) (100-i*.8+3-13), col, col);
+//            }
+//        }
+//        Minecraft.getInstance().gameRenderer.lightTexture().turnOnLightLayer();
+//
+//        GlStateManager._enableLighting();
+//        GlStateManager._enableBlend();
+//        GlStateManager._blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+//
+//        GlStateManager._popMatrix();
     }
 
     public static void renderDefault(PoseStack matrixStack, MultiBufferSource buffer, TypedMap data, Direction orientation, double scale) {

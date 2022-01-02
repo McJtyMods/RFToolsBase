@@ -1,12 +1,12 @@
 package mcjty.rftoolsbase.modules.informationscreen.network;
 
-import mcjty.lib.McJtyLib;
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.TypedMap;
+import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;

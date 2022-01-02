@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "rftoolsbase:dimensionalshard_overworld",
+    "rftoolsbase:dimensionalshard_nether",
+    "rftoolsbase:dimensionalshard_end",
+    "rftoolsbase:information_screen",
+    "rftoolsbase:machine_infuser"
+  ]
+}

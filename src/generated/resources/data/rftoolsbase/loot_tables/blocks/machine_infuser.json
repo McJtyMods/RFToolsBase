@@ -3,7 +3,8 @@
   "pools": [
     {
       "name": "infuser",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -30,15 +31,6 @@
                   "source": "Energy",
                   "target": "BlockEntityTag.Energy",
                   "op": "replace"
-                }
-              ]
-            },
-            {
-              "function": "minecraft:set_contents",
-              "entries": [
-                {
-                  "type": "minecraft:dynamic",
-                  "name": "minecraft:contents"
                 }
               ]
             }
