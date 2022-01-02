@@ -42,8 +42,7 @@ if (System.getenv('BUILD_NUMBER') != null) {
     version += "-${System.getenv('BUILD_NUMBER')}"
 }
 
-sourceCompatibility = 17
-targetCompatibility = 17
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
     mappings channel: 'parchment' , version: '2021.12.19-1.18.1'
