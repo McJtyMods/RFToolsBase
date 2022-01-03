@@ -1,7 +1,7 @@
 {
   "name": "Machine Frames",
   "icon": "rftoolsbase:machine_frame",
-  "category": "category_basics",
+  "category": "rftoolsbase:category_basics",
   "pages": [
     {
       "type": "text",

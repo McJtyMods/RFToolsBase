@@ -1,7 +1,7 @@
 {
   "name": "Machines",
   "description": "All the machines",
-  "parent": "category_rftoolsbase",
+  "parent": "rftoolsbase:category_rftoolsbase",
   "icon": "rftoolsbase:machine_infuser",
   "sortnum": 30
 }

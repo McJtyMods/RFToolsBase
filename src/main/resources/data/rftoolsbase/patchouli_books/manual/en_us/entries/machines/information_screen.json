@@ -1,7 +1,7 @@
 {
   "name": "Information Screen",
   "icon": "rftoolsbase:information_screen",
-  "category": "category_machines",
+  "category": "rftoolsbase:category_machines",
   "pages": [
     {
       "type": "text",

@@ -1,7 +1,7 @@
 {
   "name": "Infusing",
   "icon": "rftoolsbase:machine_infuser",
-  "category": "category_machines",
+  "category": "rftoolsbase:category_machines",
   "pages": [
     {
       "type": "text",

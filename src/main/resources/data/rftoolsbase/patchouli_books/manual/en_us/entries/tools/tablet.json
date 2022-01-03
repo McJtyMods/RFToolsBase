@@ -1,7 +1,7 @@
 {
   "name": "The Tablet",
   "icon": "rftoolsbase:tablet",
-  "category": "category_tools",
+  "category": "rftoolsbase:category_tools",
   "pages": [
     {
       "type": "text",

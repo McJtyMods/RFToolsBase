@@ -1,7 +1,7 @@
 {
   "name": "Smart Wrench",
   "icon": "rftoolsbase:smartwrench",
-  "category": "category_tools",
+  "category": "rftoolsbase:category_tools",
   "pages": [
     {
       "type": "text",
