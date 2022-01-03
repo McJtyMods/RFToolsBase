@@ -33,6 +33,16 @@
                   "op": "replace"
                 }
               ]
+            },
+            {
+              "function": "minecraft:set_contents",
+              "type": "rftoolsbase:machine_infuser",
+              "entries": [
+                {
+                  "type": "minecraft:dynamic",
+                  "name": "minecraft:contents"
+                }
+              ]
             }
           ],
           "name": "rftoolsbase:machine_infuser"

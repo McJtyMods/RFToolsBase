@@ -17,7 +17,7 @@ public class LootTables extends BaseLootTableProvider {
 
     @Override
     protected void addTables() {
-        lootTables.put(MachineInfuserModule.MACHINE_INFUSER.get(), createStandardTable("infuser", MachineInfuserModule.MACHINE_INFUSER.get()));
+        lootTables.put(MachineInfuserModule.MACHINE_INFUSER.get(), createStandardTable("infuser", MachineInfuserModule.MACHINE_INFUSER.get(), MachineInfuserModule.TYPE_MACHINE_INFUSER.get()));
         lootTables.put(WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get(), createSilkTouchTable("dimshard", WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get(), VariousModule.DIMENSIONALSHARD.get(), 4.0f, 5.0f));
         lootTables.put(WorldGenModule.DIMENSIONAL_SHARD_END.get(), createSilkTouchTable("dimshard", WorldGenModule.DIMENSIONAL_SHARD_END.get(), VariousModule.DIMENSIONALSHARD.get(), 4.0f, 5.0f));
         lootTables.put(WorldGenModule.DIMENSIONAL_SHARD_NETHER.get(), createSilkTouchTable("dimshard", WorldGenModule.DIMENSIONAL_SHARD_NETHER.get(), VariousModule.DIMENSIONALSHARD.get(), 4.0f, 5.0f));
