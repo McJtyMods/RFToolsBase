@@ -18,7 +18,7 @@ public class FilterModuleContainer extends GenericContainer {
 			.playerSlots(60, 106));
 
 	public FilterModuleContainer(int id, BlockPos pos, Player player) {
-		super(FilterModule.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY.get(), pos, null);
+		super(FilterModule.CONTAINER_FILTER_MODULE.get(), id, CONTAINER_FACTORY.get(), pos, null, player);
 		cardIndex = player.getInventory().selected;
     }
 
