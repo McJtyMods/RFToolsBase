@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.modules.filter.client;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import mcjty.lib.McJtyLib;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.TagSelectorWindow;
 import mcjty.lib.gui.Window;
@@ -11,6 +10,7 @@ import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
+import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
@@ -28,7 +28,9 @@ import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.*;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -250,7 +252,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     protected void slotClicked(@Nonnull Slot slotIn, int slotId, int mouseButton, @Nonnull ClickType type) {
         if (!slotIn.getItem().isEmpty()) {
             FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
-            if (McJtyLib.proxy.isSneaking()) {
+            if (SafeClientTools.isSneaking()) {
                 for (ResourceLocation tag : slotIn.getItem().getItem().getTags()) {
                     inventory.addTag(tag);
                 }

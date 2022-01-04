@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.filter;
 
-import mcjty.lib.McJtyLib;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.filter.client.GuiFilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
@@ -22,7 +22,7 @@ public class FilterModule implements IModule {
 
     private static ContainerType<FilterModuleContainer> createFilterModuleContainer() {
         return IForgeContainerType.create((windowId, inv, data) -> {
-            PlayerEntity player = McJtyLib.proxy.getClientPlayer();
+            PlayerEntity player = SafeClientTools.getClientPlayer();
             FilterModuleContainer container = new FilterModuleContainer(windowId, player.blockPosition(), player);
             container.setupInventories(null, inv);
             return container;

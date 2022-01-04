@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.crafting;
 
-import mcjty.lib.McJtyLib;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.crafting.client.GuiCraftingCard;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
@@ -23,7 +23,7 @@ public class CraftingModule implements IModule {
 
     private static ContainerType<CraftingCardContainer> createCraftingContainer() {
         return IForgeContainerType.create((windowId, inv, data) -> {
-            PlayerEntity player = McJtyLib.proxy.getClientPlayer();
+            PlayerEntity player = SafeClientTools.getClientPlayer();
             CraftingCardContainer container = new CraftingCardContainer(windowId, player.blockPosition(), player);
             container.setupInventories(null, inv);
             return container;

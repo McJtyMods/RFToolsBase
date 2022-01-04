@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.modules.informationscreen.network;
 
-import mcjty.lib.McJtyLib;
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.TypedMap;
+import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
@@ -43,7 +43,7 @@ public class PacketMonitorLogReady {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            TileEntity te = McJtyLib.proxy.getClientWorld().getBlockEntity(pos);
+            TileEntity te = SafeClientTools.getClientWorld().getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity) {
                 InformationScreenTileEntity info = (InformationScreenTileEntity) te;
                 info.setClientData(data);
