@@ -29,7 +29,7 @@ public class CraftingCardContainer extends GenericContainer {
             .playerSlots(10, 116));
 
     public CraftingCardContainer(int id, BlockPos pos, PlayerEntity player) {
-        super(CraftingModule.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY.get(), pos, null);
+        super(CraftingModule.CONTAINER_CRAFTING_CARD.get(), id, CONTAINER_FACTORY.get(), pos, null, player);
         cardIndex = player.inventory.selected;
     }
 
