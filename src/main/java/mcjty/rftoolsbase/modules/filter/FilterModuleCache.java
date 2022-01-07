@@ -16,7 +16,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
     private boolean blacklistMode = true;
     private boolean nbtMode = false;
     private boolean modMode = false;
-    private ItemStackList stacks;
+    private final ItemStackList stacks;
     private Set<ResourceLocation> tags = Collections.emptySet();
 
     // Parameter is the filter item.

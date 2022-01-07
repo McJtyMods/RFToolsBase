@@ -13,8 +13,8 @@ import java.util.function.Supplier;
 
 public class PacketMonitorLogReady {
 
-    private BlockPos pos;
-    private TypedMap data;
+    private final BlockPos pos;
+    private final TypedMap data;
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
@@ -44,8 +44,7 @@ public class PacketMonitorLogReady {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             BlockEntity te = SafeClientTools.getClientWorld().getBlockEntity(pos);
-            if (te instanceof InformationScreenTileEntity) {
-                InformationScreenTileEntity info = (InformationScreenTileEntity) te;
+            if (te instanceof InformationScreenTileEntity info) {
                 info.setClientData(data);
             }
         });

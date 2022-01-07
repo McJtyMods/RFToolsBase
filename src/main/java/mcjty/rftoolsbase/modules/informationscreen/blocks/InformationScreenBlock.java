@@ -42,16 +42,12 @@ public class InformationScreenBlock extends BaseBlock {
     @Nonnull
     public VoxelShape getShape(@Nonnull BlockState state, @Nonnull BlockGetter worldIn, @Nonnull BlockPos pos, @Nonnull CollisionContext context) {
         Direction side = OrientationTools.getOrientationHoriz(state);
-        switch (side) {
-            case NORTH:
-                return BLOCK_SOUTH;
-            case EAST:
-                return BLOCK_WEST;
-            case WEST:
-                return BLOCK_EAST;
-            default:
-                return BLOCK_NORTH;
-        }
+        return switch (side) {
+            case NORTH -> BLOCK_SOUTH;
+            case EAST -> BLOCK_WEST;
+            case WEST -> BLOCK_EAST;
+            default -> BLOCK_NORTH;
+        };
     }
 
     @Nonnull
@@ -77,8 +73,7 @@ public class InformationScreenBlock extends BaseBlock {
     protected boolean wrenchUse(Level world, BlockPos pos, Direction side, Player player) {
         if (!world.isClientSide) {
             BlockEntity te = world.getBlockEntity(pos);
-            if (te instanceof InformationScreenTileEntity) {
-                InformationScreenTileEntity monitor = (InformationScreenTileEntity) te;
+            if (te instanceof InformationScreenTileEntity monitor) {
                 monitor.toggleMode();
             }
         }

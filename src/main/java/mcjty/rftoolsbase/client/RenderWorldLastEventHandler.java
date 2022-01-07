@@ -1,20 +1,18 @@
 package mcjty.rftoolsbase.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
 import mcjty.lib.client.CustomRenderTypes;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import com.mojang.math.Matrix4f;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderLevelLastEvent;
 
 public class RenderWorldLastEventHandler {
-
-    private static long lastTime = 0;
 
     public static void tick(RenderLevelLastEvent evt) {
         renderHilightedBlock(evt);
@@ -25,7 +23,6 @@ public class RenderWorldLastEventHandler {
         if (c == null) {
             return;
         }
-        Minecraft mc = Minecraft.getInstance();
         long time = System.currentTimeMillis();
 
         if (time > RFToolsBase.instance.clientInfo.getExpireHilight()) {

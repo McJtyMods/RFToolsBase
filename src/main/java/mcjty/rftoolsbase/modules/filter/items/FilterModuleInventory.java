@@ -18,8 +18,8 @@ import java.util.function.Supplier;
 
 public class FilterModuleInventory {
 
-    private ItemStackList stacks = ItemStackList.create();
-    private Set<ResourceLocation> tags = new HashSet<>();
+    private final ItemStackList stacks = ItemStackList.create();
+    private final Set<ResourceLocation> tags = new HashSet<>();
 
     private final Supplier<ItemStack> filterGetter;
 

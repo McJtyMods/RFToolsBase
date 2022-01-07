@@ -44,7 +44,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/craftingcard.png");
 
-    private BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
+    private final BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
     public GuiCraftingCard(CraftingCardContainer container, Inventory inventory) {
         super(null, container, inventory, CraftingCardItem.MANUAL);
@@ -109,8 +109,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
             @Override
             public List<String> getTooltips() {
                 Object s = slots[idx].getRenderItem();
-                if (s instanceof ItemStack) {
-                    ItemStack stack = (ItemStack) s;
+                if (s instanceof ItemStack stack) {
                     if (!stack.isEmpty()) {
                         TooltipFlag flag = this.mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL;
                         List<Component> list = stack.getTooltipLines(this.mc.player, flag);

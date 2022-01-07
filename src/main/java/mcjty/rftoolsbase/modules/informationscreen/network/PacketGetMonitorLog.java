@@ -32,15 +32,14 @@ public class PacketGetMonitorLog {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
-            Player player = ctx.getSender();
+            ServerPlayer player = ctx.getSender();
             Level world = player.getCommandSenderWorld();
             if (world.hasChunkAt(pos)) {
                 BlockEntity te = world.getBlockEntity(pos);
-                if (te instanceof InformationScreenTileEntity) {
-                    InformationScreenTileEntity infoScreen = (InformationScreenTileEntity) te;
+                if (te instanceof InformationScreenTileEntity infoScreen) {
                     infoScreen.getInfo().ifPresent(h -> {
                         PacketMonitorLogReady packet = new PacketMonitorLogReady(pos, h.getInfo(infoScreen.getMode()));
-                        RFToolsBaseMessages.INSTANCE.sendTo(packet, ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+                        RFToolsBaseMessages.INSTANCE.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
                     });
                 }
             }

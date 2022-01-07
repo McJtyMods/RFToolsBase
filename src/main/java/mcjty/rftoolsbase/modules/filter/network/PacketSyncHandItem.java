@@ -12,7 +12,7 @@ import java.util.function.Supplier;
 
 public class PacketSyncHandItem {
 
-    private ItemStack stack;
+    private final ItemStack stack;
 
     public PacketSyncHandItem(FriendlyByteBuf buf) {
         stack = buf.readItem();

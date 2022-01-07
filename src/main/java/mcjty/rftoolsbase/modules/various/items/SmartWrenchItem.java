@@ -108,8 +108,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                         return InteractionResult.FAIL;
                     }
                     BlockEntity te = world.getBlockEntity(b.pos());
-                    if (te instanceof ISmartWrenchSelector) {
-                        ISmartWrenchSelector smartWrenchSelector = (ISmartWrenchSelector) te;
+                    if (te instanceof ISmartWrenchSelector smartWrenchSelector) {
                         smartWrenchSelector.selectBlock(player, pos);
                     }
                     return InteractionResult.SUCCESS;

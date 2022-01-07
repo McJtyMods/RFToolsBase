@@ -80,7 +80,7 @@ public class DefaultPowerInformationRenderer {
         return list;
     }
 
-    private static DecimalFormat format = new DecimalFormat("#.###");
+    private static final DecimalFormat format = new DecimalFormat("#.###");
 
     public static String formatPower(long l) {
         if (l < 100000) {
@@ -101,19 +101,12 @@ public class DefaultPowerInformationRenderer {
         float f3 = 0.0f;
 
         if (orientation != null) {
-            switch (orientation) {
-                case NORTH:
-                    f3 = 180.0F;
-                    break;
-                case WEST:
-                    f3 = 90.0F;
-                    break;
-                case EAST:
-                    f3 = -90.0F;
-                    break;
-                default:
-                    f3 = 0.0f;
-            }
+            f3 = switch (orientation) {
+                case NORTH -> 180.0F;
+                case WEST -> 90.0F;
+                case EAST -> -90.0F;
+                default -> 0.0f;
+            };
         }
         return f3;
     }

@@ -23,7 +23,7 @@ public class CraftingCardContainer extends GenericContainer {
     public static final int INPUT_SLOTS = GRID_WIDTH * GRID_HEIGHT;
     public static final int SLOT_OUT = INPUT_SLOTS;
 
-    private int cardIndex;
+    private final int cardIndex;
 
     public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(0)
             .playerSlots(10, 116));
@@ -42,7 +42,7 @@ public class CraftingCardContainer extends GenericContainer {
     @Override
     protected Slot createSlot(SlotFactory slotFactory, Player playerEntity, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
         if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
-            return new BaseSlot(inventories.get(slotFactory.getInventoryName()), null, slotFactory.getIndex(), slotFactory.getX(), slotFactory.getY()) {
+            return new BaseSlot(inventories.get(slotFactory.inventoryName()), null, slotFactory.index(), slotFactory.x(), slotFactory.y()) {
                 @Override
                 public boolean mayPickup(Player player) {
                     // We don't want to take the stack from this slot.

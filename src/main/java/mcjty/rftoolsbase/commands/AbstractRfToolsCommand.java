@@ -18,7 +18,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
     protected boolean fetchBool(Player sender, String[] args, int index, boolean defaultValue) {
         boolean value;
         try {
-            value = Boolean.valueOf(args[index]);
+            value = Boolean.parseBoolean(args[index]);
         } catch (NumberFormatException e) {
             value = false;
             Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid boolean!");

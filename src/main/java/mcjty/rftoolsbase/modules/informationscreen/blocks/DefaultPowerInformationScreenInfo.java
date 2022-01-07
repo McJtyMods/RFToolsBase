@@ -37,12 +37,10 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     @Nonnull
     @Override
     public TypedMap getInfo(int mode) {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(h -> {
-            return TypedMap.builder()
-                    .put(ENERGY, (long) h.getEnergyStored())
-                    .put(MAXENERGY, (long) h.getMaxEnergyStored())
-                    .build();
-        }).orElse(TypedMap.EMPTY);
+        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(h -> TypedMap.builder()
+                .put(ENERGY, (long) h.getEnergyStored())
+                .put(MAXENERGY, (long) h.getMaxEnergyStored())
+                .build()).orElse(TypedMap.EMPTY);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class TickOrderHandler {
         ResourceKey<Level> getDimension();
     }
 
-    private static Map<ResourceKey<Level>, List<IOrderTicker>[]> tiles = new HashMap<>();
+    private static final Map<ResourceKey<Level>, List<IOrderTicker>[]> tiles = new HashMap<>();
     private static long ticker = 0;     // To keep track of when a tile was added
 
     public static void clean() {

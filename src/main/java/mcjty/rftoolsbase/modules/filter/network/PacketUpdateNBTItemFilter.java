@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 
 public class PacketUpdateNBTItemFilter {
 
-    private TypedMap args;
+    private final TypedMap args;
 
     public PacketUpdateNBTItemFilter(FriendlyByteBuf buf) {
         args = TypedMapTools.readArguments(buf);
@@ -48,23 +48,23 @@ public class PacketUpdateNBTItemFilter {
             }
             CompoundTag tagCompound = heldItem.getOrCreateTag();
             for (Key<?> akey : args.getKeys()) {
-                String key = akey.getName();
-                if (Type.STRING.equals(akey.getType())) {
+                String key = akey.name();
+                if (Type.STRING.equals(akey.type())) {
                     tagCompound.putString(key, (String) args.get(akey));
-                } else if (Type.INTEGER.equals(akey.getType())) {
+                } else if (Type.INTEGER.equals(akey.type())) {
                     tagCompound.putInt(key, (Integer) args.get(akey));
-                } else if (Type.LONG.equals(akey.getType())) {
+                } else if (Type.LONG.equals(akey.type())) {
                     tagCompound.putLong(key, (Long) args.get(akey));
-                } else if (Type.DOUBLE.equals(akey.getType())) {
+                } else if (Type.DOUBLE.equals(akey.type())) {
                     tagCompound.putDouble(key, (Double) args.get(akey));
-                } else if (Type.BOOLEAN.equals(akey.getType())) {
+                } else if (Type.BOOLEAN.equals(akey.type())) {
                     tagCompound.putBoolean(key, (Boolean) args.get(akey));
-                } else if (Type.BLOCKPOS.equals(akey.getType())) {
+                } else if (Type.BLOCKPOS.equals(akey.type())) {
                     throw new RuntimeException("BlockPos not supported for PacketUpdateNBTItem!");
-                } else if (Type.ITEMSTACK.equals(akey.getType())) {
+                } else if (Type.ITEMSTACK.equals(akey.type())) {
                     throw new RuntimeException("ItemStack not supported for PacketUpdateNBTItem!");
                 } else {
-                    throw new RuntimeException(akey.getType().getType().getSimpleName() + " not supported for PacketUpdateNBTItem!");
+                    throw new RuntimeException(akey.type().getType().getSimpleName() + " not supported for PacketUpdateNBTItem!");
                 }
             }
         });

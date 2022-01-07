@@ -123,7 +123,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
         }
     }
 
-    private static Map<ResourceLocation, Font> trueTypeRenderer = new HashMap<>();
+    private static final Map<ResourceLocation, Font> trueTypeRenderer = new HashMap<>();
 
     private static Font getFontRenderer(boolean truetype, ResourceLocation fontId) {
         if (truetype) {

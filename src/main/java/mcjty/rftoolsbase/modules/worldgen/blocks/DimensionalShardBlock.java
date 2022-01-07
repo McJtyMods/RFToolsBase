@@ -18,7 +18,7 @@ public class DimensionalShardBlock extends Block {
                 .lightLevel(value -> 7));
     }
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     @Override
     public void destroy(LevelAccessor world, @Nonnull BlockPos pos, @Nonnull BlockState state) {
