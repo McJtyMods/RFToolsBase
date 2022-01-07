@@ -1,4 +1,4 @@
-Upcoming:
+1.18-3.0.1:
 - Updates for McJtyLib and fixes
 
 1.18-3.0.0:
