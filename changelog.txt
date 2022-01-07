@@ -1,3 +1,6 @@
+Upcoming:
+- Updates for McJtyLib and fixes
+
 1.18-3.0.0:
 - First release in 1.18
 
