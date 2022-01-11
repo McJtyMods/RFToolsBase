@@ -1,3 +1,6 @@
+Upcoming:
+- Fixed a crash bug when clicking outside the filter gui
+
 1.18-3.0.1:
 - Updates for McJtyLib and fixes
 

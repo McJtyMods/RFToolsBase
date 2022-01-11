@@ -250,7 +250,10 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void slotClicked(@Nonnull Slot slotIn, int slotId, int mouseButton, @Nonnull ClickType type) {
+    protected void slotClicked(Slot slotIn, int slotId, int mouseButton, @Nonnull ClickType type) {
+        if (slotIn == null) {
+            return;
+        }
         if (!slotIn.getItem().isEmpty()) {
             FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
             if (SafeClientTools.isSneaking()) {
