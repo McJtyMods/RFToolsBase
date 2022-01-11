@@ -4,7 +4,10 @@ Upcoming:
 1.18-3.0.1:
 - Updates for McJtyLib and fixes
 
-1.18-3.0.0:
+1.18-3.0.0:Upcoming:
+           - Fixed a problem with items not getting restored when breaking and placing blocks
+
+
 - First release in 1.18
 
 1.16-2.1.1:
