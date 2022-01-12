@@ -57,7 +57,7 @@ public class OreGenerator {
 
         OreConfiguration endConfig = new OreConfiguration(IN_ENDSTONE, WorldGenModule.DIMENSIONAL_SHARD_END.get().defaultBlockState(),
                 WorldGenConfig.END_ORE_VEINSIZE.get());
-        END_SHARDS = registerPlacedFeature("dimshard_nether", Feature.ORE.configured(endConfig),
+        END_SHARDS = registerPlacedFeature("dimshard_end", Feature.ORE.configured(endConfig),
                 CountPlacement.of(WorldGenConfig.END_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome(),
