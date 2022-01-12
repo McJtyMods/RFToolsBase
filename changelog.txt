@@ -1,4 +1,5 @@
 Upcoming:
+- Fixed a problem with items not getting restored when breaking and placing blocks
 - Fixed a crash bug when clicking outside the filter gui
 
 1.18-3.0.1:
