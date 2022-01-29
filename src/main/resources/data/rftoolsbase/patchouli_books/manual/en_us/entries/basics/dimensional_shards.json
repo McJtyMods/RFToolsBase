@@ -1,7 +1,7 @@
 {
   "name": "Dimensional Shards",
   "icon": "rftoolsbase:dimensionalshard",
-  "category": "category_basics",
+  "category": "rftoolsbase:category_basics",
   "extra_recipe_mappings":[
     ["rftoolsbase:dimensionalshard",0],
     ["rftoolsbase:dimensionalshard_overworld",0],

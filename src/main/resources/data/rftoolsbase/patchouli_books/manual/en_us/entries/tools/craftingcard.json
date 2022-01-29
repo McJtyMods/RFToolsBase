@@ -1,7 +1,7 @@
 {
   "name": "Crafting Card",
   "icon": "rftoolsbase:crafting_card",
-  "category": "category_tools",
+  "category": "rftoolsbase:category_tools",
   "pages": [
     {
       "type": "text",

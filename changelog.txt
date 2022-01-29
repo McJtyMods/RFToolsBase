@@ -1,3 +1,6 @@
+Upcoming:
+- Fixes to the Patchouli manual
+
 1.18-3.0.3:
 - Fixed a problem with dimensional shards in the nether/end
 

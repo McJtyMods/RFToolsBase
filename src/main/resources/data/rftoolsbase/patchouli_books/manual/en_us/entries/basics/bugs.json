@@ -1,7 +1,7 @@
 {
   "name": "Found a Bug?",
   "icon": "minecraft:tnt",
-  "category": "category_basics",
+  "category": "rftoolsbase:category_basics",
   "priority": "true",
   "pages": [
     {

@@ -1,7 +1,7 @@
 {
   "name": "Machine Bases",
   "icon": "rftoolsbase:machine_base",
-  "category": "category_basics",
+  "category": "rftoolsbase:category_basics",
   "pages": [
     {
       "type": "text",

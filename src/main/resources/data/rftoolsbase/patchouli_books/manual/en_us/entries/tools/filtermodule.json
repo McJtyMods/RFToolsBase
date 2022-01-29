@@ -1,7 +1,7 @@
 {
   "name": "Filter Module",
   "icon": "rftoolsbase:filter_module",
-  "category": "category_tools",
+  "category": "rftoolsbase:category_tools",
   "pages": [
     {
       "type": "text",
