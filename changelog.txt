@@ -1,3 +1,6 @@
+Upcoming:
+- New API for RFToolsDimensions
+
 1.18-3.0.4:
 - Fixes to the Patchouli manual
 

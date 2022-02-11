@@ -1,5 +1,7 @@
 package mcjty.rftoolsbase.api.dimension;
 
+import net.minecraft.world.level.Level;
+
 import java.util.UUID;
 
 /**
@@ -8,14 +10,22 @@ import java.util.UUID;
 public interface IDimensionInformation {
 
     /**
-     * Get the name of this dimension.
-     * @return
-     */
-    String getName();
-
-    /**
      * Get the owner of this dimension.
-     * @return
      */
     UUID getOwner();
+
+    /**
+     * Return the current power level in the dimension
+     */
+    long getEnergy();
+
+    /**
+     * Return the maximum supported energy in the dimension
+     */
+    long getMaxEnergy(Level world);
+
+    /**
+     * Return the number of activity probes in the dimension
+     */
+    int getActivityProbes();
 }
