@@ -1,4 +1,4 @@
-Upcoming:
+1.18-3.0.6:
 - Explosis updated the dimensional shard ore textures
 
 1.18-3.0.5:
