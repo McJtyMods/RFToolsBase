@@ -1,13 +1,16 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.varia.ItemStackList;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -19,7 +22,7 @@ import java.util.function.Supplier;
 public class FilterModuleInventory {
 
     private final ItemStackList stacks = ItemStackList.create();
-    private final Set<ResourceLocation> tags = new HashSet<>();
+    private final Set<TagKey<Item>> tags = new HashSet<>();
 
     private final Supplier<ItemStack> filterGetter;
 
@@ -47,7 +50,7 @@ public class FilterModuleInventory {
         ListTag tagList = tagCompound.getList("Tags", Tag.TAG_STRING);
         for (int i = 0 ; i < tagList.size() ; i++) {
             String s = tagList.getString(i);
-            tags.add(new ResourceLocation(s));
+            tags.add(TagKey.create(Registry.ITEM.key(), new ResourceLocation(s)));
         }
     }
 
@@ -74,11 +77,11 @@ public class FilterModuleInventory {
         stacks.remove(idx);
     }
 
-    public void removeTag(ResourceLocation id) {
+    public void removeTag(TagKey<Item> id) {
         tags.remove(id);
     }
 
-    public void addTag(ResourceLocation id) {
+    public void addTag(TagKey<Item> id) {
         tags.add(id);
     }
 
@@ -86,7 +89,7 @@ public class FilterModuleInventory {
         return stacks;
     }
 
-    public Set<ResourceLocation> getTags() {
+    public Set<TagKey<Item>> getTags() {
         return tags;
     }
 
@@ -106,8 +109,8 @@ public class FilterModuleInventory {
             tagCompound.put("Items", itemList);
 
             ListTag tagList = new ListTag();
-            for (ResourceLocation tag : tags) {
-                tagList.add(StringTag.valueOf(tag.toString()));
+            for (TagKey<Item> tag : tags) {
+                tagList.add(StringTag.valueOf(tag.location().toString()));
             }
             tagCompound.put("Tags", tagList);
         }

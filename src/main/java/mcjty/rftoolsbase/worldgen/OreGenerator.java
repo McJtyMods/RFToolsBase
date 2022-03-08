@@ -2,10 +2,9 @@ package mcjty.rftoolsbase.worldgen;
 
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import mcjty.rftoolsbase.modules.worldgen.config.WorldGenConfig;
-import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -14,7 +13,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
@@ -25,15 +23,15 @@ public class OreGenerator {
 
     public static final RuleTest IN_ENDSTONE = new TagMatchTest(Tags.Blocks.END_STONES);
 
-    public static PlacedFeature DIMENSION_SHARDS;
-    public static PlacedFeature OVERWORLD_SHARDS;
-    public static PlacedFeature NETHER_SHARDS;
-    public static PlacedFeature END_SHARDS;
+    public static Holder<PlacedFeature> DIMENSION_SHARDS;
+    public static Holder<PlacedFeature> OVERWORLD_SHARDS;
+    public static Holder<PlacedFeature> NETHER_SHARDS;
+    public static Holder<PlacedFeature> END_SHARDS;
 
     public static void registerConfiguredFeatures() {
         OreConfiguration dimensionConfig = new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                 WorldGenConfig.DIMENSION_ORE_VEINSIZE.get());
-        DIMENSION_SHARDS = registerPlacedFeature("dimshard_dimensions", Feature.ORE.configured(dimensionConfig),
+        DIMENSION_SHARDS = registerPlacedFeature("dimshard_dimensions", new ConfiguredFeature<>(Feature.ORE, dimensionConfig),
                 CountPlacement.of(WorldGenConfig.DIMENSION_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 new DimensionBiomeFilter(id -> !id.equals(Level.OVERWORLD)),
@@ -41,7 +39,7 @@ public class OreGenerator {
 
         OreConfiguration overworldConfig = new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                 WorldGenConfig.OVERWORLD_ORE_VEINSIZE.get());
-        OVERWORLD_SHARDS = registerPlacedFeature("dimshard_overworld", Feature.ORE.configured(overworldConfig),
+        OVERWORLD_SHARDS = registerPlacedFeature("dimshard_overworld", new ConfiguredFeature<>(Feature.ORE, overworldConfig),
                 CountPlacement.of(WorldGenConfig.OVERWORLD_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 new DimensionBiomeFilter(id -> id.equals(Level.OVERWORLD)),
@@ -49,7 +47,7 @@ public class OreGenerator {
 
         OreConfiguration netherConfig = new OreConfiguration(OreFeatures.NETHER_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().defaultBlockState(),
                 WorldGenConfig.NETHER_ORE_VEINSIZE.get());
-        NETHER_SHARDS = registerPlacedFeature("dimshard_nether", Feature.ORE.configured(netherConfig),
+        NETHER_SHARDS = registerPlacedFeature("dimshard_nether", new ConfiguredFeature<>(Feature.ORE, netherConfig),
                 CountPlacement.of(WorldGenConfig.NETHER_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome(),
@@ -57,16 +55,15 @@ public class OreGenerator {
 
         OreConfiguration endConfig = new OreConfiguration(IN_ENDSTONE, WorldGenModule.DIMENSIONAL_SHARD_END.get().defaultBlockState(),
                 WorldGenConfig.END_ORE_VEINSIZE.get());
-        END_SHARDS = registerPlacedFeature("dimshard_end", Feature.ORE.configured(endConfig),
+        END_SHARDS = registerPlacedFeature("dimshard_end", new ConfiguredFeature<>(Feature.ORE, endConfig),
                 CountPlacement.of(WorldGenConfig.END_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome(),
                 HeightRangePlacement.uniform(VerticalAnchor.absolute(WorldGenConfig.END_ORE_MINY.get()), VerticalAnchor.absolute(WorldGenConfig.END_ORE_MAXY.get())));
     }
 
-    private static <C extends FeatureConfiguration, F extends Feature<C>> PlacedFeature registerPlacedFeature(String registryName, ConfiguredFeature<C, F> feature, PlacementModifier... placementModifiers) {
-        PlacedFeature placed = BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_FEATURE, new ResourceLocation(registryName), feature).placed(placementModifiers);
-        return PlacementUtils.register(registryName, placed);
+    private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<PlacedFeature> registerPlacedFeature(String registryName, ConfiguredFeature<C, F> feature, PlacementModifier... placementModifiers) {
+        return PlacementUtils.register(registryName, Holder.direct(feature), placementModifiers);
     }
 
 
