@@ -11,6 +11,7 @@ import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.SafeClientTools;
+import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
@@ -37,9 +38,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static mcjty.lib.gui.widgets.Widgets.*;
 
@@ -149,7 +149,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
         ItemStack stack = inventory.getStacks().get(list.getSelected() - inventory.getTags().size());
 
-        Set<TagKey<Item>> tags = stack.getItem().builtInRegistryHolder().tags().collect(Collectors.toSet());
+        Collection<TagKey<Item>> tags = TagTools.getTags(stack.getItem());
         if (tags.isEmpty()) {
             return;
         }
@@ -221,7 +221,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         panel.userObject(tag.location());
         panel.children(label(tag.location().toString()).desiredWidth(120).horizontalAlignment(HorizontalAlignment.ALIGN_LEFT));
         int i = 5;
-        for (Holder<Item> item : Registry.ITEM.getTagOrEmpty(tag)) {
+        for (Holder<Item> item : TagTools.getItemsForTag(tag)) {
             BlockRender render = new BlockRender().renderItem(new ItemStack(item));
             panel.children(render);
             i--;
@@ -249,7 +249,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         if (!slotIn.getItem().isEmpty()) {
             FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
             if (SafeClientTools.isSneaking()) {
-                slotIn.getItem().getItem().builtInRegistryHolder().tags().forEach(inventory::addTag);
+                TagTools.getTags(slotIn.getItem().getItem()).forEach(inventory::addTag);
             } else {
                 inventory.addStack(slotIn.getItem());
             }

@@ -1,19 +1,17 @@
 package mcjty.rftoolsbase.modules.filter;
 
 import mcjty.lib.varia.ItemStackList;
+import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
-import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class FilterModuleCache implements Predicate<ItemStack> {
     private boolean matchDamage = true;
@@ -53,7 +51,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
 
             if (!tags.isEmpty()) {
                 // @todo not entirey optimal
-                for (TagKey<Item> tag : stack.getItem().builtInRegistryHolder().tags().collect(Collectors.toSet())) {
+                for (TagKey<Item> tag : TagTools.getTags(stack.getItem())) {
                     if (tags.contains(tag)) {
                         match = true;
                         break;

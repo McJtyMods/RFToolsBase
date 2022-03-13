@@ -5,12 +5,12 @@ import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipExtras;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.InventoryTools;
+import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -161,7 +161,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             itemSet.add(s.getItem());
         }
         for (TagKey<Item> tag : inventory.getTags()) {
-            Registry.ITEM.getTagOrEmpty(tag).forEach(i -> itemSet.add(i.value()));
+            TagTools.getItemsForTag(tag).forEach(i -> itemSet.add(i.value()));
         }
         return itemSet.stream().map(item -> Pair.of(new ItemStack(item), ITooltipExtras.NOAMOUNT)).collect(Collectors.toList());
     }
