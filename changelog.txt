@@ -1,3 +1,6 @@
+Upcoming:
+- Fixed a crash with the gui of the filter
+
 1.16-2.1.2:
 - Updated to latest version of McJtyLib
 

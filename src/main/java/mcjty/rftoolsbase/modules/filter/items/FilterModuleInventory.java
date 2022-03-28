@@ -62,14 +62,6 @@ public class FilterModuleInventory {
         stacks.add(toPlace);
     }
 
-    public void removeStack(ItemStack stack) {
-        for (int i = 0 ; i < stacks.size() ; i++) {
-            if (ItemHandlerHelper.canItemStacksStack(stack, stacks.get(i))) {
-                stacks.remove(i);
-            }
-        }
-    }
-
     public void removeStack(int idx) {
         stacks.remove(idx);
     }
