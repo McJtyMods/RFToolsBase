@@ -1,3 +1,6 @@
+Upcoming:
+- Added dimensional shards to the forge:dusts tag
+
 1.18-3.0.7:
 - Port to 1.18.2
 
