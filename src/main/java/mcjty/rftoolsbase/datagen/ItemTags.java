@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.datagen;
 
+import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
@@ -19,6 +20,8 @@ public class ItemTags extends ItemTagsProvider {
     protected void addTags() {
         tag(Tags.Items.ORES)
                 .add(WorldGenModule.DIMENSIONAL_SHARD_END_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD_ITEM.get());
+        tag(Tags.Items.DUSTS)
+                .add(VariousModule.DIMENSIONALSHARD.get());
     }
 
     @Nonnull

@@ -1,3 +1,6 @@
+Upcoming:
+- Added dimensional shards to the forge:dusts tag
+
 1.16-2.1.3:
 - Fixed a crash with the gui of the filter
 
