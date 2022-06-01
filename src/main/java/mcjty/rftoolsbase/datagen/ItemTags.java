@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.datagen;
 
+import mcjty.lib.varia.WrenchChecker;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
@@ -25,6 +26,8 @@ public class ItemTags extends ItemTagsProvider {
                 .add(VariousModule.DIMENSIONALSHARD.get());
         tag(VariousModule.SHARDS_TAG)
                 .add(VariousModule.DIMENSIONALSHARD.get());
+        tag(WrenchChecker.WRENCH_TAG)
+                .add(VariousModule.SMARTWRENCH.get(), VariousModule.SMARTWRENCH_SELECT.get());
     }
 
     @Nonnull

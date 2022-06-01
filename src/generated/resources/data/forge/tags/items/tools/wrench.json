@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "rftoolsbase:smartwrench",
+    "rftoolsbase:smartwrench_select"
+  ]
+}
