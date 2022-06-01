@@ -23,6 +23,8 @@ public class ItemTags extends ItemTagsProvider {
                 .add(WorldGenModule.DIMENSIONAL_SHARD_END_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD_ITEM.get());
         tag(Tags.Items.DUSTS)
                 .add(VariousModule.DIMENSIONALSHARD.get());
+        tag(VariousModule.SHARDS_TAG)
+                .add(VariousModule.DIMENSIONALSHARD.get());
     }
 
     @Nonnull

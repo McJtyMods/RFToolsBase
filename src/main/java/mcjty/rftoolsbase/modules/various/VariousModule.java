@@ -6,6 +6,9 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.items.ManualItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import mcjty.rftoolsbase.setup.Registration;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -26,6 +29,9 @@ public class VariousModule implements IModule {
     public static final RegistryObject<Item> MACHINE_BASE = ITEMS.register("machine_base", () -> new Item(Registration.createStandardProperties()));
 
     public static final RegistryObject<ManualItem> MANUAL = ITEMS.register("manual", ManualItem::new);
+
+    public static final ResourceLocation SHARDS = new ResourceLocation(RFToolsBase.MODID, "shards");
+    public static final TagKey<Item> SHARDS_TAG = TagKey.create(Registry.ITEM_REGISTRY, SHARDS);
 
     private static Item createItem16() {
         return new Item(new Item.Properties().tab(RFToolsBase.setup.getTab()).stacksTo(16));

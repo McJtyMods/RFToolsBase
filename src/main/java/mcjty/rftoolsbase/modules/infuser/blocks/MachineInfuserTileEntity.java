@@ -12,6 +12,7 @@ import mcjty.lib.tileentity.Cap;
 import mcjty.lib.tileentity.CapType;
 import mcjty.lib.tileentity.GenericEnergyStorage;
 import mcjty.lib.tileentity.TickingTileEntity;
+import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
@@ -40,7 +41,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     public static final int SLOT_MACHINEOUTPUT = 1;
 
     public static final Lazy<ContainerFactory> CONTAINER_FACTORY = Lazy.of(() -> new ContainerFactory(2)
-            .slot(specific(VariousModule.DIMENSIONALSHARD.get()).in(), SLOT_SHARDINPUT, 64, 24)
+            .slot(specific(MachineInfuserTileEntity::isShard).in(), SLOT_SHARDINPUT, 64, 24)
             .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
 
@@ -50,7 +51,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
                 if (slot == SLOT_MACHINEOUTPUT) {
                     return isInfusable(stack);
                 } else {
-                    return stack.getItem() == VariousModule.DIMENSIONALSHARD.get();
+                    return isShard(stack);
                 }
             })
             .build();
@@ -96,10 +97,14 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
         } else {
             ItemStack inputStack = items.getStackInSlot(0);
             ItemStack outputStack = items.getStackInSlot(1);
-            if (!inputStack.isEmpty() && inputStack.getItem() == VariousModule.DIMENSIONALSHARD.get() && isInfusable(outputStack)) {
+            if (isShard(inputStack) && isInfusable(outputStack)) {
                 startInfusing();
             }
         }
+    }
+
+    private static boolean isShard(ItemStack stack) {
+        return TagTools.hasTag(stack.getItem(), VariousModule.SHARDS_TAG);
     }
 
     private static boolean isInfusable(ItemStack stack) {
