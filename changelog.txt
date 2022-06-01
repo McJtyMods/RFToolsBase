@@ -1,5 +1,6 @@
 Upcoming:
 - Added dimensional shards to the forge:dusts tag
+- Fixed the machine infuser so that automation will put shards and machines in the right slots
 
 1.18-3.0.7:
 - Port to 1.18.2
