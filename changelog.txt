@@ -1,4 +1,4 @@
-Upcoming:
+1.18-3.0.8:
 - Added dimensional shards to the forge:dusts tag
 - Fixed the machine infuser so that automation will put shards and machines in the right slots
 - Added dimensional shards to the new rftoolsbase:shards tag so that other mods can also add dimensional shards
