@@ -43,7 +43,15 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
             .playerSlots(10, 70));
 
     @Cap(type = CapType.ITEMS_AUTOMATION)
-    private final GenericItemHandler items = new GenericItemHandler(this, CONTAINER_FACTORY.get());
+    private final GenericItemHandler items = GenericItemHandler.create(this, CONTAINER_FACTORY)
+            .insertable((slot, stack) -> {
+                if (slot == SLOT_MACHINEOUTPUT) {
+                    return isInfusable(stack);
+                } else {
+                    return stack.getItem() == VariousModule.DIMENSIONALSHARD.get();
+                }
+            })
+            .build();
 
     @Cap(type = CapType.ENERGY)
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
