@@ -24,6 +24,6 @@ The base class for all RFTools tech mods (and XNet/Deep Resonance)
 [[dependencies.rftoolsbase]]
     modId="mcjtylib"
     mandatory=false
-    versionRange="[1.16-5.1.4,)"
+    versionRange="[1.16-5.1.7,)"
     ordering="AFTER"
     side="BOTH"
