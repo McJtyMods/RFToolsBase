@@ -4,6 +4,7 @@ import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipExtras;
 import mcjty.lib.tooltips.ITooltipSettings;
+import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.InventoryTools;
 import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -13,7 +14,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -102,7 +102,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                     FilterModuleInventory inventory = new FilterModuleInventory(stack);
                     InventoryTools.getItems(te, s -> true).forEach(inventory::addStack);
                     inventory.markDirty();
-                    player.displayClientMessage(new TextComponent(ChatFormatting.GREEN + "Stored inventory contents in filter"), false);
+                    player.displayClientMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Stored inventory contents in filter"), false);
                 } else {
                     BlockState state = world.getBlockState(pos);
                     ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state);
@@ -110,9 +110,9 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                         FilterModuleInventory inventory = new FilterModuleInventory(stack);
                         inventory.addStack(blockStack);
                         inventory.markDirty();
-                        player.displayClientMessage(new TextComponent(ChatFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.displayClientMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     } else {
-                        player.displayClientMessage(new TextComponent(ChatFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.displayClientMessage(ComponentFactory.literal(ChatFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
                     }
                 }
             }
@@ -130,7 +130,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                 @Nonnull
                 @Override
                 public Component getDisplayName() {
-                    return new TextComponent("Filter Module");
+                    return ComponentFactory.literal("Filter Module");
                 }
 
                 @Override

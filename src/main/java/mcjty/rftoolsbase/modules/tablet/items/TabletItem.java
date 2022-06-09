@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.modules.tablet.items;
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipSettings;
+import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.NBTTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
@@ -11,7 +12,6 @@ import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -92,7 +92,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
             ItemStack containingItem = getContainingItem(stack, currentItem);
             if (!containingItem.isEmpty()) {
                 setCurrentSlot(player, stack, currentItem);
-                player.displayClientMessage(new TextComponent("Switched item"), false);
+                player.displayClientMessage(ComponentFactory.literal("Switched item"), false);
                 return;
             }
             tries--;
@@ -163,7 +163,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
             @Nonnull
             @Override
             public Component getDisplayName() {
-                return new TextComponent("Tablet");
+                return ComponentFactory.literal("Tablet");
             }
 
             @Override

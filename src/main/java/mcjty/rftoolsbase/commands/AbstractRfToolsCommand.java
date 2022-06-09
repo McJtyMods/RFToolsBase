@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.commands;
 
+import mcjty.lib.varia.ComponentFactory;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 
 public abstract class AbstractRfToolsCommand implements RfToolsCommand {
@@ -21,7 +21,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = Boolean.parseBoolean(args[index]);
         } catch (NumberFormatException e) {
             value = false;
-            Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid boolean!");
+            Component component = ComponentFactory.literal(ChatFormatting.RED + "Parameter is not a valid boolean!");
             if (sender != null) {
                 sender.displayClientMessage(component, false);
             }
@@ -37,7 +37,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = Integer.parseInt(args[index]);
         } catch (NumberFormatException e) {
             value = 0;
-            Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid integer!");
+            Component component = ComponentFactory.literal(ChatFormatting.RED + "Parameter is not a valid integer!");
             if (sender != null) {
                 sender.displayClientMessage(component, false);
             }
@@ -53,7 +53,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = Float.parseFloat(args[index]);
         } catch (NumberFormatException e) {
             value = 0.0f;
-            Component component = new TextComponent(ChatFormatting.RED + "Parameter is not a valid real number!");
+            Component component = ComponentFactory.literal(ChatFormatting.RED + "Parameter is not a valid real number!");
             if (sender != null) {
                 sender.displayClientMessage(component, false);
             }

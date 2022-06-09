@@ -10,6 +10,7 @@ import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
+import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -27,7 +28,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
@@ -260,10 +260,10 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     @Nonnull
     @Override
-    public List<Component> getTooltipFromItem(@Nonnull ItemStack p_231151_1_) {
-        List<Component> list = super.getTooltipFromItem(p_231151_1_);
-        list.add(new TextComponent(ChatFormatting.GOLD + "Click to add to filter"));
-        list.add(new TextComponent(ChatFormatting.GOLD + "Shift-Click to add tags to filter"));
+    public List<Component> getTooltipFromItem(@Nonnull ItemStack stack) {
+        List<Component> list = super.getTooltipFromItem(stack);
+        list.add(ComponentFactory.literal(ChatFormatting.GOLD + "Click to add to filter"));
+        list.add(ComponentFactory.literal(ChatFormatting.GOLD + "Shift-Click to add tags to filter"));
         return list;
     }
 
