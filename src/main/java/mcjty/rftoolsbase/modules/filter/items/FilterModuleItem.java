@@ -7,6 +7,7 @@ import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.InventoryTools;
 import mcjty.lib.varia.TagTools;
+import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
 import mcjty.rftoolsbase.tools.ManualHelper;
@@ -84,7 +85,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     @Override
     public void appendHoverText(@Nonnull ItemStack itemStack, @Nullable Level worldIn, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(itemStack, worldIn, list, flagIn);
-        tooltipBuilder.get().makeTooltip(getRegistryName(), itemStack, list, flagIn);
+        tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flagIn);
     }
 
     @Nonnull

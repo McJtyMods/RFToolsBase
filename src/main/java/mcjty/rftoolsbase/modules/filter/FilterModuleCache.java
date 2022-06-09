@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.modules.filter;
 
 import mcjty.lib.varia.ItemStackList;
 import mcjty.lib.varia.TagTools;
+import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.TagKey;
@@ -46,7 +47,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
             boolean match = false;
             String modName = "";
             if (modMode) {
-                modName = stack.getItem().getRegistryName().getNamespace();
+                modName = Tools.getId(stack).getNamespace();
             }
 
             if (!tags.isEmpty()) {
@@ -76,7 +77,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
                     continue;
                 }
                 if (modMode) {
-                    if (modName.equals(itemStack.getItem().getRegistryName().getNamespace())) {
+                    if (modName.equals(Tools.getId(itemStack).getNamespace())) {
                         return true;
                     }
                 } else if (itemStack.getItem().equals(stack.getItem())) {

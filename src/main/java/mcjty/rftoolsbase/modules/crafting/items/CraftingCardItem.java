@@ -5,6 +5,7 @@ import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.ItemStackList;
+import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -149,7 +150,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     @Override
     public void appendHoverText(@Nonnull ItemStack stack, @Nullable Level worldIn, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, list, flagIn);
-        tooltipBuilder.get().makeTooltip(getRegistryName(), stack, list, flagIn);
+        tooltipBuilder.get().makeTooltip(Tools.getId(this), stack, list, flagIn);
         // @todo tooltip icons
     }
 
