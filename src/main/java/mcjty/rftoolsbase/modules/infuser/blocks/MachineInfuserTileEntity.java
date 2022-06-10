@@ -113,7 +113,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
     @Nonnull
     private static Optional<ItemStack> getStackIfInfusable(ItemStack stack) {
-        if (stack.isEmpty() || stack.getCount() != 1) {
+        if (stack.isEmpty()) {
             return Optional.empty();
         }
 
