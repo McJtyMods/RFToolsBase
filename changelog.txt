@@ -1,4 +1,4 @@
-Upcoming:
+1.18-3.0.9:
 - Fixed a problem with the machine infuser no longer accepting machines to infuse
 
 1.18-3.0.8:
