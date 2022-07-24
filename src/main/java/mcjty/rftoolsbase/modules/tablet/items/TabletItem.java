@@ -160,7 +160,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     private void openTabletGui(Player player) {
-        NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
+        NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
             @Nonnull
             @Override
             public Component getDisplayName() {

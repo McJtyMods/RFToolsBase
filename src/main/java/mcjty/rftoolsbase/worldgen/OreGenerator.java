@@ -6,8 +6,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -17,7 +15,6 @@ import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 public class OreGenerator {
 
@@ -67,14 +64,15 @@ public class OreGenerator {
     }
 
 
-    public static void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.BiomeCategory.NETHER) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, NETHER_SHARDS);
-        } else if (event.getCategory() == Biome.BiomeCategory.THEEND) {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, END_SHARDS);
-        } else {
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OVERWORLD_SHARDS);
-            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DIMENSION_SHARDS);
-        }
-    }
+    // @todo 1.19 biome decorator
+//    public static void onBiomeLoadingEvent(BiomeLoadingEvent event) {
+//        if (event.getCategory() == Biome.BiomeCategory.NETHER) {
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, NETHER_SHARDS);
+//        } else if (event.getCategory() == Biome.BiomeCategory.THEEND) {
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, END_SHARDS);
+//        } else {
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OVERWORLD_SHARDS);
+//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DIMENSION_SHARDS);
+//        }
+//    }
 }

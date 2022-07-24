@@ -4,32 +4,32 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.gui.ingredient.IGuiIngredient;
+import mezz.jei.api.gui.ingredient.IRecipeSlotView;
+import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @JeiPlugin
 public class RFToolsBaseJeiPlugin implements IModPlugin {
 
-    public static void transferRecipe(Map<Integer, ? extends IGuiIngredient<ItemStack>> guiIngredients) {
+    public static void transferRecipe(List<IRecipeSlotView> slotViews) {
         List<ItemStack> items = new ArrayList<>(10);
         for (int i = 0 ; i < 10 ; i++) {
             items.add(ItemStack.EMPTY);
         }
-        for (Map.Entry<Integer, ? extends IGuiIngredient<ItemStack>> entry : guiIngredients.entrySet()) {
-            int recipeSlot = entry.getKey();
-            List<ItemStack> allIngredients = entry.getValue().getAllIngredients();
+        for (int i = 0 ; i < slotViews.size() ; i++) {
+            List<ITypedIngredient<?>> allIngredients = slotViews.get(i).getAllIngredients().collect(Collectors.toList());
             if (!allIngredients.isEmpty()) {
-                items.set(recipeSlot, allIngredients.get(0));
+                ItemStack stack = (ItemStack) allIngredients.get(0).getIngredient();    // @todo 1.19 is this correct?
+                items.set(i, stack);
             }
         }
-
         RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendRecipe(items));
     }
 

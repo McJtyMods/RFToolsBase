@@ -127,7 +127,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
-            NetworkHooks.openGui((ServerPlayer) player, new MenuProvider() {
+            NetworkHooks.openScreen((ServerPlayer) player, new MenuProvider() {
                 @Nonnull
                 @Override
                 public Component getDisplayName() {

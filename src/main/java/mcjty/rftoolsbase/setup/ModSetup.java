@@ -33,9 +33,9 @@ public class ModSetup extends DefaultModSetup {
         });
 
         RFToolsBaseMessages.registerMessages("rftoolsbase");
-        MinecraftForge.EVENT_BUS.addListener((TickEvent.WorldTickEvent event) -> {
-            if (!event.world.isClientSide) {
-                TickOrderHandler.postWorldTick(event.world.dimension());
+        MinecraftForge.EVENT_BUS.addListener((TickEvent.LevelTickEvent event) -> {
+            if (!event.level.isClientSide) {
+                TickOrderHandler.postWorldTick(event.level.dimension());
             }
         });
     }

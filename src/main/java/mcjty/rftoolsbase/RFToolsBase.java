@@ -51,7 +51,7 @@ public class RFToolsBase {
         modbus.addListener(modules::init);
         modbus.addListener(setup::registerCapabilities);
         MinecraftForge.EVENT_BUS.addListener((ServerStartedEvent e) -> TickOrderHandler.clean());
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGenerator::onBiomeLoadingEvent);
+//        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, OreGenerator::onBiomeLoadingEvent);  // @todo 1.19
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             modbus.addListener(ClientSetup::init);
             modbus.addListener(modules::initClient);

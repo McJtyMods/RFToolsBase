@@ -50,6 +50,12 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         public boolean stillValid(@Nonnull Player playerIn) {
             return false;
         }
+
+        // @todo 1.19 is this right?
+        @Override
+        public ItemStack quickMoveStack(Player player, int slot) {
+            return ItemStack.EMPTY;
+        }
     }, 3, 3);
 
     @Override
@@ -162,7 +168,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
             return new InteractionResultHolder<>(InteractionResult.PASS, stack);
         }
         if (!world.isClientSide) {
-            NetworkHooks.openGui((ServerPlayer) player, new MenuProvider() {
+            NetworkHooks.openScreen((ServerPlayer) player, new MenuProvider() {
                 @Override
                 @Nonnull
                 public Component getDisplayName() {
