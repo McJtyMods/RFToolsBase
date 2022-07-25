@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "rftoolsbase:dimshard_dimensions",
+  "step": "underground_ores"
+}

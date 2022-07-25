@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_nether",
+  "features": "rftoolsbase:dimshard_nether",
+  "step": "underground_ores"
+}

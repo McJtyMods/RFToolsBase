@@ -62,17 +62,4 @@ public class OreGenerator {
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<PlacedFeature> registerPlacedFeature(String registryName, ConfiguredFeature<C, F> feature, PlacementModifier... placementModifiers) {
         return PlacementUtils.register(registryName, Holder.direct(feature), placementModifiers);
     }
-
-
-    // @todo 1.19 biome decorator
-//    public static void onBiomeLoadingEvent(BiomeLoadingEvent event) {
-//        if (event.getCategory() == Biome.BiomeCategory.NETHER) {
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, NETHER_SHARDS);
-//        } else if (event.getCategory() == Biome.BiomeCategory.THEEND) {
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, END_SHARDS);
-//        } else {
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OVERWORLD_SHARDS);
-//            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DIMENSION_SHARDS);
-//        }
-//    }
 }
