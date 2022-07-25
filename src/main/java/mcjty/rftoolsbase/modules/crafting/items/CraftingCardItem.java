@@ -51,7 +51,6 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
             return false;
         }
 
-        // @todo 1.19 is this right?
         @Override
         public ItemStack quickMoveStack(Player player, int slot) {
             return ItemStack.EMPTY;
