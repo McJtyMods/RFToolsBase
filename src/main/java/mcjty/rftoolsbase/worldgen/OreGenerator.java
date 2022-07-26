@@ -28,7 +28,7 @@ public class OreGenerator {
     public static void registerConfiguredFeatures() {
         OreConfiguration dimensionConfig = new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                 WorldGenConfig.DIMENSION_ORE_VEINSIZE.get());
-        DIMENSION_SHARDS = registerPlacedFeature("dimshard_dimensions", new ConfiguredFeature<>(Feature.ORE, dimensionConfig),
+        DIMENSION_SHARDS = registerPlacedFeature("rftoolsbase:dimshard_dimensions", new ConfiguredFeature<>(Feature.ORE, dimensionConfig),
                 CountPlacement.of(WorldGenConfig.DIMENSION_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 new DimensionBiomeFilter(id -> !id.equals(Level.OVERWORLD)),
@@ -36,7 +36,7 @@ public class OreGenerator {
 
         OreConfiguration overworldConfig = new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                 WorldGenConfig.OVERWORLD_ORE_VEINSIZE.get());
-        OVERWORLD_SHARDS = registerPlacedFeature("dimshard_overworld", new ConfiguredFeature<>(Feature.ORE, overworldConfig),
+        OVERWORLD_SHARDS = registerPlacedFeature("rftoolsbase:dimshard_overworld", new ConfiguredFeature<>(Feature.ORE, overworldConfig),
                 CountPlacement.of(WorldGenConfig.OVERWORLD_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 new DimensionBiomeFilter(id -> id.equals(Level.OVERWORLD)),
@@ -44,7 +44,7 @@ public class OreGenerator {
 
         OreConfiguration netherConfig = new OreConfiguration(OreFeatures.NETHER_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().defaultBlockState(),
                 WorldGenConfig.NETHER_ORE_VEINSIZE.get());
-        NETHER_SHARDS = registerPlacedFeature("dimshard_nether", new ConfiguredFeature<>(Feature.ORE, netherConfig),
+        NETHER_SHARDS = registerPlacedFeature("rftoolsbase:dimshard_nether", new ConfiguredFeature<>(Feature.ORE, netherConfig),
                 CountPlacement.of(WorldGenConfig.NETHER_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome(),
@@ -52,7 +52,7 @@ public class OreGenerator {
 
         OreConfiguration endConfig = new OreConfiguration(IN_ENDSTONE, WorldGenModule.DIMENSIONAL_SHARD_END.get().defaultBlockState(),
                 WorldGenConfig.END_ORE_VEINSIZE.get());
-        END_SHARDS = registerPlacedFeature("dimshard_end", new ConfiguredFeature<>(Feature.ORE, endConfig),
+        END_SHARDS = registerPlacedFeature("rftoolsbase:dimshard_end", new ConfiguredFeature<>(Feature.ORE, endConfig),
                 CountPlacement.of(WorldGenConfig.END_ORE_CHANCES.get()),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome(),
