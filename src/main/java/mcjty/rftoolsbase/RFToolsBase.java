@@ -53,6 +53,7 @@ public class RFToolsBase {
         MinecraftForge.EVENT_BUS.addListener((ServerStartedEvent e) -> TickOrderHandler.clean());
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             modbus.addListener(ClientSetup::init);
+            modbus.addListener(ClientSetup::registerKeyBinds);
             modbus.addListener(modules::initClient);
         });
     }
