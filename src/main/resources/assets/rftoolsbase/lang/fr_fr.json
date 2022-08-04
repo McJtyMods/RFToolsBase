@@ -1,0 +1,73 @@
+{
+    "item.rftoolsbase.network_monitor": "Moniteur de réseau RF",
+    "item.rftoolsbase.teleport_probe": "Sonde de téléportation",
+    "item.rftoolsbase.filter_module": "Module de filtrage",
+    "item.rftoolsbase.developers_delight": "Délice des développeurs",
+    "item.rftoolsbase.shard_wand": "Baguette d'éclat",
+    "item.rftoolsbase.orphaning_card": "Carte orpheline",
+    "item.rftoolsbase.security_card": "Carte de sécurité",
+    "item.rftoolsbase.infused_diamond": "Diamant infusé",
+    "item.rftoolsbase.infused_enderpearl": "Perle de l'Ender infusée",
+    "item.rftoolsbase.smartwrench": "Clé intelligente",
+    "item.rftoolsbase.smartwrench_select": "Clé intelligente (sélectionner)",
+    "item.rftoolsbase.dimensionalshard": "Éclat dimensionnel",
+    "item.rftoolsbase.machine_frame": "Châssis de machine",
+    "item.rftoolsbase.machine_base": "Base de machine",
+    "item.rftoolsbase.crafting_card": "Carte d'artisanat",
+    "item.rftoolsbase.tablet": "Tablette (vide)",
+    "item.rftoolsbase.tablet_filled": "Tablette (rempli)",
+    "item.rftoolsbase.manual": "Guide technologique",
+
+    "block.rftoolsbase.machine_infuser": "Infuseur automatique",
+    "block.rftoolsbase.security_manager": "Gestionnaire de sécurité",
+    "block.rftoolsbase.dimensionalshard_overworld": "Minerai d'éclat dimensionnel",
+    "block.rftoolsbase.dimensionalshard_nether": "Minerai d'éclat dimensionnel",
+    "block.rftoolsbase.dimensionalshard_end": "Minerai d'éclat dimensionnel",
+    "block.rftoolsbase.information_screen": "Écran d'informations",
+
+    "_comment": "Creative Tabs",
+    "itemGroup.rftoolsbase": "RFTools Base",
+
+    "_comment": "Keys",
+    "key.categories.rftools": "RFTools",
+    "key.debugDumpNBTItem": "Copier les NBT pour l'objet en main",
+    "key.debugDumpNBTBlock": "Copier les NBT pour le bloc sélectionné",
+    "key.nextDestination": "Passer à la cible suivante",
+    "key.prevDestination": "Passer à la cible précédente",
+
+    "_comment": "Messages",
+    "message.rftoolsbase.shiftmessage": "<Appuyez sur Maj>",
+
+    "message.rftoolsbase.crafting_card.header": "Cet objet peut être utilisé pour l'artisanat. Il stocke les ingrédients et le résultat final d'une recette",
+    "message.rftoolsbase.crafting_card.info": "Objet : ",
+
+    "message.rftoolsbase.information_screen.header": "Placez ce bloc sur une cellule d'énergie pour afficher des informations sur cette cellule. Faites un clic droit avec une clé pour changer de mode",
+    "message.rftoolsbase.information_screen.gold": "Ce bloc peut également afficher des informations sur l'alimentation de tout bloc prenant en charge RF/FE",
+
+    "message.rftoolsbase.machine_infuser.header": "Avec cette machine, vous pouvez améliorer la plupart des autres machines dans RFTools de différentes manières. Cela nécessite des fragments dimensionnels",
+    "message.rftoolsbase.machine_infuser.gold": "Bonus d'infusion : consommation d'énergie réduite",
+
+    "message.rftoolsbase.filter_module.header": "Ce module de filtrage est utilisé dans diverses situations (XNet, stockage, constructeur, artisan, ...). Il peut s'assurer que le bloc n'accepte que certains éléments",
+    "message.rftoolsbase.filter_module.gold": "Faites un clic droit accroupi sur un inventaire pour le configurer en fonction du contenu ou sur un bloc pour ajouter ce bloc au filtre",
+    "message.rftoolsbase.filter_module.info": "Mode : ",
+
+    "message.rftoolsbase.manual.header": "Ce guide est le manuel de tous les mods technologiques basés sur RFTools",
+
+    "message.rftoolsbase.tablet.header": "Tablette pouvant être utilisée pour référencer des interfaces graphiques et des informations à distance",
+    "message.rftoolsbase.tablet.gold": "Tablette vide : ouvrez l'interface graphique à combiner avec un éventuel objet d'information de la tablette",
+
+    "message.rftoolsbase.tablet_filled.header": "Tablette pouvant être utilisée pour référencer des interfaces graphiques et des informations à distance",
+    "message.rftoolsbase.tablet_filled.gold": "Tablette contenant des informations : clic droit pour l'interface graphique d'informations, clic droit accroupi pour l'interface graphique de la tablette",
+
+    "message.rftoolsbase.smartwrench.header": "Clé intelligente générale. Faites un clic droit sur air pour changer de mode",
+    "message.rftoolsbase.smartwrench.gold": "Utiliser comme une clé normale : faites un clic droit accroupi pour ramasser et faites un clic droit pour faire pivoter",
+    "message.rftoolsbase.smartwrench.info1": "Mode : ",
+    "message.rftoolsbase.smartwrench.info2": "Bloc : ",
+
+    "message.rftoolsbase.smartwrench_select.header": "Clé intelligente générale. Faites un clic droit en l'air pour changer de mode",
+    "message.rftoolsbase.smartwrench_select.gold": "Utiliser comme sélecteur de bloc : faites un clic droit accroupi pour sélectionner le bloc maître et cliquez avec le bouton droit pour associer des blocs au maître",
+    "message.rftoolsbase.smartwrench_select.info1": "Mode : ",
+    "message.rftoolsbase.smartwrench_select.info2": "Bloc: ",
+
+    "message.rftoolsbase.security_manager": "@aContenu: %s piles\n@fCe bloc gère vos cartes de sécurité"
+}
