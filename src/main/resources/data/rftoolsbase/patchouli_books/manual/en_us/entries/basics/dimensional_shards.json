@@ -2,12 +2,12 @@
   "name": "Dimensional Shards",
   "icon": "rftoolsbase:dimensionalshard",
   "category": "rftoolsbase:category_basics",
-  "extra_recipe_mappings":[
-    ["rftoolsbase:dimensionalshard",0],
-    ["rftoolsbase:dimensionalshard_overworld",0],
-    ["rftoolsbase:dimensionalshard_nether",0],
-    ["rftoolsbase:dimensionalshard_end",0]
-    ],
+  "extra_recipe_mappings": {
+    "rftoolsbase:dimensionalshard": 0,
+    "rftoolsbase:dimensionalshard_overworld": 0,
+    "rftoolsbase:dimensionalshard_nether": 0,
+    "rftoolsbase:dimensionalshard_end": 0
+  },
   "pages": [
     {
       "type": "text",
