@@ -101,7 +101,7 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
         }
         calculateColorsMask();
         String facing = (String) data.get(TAG_FACING);
-        facingOverride = facing == null ? null : Direction.byName(facing);
+        facingOverride = facing == null ? null : Direction.byName(facing.toLowerCase());
     }
 
     protected static <T extends Enum<T>> void setEnumSafe(JsonObject object, String tag, T value) {
