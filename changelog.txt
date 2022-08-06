@@ -1,5 +1,6 @@
 Upcoming:
 - Fixed keybindings
+- You can again change the side of an advanced connector (in the gui)
 
 1.19.1-4.0.1:
 - Fix for 1.19.1
