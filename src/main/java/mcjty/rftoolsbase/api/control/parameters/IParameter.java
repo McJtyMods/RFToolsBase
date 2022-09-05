@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.control.parameters;
 
-public interface IParameter extends Comparable<IParameter> {
+public interface IParameter {
     boolean isSet();
 
     ParameterType getParameterType();
