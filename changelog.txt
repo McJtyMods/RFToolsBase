@@ -1,3 +1,6 @@
+Upcoming:
+- Moved the Parameter class from RFToolsControl to the API
+
 1.19.1-4.0.2:
 - Fixed keybindings
 - You can again change the side of an advanced connector (in the gui)
