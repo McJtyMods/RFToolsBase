@@ -7,7 +7,6 @@ import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.hud.Hud;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
-import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,7 +15,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class ModSetup extends DefaultModSetup {
-
 
     public ModSetup() {
         createTab("rftoolsbase", () -> new ItemStack(VariousModule.SMARTWRENCH.get()));
@@ -28,7 +26,6 @@ public class ModSetup extends DefaultModSetup {
         e.enqueueWork(() -> {
             CommandHandler.registerCommands();
             // Needs to be here: after registration of everything and after reading config
-            OreGenerator.registerConfiguredFeatures();
             McJtyLib.registerListCommandInfo(Hud.COMMAND_GETHUDLOG, String.class, buf -> buf.readUtf(32767), FriendlyByteBuf::writeUtf);
         });
 

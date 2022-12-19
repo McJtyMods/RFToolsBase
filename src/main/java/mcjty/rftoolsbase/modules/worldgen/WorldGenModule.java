@@ -2,14 +2,14 @@ package mcjty.rftoolsbase.modules.worldgen;
 
 import mcjty.lib.modules.IModule;
 import mcjty.rftoolsbase.modules.worldgen.blocks.DimensionalShardBlock;
-import mcjty.rftoolsbase.modules.worldgen.config.WorldGenConfig;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.world.level.block.Block;
+import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.rftoolsbase.setup.Registration.BLOCKS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
@@ -25,6 +25,10 @@ public class WorldGenModule implements IModule {
     public static final RegistryObject<Block> DIMENSIONAL_SHARD_END = BLOCKS.register("dimensionalshard_end", DimensionalShardBlock::new);
     public static final RegistryObject<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", () -> new BlockItem(DIMENSIONAL_SHARD_END.get(), Registration.createStandardProperties()));
 
+    public WorldGenModule() {
+        OreGenerator.init();
+    }
+
     @Override
     public void init(FMLCommonSetupEvent event) {
 
@@ -37,6 +41,5 @@ public class WorldGenModule implements IModule {
 
     @Override
     public void initConfig() {
-        WorldGenConfig.setupWorldgenConfig();
     }
 }
