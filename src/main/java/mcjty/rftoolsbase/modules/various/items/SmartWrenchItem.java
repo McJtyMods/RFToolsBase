@@ -49,9 +49,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                     parameter("info2", stack -> getCurrentBlock(stack).map(BlockPosTools::toString).orElse("<not selected>")));
 
     public SmartWrenchItem(SmartWrenchMode mode) {
-        super(new Properties()
-                .stacksTo(1)
-                .tab(RFToolsBase.setup.getTab()));
+        super(RFToolsBase.setup.defaultProperties().stacksTo(1));
         this.mode = mode;
     }
 

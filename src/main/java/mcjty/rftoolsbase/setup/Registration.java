@@ -43,6 +43,6 @@ public class Registration {
 //            () -> new CountPlacement(CountPlacementConfig.CODEC));
 
     public static Item.Properties createStandardProperties() {
-        return new Item.Properties().tab(RFToolsBase.setup.getTab());
+        return RFToolsBase.setup.defaultProperties();
     }
 }

@@ -72,9 +72,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
 
 
     public FilterModuleItem() {
-        super(new Properties()
-                .stacksTo(1)
-                .tab(RFToolsBase.setup.getTab()));
+        super(RFToolsBase.setup.defaultProperties().stacksTo(1));
     }
 
     @Override

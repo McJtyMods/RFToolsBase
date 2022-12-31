@@ -51,9 +51,7 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     public TabletItem() {
-        super(new Properties()
-                .stacksTo(1)
-                .tab(RFToolsBase.setup.getTab()));
+        super(RFToolsBase.setup.defaultProperties().stacksTo(1));
     }
 
     public static int getCurrentSlot(ItemStack stack) {

@@ -10,9 +10,9 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
@@ -34,13 +34,11 @@ public class VariousModule implements IModule {
     public static final TagKey<Item> SHARDS_TAG = TagKey.create(Registry.ITEM_REGISTRY, SHARDS);
 
     private static Item createItem16() {
-        return new Item(new Item.Properties().tab(RFToolsBase.setup.getTab()).stacksTo(16));
+        return new Item(RFToolsBase.setup.defaultProperties().stacksTo(16));
     }
 
     private static Item createDimensionalShard() {
-        return new Item(new Item.Properties()
-                .stacksTo(64)
-                .tab(RFToolsBase.setup.getTab()));
+        return new Item(RFToolsBase.setup.defaultProperties().stacksTo(64));
     }
 
     @Override

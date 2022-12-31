@@ -77,8 +77,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                     }));
 
     public CraftingCardItem() {
-        super(new Properties()
-                .tab(RFToolsBase.setup.getTab())
+        super(RFToolsBase.setup.defaultProperties()
                 .defaultDurability(0)
                 .stacksTo(1));
     }
