@@ -3,8 +3,8 @@ package mcjty.rftoolsbase.client;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import mcjty.lib.client.CustomRenderTypes;
+import mcjty.lib.client.RenderHelper;
 import mcjty.rftoolsbase.RFToolsBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -43,8 +43,7 @@ public class RenderWorldLastEventHandler {
         Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
-        Matrix4f positionMatrix = matrixStack.last().pose();
-        mcjty.lib.client.RenderHelper.renderHighLightedBlocksOutline(builder, positionMatrix, c.getX(), c.getY(), c.getZ(), 1.0f, 0.0f, 0.0f, 1.0f);
+        RenderHelper.renderHighLightedBlocksOutline(matrixStack, builder, c.getX(), c.getY(), c.getZ(), 1.0f, 0.0f, 0.0f, 1.0f);
 
         matrixStack.popPose();
         RenderSystem.disableDepthTest();
