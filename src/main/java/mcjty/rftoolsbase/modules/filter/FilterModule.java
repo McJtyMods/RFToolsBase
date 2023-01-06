@@ -1,17 +1,22 @@
 package mcjty.rftoolsbase.modules.filter;
 
+import mcjty.lib.datagen.DataGen;
+import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.filter.client.GuiFilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import static mcjty.lib.datagen.DataGen.has;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
@@ -44,5 +49,16 @@ public class FilterModule implements IModule {
     @Override
     public void initConfig() {
 
+    }
+
+    @Override
+    public void initDatagen(DataGen dataGen) {
+        dataGen.add(
+                Dob.itemBuilder(FILTER_MODULE)
+                        .shaped(builder -> builder
+                                .define('h', Items.HOPPER)
+                                .unlockedBy("hopper", has(Items.HOPPER)),
+                                " h ", "rir", " p ")
+        );
     }
 }

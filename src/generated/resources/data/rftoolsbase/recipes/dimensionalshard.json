@@ -1,19 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "deg",
-    "irG",
-    "qcL"
-  ],
   "key": {
-    "q": {
-      "item": "minecraft:quartz"
-    },
-    "r": {
-      "item": "minecraft:redstone"
-    },
-    "c": {
+    "C": {
       "item": "minecraft:prismarine_shard"
+    },
+    "G": {
+      "tag": "forge:glass"
+    },
+    "X": {
+      "item": "minecraft:glowstone_dust"
     },
     "d": {
       "item": "minecraft:diamond"
@@ -24,16 +19,21 @@
     "g": {
       "item": "minecraft:gold_ingot"
     },
-    "G": {
-      "item": "minecraft:glowstone_dust"
-    },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
-    "L": {
-      "item": "minecraft:glass"
+    "q": {
+      "item": "minecraft:quartz"
+    },
+    "r": {
+      "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "deg",
+    "irX",
+    "qCG"
+  ],
   "result": {
     "item": "rftoolsbase:dimensionalshard"
   }

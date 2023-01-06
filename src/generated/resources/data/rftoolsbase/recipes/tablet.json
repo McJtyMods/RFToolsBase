@@ -1,14 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "geg",
-    "RQR",
-    "gRg"
-  ],
   "key": {
-    "g": {
-      "tag": "forge:nuggets/gold"
-    },
     "Q": {
       "tag": "forge:storage_blocks/quartz"
     },
@@ -17,8 +9,16 @@
     },
     "e": {
       "item": "minecraft:emerald"
+    },
+    "g": {
+      "tag": "forge:nuggets/gold"
     }
   },
+  "pattern": [
+    "geg",
+    "RQR",
+    "gRg"
+  ],
   "result": {
     "item": "rftoolsbase:tablet"
   }

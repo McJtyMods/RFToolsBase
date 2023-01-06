@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "---",
-    "rAr"
-  ],
   "key": {
     "-": {
       "tag": "forge:glass_panes"
@@ -15,6 +11,10 @@
       "item": "minecraft:redstone"
     }
   },
+  "pattern": [
+    "---",
+    "rAr"
+  ],
   "result": {
     "item": "rftoolsbase:information_screen"
   }

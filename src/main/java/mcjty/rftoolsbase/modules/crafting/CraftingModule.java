@@ -1,5 +1,7 @@
 package mcjty.rftoolsbase.modules.crafting;
 
+import mcjty.lib.datagen.DataGen;
+import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.crafting.client.GuiCraftingCard;
@@ -8,11 +10,13 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import static mcjty.lib.datagen.DataGen.has;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
@@ -45,5 +49,17 @@ public class CraftingModule implements IModule {
     @Override
     public void initConfig() {
 
+    }
+
+    @Override
+    public void initDatagen(DataGen dataGen) {
+        dataGen.add(
+                Dob.itemBuilder(CRAFTING_CARD)
+                        .shaped(builder -> builder
+                                .define('C', Items.CRAFTING_TABLE)
+                                .unlockedBy("crafter", has(Items.CRAFTING_TABLE)),
+                                8,
+                                "pC", "rp")
+        );
     }
 }

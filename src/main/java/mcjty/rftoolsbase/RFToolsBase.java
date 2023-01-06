@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase;
 
+import mcjty.lib.datagen.DataGen;
 import mcjty.lib.modules.Modules;
 import mcjty.rftoolsbase.client.ClientInfo;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
@@ -17,6 +18,7 @@ import mcjty.rftoolsbase.tools.TickOrderHandler;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -46,16 +48,24 @@ public class RFToolsBase {
 
         Registration.register();
 
-        IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
-        modbus.addListener(setup::init);
-        modbus.addListener(modules::init);
-        modbus.addListener(setup::registerCapabilities);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(setup::init);
+        bus.addListener(modules::init);
+        bus.addListener(setup::registerCapabilities);
+        bus.addListener(this::onDataGen);
+
         MinecraftForge.EVENT_BUS.addListener((ServerStartedEvent e) -> TickOrderHandler.clean());
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-            modbus.addListener(ClientSetup::init);
-            modbus.addListener(ClientSetup::registerKeyBinds);
-            modbus.addListener(modules::initClient);
+            bus.addListener(ClientSetup::init);
+            bus.addListener(ClientSetup::registerKeyBinds);
+            bus.addListener(modules::initClient);
         });
+    }
+
+    private void onDataGen(GatherDataEvent event) {
+        DataGen datagen = new DataGen(MODID, event);
+        modules.datagen(datagen);
+        datagen.generate();
     }
 
     private void setupModules() {

@@ -2,15 +2,15 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "informationscreen",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "name": "rftoolsbase:information_screen"
         }
-      ]
+      ],
+      "name": "information_screen",
+      "rolls": 1.0
     }
   ]
 }

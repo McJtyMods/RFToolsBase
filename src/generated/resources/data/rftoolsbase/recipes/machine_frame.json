@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ili",
-    "g g",
-    "ili"
-  ],
   "key": {
     "g": {
       "item": "minecraft:gold_nugget"
     },
     "i": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     "l": {
       "tag": "forge:dyes/blue"
     }
   },
+  "pattern": [
+    "ili",
+    "g g",
+    "ili"
+  ],
   "result": {
     "item": "rftoolsbase:machine_frame"
   }

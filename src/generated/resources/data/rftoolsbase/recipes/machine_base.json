@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ggg",
-    "sss"
-  ],
   "key": {
     "g": {
       "item": "minecraft:gold_nugget"
@@ -12,6 +8,10 @@
       "tag": "forge:stone"
     }
   },
+  "pattern": [
+    "ggg",
+    "sss"
+  ],
   "result": {
     "item": "rftoolsbase:machine_base"
   }

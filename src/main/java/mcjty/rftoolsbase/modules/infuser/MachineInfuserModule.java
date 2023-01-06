@@ -2,18 +2,23 @@ package mcjty.rftoolsbase.modules.infuser;
 
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.container.GenericContainer;
+import mcjty.lib.datagen.DataGen;
+import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import mcjty.rftoolsbase.modules.infuser.client.GuiMachineInfuser;
+import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.Registration;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.rftoolsbase.setup.Registration.*;
 
@@ -37,5 +42,19 @@ public class MachineInfuserModule implements IModule {
     @Override
     public void initConfig() {
         MachineInfuserConfiguration.init(Config.SERVER_BUILDER);
+    }
+
+    @Override
+    public void initDatagen(DataGen dataGen) {
+        dataGen.add(
+                Dob.blockBuilder(MACHINE_INFUSER)
+                        .ironPickaxeTags()
+                        .standardLoot(TYPE_MACHINE_INFUSER)
+                        .shaped(builder -> builder
+                                .define('s', VariousModule.DIMENSIONALSHARD.get())
+                                .define('M', VariousModule.MACHINE_FRAME.get())
+                                .unlockedBy("machine_frame", InventoryChangeTrigger.TriggerInstance.hasItems(VariousModule.MACHINE_FRAME.get(), VariousModule.DIMENSIONALSHARD.get())),
+                                "srs", "dMd", "srs")
+        );
     }
 }
