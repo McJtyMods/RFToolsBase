@@ -71,13 +71,13 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
     }
 
     // @todo 1.19.3
-//    @Override
-//    public Collection<CreativeModeTab> getCreativeTabs() {
-//        if (this == TabletModule.TABLET.get()) {
-//            return super.getCreativeTabs();
-//        }
-//        return Collections.emptyList();
-//    }
+    @Override
+    public Collection<CreativeModeTab> getCreativeTabs() {
+        if (this == TabletModule.TABLET.get()) {
+            return super.getCreativeTabs();
+        }
+        return Collections.emptyList();
+    }
 
     @Override
     public void cycle(Player player, ItemStack stack, boolean next) {
