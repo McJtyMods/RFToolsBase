@@ -1,0 +1,27 @@
+{
+  "feature": "rftoolsbase:dimshard_overworld",
+  "placement": [
+    {
+      "count": 6,
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "min_inclusive": {
+          "absolute": -15
+        },
+        "max_inclusive": {
+          "absolute": 40
+        }
+      }
+    },
+    {
+      "type": "rftoolsbase:filter_dimensions"
+    }
+  ]
+}
