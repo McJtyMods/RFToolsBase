@@ -70,13 +70,14 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
         return player.getUsedItemHand() == null ? InteractionHand.MAIN_HAND : player.getUsedItemHand();
     }
 
-    @Override
-    public Collection<CreativeModeTab> getCreativeTabs() {
-        if (this == TabletModule.TABLET.get()) {
-            return super.getCreativeTabs();
-        }
-        return Collections.emptyList();
-    }
+    // @todo 1.19.3
+//    @Override
+//    public Collection<CreativeModeTab> getCreativeTabs() {
+//        if (this == TabletModule.TABLET.get()) {
+//            return super.getCreativeTabs();
+//        }
+//        return Collections.emptyList();
+//    }
 
     @Override
     public void cycle(Player player, ItemStack stack, boolean next) {

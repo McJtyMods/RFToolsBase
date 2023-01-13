@@ -25,7 +25,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -130,7 +129,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         selector.create(window, TagSelectorWindow.TYPE_BOTH, t -> {
             if (t != null) {
                 FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
-                inventory.addTag(TagKey.create(Registry.ITEM.key(), new ResourceLocation(t)));
+                inventory.addTag(TagTools.createItemTagKey(new ResourceLocation(t)));
                 inventory.markDirty();
                 refresh();
             }
@@ -173,7 +172,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
             inventory.removeStack(list.getSelected()-inventory.getTags().size());
         } else {
             ResourceLocation location = (ResourceLocation) list.getChild(list.getSelected()).getUserObject();
-            TagKey<Item> tag = TagKey.create(Registry.ITEM.key(), location);
+            TagKey<Item> tag = TagTools.createItemTagKey(location);
             inventory.removeTag(tag);
         }
         inventory.markDirty();

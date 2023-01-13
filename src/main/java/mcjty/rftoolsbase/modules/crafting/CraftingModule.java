@@ -17,12 +17,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.lib.datagen.DataGen.has;
+import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class CraftingModule implements IModule {
 
-    public static final RegistryObject<Item> CRAFTING_CARD = ITEMS.register("crafting_card", CraftingCardItem::new);
+    public static final RegistryObject<Item> CRAFTING_CARD = ITEMS.register("crafting_card", tab(CraftingCardItem::new));
     public static final RegistryObject<MenuType<CraftingCardContainer>> CONTAINER_CRAFTING_CARD = CONTAINERS.register("crafting_card", CraftingModule::createCraftingContainer);
 
     private static MenuType<CraftingCardContainer> createCraftingContainer() {

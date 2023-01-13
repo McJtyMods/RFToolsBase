@@ -20,12 +20,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.*;
 
 public class MachineInfuserModule implements IModule {
 
     public static final RegistryObject<BaseBlock> MACHINE_INFUSER = BLOCKS.register("machine_infuser", MachineInfuserTileEntity::createBlock);
-    public static final RegistryObject<Item> MACHINE_INFUSER_ITEM = ITEMS.register("machine_infuser", () -> new BlockItem(MACHINE_INFUSER.get(), Registration.createStandardProperties()));
+    public static final RegistryObject<Item> MACHINE_INFUSER_ITEM = ITEMS.register("machine_infuser", tab(() -> new BlockItem(MACHINE_INFUSER.get(), Registration.createStandardProperties())));
     public static final RegistryObject<BlockEntityType<?>> TYPE_MACHINE_INFUSER = TILES.register("machine_infuser", () -> BlockEntityType.Builder.of(MachineInfuserTileEntity::new, MACHINE_INFUSER.get()).build(null));
     public static final RegistryObject<MenuType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 

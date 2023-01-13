@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.varia.ItemStackList;
+import mcjty.lib.varia.TagTools;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -50,7 +51,7 @@ public class FilterModuleInventory {
         ListTag tagList = tagCompound.getList("Tags", Tag.TAG_STRING);
         for (int i = 0 ; i < tagList.size() ; i++) {
             String s = tagList.getString(i);
-            tags.add(TagKey.create(Registry.ITEM.key(), new ResourceLocation(s)));
+            tags.add(TagTools.createItemTagKey(new ResourceLocation(s)));
         }
     }
 

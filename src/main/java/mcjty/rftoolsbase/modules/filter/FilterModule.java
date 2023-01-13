@@ -17,12 +17,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.lib.datagen.DataGen.has;
+import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class FilterModule implements IModule {
 
-    public static final RegistryObject<FilterModuleItem> FILTER_MODULE = ITEMS.register("filter_module", FilterModuleItem::new);
+    public static final RegistryObject<FilterModuleItem> FILTER_MODULE = ITEMS.register("filter_module", tab(FilterModuleItem::new));
     public static final RegistryObject<MenuType<FilterModuleContainer>> CONTAINER_FILTER_MODULE = CONTAINERS.register("filter_module", FilterModule::createFilterModuleContainer);
 
     private static MenuType<FilterModuleContainer> createFilterModuleContainer() {

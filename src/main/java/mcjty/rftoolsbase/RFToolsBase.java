@@ -16,6 +16,7 @@ import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -25,6 +26,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.function.Supplier;
 
 
 @Mod(RFToolsBase.MODID)
@@ -60,6 +63,11 @@ public class RFToolsBase {
             bus.addListener(ClientSetup::registerKeyBinds);
             bus.addListener(modules::initClient);
         });
+    }
+
+    public static <T extends Item> Supplier<T> tab(Supplier<T> supplier) {
+        instance.setup.tab(supplier);
+        return supplier;
     }
 
     private void onDataGen(GatherDataEvent event) {

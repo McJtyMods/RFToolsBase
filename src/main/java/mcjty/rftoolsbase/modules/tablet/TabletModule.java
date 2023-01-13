@@ -18,12 +18,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import static mcjty.lib.datagen.DataGen.has;
+import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class TabletModule implements IModule {
 
-    public static final RegistryObject<TabletItem> TABLET = ITEMS.register("tablet", TabletItem::new);
+    public static final RegistryObject<TabletItem> TABLET = ITEMS.register("tablet", tab(TabletItem::new));
     public static final RegistryObject<MenuType<TabletContainer>> CONTAINER_TABLET = CONTAINERS.register("tablet", TabletModule::createTabletContainer);
 
     public static final RegistryObject<TabletItem> TABLET_FILLED = ITEMS.register("tablet_filled", TabletItem::new);

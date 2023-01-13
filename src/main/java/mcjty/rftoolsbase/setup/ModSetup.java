@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.setup.DefaultModSetup;
+import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.infoscreen.CapabilityInformationScreenInfo;
 import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.hud.Hud;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 public class ModSetup extends DefaultModSetup {
 
     public ModSetup() {
-        createTab("rftoolsbase", () -> new ItemStack(VariousModule.SMARTWRENCH.get()));
+        createTab(RFToolsBase.MODID, "rftoolsbase", () -> new ItemStack(VariousModule.SMARTWRENCH.get()));
     }
 
     @Override

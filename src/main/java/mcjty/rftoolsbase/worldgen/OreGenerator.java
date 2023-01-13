@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.worldgen;
 import mcjty.rftoolsbase.modules.worldgen.WorldGenModule;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -26,7 +27,7 @@ public class OreGenerator {
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> OVERWORLD_SHARDS = Registration.CONFIGURED_FEATURES.register(
             "dimshard_overworld",
-            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                     5)));
     public static final RegistryObject<PlacedFeature> PLACEMENT_OVERWORLD_SHARDS = Registration.PLACED_FEATURES.register(
             "dimshard_overworld",
@@ -39,7 +40,7 @@ public class OreGenerator {
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> DIMENSION_SHARDS = Registration.CONFIGURED_FEATURES.register(
             "dimshard_dimensions",
-            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get().defaultBlockState(),
                     10)));
     public static final RegistryObject<PlacedFeature> PLACEMENT_DIMENSION_SHARDS = Registration.PLACED_FEATURES.register(
             "dimshard_dimensions",
@@ -52,7 +53,7 @@ public class OreGenerator {
 
     public static final RegistryObject<ConfiguredFeature<?, ?>> NETHER_SHARDS = Registration.CONFIGURED_FEATURES.register(
             "dimshard_nether",
-            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(OreFeatures.NETHER_ORE_REPLACEABLES, WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().defaultBlockState(),
+            () -> new ConfiguredFeature<>(Feature.ORE, new OreConfiguration(new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES), WorldGenModule.DIMENSIONAL_SHARD_NETHER.get().defaultBlockState(),
                     8)));
     public static final RegistryObject<PlacedFeature> PLACEMENT_NETHER_SHARDS = Registration.PLACED_FEATURES.register(
             "dimshard_nether",
