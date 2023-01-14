@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.modules.tablet.items;
 
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.gui.ManualEntry;
+import mcjty.lib.items.BaseItem;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.NBTTools;
@@ -21,8 +22,6 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -30,14 +29,13 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.rftoolsbase.modules.tablet.items.TabletContainer.NUM_SLOTS;
 
-public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
+public class TabletItem extends BaseItem implements IItemCycler, ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/tablet");
 
@@ -70,14 +68,11 @@ public class TabletItem extends Item implements IItemCycler, ITooltipSettings {
         return player.getUsedItemHand() == null ? InteractionHand.MAIN_HAND : player.getUsedItemHand();
     }
 
-    // @todo 1.19.3
     @Override
-    public Collection<CreativeModeTab> getCreativeTabs() {
-        if (this == TabletModule.TABLET.get()) {
-            return super.getCreativeTabs();
-        }
-        return Collections.emptyList();
+    public List<ItemStack> getItemsForTab() {
+        return Collections.singletonList(new ItemStack(TabletModule.TABLET.get()));
     }
+
 
     @Override
     public void cycle(Player player, ItemStack stack, boolean next) {
