@@ -1,3 +1,6 @@
+Upcoming:
+- Fixed oregen in nether and end
+
 1.19.1-4.0.4:
 - Improved feature registration
 
