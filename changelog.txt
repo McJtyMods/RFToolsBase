@@ -1,4 +1,4 @@
-Upcoming:
+1.19.1-4.1.1:
 - Fixed problem with mining dimensional shard ore
 
 1.19.1-4.1.0:
