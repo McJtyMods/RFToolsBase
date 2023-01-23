@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.modules.worldgen;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
+import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
@@ -54,17 +55,17 @@ public class WorldGenModule implements IModule {
         dataGen.add(
                 Dob.builder(DIMENSIONAL_SHARD_OVERWORLD, DIMENSIONAL_SHARD_OVERWORLD_ITEM)
                         .ironPickaxeTags()
-                        .silkTouchLoot(DIMENSIONAL_SHARD_OVERWORLD_ITEM, 4f, 5f)
+                        .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
                         .blockTags(List.of(Tags.Blocks.ORES))
                         .itemTags(List.of(Tags.Items.ORES)),
                 Dob.builder(DIMENSIONAL_SHARD_NETHER, DIMENSIONAL_SHARD_NETHER_ITEM)
                         .ironPickaxeTags()
-                        .silkTouchLoot(DIMENSIONAL_SHARD_NETHER_ITEM, 4f, 5f)
+                        .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
                         .blockTags(List.of(Tags.Blocks.ORES))
                         .itemTags(List.of(Tags.Items.ORES)),
                 Dob.builder(DIMENSIONAL_SHARD_END, DIMENSIONAL_SHARD_END_ITEM)
                         .ironPickaxeTags()
-                        .silkTouchLoot(DIMENSIONAL_SHARD_END_ITEM, 4f, 5f)
+                        .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
                         .blockTags(List.of(Tags.Blocks.ORES))
                         .itemTags(List.of(Tags.Items.ORES))
         );

@@ -1,3 +1,6 @@
+Upcoming:
+- Fixed problem with mining dimensional shard ore
+
 1.19.1-4.1.0:
 - Updated to Latest McJtyLib and made compatible with 1.19.3
 - Fixed oregen in nether and end
