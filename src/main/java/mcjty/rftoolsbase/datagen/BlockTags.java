@@ -19,6 +19,8 @@ public class BlockTags extends BaseBlockTagsProvider {
 
     @Override
     protected void addTags() {
+        tag(WorldGenModule.DIMENSIONAL_SHARD_ORE)
+                .add(WorldGenModule.DIMENSIONAL_SHARD_END.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get());
         tag(Tags.Blocks.ORES)
                 .add(WorldGenModule.DIMENSIONAL_SHARD_END.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD.get());
         ironPickaxe(

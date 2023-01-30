@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "rftoolsbase:dimensionalshard_end",
+    "rftoolsbase:dimensionalshard_nether",
+    "rftoolsbase:dimensionalshard_overworld"
+  ]
+}

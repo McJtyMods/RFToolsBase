@@ -20,6 +20,8 @@ public class ItemTags extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
+        tag(WorldGenModule.DIMENSIONAL_SHARD_ORE_ITEM)
+                .add(WorldGenModule.DIMENSIONAL_SHARD_END_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD_ITEM.get());
         tag(Tags.Items.ORES)
                 .add(WorldGenModule.DIMENSIONAL_SHARD_END_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_NETHER_ITEM.get(), WorldGenModule.DIMENSIONAL_SHARD_OVERWORLD_ITEM.get());
         tag(Tags.Items.DUSTS)
