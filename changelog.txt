@@ -1,3 +1,6 @@
+Upcoming:
+- Added forge:ores/dimensional_shard tag to the dimensional shard ores
+
 1.19.1-4.1.1:
 - Fixed problem with mining dimensional shard ore
 

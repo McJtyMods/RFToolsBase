@@ -3,10 +3,14 @@ package mcjty.rftoolsbase.modules.worldgen;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.varia.TagTools;
+import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -32,6 +36,9 @@ public class WorldGenModule implements IModule {
     public static final RegistryObject<Block> DIMENSIONAL_SHARD_END = BLOCKS.register("dimensionalshard_end", DimensionalShardBlock::new);
     public static final RegistryObject<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", tab(() -> new BlockItem(DIMENSIONAL_SHARD_END.get(), Registration.createStandardProperties())));
 
+    public static final TagKey<Block> DIMENSIONAL_SHARD_ORE = TagTools.createBlockTagKey(new ResourceLocation("forge", "ores/dimensional_shard"));
+    public static final TagKey<Item> DIMENSIONAL_SHARD_ORE_ITEM = TagTools.createItemTagKey(new ResourceLocation("forge", "ores/dimensional_shard"));
+
     public WorldGenModule() {
         OreGenerator.init();
     }
@@ -56,18 +63,18 @@ public class WorldGenModule implements IModule {
                 Dob.builder(DIMENSIONAL_SHARD_OVERWORLD, DIMENSIONAL_SHARD_OVERWORLD_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(Tags.Blocks.ORES))
-                        .itemTags(List.of(Tags.Items.ORES)),
+                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
+                        .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_NETHER, DIMENSIONAL_SHARD_NETHER_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(Tags.Blocks.ORES))
-                        .itemTags(List.of(Tags.Items.ORES)),
+                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
+                        .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_END, DIMENSIONAL_SHARD_END_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(Tags.Blocks.ORES))
-                        .itemTags(List.of(Tags.Items.ORES))
+                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
+                        .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM))
         );
     }
 }
