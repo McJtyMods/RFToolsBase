@@ -1,4 +1,4 @@
-Upcoming:
+1.19.1-4.1.2:
 - Added forge:ores/dimensional_shard tag to the dimensional shard ores
 
 1.19.1-4.1.1:
