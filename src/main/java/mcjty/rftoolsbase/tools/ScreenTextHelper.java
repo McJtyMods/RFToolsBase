@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.tools;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import mcjty.lib.client.RenderHelper;
 import mcjty.rftoolsbase.api.screens.ITextRenderHelper;
 import mcjty.rftoolsbase.api.screens.ModuleRenderInfo;
 import mcjty.rftoolsbase.api.screens.TextAlign;
@@ -102,10 +103,10 @@ public class ScreenTextHelper implements ITextRenderHelper {
             matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
             // @todo 1.15 check if the 0xff000000 | is needed
-            renderer.drawInBatch(text, x * 2, y * 2, 0xff000000 | color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
+            RenderHelper.renderText(renderer, text, x * 2, y * 2, 0xff000000 | color, matrixStack, buffer, lightmapValue);
             matrixStack.popPose();
         } else {
-            renderer.drawInBatch(text, x, y, 0xff000000 | color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
+            RenderHelper.renderText(renderer, text, x, y, 0xff000000 | color, matrixStack, buffer, lightmapValue);
         }
     }
 
@@ -115,11 +116,11 @@ public class ScreenTextHelper implements ITextRenderHelper {
             matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
             text = renderer.plainSubstrByWidth(text, maxwidth * 2);
-            renderer.drawInBatch(text, x * 2, y * 2, color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
+            RenderHelper.renderText(renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
             matrixStack.popPose();
         } else {
             text = renderer.plainSubstrByWidth(text, maxwidth);
-            renderer.drawInBatch(text, x * 2, y * 2, color, false, matrixStack.last().pose(), buffer, false, 0, lightmapValue);
+            RenderHelper.renderText(renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
         }
     }
 
