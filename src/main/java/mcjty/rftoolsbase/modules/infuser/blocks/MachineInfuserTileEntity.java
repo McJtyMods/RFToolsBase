@@ -47,6 +47,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
     @Cap(type = CapType.ITEMS_AUTOMATION)
     private final GenericItemHandler items = GenericItemHandler.create(this, CONTAINER_FACTORY)
+            .slotLimit(slot -> slot == SLOT_MACHINEOUTPUT ? 1 : 64)
             .insertable((slot, stack) -> {
                 if (slot == SLOT_MACHINEOUTPUT) {
                     return isInfusable(stack);
