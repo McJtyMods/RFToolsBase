@@ -1,4 +1,4 @@
-Upcoming:
+1.19.1-4.1.4:
 - Fixed a problem where the machine infuser could infuse multiple machines at the same time
 
 1.19.1-4.1.3:
