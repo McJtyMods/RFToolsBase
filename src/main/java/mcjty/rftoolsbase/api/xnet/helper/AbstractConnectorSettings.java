@@ -165,7 +165,7 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
         colors[1] = getEnumSafe(object, "color1", BaseStringTranslators::getColor);
         colors[2] = getEnumSafe(object, "color2", BaseStringTranslators::getColor);
         colors[3] = getEnumSafe(object, "color3", BaseStringTranslators::getColor);
-        facingOverride = getEnumSafe(object, "facingoverride", Direction::byName);
+        facingOverride = getEnumSafe(object, "facingoverride", s -> Direction.byName(s.toLowerCase()));
     }
 
     @Override
