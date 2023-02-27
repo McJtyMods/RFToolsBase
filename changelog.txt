@@ -1,3 +1,6 @@
+Upcoming:
+- Pasting to an advanced connector with a direction different from default would not correctly set that direction
+
 1.19.1-4.1.4:
 - Fixed a problem where the machine infuser could infuse multiple machines at the same time
 
