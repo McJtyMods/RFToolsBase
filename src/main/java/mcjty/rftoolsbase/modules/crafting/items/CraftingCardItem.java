@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.modules.crafting.items;
 
 import mcjty.lib.builder.TooltipBuilder;
-import mcjty.lib.crafting.BaseShapedRecipe;
+import mcjty.lib.crafting.BaseRecipe;
 import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ComponentFactory;
@@ -120,7 +120,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         }
         Recipe recipe = findRecipeInternal(world, CRAFTING_INVENTORY, RecipeType.CRAFTING);
         if (recipe != null) {
-            ItemStack stack = BaseShapedRecipe.assemble(recipe, CRAFTING_INVENTORY, world.registryAccess());
+            ItemStack stack = BaseRecipe.assemble(recipe, CRAFTING_INVENTORY, world.registryAccess());
             stacks.set(INPUT_SLOTS, stack);
         } else {
             stacks.set(INPUT_SLOTS, ItemStack.EMPTY);
