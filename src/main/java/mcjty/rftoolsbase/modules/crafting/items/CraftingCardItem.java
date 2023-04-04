@@ -120,7 +120,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         }
         Recipe recipe = findRecipeInternal(world, CRAFTING_INVENTORY, RecipeType.CRAFTING);
         if (recipe != null) {
-            ItemStack stack = BaseRecipe.assemble(recipe, CRAFTING_INVENTORY, world.registryAccess());
+            ItemStack stack = BaseRecipe.assemble(recipe, CRAFTING_INVENTORY, world);
             stacks.set(INPUT_SLOTS, stack);
         } else {
             stacks.set(INPUT_SLOTS, ItemStack.EMPTY);
