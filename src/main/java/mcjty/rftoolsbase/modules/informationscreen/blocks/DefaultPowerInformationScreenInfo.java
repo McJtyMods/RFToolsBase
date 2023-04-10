@@ -7,9 +7,9 @@ import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
 import mcjty.rftoolsbase.modules.informationscreen.client.DefaultPowerInformationRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.Direction;
-import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import javax.annotation.Nonnull;
 
@@ -37,7 +37,7 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     @Nonnull
     @Override
     public TypedMap getInfo(int mode) {
-        return tileEntity.getCapability(CapabilityEnergy.ENERGY).map(h -> TypedMap.builder()
+        return tileEntity.getCapability(ForgeCapabilities.ENERGY).map(h -> TypedMap.builder()
                 .put(ENERGY, (long) h.getEnergyStored())
                 .put(MAXENERGY, (long) h.getMaxEnergyStored())
                 .build()).orElse(TypedMap.EMPTY);
