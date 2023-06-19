@@ -22,6 +22,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -46,7 +47,7 @@ import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INP
 public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/craftingcard");
-    private static final CraftingContainer CRAFTING_INVENTORY = new CraftingContainer(new AbstractContainerMenu(null, -1) {
+    private static final CraftingContainer CRAFTING_INVENTORY = new TransientCraftingContainer(new AbstractContainerMenu(null, -1) {
         @Override
         public boolean stillValid(@Nonnull Player playerIn) {
             return false;

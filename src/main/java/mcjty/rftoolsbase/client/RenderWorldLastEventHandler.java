@@ -10,15 +10,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 
 public class RenderWorldLastEventHandler {
 
-    public static void tick(RenderLevelLastEvent evt) {
+    // @todo 1.20 is this the right event?
+    public static void tick(RenderLevelStageEvent evt) {
         renderHilightedBlock(evt);
     }
 
-    private static void renderHilightedBlock(RenderLevelLastEvent evt) {
+    private static void renderHilightedBlock(RenderLevelStageEvent evt) {
         BlockPos c = RFToolsBase.instance.clientInfo.getHilightedBlock();
         if (c == null) {
             return;

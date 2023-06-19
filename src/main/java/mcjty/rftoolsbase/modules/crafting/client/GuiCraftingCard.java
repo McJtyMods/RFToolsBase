@@ -20,6 +20,7 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Inventory;
@@ -183,8 +184,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     @Override
-    protected void renderBg(@Nonnull PoseStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
         updateSlots();
-        drawWindow(matrixStack);
+        drawWindow(graphics);
     }
 }

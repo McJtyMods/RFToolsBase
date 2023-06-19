@@ -4,8 +4,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -13,7 +14,9 @@ import java.util.Random;
 public class DimensionalShardBlock extends Block {
 
     public DimensionalShardBlock() {
-        super(Properties.of(Material.STONE)
+        super(Properties.of()
+                .sound(SoundType.METAL)
+                .mapColor(MapColor.METAL)
                 .strength(3.0f, 5.0f)
                 .lightLevel(value -> 7));
     }

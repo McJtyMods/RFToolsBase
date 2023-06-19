@@ -73,7 +73,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
                 if (matchDamage && itemStack.getDamageValue() != stack.getDamageValue()) {
                     continue;
                 }
-                if (nbtMode && !ItemStack.tagMatches(itemStack, stack)) {
+                if (nbtMode && !ItemStack.isSameItemSameTags(itemStack, stack)) {
                     continue;
                 }
                 if (modMode) {

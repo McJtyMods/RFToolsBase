@@ -23,6 +23,7 @@ import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
@@ -180,8 +181,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void drawWindow(PoseStack matrixStack) {
-        super.drawWindow(matrixStack);
+    protected void drawWindow(GuiGraphics graphics) {
+        super.drawWindow(graphics);
         remove.enabled(canRemove());
         expand.enabled(canExpand());
     }
@@ -257,10 +258,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         }
     }
 
-    @Nonnull
     @Override
-    public List<Component> getTooltipFromItem(@Nonnull ItemStack stack) {
-        List<Component> list = super.getTooltipFromItem(stack);
+    protected List<Component> getTooltipFromContainerItem(ItemStack stack) {
+        List<Component> list = getTooltipFromItem(minecraft, stack);
         list.add(ComponentFactory.literal(ChatFormatting.GOLD + "Click to add to filter"));
         list.add(ComponentFactory.literal(ChatFormatting.GOLD + "Shift-Click to add tags to filter"));
         return list;

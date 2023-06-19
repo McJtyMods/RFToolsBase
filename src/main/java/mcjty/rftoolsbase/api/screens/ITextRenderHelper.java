@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.screens;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 
 /**
@@ -46,10 +46,12 @@ public interface ITextRenderHelper {
     /**
      * Actually render the text. The given coordinates are in 128x128 space with 0,0 being the top-left
      * of the screen
+     *
+     * @param graphics
      * @param x
      * @param y
      * @param color
      * @param renderInfo
      */
-    void renderText(PoseStack matrixStack, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo);
+    void renderText(GuiGraphics graphics, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo);
 }

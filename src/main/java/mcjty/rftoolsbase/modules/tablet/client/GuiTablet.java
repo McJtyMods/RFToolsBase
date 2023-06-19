@@ -12,6 +12,7 @@ import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -80,8 +81,8 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     }
 
     @Override
-    protected void renderLabels(@Nonnull PoseStack stack, int p_230451_2_, int p_230451_3_) {
-        super.renderLabels(stack, p_230451_2_, p_230451_3_);
+    protected void renderLabels(@Nonnull GuiGraphics graphics, int p_230451_2_, int p_230451_3_) {
+        super.renderLabels(graphics, p_230451_2_, p_230451_3_);
         ItemStack heldItem = minecraft.player.getItemInHand(getHand());
         updateActiveButton(TabletItem.getCurrentSlot(heldItem));
     }

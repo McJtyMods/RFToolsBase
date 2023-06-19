@@ -7,6 +7,7 @@ import mcjty.rftoolsbase.api.screens.ModuleRenderInfo;
 import mcjty.rftoolsbase.api.screens.TextAlign;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.resources.ResourceLocation;
@@ -93,11 +94,12 @@ public class ScreenTextHelper implements ITextRenderHelper {
     }
 
     @Override
-    public void renderText(PoseStack matrixStack, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
-        renderScaled(fontId, matrixStack, buffer, text, textx + x, y, color, truetype, renderInfo.getLightmapValue());
+    public void renderText(GuiGraphics graphics, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
+        renderScaled(fontId, graphics, buffer, text, textx + x, y, color, truetype, renderInfo.getLightmapValue());
     }
 
-    public static void renderScaled(ResourceLocation fontId, PoseStack matrixStack, MultiBufferSource buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
+    public static void renderScaled(ResourceLocation fontId, GuiGraphics graphics, MultiBufferSource buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
+        PoseStack matrixStack = graphics.pose();
         Font renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
             matrixStack.pushPose();

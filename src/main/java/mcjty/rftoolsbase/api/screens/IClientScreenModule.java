@@ -1,8 +1,8 @@
 package mcjty.rftoolsbase.api.screens;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -55,11 +55,12 @@ public interface IClientScreenModule<T extends IModuleData> {
      * Here you actually render your module. Warning! Always check if screenData is actually set! It is possible
      * you get null here which can mean that you don't need server data or the data isn't ready yet. Prepare for that.
      * Warnings! Always use the GLStateManager and restore state.
-     * @param matrixStack
+     *
+     * @param graphics
      * @param buffer
      * @param renderInfo
      */
-    void render(PoseStack matrixStack, MultiBufferSource buffer, IModuleRenderHelper renderHelper, Font fontRenderer, int currenty, T screenData, ModuleRenderInfo renderInfo);
+    void render(GuiGraphics graphics, MultiBufferSource buffer, IModuleRenderHelper renderHelper, Font fontRenderer, int currenty, T screenData, ModuleRenderInfo renderInfo);
 
     /**
      * For interactive modules you can implement this to detect if your module was clickedd

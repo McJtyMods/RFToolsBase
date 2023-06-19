@@ -9,6 +9,7 @@ import mcjty.lib.gui.widgets.Panel;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 
@@ -61,8 +62,8 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     }
 
     @Override
-    protected void renderBg(@Nonnull PoseStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
         updateFields();
-        drawWindow(matrixStack);
+        drawWindow(graphics);
     }
 }
