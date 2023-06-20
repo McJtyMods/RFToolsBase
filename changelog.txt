@@ -1,3 +1,6 @@
+1.20-5.0.0:
+- Port to 1.20
+
 1.19-4.1.7:
 - Update for latest McJtyLib fixing the registryAccess() problem
 
