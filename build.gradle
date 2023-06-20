@@ -49,8 +49,8 @@ dependencies {
     mcjtylib()
 }
 
-cfdeps(['the-one-probe'], ['mcjtylib'], ['1.19.3', '1.19.4'])
-modrinth(['the-one-probe'], ['mcjtylib'], ['1.19.3', '1.19.4'])
+cfdeps(['the-one-probe'], ['mcjtylib'], [])
+modrinth(['the-one-probe'], ['mcjtylib'], [])
 
 task apiJar(type: Jar) {
     classifier = "api"
