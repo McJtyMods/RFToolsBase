@@ -16,6 +16,9 @@ public class RenderWorldLastEventHandler {
 
     // @todo 1.20 is this the right event?
     public static void tick(RenderLevelStageEvent evt) {
+        if (evt.getStage() != RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
+            return;
+        }
         renderHilightedBlock(evt);
     }
 
