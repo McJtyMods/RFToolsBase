@@ -6,5 +6,6 @@
   "custom_book_item": "rftoolsbase:manual",
   "show_progress": false,
   "book_texture": "rftoolsbase:textures/manual/book_techguide.png",
+  "use_resource_pack": true,
   "version": 1
 }
