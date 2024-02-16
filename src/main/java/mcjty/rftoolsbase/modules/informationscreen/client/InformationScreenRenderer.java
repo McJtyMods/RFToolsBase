@@ -23,7 +23,7 @@ public class InformationScreenRenderer implements BlockEntityRenderer<Informatio
     public void render(InformationScreenTileEntity te, float v, @Nonnull PoseStack matrixStack, @Nonnull MultiBufferSource buffer, int i, int i1) {
         long t = System.currentTimeMillis();
         if (t - te.getLastUpdateTime() > 250) {
-            RFToolsBaseMessages.INSTANCE.sendToServer(new PacketGetMonitorLog(te.getBlockPos()));
+            RFToolsBaseMessages.sendToServer(PacketGetMonitorLog.create(te.getBlockPos()));
             te.setLastUpdateTime(t);
         }
         Direction orientation = te.getBlockOrientation();

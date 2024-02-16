@@ -4,6 +4,7 @@ import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.setup.DeferredItem;
 import mcjty.lib.varia.TagTools;
 import mcjty.lib.varia.WrenchChecker;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -28,17 +29,17 @@ import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class VariousModule implements IModule {
 
-    public static final RegistryObject<SmartWrenchItem> SMARTWRENCH = ITEMS.register("smartwrench", tab(() -> new SmartWrenchItem(SmartWrenchMode.MODE_WRENCH)));
-    public static final RegistryObject<SmartWrenchItem> SMARTWRENCH_SELECT = ITEMS.register("smartwrench_select", tab(() -> new SmartWrenchItem(SmartWrenchMode.MODE_SELECT)));
+    public static final DeferredItem<SmartWrenchItem> SMARTWRENCH = ITEMS.register("smartwrench", tab(() -> new SmartWrenchItem(SmartWrenchMode.MODE_WRENCH)));
+    public static final DeferredItem<SmartWrenchItem> SMARTWRENCH_SELECT = ITEMS.register("smartwrench_select", tab(() -> new SmartWrenchItem(SmartWrenchMode.MODE_SELECT)));
 
-    public static final RegistryObject<Item> DIMENSIONALSHARD = ITEMS.register("dimensionalshard", tab(VariousModule::createDimensionalShard));
-    public static final RegistryObject<Item> INFUSED_DIAMOND = ITEMS.register("infused_diamond", tab(VariousModule::createItem16));
-    public static final RegistryObject<Item> INFUSED_ENDERPEARL = ITEMS.register("infused_enderpearl", tab(VariousModule::createItem16));
+    public static final DeferredItem<Item> DIMENSIONALSHARD = ITEMS.register("dimensionalshard", tab(VariousModule::createDimensionalShard));
+    public static final DeferredItem<Item> INFUSED_DIAMOND = ITEMS.register("infused_diamond", tab(VariousModule::createItem16));
+    public static final DeferredItem<Item> INFUSED_ENDERPEARL = ITEMS.register("infused_enderpearl", tab(VariousModule::createItem16));
 
-    public static final RegistryObject<Item> MACHINE_FRAME = ITEMS.register("machine_frame", tab(() -> new Item(Registration.createStandardProperties())));
-    public static final RegistryObject<Item> MACHINE_BASE = ITEMS.register("machine_base", tab(() -> new Item(Registration.createStandardProperties())));
+    public static final DeferredItem<Item> MACHINE_FRAME = ITEMS.register("machine_frame", tab(() -> new Item(Registration.createStandardProperties())));
+    public static final DeferredItem<Item> MACHINE_BASE = ITEMS.register("machine_base", tab(() -> new Item(Registration.createStandardProperties())));
 
-    public static final RegistryObject<ManualItem> MANUAL = ITEMS.register("manual", tab(ManualItem::new));
+    public static final DeferredItem<ManualItem> MANUAL = ITEMS.register("manual", tab(ManualItem::new));
 
     public static final ResourceLocation SHARDS = new ResourceLocation(RFToolsBase.MODID, "shards");
     public static final TagKey<Item> SHARDS_TAG = TagTools.createItemTagKey(SHARDS);

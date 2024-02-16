@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.modules.tablet;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.setup.DeferredItem;
 import mcjty.rftoolsbase.modules.tablet.client.GuiTablet;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
@@ -17,6 +18,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Supplier;
+
 import static mcjty.lib.datagen.DataGen.has;
 import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
@@ -24,10 +27,10 @@ import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class TabletModule implements IModule {
 
-    public static final RegistryObject<TabletItem> TABLET = ITEMS.register("tablet", tab(TabletItem::new));
-    public static final RegistryObject<MenuType<TabletContainer>> CONTAINER_TABLET = CONTAINERS.register("tablet", TabletModule::createTabletContainer);
+    public static final DeferredItem<TabletItem> TABLET = ITEMS.register("tablet", tab(TabletItem::new));
+    public static final Supplier<MenuType<TabletContainer>> CONTAINER_TABLET = CONTAINERS.register("tablet", TabletModule::createTabletContainer);
 
-    public static final RegistryObject<TabletItem> TABLET_FILLED = ITEMS.register("tablet_filled", TabletItem::new);
+    public static final DeferredItem<TabletItem> TABLET_FILLED = ITEMS.register("tablet_filled", TabletItem::new);
 
     private static MenuType<TabletContainer> createTabletContainer() {
         return IForgeMenuType.create((windowId, inv, data) -> {

@@ -1,49 +1,50 @@
 package mcjty.rftoolsbase.compat.jei;
 
+import mcjty.lib.network.CustomPacketPayload;
 import mcjty.lib.network.NetworkTools;
+import mcjty.lib.network.PlayPayloadContext;
+import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
-import java.util.function.Supplier;
 
-public class PacketSendRecipe {
-    private List<ItemStack> stacks;
+public record PacketSendRecipe(List<ItemStack> stacks) implements CustomPacketPayload {
 
-    public void toBytes(FriendlyByteBuf buf) {
+    public static final ResourceLocation ID = new ResourceLocation(RFToolsBase.MODID, "sendrecipe");
+
+    public static PacketSendRecipe create(FriendlyByteBuf buf) {
+        return new PacketSendRecipe(NetworkTools.readItemStackList(buf));
+    }
+
+    public static PacketSendRecipe create(List<ItemStack> stacks) {
+        return new PacketSendRecipe(stacks);
+    }
+
+    @Override
+    public void write(FriendlyByteBuf buf) {
         NetworkTools.writeItemStackList(buf, stacks);
     }
 
-    public PacketSendRecipe() {
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
 
-    public PacketSendRecipe(FriendlyByteBuf buf) {
-        stacks = NetworkTools.readItemStackList(buf);
-    }
-
-    public PacketSendRecipe(List<ItemStack> stacks) {
-        this.stacks = stacks;
-    }
-
-    public void handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context ctx = supplier.get();
-        ctx.enqueueWork(() -> {
-            Player player = ctx.getSender();
-            Level world = player.getCommandSenderWorld();
-            // Handle tablet version
-            ItemStack mainhand = player.getMainHandItem();
-            if (!mainhand.isEmpty() && mainhand.getItem() == CraftingModule.CRAFTING_CARD.get()) {
-                if (player.containerMenu instanceof CraftingCardContainer) {
-                    CraftingCardContainer craftingCardContainer = (CraftingCardContainer) player.containerMenu;
-                    craftingCardContainer.setGridContents(player, stacks);
+    public void handle(PlayPayloadContext ctx) {
+        ctx.workHandler().submitAsync(() -> {
+            ctx.player().ifPresent(player -> {
+                // Handle tablet version
+                ItemStack mainhand = player.getMainHandItem();
+                if (!mainhand.isEmpty() && mainhand.getItem() == CraftingModule.CRAFTING_CARD.get()) {
+                    if (player.containerMenu instanceof CraftingCardContainer craftingCardContainer) {
+                        craftingCardContainer.setGridContents(player, stacks);
+                    }
                 }
-            }
+            });
         });
-        ctx.setPacketHandled(true);
     }
 }

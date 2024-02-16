@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.modules.filter;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.setup.DeferredItem;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.filter.client.GuiFilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
@@ -16,6 +17,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.function.Supplier;
+
 import static mcjty.lib.datagen.DataGen.has;
 import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.CONTAINERS;
@@ -23,8 +26,8 @@ import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class FilterModule implements IModule {
 
-    public static final RegistryObject<FilterModuleItem> FILTER_MODULE = ITEMS.register("filter_module", tab(FilterModuleItem::new));
-    public static final RegistryObject<MenuType<FilterModuleContainer>> CONTAINER_FILTER_MODULE = CONTAINERS.register("filter_module", FilterModule::createFilterModuleContainer);
+    public static final DeferredItem<FilterModuleItem> FILTER_MODULE = ITEMS.register("filter_module", tab(FilterModuleItem::new));
+    public static final Supplier<MenuType<FilterModuleContainer>> CONTAINER_FILTER_MODULE = CONTAINERS.register("filter_module", FilterModule::createFilterModuleContainer);
 
     private static MenuType<FilterModuleContainer> createFilterModuleContainer() {
         return IForgeMenuType.create((windowId, inv, data) -> {

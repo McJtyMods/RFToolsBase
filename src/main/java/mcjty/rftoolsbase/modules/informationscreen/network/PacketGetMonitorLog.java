@@ -1,49 +1,52 @@
 package mcjty.rftoolsbase.modules.informationscreen.network;
 
+import mcjty.lib.network.CustomPacketPayload;
+import mcjty.lib.network.PlayPayloadContext;
+import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-import java.util.function.Supplier;
+public record PacketGetMonitorLog(BlockPos pos) implements CustomPacketPayload {
 
-public class PacketGetMonitorLog {
+    public static ResourceLocation ID = new ResourceLocation(RFToolsBase.MODID, "getmonitorlog");
 
-    private BlockPos pos;
-
-    public void toBytes(FriendlyByteBuf buf) {
+    @Override
+    public void write(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
     }
 
-    public PacketGetMonitorLog(FriendlyByteBuf buf) {
-        pos = buf.readBlockPos();
+    @Override
+    public ResourceLocation id() {
+        return ID;
     }
 
-    public PacketGetMonitorLog(BlockPos pos) {
-        this.pos = pos;
+    public static PacketGetMonitorLog create(FriendlyByteBuf buf) {
+        return new PacketGetMonitorLog(buf.readBlockPos());
     }
 
-    public void handle(Supplier<NetworkEvent.Context> supplier) {
-        NetworkEvent.Context ctx = supplier.get();
-        ctx.enqueueWork(() -> {
-            ServerPlayer player = ctx.getSender();
-            Level world = player.getCommandSenderWorld();
-            if (world.hasChunkAt(pos)) {
-                BlockEntity te = world.getBlockEntity(pos);
-                if (te instanceof InformationScreenTileEntity infoScreen) {
-                    infoScreen.getInfo().ifPresent(h -> {
-                        PacketMonitorLogReady packet = new PacketMonitorLogReady(pos, h.getInfo(infoScreen.getMode()));
-                        RFToolsBaseMessages.INSTANCE.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-                    });
+    public static PacketGetMonitorLog create(BlockPos pos) {
+        return new PacketGetMonitorLog(pos);
+    }
+
+    public void handle(PlayPayloadContext ctx) {
+        ctx.workHandler().submitAsync(() -> {
+            ctx.player().ifPresent(player -> {
+                Level world = player.getCommandSenderWorld();
+                if (world.hasChunkAt(pos)) {
+                    BlockEntity te = world.getBlockEntity(pos);
+                    if (te instanceof InformationScreenTileEntity infoScreen) {
+                        infoScreen.getInfo().ifPresent(h -> {
+                            PacketMonitorLogReady packet = new PacketMonitorLogReady(pos, h.getInfo(infoScreen.getMode()));
+                            RFToolsBaseMessages.sendToPlayer(packet, player);
+                        });
+                    }
                 }
-            }
+            });
         });
-        ctx.setPacketHandled(true);
     }
 }

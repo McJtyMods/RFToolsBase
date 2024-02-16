@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.modules.filter.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.TagSelectorWindow;
 import mcjty.lib.gui.Window;
@@ -267,11 +266,11 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void syncStack() {
-        RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSyncHandItem(minecraft.player));
+        RFToolsBaseMessages.sendToServer(PacketSyncHandItem.create(minecraft.player));
     }
 
     private void updateSettings() {
-        RFToolsBaseMessages.INSTANCE.sendToServer(new PacketUpdateNBTItemFilter(
+        RFToolsBaseMessages.sendToServer(PacketUpdateNBTItemFilter.create(
                 TypedMap.builder()
                         .put(new Key<>("blacklistMode", Type.STRING), blacklistMode.getCurrentChoice())
                         .put(new Key<>("damageMode", Type.BOOLEAN), damageMode.getCurrentChoiceIndex() == 1)

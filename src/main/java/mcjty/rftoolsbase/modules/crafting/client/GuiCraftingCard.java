@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.modules.crafting.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
 import mcjty.lib.gui.events.BlockRenderEvent;
@@ -22,12 +21,12 @@ import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.TooltipFlag;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -73,7 +72,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         toplevel.children(label("or more complicated recipes").horizontalAlignment(HorizontalAlignment.ALIGN_LEFT).hint(10, 17, 160, 14));
         toplevel.children(button(110, 57, 60, 14, "Update")
                 .tooltips("Update the item in the output", "slot to the recipe in the", "3x3 grid")
-                .event(() -> RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY))));
+                .event(() -> RFToolsBaseMessages.sendToServer(PacketSendServerCommand.create(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY))));
         // In 1.15 this no longer makes sense
 //        ToggleButton toggle = new ToggleButton(minecraft, this)
 //                .setCheckMarker(true)
@@ -172,7 +171,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                     stacks.set(idx, itemstack);
                     ItemStack cardItem = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
                     CraftingCardItem.putStacksInItem(cardItem, stacks);
-                    RFToolsBaseMessages.INSTANCE.sendToServer(new PacketItemNBTToServer(cardItem.getTag()));
+                    RFToolsBaseMessages.sendToServer(PacketItemNBTToServer.create(cardItem.getTag()));
                 }
             }
 

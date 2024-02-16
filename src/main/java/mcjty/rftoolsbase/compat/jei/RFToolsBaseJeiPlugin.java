@@ -31,7 +31,7 @@ public class RFToolsBaseJeiPlugin implements IModPlugin {
                 items.set(i, stack);
             }
         }
-        RFToolsBaseMessages.INSTANCE.sendToServer(new PacketSendRecipe(items));
+        RFToolsBaseMessages.sendToServer(PacketSendRecipe.create(items));
     }
 
     @Nonnull

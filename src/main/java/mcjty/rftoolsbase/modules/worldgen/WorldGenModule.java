@@ -3,6 +3,8 @@ package mcjty.rftoolsbase.modules.worldgen;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
+import mcjty.lib.setup.DeferredBlock;
+import mcjty.lib.setup.DeferredItem;
 import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
@@ -27,14 +29,14 @@ import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class WorldGenModule implements IModule {
 
-    public static final RegistryObject<Block> DIMENSIONAL_SHARD_OVERWORLD = BLOCKS.register("dimensionalshard_overworld", DimensionalShardBlock::new);
-    public static final RegistryObject<Item> DIMENSIONAL_SHARD_OVERWORLD_ITEM = ITEMS.register("dimensionalshard_overworld", tab(() -> new BlockItem(DIMENSIONAL_SHARD_OVERWORLD.get(), Registration.createStandardProperties())));
+    public static final DeferredBlock<Block> DIMENSIONAL_SHARD_OVERWORLD = BLOCKS.register("dimensionalshard_overworld", DimensionalShardBlock::new);
+    public static final DeferredItem<Item> DIMENSIONAL_SHARD_OVERWORLD_ITEM = ITEMS.register("dimensionalshard_overworld", tab(() -> new BlockItem(DIMENSIONAL_SHARD_OVERWORLD.get(), Registration.createStandardProperties())));
 
-    public static final RegistryObject<Block> DIMENSIONAL_SHARD_NETHER = BLOCKS.register("dimensionalshard_nether", DimensionalShardBlock::new);
-    public static final RegistryObject<Item> DIMENSIONAL_SHARD_NETHER_ITEM = ITEMS.register("dimensionalshard_nether", tab(() -> new BlockItem(DIMENSIONAL_SHARD_NETHER.get(), Registration.createStandardProperties())));
+    public static final DeferredBlock<Block> DIMENSIONAL_SHARD_NETHER = BLOCKS.register("dimensionalshard_nether", DimensionalShardBlock::new);
+    public static final DeferredItem<Item> DIMENSIONAL_SHARD_NETHER_ITEM = ITEMS.register("dimensionalshard_nether", tab(() -> new BlockItem(DIMENSIONAL_SHARD_NETHER.get(), Registration.createStandardProperties())));
 
-    public static final RegistryObject<Block> DIMENSIONAL_SHARD_END = BLOCKS.register("dimensionalshard_end", DimensionalShardBlock::new);
-    public static final RegistryObject<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", tab(() -> new BlockItem(DIMENSIONAL_SHARD_END.get(), Registration.createStandardProperties())));
+    public static final DeferredBlock<Block> DIMENSIONAL_SHARD_END = BLOCKS.register("dimensionalshard_end", DimensionalShardBlock::new);
+    public static final DeferredItem<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", tab(() -> new BlockItem(DIMENSIONAL_SHARD_END.get(), Registration.createStandardProperties())));
 
     public static final TagKey<Block> DIMENSIONAL_SHARD_ORE = TagTools.createBlockTagKey(new ResourceLocation("forge", "ores/dimensional_shard"));
     public static final TagKey<Item> DIMENSIONAL_SHARD_ORE_ITEM = TagTools.createItemTagKey(new ResourceLocation("forge", "ores/dimensional_shard"));
