@@ -17,9 +17,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class VariousModule implements IModule {
     }
 
     @Override
-    public void initConfig() {
+    public void initConfig(IEventBus bus) {
 
     }
 

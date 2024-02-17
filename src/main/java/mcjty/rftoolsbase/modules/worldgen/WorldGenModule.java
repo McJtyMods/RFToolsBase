@@ -6,7 +6,6 @@ import mcjty.lib.modules.IModule;
 import mcjty.lib.setup.DeferredBlock;
 import mcjty.lib.setup.DeferredItem;
 import mcjty.lib.varia.TagTools;
-import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.setup.Registration;
@@ -17,9 +16,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class WorldGenModule implements IModule {
     }
 
     @Override
-    public void initConfig() {
+    public void initConfig(IEventBus bus) {
     }
 
     @Override

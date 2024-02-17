@@ -8,14 +8,13 @@ import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.filter.client.GuiFilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -51,7 +50,7 @@ public class FilterModule implements IModule {
     }
 
     @Override
-    public void initConfig() {
+    public void initConfig(IEventBus bus) {
 
     }
 

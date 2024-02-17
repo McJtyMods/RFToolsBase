@@ -15,15 +15,12 @@ import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
-import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -51,9 +48,9 @@ public class RFToolsBase {
         instance = this;
         setupModules();
 
-        Config.register(modules);
+        Config.register(bus, modules);
 
-        Registration.register();
+        Registration.register(bus);
 
         bus.addListener(setup::init);
         bus.addListener(modules::init);

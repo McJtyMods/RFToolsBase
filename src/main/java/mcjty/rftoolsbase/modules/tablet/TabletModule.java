@@ -8,15 +8,14 @@ import mcjty.rftoolsbase.modules.tablet.client.GuiTablet;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItemHandler;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -52,7 +51,7 @@ public class TabletModule implements IModule {
     }
 
     @Override
-    public void initConfig() {
+    public void initConfig(IEventBus bus) {
 
     }
 
