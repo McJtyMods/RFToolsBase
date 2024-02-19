@@ -1,8 +1,6 @@
 package mcjty.rftoolsbase.setup;
 
-import mcjty.lib.network.PacketHandler;
-import mcjty.lib.network.PacketRequestDataFromServer;
-import mcjty.lib.network.PacketSendClientCommand;
+import mcjty.lib.McJtyLib;
 import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -49,26 +47,14 @@ public class RFToolsBaseMessages {
         net.registerMessage(id(), PacketMonitorLogReady.class, PacketMonitorLogReady::write, PacketMonitorLogReady::create, wrap(PacketMonitorLogReady::handle));
         net.registerMessage(id(), PacketUpdateNBTItemFilter.class, PacketUpdateNBTItemFilter::write, PacketUpdateNBTItemFilter::create, wrap(PacketUpdateNBTItemFilter::handle));
         net.registerMessage(id(), PacketSyncHandItem.class, PacketSyncHandItem::write, PacketSyncHandItem::create, wrap(PacketSyncHandItem::handle));
-
-        PacketRequestDataFromServer.register(net, id());
-
-        PacketHandler.registerStandardMessages(id(), net);
     }
 
     public static void sendToServer(String command, @Nonnull TypedMap.Builder argumentBuilder) {
-        INSTANCE.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, argumentBuilder.build()));
+        McJtyLib.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, argumentBuilder.build()));
     }
 
     public static void sendToServer(String command) {
-        INSTANCE.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, TypedMap.EMPTY));
-    }
-
-    public static void sendToClient(Player player, String command, @Nonnull TypedMap.Builder argumentBuilder) {
-        INSTANCE.sendTo(new PacketSendClientCommand(RFToolsBase.MODID, command, argumentBuilder.build()), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-    }
-
-    public static void sendToClient(Player player, String command) {
-        INSTANCE.sendTo(new PacketSendClientCommand(RFToolsBase.MODID, command, TypedMap.EMPTY), ((ServerPlayer) player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        McJtyLib.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, TypedMap.EMPTY));
     }
 
     public static <T> void sendToPlayer(T packet, Player player) {
