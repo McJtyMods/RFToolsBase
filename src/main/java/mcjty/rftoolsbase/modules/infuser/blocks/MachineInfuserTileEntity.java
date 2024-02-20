@@ -26,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -68,7 +67,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
             .setupSync(this));
 
     @Cap(type = CapType.INFUSABLE)
-    private final LazyOptional<IInfusable> infusableHandler = LazyOptional.of(() -> new DefaultInfusable(MachineInfuserTileEntity.this));
+    private final IInfusable infusableHandler = new DefaultInfusable(MachineInfuserTileEntity.this);
 
     private int infusing = 0;
 
@@ -138,7 +137,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
     private void startInfusing() {
         int defaultCost = MachineInfuserConfiguration.RFPERTICK.get();
-        int rf = infusableHandler.map(h -> (int) (defaultCost * (2.0f - h.getInfusedFactor()) / 2.0f)).orElse(defaultCost);
+        int rf = (int) (defaultCost * (2.0f - infusableHandler.getInfusedFactor()) / 2.0f);
 
         if (energyStorage.getEnergy() < rf) {
             // Not enough energy.
