@@ -61,7 +61,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
 
     @Cap(type = CapType.CONTAINER)
-    private final LazyOptional<MenuProvider> screenHandler = LazyOptional.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
+    private final Lazy<MenuProvider> screenHandler = Lazy.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
             .containerSupplier(container(MachineInfuserModule.CONTAINER_MACHINE_INFUSER, CONTAINER_FACTORY,this))
             .itemHandler(() -> items)
             .energyHandler(() -> energyStorage)
