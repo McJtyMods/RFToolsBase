@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.setup;
 
-import mcjty.lib.McJtyLib;
+import mcjty.lib.network.IPayloadRegistrar;
+import mcjty.lib.network.Networking;
 import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -11,57 +12,43 @@ import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 
 import javax.annotation.Nonnull;
 
-import static mcjty.lib.network.PlayPayloadContext.wrap;
-
 public class RFToolsBaseMessages {
-    private static SimpleChannel INSTANCE;
 
-    private static int packetId = 0;
-    private static int id() {
-        return packetId++;
-    }
+    private static IPayloadRegistrar registrar;
 
-    public static void registerMessages(String name) {
-        SimpleChannel net = NetworkRegistry.ChannelBuilder
-                .named(new ResourceLocation(RFToolsBase.MODID, name))
-                .networkProtocolVersion(() -> "1.0")
-                .clientAcceptedVersions(s -> true)
-                .serverAcceptedVersions(s -> true)
-                .simpleChannel();
+    public static void registerMessages() {
+        registrar = Networking.registrar(RFToolsBase.MODID)
+                .versioned("1.0")
+                .optional();
 
-        INSTANCE = net;
-
-        net.registerMessage(id(), PacketItemNBTToServer.class, PacketItemNBTToServer::write, PacketItemNBTToServer::create, wrap(PacketItemNBTToServer::handle));
-        net.registerMessage(id(), PacketUpdateNBTItemCard.class, PacketUpdateNBTItemCard::write, PacketUpdateNBTItemCard::create, wrap(PacketUpdateNBTItemCard::handle));
-        net.registerMessage(id(), PacketSendRecipe.class, PacketSendRecipe::write, PacketSendRecipe::create, wrap(PacketSendRecipe::handle));
-        net.registerMessage(id(), PacketGetMonitorLog.class, PacketGetMonitorLog::write, PacketGetMonitorLog::create, wrap(PacketGetMonitorLog::handle));
-        net.registerMessage(id(), PacketMonitorLogReady.class, PacketMonitorLogReady::write, PacketMonitorLogReady::create, wrap(PacketMonitorLogReady::handle));
-        net.registerMessage(id(), PacketUpdateNBTItemFilter.class, PacketUpdateNBTItemFilter::write, PacketUpdateNBTItemFilter::create, wrap(PacketUpdateNBTItemFilter::handle));
-        net.registerMessage(id(), PacketSyncHandItem.class, PacketSyncHandItem::write, PacketSyncHandItem::create, wrap(PacketSyncHandItem::handle));
+        registrar.play(PacketItemNBTToServer.class, PacketItemNBTToServer::create, handler -> handler.server(PacketItemNBTToServer::handle));
+        registrar.play(PacketUpdateNBTItemCard.class, PacketUpdateNBTItemCard::create, handler -> handler.server(PacketUpdateNBTItemCard::handle));
+        registrar.play(PacketSendRecipe.class, PacketSendRecipe::create, handler -> handler.server(PacketSendRecipe::handle));
+        registrar.play(PacketGetMonitorLog.class, PacketGetMonitorLog::create, handler -> handler.server(PacketGetMonitorLog::handle));
+        registrar.play(PacketMonitorLogReady.class, PacketMonitorLogReady::create, handler -> handler.client(PacketMonitorLogReady::handle));
+        registrar.play(PacketUpdateNBTItemFilter.class, PacketUpdateNBTItemFilter::create, handler -> handler.server(PacketUpdateNBTItemFilter::handle));
+        registrar.play(PacketSyncHandItem.class, PacketSyncHandItem::create, handler -> handler.server(PacketSyncHandItem::handle));
     }
 
     public static void sendToServer(String command, @Nonnull TypedMap.Builder argumentBuilder) {
-        McJtyLib.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, argumentBuilder.build()));
+        Networking.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, argumentBuilder.build()));
     }
 
     public static void sendToServer(String command) {
-        McJtyLib.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, TypedMap.EMPTY));
+        Networking.sendToServer(new PacketSendServerCommand(RFToolsBase.MODID, command, TypedMap.EMPTY));
     }
 
     public static <T> void sendToPlayer(T packet, Player player) {
-        INSTANCE.sendTo(packet, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+        registrar.getChannel().sendTo(packet, ((ServerPlayer)player).connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static <T> void sendToServer(T packet) {
-        INSTANCE.sendToServer(packet);
+        registrar.getChannel().sendToServer(packet);
     }
 }

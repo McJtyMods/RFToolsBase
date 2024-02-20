@@ -1,12 +1,11 @@
 package mcjty.rftoolsbase.modules.hud.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import mcjty.lib.McJtyLib;
 import mcjty.lib.client.HudRenderHelper;
+import mcjty.lib.network.Networking;
 import mcjty.lib.network.PacketGetListFromServer;
 import mcjty.rftoolsbase.api.client.IHudSupport;
 import mcjty.rftoolsbase.modules.hud.Hud;
-import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
 
@@ -22,7 +21,7 @@ public class HudRenderer {
         List<String> log = support.getClientLog();
         long t = System.currentTimeMillis();
         if (t - support.getLastUpdateTime() > 250) {
-            McJtyLib.sendToServer(PacketGetListFromServer.create(support.getHudPos(), Hud.COMMAND_GETHUDLOG));
+            Networking.sendToServer(PacketGetListFromServer.create(support.getHudPos(), Hud.COMMAND_GETHUDLOG));
             support.setLastUpdateTime(t);
         }
         Direction orientation = support.getBlockOrientation();

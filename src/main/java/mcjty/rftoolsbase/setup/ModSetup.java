@@ -23,7 +23,7 @@ public class ModSetup extends DefaultModSetup {
             McJtyLib.registerListCommandInfo(Hud.COMMAND_GETHUDLOG, String.class, buf -> buf.readUtf(32767), FriendlyByteBuf::writeUtf);
         });
 
-        RFToolsBaseMessages.registerMessages("rftoolsbase");
+        RFToolsBaseMessages.registerMessages();
         MinecraftForge.EVENT_BUS.addListener((TickEvent.LevelTickEvent event) -> {
             if (!event.level.isClientSide) {
                 TickOrderHandler.postWorldTick(event.level.dimension());
