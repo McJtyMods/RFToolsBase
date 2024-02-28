@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.api.screens;
 
-import net.minecraftforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.capabilities.Capability;
 
 /**
  * Implement this interface on your module item.

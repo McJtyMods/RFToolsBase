@@ -12,10 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.eventbus.api.IEventBus;
+import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.function.Supplier;
 
@@ -30,7 +30,7 @@ public class CraftingModule implements IModule {
     public static final Supplier<MenuType<CraftingCardContainer>> CONTAINER_CRAFTING_CARD = CONTAINERS.register("crafting_card", CraftingModule::createCraftingContainer);
 
     private static MenuType<CraftingCardContainer> createCraftingContainer() {
-        return IForgeMenuType.create((windowId, inv, data) -> {
+        return IMenuTypeExtension.create((windowId, inv, data) -> {
             Player player = SafeClientTools.getClientPlayer();
             CraftingCardContainer container = new CraftingCardContainer(windowId, player.blockPosition(), player);
             container.setupInventories(null, inv);

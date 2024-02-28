@@ -11,11 +11,11 @@ import mcjty.rftoolsbase.modules.tablet.items.TabletItemHandler;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.eventbus.api.IEventBus;
+import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.function.Supplier;
 
@@ -32,7 +32,7 @@ public class TabletModule implements IModule {
     public static final DeferredItem<TabletItem> TABLET_FILLED = ITEMS.register("tablet_filled", TabletItem::new);
 
     private static MenuType<TabletContainer> createTabletContainer() {
-        return IForgeMenuType.create((windowId, inv, data) -> {
+        return IMenuTypeExtension.create((windowId, inv, data) -> {
             Player player = inv.player;
             TabletContainer container = new TabletContainer(windowId, player.blockPosition(), player);
             container.setupInventories(new TabletItemHandler(player), inv);
