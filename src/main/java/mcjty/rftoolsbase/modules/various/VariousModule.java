@@ -17,9 +17,9 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.List;
 

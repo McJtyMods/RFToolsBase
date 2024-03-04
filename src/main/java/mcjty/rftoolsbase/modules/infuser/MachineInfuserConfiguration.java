@@ -1,17 +1,17 @@
 package mcjty.rftoolsbase.modules.infuser;
 
-import net.neoforged.neoforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class MachineInfuserConfiguration {
 
     public static final String CATEGORY_INFUSER = "infuser";
 
-    public static ForgeConfigSpec.IntValue MAX_INFUSE;
-    public static ForgeConfigSpec.IntValue MAXENERGY;
-    public static ForgeConfigSpec.IntValue RECEIVEPERTICK;
-    public static ForgeConfigSpec.IntValue RFPERTICK;
+    public static ModConfigSpec.IntValue MAX_INFUSE;
+    public static ModConfigSpec.IntValue MAXENERGY;
+    public static ModConfigSpec.IntValue RECEIVEPERTICK;
+    public static ModConfigSpec.IntValue RFPERTICK;
 
-    public static void init(ForgeConfigSpec.Builder SERVER_BUILDER) {
+    public static void init(ModConfigSpec.Builder SERVER_BUILDER) {
         SERVER_BUILDER.comment("Settings for the infusing system").push(CATEGORY_INFUSER);
 
         MAX_INFUSE = SERVER_BUILDER

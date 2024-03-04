@@ -2,9 +2,9 @@ package mcjty.rftoolsbase.setup;
 
 
 import mcjty.lib.modules.Modules;
-import net.neoforged.neoforge.common.ForgeConfigSpec;
-import net.neoforged.neoforge.common.ForgeConfigSpec.Builder;
-import net.neoforged.neoforge.eventbus.api.IEventBus;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.Builder;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fml.ModLoadingContext;
 import net.neoforged.neoforge.fml.config.ModConfig;
 
@@ -14,9 +14,9 @@ public class Config {
     public static final Builder COMMON_BUILDER = new Builder();
 //    private static final Builder CLIENT_BUILDER = new Builder();
 
-    public static ForgeConfigSpec SERVER_CONFIG;
-    public static ForgeConfigSpec COMMON_CONFIG;
-//    public static ForgeConfigSpec CLIENT_CONFIG;
+    public static ModConfigSpec SERVER_CONFIG;
+    public static ModConfigSpec COMMON_CONFIG;
+//    public static ModConfigSpec CLIENT_CONFIG;
 
 
     public static void register(IEventBus bus, Modules modules) {

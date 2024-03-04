@@ -13,9 +13,9 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.function.Supplier;
 

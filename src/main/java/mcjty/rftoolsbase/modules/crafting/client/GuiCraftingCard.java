@@ -185,6 +185,6 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     @Override
     protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
         updateSlots();
-        drawWindow(graphics);
+        drawWindow(graphics, xxx, xxx, yyy);
     }
 }

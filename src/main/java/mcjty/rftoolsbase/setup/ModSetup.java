@@ -7,10 +7,10 @@ import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.hud.Hud;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.common.MinecraftForge;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.event.TickEvent;
-import net.neoforged.neoforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class ModSetup extends DefaultModSetup {
 

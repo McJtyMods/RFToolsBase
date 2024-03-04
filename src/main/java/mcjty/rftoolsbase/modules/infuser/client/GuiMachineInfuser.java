@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.modules.infuser.client;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.gui.GenericGuiContainer;
 import mcjty.lib.gui.Window;
@@ -64,6 +63,6 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     @Override
     protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
         updateFields();
-        drawWindow(graphics);
+        drawWindow(graphics, xxx, xxx, yyy);
     }
 }

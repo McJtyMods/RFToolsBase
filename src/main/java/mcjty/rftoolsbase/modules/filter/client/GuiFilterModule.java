@@ -180,8 +180,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void drawWindow(GuiGraphics graphics) {
-        super.drawWindow(graphics);
+    protected void drawWindow(GuiGraphics graphics, float partialTicks, int x, int y) {
+        super.drawWindow(graphics, partialTicks, x, y);
         remove.enabled(canRemove());
         expand.enabled(canExpand());
     }
