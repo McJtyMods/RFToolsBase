@@ -1,7 +1,5 @@
 package mcjty.rftoolsbase.modules.crafting.network;
 
-import mcjty.lib.network.CustomPacketPayload;
-import mcjty.lib.network.PlayPayloadContext;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.nbt.CompoundTag;

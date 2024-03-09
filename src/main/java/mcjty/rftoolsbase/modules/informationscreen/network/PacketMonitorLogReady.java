@@ -1,7 +1,5 @@
 package mcjty.rftoolsbase.modules.informationscreen.network;
 
-import mcjty.lib.network.CustomPacketPayload;
-import mcjty.lib.network.PlayPayloadContext;
 import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.SafeClientTools;

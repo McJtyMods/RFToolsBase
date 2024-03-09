@@ -1,6 +1,5 @@
 package mcjty.rftoolsbase.setup;
 
-import mcjty.lib.network.IPayloadRegistrar;
 import mcjty.lib.network.Networking;
 import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.typed.TypedMap;

@@ -1,8 +1,6 @@
 package mcjty.rftoolsbase.compat.jei;
 
-import mcjty.lib.network.CustomPacketPayload;
 import mcjty.lib.network.NetworkTools;
-import mcjty.lib.network.PlayPayloadContext;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;

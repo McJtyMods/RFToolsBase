@@ -1,7 +1,5 @@
 package mcjty.rftoolsbase.modules.informationscreen.network;
 
-import mcjty.lib.network.CustomPacketPayload;
-import mcjty.lib.network.PlayPayloadContext;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
