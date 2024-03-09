@@ -4,7 +4,6 @@ import mcjty.lib.api.smartwrench.SmartWrenchMode;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
-import mcjty.lib.setup.DeferredItem;
 import mcjty.lib.varia.TagTools;
 import mcjty.lib.varia.WrenchChecker;
 import mcjty.rftoolsbase.RFToolsBase;
@@ -18,7 +17,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.List;

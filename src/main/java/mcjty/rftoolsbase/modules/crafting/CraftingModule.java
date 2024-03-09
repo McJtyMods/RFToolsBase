@@ -3,7 +3,6 @@ package mcjty.rftoolsbase.modules.crafting;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
-import mcjty.lib.setup.DeferredItem;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.crafting.client.GuiCraftingCard;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
@@ -14,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.function.Supplier;
