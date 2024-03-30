@@ -20,6 +20,8 @@ public interface IEditorGui {
 
     IEditorGui integer(String tag, String tooltip, Integer value, int width, Integer maximum);
 
+    IEditorGui integer(String tag, String tooltip, Integer value, int width, int maximum, int minimum);
+
     IEditorGui integer(String tag, String tooltip, Integer value, int width);
 
     IEditorGui real(String tag, String tooltip, Double value, int width);
