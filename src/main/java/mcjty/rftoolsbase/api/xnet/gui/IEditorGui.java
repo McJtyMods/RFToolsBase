@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.api.xnet.gui;
 
+import mcjty.lib.gui.ITranslatableEnum;
 import mcjty.rftoolsbase.api.xnet.channels.RSMode;
 import net.minecraft.world.item.ItemStack;
 
