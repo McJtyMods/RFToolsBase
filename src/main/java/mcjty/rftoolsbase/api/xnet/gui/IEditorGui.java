@@ -35,6 +35,7 @@ public interface IEditorGui {
     IEditorGui choices(String tag, String tooltip, String current, String... values);
 
     <T extends Enum<T>> IEditorGui choices(String tag, String tooltip, T current, T... values);
+    IEditorGui translatableChoices(String tag, ITranslatableEnum<?> current, ITranslatableEnum<?>... values);
 
     IEditorGui redstoneMode(String tag, RSMode current);
 
