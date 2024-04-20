@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.api.xnet.gui;
 
+import mcjty.lib.gui.ITranslatableEnum;
 import mcjty.rftoolsbase.api.xnet.channels.RSMode;
 import net.minecraft.world.item.ItemStack;
 
@@ -20,6 +21,8 @@ public interface IEditorGui {
 
     IEditorGui integer(String tag, String tooltip, Integer value, int width, Integer maximum);
 
+    IEditorGui integer(String tag, String tooltip, Integer value, int width, int maximum, int minimum);
+
     IEditorGui integer(String tag, String tooltip, Integer value, int width);
 
     IEditorGui real(String tag, String tooltip, Double value, int width);
@@ -33,6 +36,7 @@ public interface IEditorGui {
     IEditorGui choices(String tag, String tooltip, String current, String... values);
 
     <T extends Enum<T>> IEditorGui choices(String tag, String tooltip, T current, T... values);
+    IEditorGui translatableChoices(String tag, ITranslatableEnum<?> current, ITranslatableEnum<?>... values);
 
     IEditorGui redstoneMode(String tag, RSMode current);
 
