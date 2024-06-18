@@ -1,3 +1,6 @@
+1.20-5.0.3:
+- Some changes from Dertiende for the upcoming XNet release
+
 1.20-5.0.2:
 - Fixed patchouli integration
 
