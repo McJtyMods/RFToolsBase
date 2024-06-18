@@ -1,3 +1,6 @@
+1.19-4.1.8:
+- Some changes from Dertiende for the upcoming XNet release
+
 1.19-4.1.7:
 - Update for latest McJtyLib fixing the registryAccess() problem
 
