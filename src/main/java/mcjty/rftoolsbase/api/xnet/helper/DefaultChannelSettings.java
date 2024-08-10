@@ -32,23 +32,19 @@ public class DefaultChannelSettings {
      */
     protected boolean checkRedstone(AbstractConnectorSettings settings, IConnectorTile connector, IControllerContext context) {
         RSMode rsMode = settings.getRsMode();
+        boolean redstoneCondition;
         switch (rsMode) {
-            case IGNORED -> {return true;}
-
-            case OFF -> {
-                //Match color return true if color has RS signal. RSMode.OFF means that we don't need signal to work
-                return (settings.getColorsMask() == 0 || !context.matchColor(settings.getColorsMask())) && connector.getPowerLevel() == 0;
-            }
+            case IGNORED -> {redstoneCondition = true;}
+            case OFF -> redstoneCondition = connector.getPowerLevel() == 0;
             case PULSE -> {
                 int prevPulse = settings.getPrevPulse();
                 settings.setPrevPulse(connector.getPulseCounter());
-                return prevPulse != connector.getPulseCounter();
+                redstoneCondition = prevPulse != connector.getPulseCounter();
             }
-            default -> {
-                return context.matchColor(settings.getColorsMask()) && connector.getPowerLevel() != 0;
-            }
+            default -> redstoneCondition = connector.getPowerLevel() != 0;
         }
 
+        return context.matchColor(settings.getColorsMask()) && redstoneCondition;
     }
 
 }
