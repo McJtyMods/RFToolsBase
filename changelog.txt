@@ -1,3 +1,6 @@
+Upcoming:
+- A fix from Dertiende for XNet
+
 1.20-5.0.4:
 - Some changes from Dertiende for the upcoming XNet release
 
