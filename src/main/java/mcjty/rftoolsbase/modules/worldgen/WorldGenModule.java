@@ -17,6 +17,8 @@ import net.neoforged.neoforge.common.Tags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
 
@@ -35,8 +37,8 @@ public class WorldGenModule implements IModule {
     public static final DeferredBlock<Block> DIMENSIONAL_SHARD_END = BLOCKS.register("dimensionalshard_end", DimensionalShardBlock::new);
     public static final DeferredItem<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", tab(() -> new BlockItem(DIMENSIONAL_SHARD_END.get(), Registration.createStandardProperties())));
 
-    public static final TagKey<Block> DIMENSIONAL_SHARD_ORE = TagTools.createBlockTagKey(new ResourceLocation("forge", "ores/dimensional_shard"));
-    public static final TagKey<Item> DIMENSIONAL_SHARD_ORE_ITEM = TagTools.createItemTagKey(new ResourceLocation("forge", "ores/dimensional_shard"));
+    public static final TagKey<Block> DIMENSIONAL_SHARD_ORE = TagTools.createBlockTagKey(ResourceLocation.fromNamespaceAndPath("c", "ores/dimensional_shard"));
+    public static final TagKey<Item> DIMENSIONAL_SHARD_ORE_ITEM = TagTools.createItemTagKey(ResourceLocation.fromNamespaceAndPath("c", "ores/dimensional_shard"));
 
     public WorldGenModule() {
         OreGenerator.init();

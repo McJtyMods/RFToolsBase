@@ -15,10 +15,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public class VariousModule implements IModule {
 
     public static final DeferredItem<ManualItem> MANUAL = ITEMS.register("manual", tab(ManualItem::new));
 
-    public static final ResourceLocation SHARDS = new ResourceLocation(RFToolsBase.MODID, "shards");
+    public static final ResourceLocation SHARDS = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "shards");
     public static final TagKey<Item> SHARDS_TAG = TagTools.createItemTagKey(SHARDS);
 
     private static Item createItem16() {
@@ -92,7 +92,7 @@ public class VariousModule implements IModule {
                 Dob.itemBuilder(MACHINE_BASE)
                         .shaped(builder -> builder
                                         .define('g', Items.GOLD_NUGGET)
-                                        .define('s', Tags.Items.STONE)
+                                        .define('s', Tags.Items.STONES)
                                         .unlockedBy("gold", has(Items.GOLD_NUGGET)),
                                 "ggg", "sss"),
                 Dob.itemBuilder(MACHINE_FRAME)

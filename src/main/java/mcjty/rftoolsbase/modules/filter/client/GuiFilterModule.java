@@ -47,8 +47,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     public static final int CONTROLLER_WIDTH = 230;
     public static final int CONTROLLER_HEIGHT = 188;
 
-    private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/filtermodule.png");
-    private static final ResourceLocation guiElements = new ResourceLocation(RFToolsBase.MODID, "textures/gui/guielements.png");
+    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/filtermodule.png");
+    private static final ResourceLocation guiElements = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/guielements.png");
 
     private final TagSelectorWindow selector = new TagSelectorWindow();
 

@@ -26,7 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -39,9 +38,9 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/tablet");
 
-    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = Lazy.of(() -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
-            .infoShift(header(), gold());
+            .infoShift(header(), gold()));
 
     @Override
     public ManualEntry getManualEntry() {
@@ -57,7 +56,8 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static void setCurrentSlot(Player player, ItemStack stack, int current) {
-        stack.getOrCreateTag().putInt("Current", current);
+        // @todo 1.21
+//        stack.getOrCreateTag().putInt("Current", current);
         ItemStack containingItem = getContainingItem(stack, current);
         ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
         player.getInventory().items.set(player.getInventory().selected, newTablet);

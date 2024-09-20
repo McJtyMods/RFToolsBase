@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[47,)"
+loaderVersion="[2,)"
 license="MIT License https://github.com/McJtyMods/RFToolsBase/blob/1.16/LICENCE"
 issueTrackerURL="http://github.com/McJtyMods/RFToolsBase/issues"
 displayURL="http://github.com/McJtyMods/RFToolsBase/"
@@ -19,14 +19,14 @@ description='''
 The base class for all RFTools tech mods (and XNet/Deep Resonance)
 '''
 [[dependencies.rftoolsbase]]
-    modId="forge"
-    mandatory=true
-    versionRange="[47,)"
+    modId="neoforge"
+    type="required"
+    versionRange="[21.0,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.rftoolsbase]]
     modId="mcjtylib"
     mandatory=true
-    versionRange="[1.20-8.0.0,)"
+    versionRange="[1.21-9.0.0,)"
     ordering="AFTER"
     side="BOTH"

@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -199,14 +198,14 @@ public interface IProcessor {
     /**
      * Get a fluidhandler for a tank at a given position on the network
      */
-    @Nonnull
-    LazyOptional<IFluidHandler> getFluidHandlerAt(@Nonnull Inventory inv);
+    @Nullable
+    IFluidHandler getFluidHandlerAt(@Nonnull Inventory inv);
 
     /**
      * Get an itemhandler for an inventory at a given position on the network
      */
-    @Nonnull
-    LazyOptional<IItemHandler> getItemHandlerAt(@Nonnull Inventory inv);
+    @Nullable
+    IItemHandler getItemHandlerAt(@Nonnull Inventory inv);
 
     /**
      * Log a message on the console. This message can

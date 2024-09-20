@@ -4,17 +4,28 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PacketSyncHandItem(ItemStack stack) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = new ResourceLocation(RFToolsBase.MODID, "synchanditem");
+    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "synchanditem");
+    public static final CustomPacketPayload.Type<PacketSyncHandItem> TYPE = new Type<>(ID);
 
-    public static PacketSyncHandItem create(FriendlyByteBuf buf) {
-        return new PacketSyncHandItem(buf.readItem());
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketSyncHandItem> CODEC = StreamCodec.composite(
+            ItemStack.STREAM_CODEC, PacketSyncHandItem::stack,
+            PacketSyncHandItem::new
+    );
+
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
     }
 
     public static PacketSyncHandItem create(Player player) {
@@ -25,32 +36,21 @@ public record PacketSyncHandItem(ItemStack stack) implements CustomPacketPayload
         return itemStack.getItem() instanceof FilterModuleItem || itemStack.getItem() instanceof TabletItem;
     }
 
-    @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeItem(stack);
-    }
-
-    @Override
-    public ResourceLocation id() {
-        return ID;
-    }
-
-    public void handle(PlayPayloadContext ctx) {
-        ctx.workHandler().submitAsync(() -> {
-            ctx.player().ifPresent(playerEntity -> {
-                ItemStack heldItem = playerEntity.getItemInHand(InteractionHand.MAIN_HAND);
-                if (heldItem.isEmpty()) {
-                    return;
-                }
-                // To avoid people messing with packets
-                if (!isValidItem(heldItem)) {
-                    return;
-                }
-                if (!isValidItem(stack)) {
-                    return;
-                }
-                playerEntity.setItemInHand(InteractionHand.MAIN_HAND, stack);
-            });
+    public void handle(IPayloadContext ctx) {
+        ctx.enqueueWork(() -> {
+            Player player = ctx.player();
+            ItemStack heldItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+            if (heldItem.isEmpty()) {
+                return;
+            }
+            // To avoid people messing with packets
+            if (!isValidItem(heldItem)) {
+                return;
+            }
+            if (!isValidItem(stack)) {
+                return;
+            }
+            player.setItemInHand(InteractionHand.MAIN_HAND, stack);
         });
     }
 }

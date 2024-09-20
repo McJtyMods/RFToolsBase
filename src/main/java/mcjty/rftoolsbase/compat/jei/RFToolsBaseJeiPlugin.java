@@ -37,7 +37,7 @@ public class RFToolsBaseJeiPlugin implements IModPlugin {
     @Nonnull
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(RFToolsBase.MODID, "rftoolsbase");
+        return ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "rftoolsbase");
     }
 
     @Override

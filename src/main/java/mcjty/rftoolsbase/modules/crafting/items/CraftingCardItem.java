@@ -26,12 +26,9 @@ import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -64,7 +61,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         return MANUAL;
     }
 
-    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = Lazy.of(() -> new TooltipBuilder()
             .info(header(),
                     parameter("info", stack -> {
                         ItemStack result = getResult(stack);
@@ -76,22 +73,27 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                             }
                         }
                         return "<empty>";
-                    }));
+                    })));
 
     public CraftingCardItem() {
         super(RFToolsBase.setup.defaultProperties()
-                .defaultDurability(0)
+                .durability(0)
                 .stacksTo(1));
     }
 
     @Nullable
-    private static Recipe findRecipeInternal(Level world, CraftingContainer inv, RecipeType<?> type) {
-        for (Recipe r : world.getRecipeManager().getRecipes()) {
-            if (r != null && type.equals(r.getType()) && r.matches(inv, world)) {
+    private static Recipe<?> findRecipeInternal(Level world, CraftingInput inv, RecipeType<?> type) {
+        for (RecipeHolder<?> rh : world.getRecipeManager().getRecipes()) {
+            Recipe<?> r = rh.value();
+            if (r != null && type.equals(r.getType()) && recipeMatch((Recipe<CraftingInput>)r, inv, world)) {
                 return r;
             }
         }
         return null;
+    }
+
+    private static <T extends RecipeInput> boolean recipeMatch(Recipe<T> r, T inv, Level world) {
+        return r.matches(inv, world);
     }
 
     /**

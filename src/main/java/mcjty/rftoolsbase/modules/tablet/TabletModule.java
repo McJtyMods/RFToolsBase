@@ -9,12 +9,14 @@ import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItemHandler;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.function.Supplier;
 
@@ -60,7 +62,7 @@ public class TabletModule implements IModule {
                 Dob.itemBuilder(TABLET)
                         .shaped(builder -> builder
                                         .define('g', Tags.Items.NUGGETS_GOLD)
-                                        .define('Q', Tags.Items.STORAGE_BLOCKS_QUARTZ)
+                                        .define('Q', Items.QUARTZ_BLOCK)
                                         .unlockedBy("quartz", has(Blocks.QUARTZ_BLOCK)),
                                 "geg", "RQR", "gRg")
         );

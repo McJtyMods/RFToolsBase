@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.function.Supplier;
 
@@ -51,7 +53,7 @@ public class MachineInfuserModule implements IModule {
         dataGen.add(
                 Dob.blockBuilder(MACHINE_INFUSER)
                         .ironPickaxeTags()
-                        .standardLoot(TYPE_MACHINE_INFUSER)
+                        .standardLoot()
                         .shaped(builder -> builder
                                 .define('s', VariousModule.DIMENSIONALSHARD.get())
                                 .define('M', VariousModule.MACHINE_FRAME.get())

@@ -9,7 +9,8 @@ import mcjty.rftoolsbase.modules.informationscreen.client.DefaultPowerInformatio
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 import javax.annotation.Nonnull;
 
@@ -37,10 +38,15 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     @Nonnull
     @Override
     public TypedMap getInfo(int mode) {
-        return tileEntity.getCapability(ForgeCapabilities.ENERGY).map(h -> TypedMap.builder()
-                .put(ENERGY, (long) h.getEnergyStored())
-                .put(MAXENERGY, (long) h.getMaxEnergyStored())
-                .build()).orElse(TypedMap.EMPTY);
+        IEnergyStorage h = tileEntity.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, tileEntity.getBlockPos(), null);
+        if (h != null) {
+            return TypedMap.builder()
+                    .put(ENERGY, (long) h.getEnergyStored())
+                    .put(MAXENERGY, (long) h.getMaxEnergyStored())
+                    .build();
+        } else {
+            return TypedMap.EMPTY;
+        }
     }
 
     @Override

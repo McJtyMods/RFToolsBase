@@ -42,7 +42,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     public static final int WIDTH = 180;
     public static final int HEIGHT = 198;
 
-    private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/craftingcard.png");
+    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/craftingcard.png");
 
     private final BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
@@ -171,7 +171,8 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                     stacks.set(idx, itemstack);
                     ItemStack cardItem = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
                     CraftingCardItem.putStacksInItem(cardItem, stacks);
-                    RFToolsBaseMessages.sendToServer(PacketItemNBTToServer.create(cardItem.getTag()));
+                    // @todo 1.21
+//                    RFToolsBaseMessages.sendToServer(PacketItemNBTToServer.create(cardItem.getTag()));
                 }
             }
 

@@ -2,15 +2,12 @@ package mcjty.rftoolsbase.setup;
 
 import mcjty.lib.McJtyLib;
 import mcjty.lib.setup.DefaultModSetup;
-import mcjty.rftoolsbase.api.infoscreen.CapabilityInformationScreenInfo;
-import mcjty.rftoolsbase.api.machineinfo.CapabilityMachineInformation;
 import mcjty.rftoolsbase.modules.hud.Hud;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import net.minecraft.network.FriendlyByteBuf;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
 
 public class ModSetup extends DefaultModSetup {
 
@@ -24,17 +21,18 @@ public class ModSetup extends DefaultModSetup {
         });
 
         RFToolsBaseMessages.registerMessages();
-        MinecraftForge.EVENT_BUS.addListener((TickEvent.LevelTickEvent event) -> {
-            if (!event.level.isClientSide) {
-                TickOrderHandler.postWorldTick(event.level.dimension());
+        NeoForge.EVENT_BUS.addListener((LevelTickEvent event) -> {
+            if (!event.getLevel().isClientSide) {
+                TickOrderHandler.postWorldTick(event.getLevel().dimension());
             }
         });
     }
 
-    public void registerCapabilities(RegisterCapabilitiesEvent event) {
-        CapabilityInformationScreenInfo.register(event);
-        CapabilityMachineInformation.register(event);
-    }
+    // @todo 1.21
+//    public void registerCapabilities(RegisterCapabilitiesEvent event) {
+//        CapabilityInformationScreenInfo.register(event);
+//        CapabilityMachineInformation.register(event);
+//    }
 
     @Override
     protected void setupModCompat() {

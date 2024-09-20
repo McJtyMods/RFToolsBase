@@ -18,6 +18,7 @@ import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.BlockItem;
@@ -153,16 +154,17 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
         markDirtyQuick();
     }
 
-
     @Override
-    public void load(CompoundTag tagCompound) {
-        super.load(tagCompound);
+    protected void loadAdditional(CompoundTag tagCompound, HolderLookup.Provider pRegistries) {
+        super.loadAdditional(tagCompound, pRegistries);
+        // @todo 1.21 (data?)
         infusing = tagCompound.getCompound("Info").getInt("infusing");
     }
 
     @Override
-    public void saveAdditional(@Nonnull CompoundTag tagCompound) {
-        super.saveAdditional(tagCompound);
+    protected void saveAdditional(CompoundTag tagCompound, HolderLookup.Provider provider) {
+        super.saveAdditional(tagCompound, provider);
+        // @todo 1.21 (data?)
         getOrCreateInfo(tagCompound).putInt("infusing", infusing);
     }
 }

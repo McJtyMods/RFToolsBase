@@ -26,9 +26,9 @@ import static mcjty.lib.builder.TooltipBuilder.key;
 
 public class ManualItem extends Item implements ITooltipSettings {
 
-    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = Lazy.of(() -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
-            .infoShift(header());
+            .infoShift(header()));
 
     public ManualItem() {
         super(Registration.createStandardProperties().stacksTo(1));
@@ -38,14 +38,14 @@ public class ManualItem extends Item implements ITooltipSettings {
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, @Nonnull Player playerIn, @Nonnull InteractionHand handIn) {
         if (!worldIn.isClientSide) {
-            PatchouliCompatibility.openBookGUI((ServerPlayer) playerIn, new ResourceLocation(RFToolsBase.MODID, "manual"));
+            PatchouliCompatibility.openBookGUI((ServerPlayer) playerIn, ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "manual"));
         }
         return super.use(worldIn, playerIn, handIn);
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, Level world, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
-        super.appendHoverText(itemStack, world, list, flags);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
+        super.appendHoverText(itemStack, context, list, flags);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flags);
     }
 }

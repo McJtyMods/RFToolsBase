@@ -1,15 +1,17 @@
 package mcjty.rftoolsbase.api.infoscreen;
 
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.capabilities.CapabilityManager;
-import net.neoforged.neoforge.common.capabilities.CapabilityToken;
-import net.neoforged.neoforge.common.capabilities.RegisterCapabilitiesEvent;
+import mcjty.rftoolsbase.RFToolsBase;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.capabilities.BlockCapability;
+import org.jetbrains.annotations.Nullable;
 
 public class CapabilityInformationScreenInfo {
 
-    public static Capability<IInformationScreenInfo> INFORMATION_SCREEN_INFO_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});;
+    public static final BlockCapability<IInformationScreenInfo, @Nullable Direction> INFORMATION_SCREEN_INFO_CAPABILITY = BlockCapability.createSided(ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "information_screen"), IInformationScreenInfo.class);
 
-    public static void register(RegisterCapabilitiesEvent event) {
-        event.register(IInformationScreenInfo.class);
-    }
+    // @todo 1.21
+//    public static void register(RegisterCapabilitiesEvent event) {
+//        event.register(IInformationScreenInfo.class);
+//    }
 }

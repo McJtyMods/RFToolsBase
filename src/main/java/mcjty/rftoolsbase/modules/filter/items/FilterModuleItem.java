@@ -13,9 +13,7 @@ import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,11 +30,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,27 +44,28 @@ import static mcjty.lib.builder.TooltipBuilder.*;
 public class FilterModuleItem extends Item implements ITooltipSettings, ITooltipExtras {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/filtermodule");
-    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = Lazy.of(() -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info", stack -> {
-                        CompoundTag tagCompound = stack.getTag();
-                        if (tagCompound != null) {
-                            String blackListMode = tagCompound.getString("blacklistMode");
-                            String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
-                            if (tagCompound.getBoolean("damageMode")) {
-                                modeLine += ", Damage";
-                            }
-                            if (tagCompound.getBoolean("nbtMode")) {
-                                modeLine += ", NBT";
-                            }
-                            if (tagCompound.getBoolean("modMode")) {
-                                modeLine += ", Mod";
-                            }
-                            return modeLine;
-                        }
+                        /// @todo 1.21
+//                        CompoundTag tagCompound = stack.getTag();
+//                        if (tagCompound != null) {
+//                            String blackListMode = tagCompound.getString("blacklistMode");
+//                            String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
+//                            if (tagCompound.getBoolean("damageMode")) {
+//                                modeLine += ", Damage";
+//                            }
+//                            if (tagCompound.getBoolean("nbtMode")) {
+//                                modeLine += ", NBT";
+//                            }
+//                            if (tagCompound.getBoolean("modMode")) {
+//                                modeLine += ", Mod";
+//                            }
+//                            return modeLine;
+//                        }
                         return "<not configured>";
-                    }));
+                    })));
 
 
     public FilterModuleItem() {
@@ -81,8 +78,8 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, @Nullable Level worldIn, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
-        super.appendHoverText(itemStack, worldIn, list, flagIn);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
+        super.appendHoverText(itemStack, context, list, flagIn);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flagIn);
     }
 
@@ -125,7 +122,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
-            NetworkHooks.openScreen((ServerPlayer) player, new MenuProvider() {
+            player.openMenu(new MenuProvider() {
                 @Nonnull
                 @Override
                 public Component getDisplayName() {

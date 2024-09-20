@@ -51,7 +51,7 @@ public class FilterModuleInventory {
         ListTag tagList = tagCompound.getList("Tags", Tag.TAG_STRING);
         for (int i = 0 ; i < tagList.size() ; i++) {
             String s = tagList.getString(i);
-            tags.add(TagTools.createItemTagKey(new ResourceLocation(s)));
+            tags.add(TagTools.createItemTagKey(ResourceLocation.parse(s)));
         }
     }
 

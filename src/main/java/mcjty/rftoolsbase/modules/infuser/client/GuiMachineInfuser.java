@@ -22,7 +22,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
     private EnergyBar energyBar;
 
-    private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/infuser.png");
+    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/infuser.png");
 
     public GuiMachineInfuser(MachineInfuserTileEntity te, GenericContainer container, Inventory inventory) {
         super(te, container, inventory, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());

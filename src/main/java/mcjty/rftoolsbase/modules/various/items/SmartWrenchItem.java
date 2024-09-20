@@ -42,11 +42,11 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
 
     private final SmartWrenchMode mode;
 
-    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = Lazy.of(() -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info1", stack -> getMode().getName()),
-                    parameter("info2", stack -> getCurrentBlock(stack).map(BlockPosTools::toString).orElse("<not selected>")));
+                    parameter("info2", stack -> getCurrentBlock(stack).map(BlockPosTools::toString).orElse("<not selected>"))));
 
     public SmartWrenchItem(SmartWrenchMode mode) {
         super(RFToolsBase.setup.defaultProperties().stacksTo(1));
@@ -59,17 +59,18 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             SmartWrenchMode mode = getCurrentMode(stack);
-            CompoundTag tag = stack.getTag();
-            ItemStack newStack;
-            if (mode == SmartWrenchMode.MODE_WRENCH) {
-                mode = SmartWrenchMode.MODE_SELECT;
-                newStack = new ItemStack(VariousModule.SMARTWRENCH_SELECT.get());
-            } else {
-                mode = SmartWrenchMode.MODE_WRENCH;
-                newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
-            }
-            newStack.setTag(tag);
-            player.setItemInHand(hand, newStack);
+            // @todo 1.21
+//            CompoundTag tag = stack.getTag();
+//            ItemStack newStack;
+//            if (mode == SmartWrenchMode.MODE_WRENCH) {
+//                mode = SmartWrenchMode.MODE_SELECT;
+//                newStack = new ItemStack(VariousModule.SMARTWRENCH_SELECT.get());
+//            } else {
+//                mode = SmartWrenchMode.MODE_WRENCH;
+//                newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
+//            }
+//            newStack.setTag(tag);
+//            player.setItemInHand(hand, newStack);
             Logging.message(player, ChatFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
         }
         return super.use(world, player, hand);

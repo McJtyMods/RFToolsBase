@@ -29,7 +29,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     public static final int TABLET_WIDTH = 180;
     public static final int TABLET_HEIGHT = 188;
 
-    private static final ResourceLocation iconLocation = new ResourceLocation(RFToolsBase.MODID, "textures/gui/tablet.png");
+    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/tablet.png");
 
     private ToggleButton[] buttons;
 

@@ -16,14 +16,12 @@ import mcjty.rftoolsbase.setup.ModSetup;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.tools.TickOrderHandler;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.api.distmarker.Dist;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.fml.common.Mod;
-import net.neoforged.neoforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.neoforged.neoforge.fml.loading.FMLEnvironment;
 
 import java.util.function.Supplier;
 
@@ -41,10 +39,7 @@ public class RFToolsBase {
     private final Modules modules = new Modules();
     public ClientInfo clientInfo = new ClientInfo();
 
-    public RFToolsBase() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        Dist dist = FMLEnvironment.dist;
-
+    public RFToolsBase(IEventBus bus, Dist dist) {
         instance = this;
         setupModules();
 
@@ -57,7 +52,7 @@ public class RFToolsBase {
         bus.addListener(setup::registerCapabilities);
         bus.addListener(this::onDataGen);
 
-        MinecraftForge.EVENT_BUS.addListener((ServerStartedEvent e) -> TickOrderHandler.clean());
+        NeoForge.EVENT_BUS.addListener((ServerStartedEvent e) -> TickOrderHandler.clean());
         if (dist.isClient()) {
             bus.addListener(ClientSetup::init);
             bus.addListener(ClientSetup::registerKeyBinds);

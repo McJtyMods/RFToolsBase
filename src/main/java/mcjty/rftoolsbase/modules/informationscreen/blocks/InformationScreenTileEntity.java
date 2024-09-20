@@ -11,7 +11,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.LazyOptional;
+
+import javax.annotation.Nullable;
 
 import static mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule.TYPE_INFORMATION_SCREEN;
 
@@ -43,29 +44,28 @@ public class InformationScreenTileEntity extends TickingTileEntity {
         if (cnt <= 0) {
             cnt = 10;
             BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
-            BlockEntity te = level.getBlockEntity(offset);
-            if (te != null) {
-                te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY).ifPresent(IInformationScreenInfo::tick);
+            IInformationScreenInfo capability = level.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY, offset, null);
+            if (capability != null) {
+                capability.tick();
             }
         }
     }
 
     public void toggleMode() {
-        getInfo().ifPresent(h -> {
-            int[] modes = h.getSupportedModes();
-            int found = -1;
-            for (int i = 0 ; i < modes.length ; i++) {
-                if (modes[i] == mode) {
-                    found = i;
-                    break;
-                }
+        IInformationScreenInfo h = getInfo();
+        int[] modes = h.getSupportedModes();
+        int found = -1;
+        for (int i = 0; i < modes.length; i++) {
+            if (modes[i] == mode) {
+                found = i;
+                break;
             }
-            if (found != -1) {
-                found++;
-                mode = modes[found % modes.length];
-                markDirtyClient();
-            }
-        });
+        }
+        if (found != -1) {
+            found++;
+            mode = modes[found % modes.length];
+            markDirtyClient();
+        }
     }
 
     public int getMode() {
@@ -114,18 +114,19 @@ public class InformationScreenTileEntity extends TickingTileEntity {
         lastHudTime = t;
     }
 
-    public LazyOptional<IInformationScreenInfo> getInfo() {
+    @Nullable
+    public IInformationScreenInfo getInfo() {
         BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
         BlockEntity te = level.getBlockEntity(offset);
         if (te != null) {
-            LazyOptional<IInformationScreenInfo> capability = te.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY);
-            if (capability.isPresent()) {
-                return capability.cast();
+            IInformationScreenInfo capability = level.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY, offset, null);
+            if (capability != null) {
+                return capability;
             }
             if (EnergyTools.isEnergyTE(te, getBlockOrientation())) {
-                return LazyOptional.of(() -> new DefaultPowerInformationScreenInfo(te));
+                return new DefaultPowerInformationScreenInfo(te);
             }
         }
-        return LazyOptional.empty();
+        return null;
     }
 }
