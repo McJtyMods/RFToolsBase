@@ -3,7 +3,6 @@ package mcjty.rftoolsbase.worldgen;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
-import net.neoforged.neoforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 

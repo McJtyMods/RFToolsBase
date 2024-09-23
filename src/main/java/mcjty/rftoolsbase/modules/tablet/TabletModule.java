@@ -7,6 +7,7 @@ import mcjty.rftoolsbase.modules.tablet.client.GuiTablet;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItemHandler;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Items;
@@ -57,7 +58,7 @@ public class TabletModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.itemBuilder(TABLET)
                         .shaped(builder -> builder

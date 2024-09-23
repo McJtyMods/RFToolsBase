@@ -7,12 +7,14 @@ import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.filter.client.GuiFilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Items;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -37,6 +39,10 @@ public class FilterModule implements IModule {
         });
     }
 
+    public FilterModule(IEventBus bus) {
+        bus.addListener(this::registerMenuScreens);
+    }
+
     @Override
     public void init(FMLCommonSetupEvent event) {
 
@@ -44,9 +50,10 @@ public class FilterModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            GuiFilterModule.register();
-        });
+    }
+
+    public void registerMenuScreens(RegisterMenuScreensEvent event) {
+        GuiFilterModule.register(event);
     }
 
     @Override
@@ -55,7 +62,7 @@ public class FilterModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.itemBuilder(FILTER_MODULE)
                         .shaped(builder -> builder

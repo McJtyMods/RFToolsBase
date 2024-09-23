@@ -16,17 +16,17 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
-import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -46,19 +46,14 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     private final BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
-    public GuiCraftingCard(CraftingCardContainer container, Inventory inventory) {
-        super(null, container, inventory, CraftingCardItem.MANUAL);
+    public GuiCraftingCard(CraftingCardContainer container, Inventory inventory, Component title) {
+        super(container, inventory, title, CraftingCardItem.MANUAL);
         imageWidth = WIDTH;
         imageHeight = HEIGHT;
     }
 
-    public static void register() {
-        MenuScreens.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::createCraftingCardGui);
-    }
-
-    @Nonnull
-    private static GuiCraftingCard createCraftingCardGui(CraftingCardContainer container, Inventory inventory, Component textComponent) {
-        return new GuiCraftingCard(container, inventory);
+    public static void register(RegisterMenuScreensEvent event) {
+        event.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::new);
     }
 
     @Override
@@ -112,7 +107,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                 if (s instanceof ItemStack stack) {
                     if (!stack.isEmpty()) {
                         TooltipFlag flag = this.mc.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL;
-                        List<Component> list = stack.getTooltipLines(this.mc.player, flag);
+                        List<Component> list = stack.getTooltipLines(Item.TooltipContext.of(this.mc.level), this.mc.player, flag);
 
                         // @todo 1.14
                         for (int i = 0; i < list.size(); ++i) {
@@ -186,6 +181,6 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     @Override
     protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
         updateSlots();
-        drawWindow(graphics, xxx, xxx, yyy);
+        drawWindow(graphics, partialTicks, x, y);
     }
 }

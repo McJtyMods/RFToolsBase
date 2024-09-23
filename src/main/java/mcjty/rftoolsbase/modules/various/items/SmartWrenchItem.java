@@ -7,19 +7,17 @@ import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.builder.TooltipBuilder;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.BlockPosTools;
-import mcjty.lib.varia.LevelTools;
 import mcjty.lib.varia.Logging;
 import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.modules.various.VariousModule;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -91,7 +89,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                 BlockState state = world.getBlockState(pos);
                 Block block = state.getBlock();
                 if (block instanceof BaseBlock) {
-                    if (state.use(world, player, hand, new BlockHitResult(context.getClickLocation(), context.getClickedFace(), pos, context.isInside())) == InteractionResult.SUCCESS) {
+                    if (state.useWithoutItem(world, player, new BlockHitResult(context.getClickLocation(), context.getClickedFace(), pos, context.isInside())) == InteractionResult.SUCCESS) {
                         return InteractionResult.SUCCESS;
                     }
                 }
@@ -117,8 +115,8 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, Level world, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
-        super.appendHoverText(itemStack, world, list, flags);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
+        super.appendHoverText(itemStack, context, list, flags);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flags);
     }
 
@@ -139,36 +137,38 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     public static void setCurrentBlock(ItemStack itemStack, GlobalPos c) {
-        CompoundTag tagCompound = itemStack.getOrCreateTag();
-
-        if (c == null) {
-            tagCompound.remove("selectedX");
-            tagCompound.remove("selectedY");
-            tagCompound.remove("selectedZ");
-            tagCompound.remove("selectedDim");
-        } else {
-            tagCompound.putInt("selectedX", c.pos().getX());
-            tagCompound.putInt("selectedY", c.pos().getY());
-            tagCompound.putInt("selectedZ", c.pos().getZ());
-            tagCompound.putString("selectedDim", c.dimension().location().toString());
-        }
+        // @todo 1.21
+//        CompoundTag tagCompound = itemStack.getOrCreateTag();
+//
+//        if (c == null) {
+//            tagCompound.remove("selectedX");
+//            tagCompound.remove("selectedY");
+//            tagCompound.remove("selectedZ");
+//            tagCompound.remove("selectedDim");
+//        } else {
+//            tagCompound.putInt("selectedX", c.pos().getX());
+//            tagCompound.putInt("selectedY", c.pos().getY());
+//            tagCompound.putInt("selectedZ", c.pos().getZ());
+//            tagCompound.putString("selectedDim", c.dimension().location().toString());
+//        }
     }
 
     @Nonnull
     public static Optional<GlobalPos> getCurrentBlock(ItemStack itemStack) {
-        CompoundTag tagCompound = itemStack.getTag();
-        if (tagCompound != null && tagCompound.contains("selectedX")) {
-            int x = tagCompound.getInt("selectedX");
-            int y = tagCompound.getInt("selectedY");
-            int z = tagCompound.getInt("selectedZ");
-            String dim = tagCompound.getString("selectedDim");
-            return Optional.of(GlobalPos.of(LevelTools.getId(dim), new BlockPos(x, y, z)));
-        }
+        // @todo 1.21
+//        CompoundTag tagCompound = itemStack.getTag();
+//        if (tagCompound != null && tagCompound.contains("selectedX")) {
+//            int x = tagCompound.getInt("selectedX");
+//            int y = tagCompound.getInt("selectedY");
+//            int z = tagCompound.getInt("selectedZ");
+//            String dim = tagCompound.getString("selectedDim");
+//            return Optional.of(GlobalPos.of(LevelTools.getId(dim), new BlockPos(x, y, z)));
+//        }
         return Optional.empty();
     }
 
     @Override
-    public int getUseDuration(@Nonnull ItemStack stack) {
+    public int getUseDuration(@Nonnull ItemStack stack, LivingEntity entity) {
         return 1;
     }
 

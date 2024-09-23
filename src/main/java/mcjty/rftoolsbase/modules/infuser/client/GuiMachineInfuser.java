@@ -9,8 +9,10 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 
@@ -24,15 +26,15 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
 
     private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/infuser.png");
 
-    public GuiMachineInfuser(MachineInfuserTileEntity te, GenericContainer container, Inventory inventory) {
-        super(te, container, inventory, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());
+    public GuiMachineInfuser(GenericContainer container, Inventory inventory, Component title) {
+        super(container, inventory, title, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());
 
         imageWidth = INFUSER_WIDTH;
         imageHeight = INFUSER_HEIGHT;
     }
 
-    public static void register() {
-        register(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
+    public static void register(RegisterMenuScreensEvent event) {
+        event.register(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
     }
 
     @Override
@@ -63,6 +65,6 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     @Override
     protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
         updateFields();
-        drawWindow(graphics, xxx, xxx, yyy);
+        drawWindow(graphics, partialTicks, x, y);
     }
 }

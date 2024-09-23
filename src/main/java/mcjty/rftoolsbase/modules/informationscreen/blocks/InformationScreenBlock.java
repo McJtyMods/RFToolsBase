@@ -52,13 +52,13 @@ public class InformationScreenBlock extends BaseBlock {
 
     @Nonnull
     @Override
-    public InteractionResult use(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull InteractionHand hand, @Nonnull BlockHitResult result) {
-        InteractionResult rc = super.use(state, world, pos, player, hand, result);
+    public InteractionResult useWithoutItem(@Nonnull BlockState state, Level world, @Nonnull BlockPos pos, @Nonnull Player player, @Nonnull BlockHitResult result) {
+        InteractionResult rc = super.useWithoutItem(state, world, pos, player, result);
         if (rc != InteractionResult.SUCCESS) {
             // We just pass along the block activation to the block behind it so that we can open the gui of that
             BlockPos offset = pos.relative(OrientationTools.getOrientationHoriz(state).getOpposite());
             result = new BlockHitResult(result.getLocation(), result.getDirection(), offset, result.isInside());
-            return world.getBlockState(offset).use(world, player, hand, result);
+            return world.getBlockState(offset).useWithoutItem(world, player, result);
         }
         return rc;
     }

@@ -1,6 +1,6 @@
 package mcjty.rftoolsbase.worldgen;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
@@ -17,8 +17,8 @@ public class DimensionBiomeFilter extends PlacementFilter {
 
     private static final DimensionBiomeFilter INSTANCE_OVERWORLD = new DimensionBiomeFilter(true);
     private static final DimensionBiomeFilter INSTANCE_DIMENSION = new DimensionBiomeFilter(false);
-    public static Codec<PlacementModifier> CODEC_OVERWORLD = Codec.unit(() -> INSTANCE_OVERWORLD);
-    public static Codec<PlacementModifier> CODEC_DIMENSION = Codec.unit(() -> INSTANCE_DIMENSION);
+    public static MapCodec<PlacementModifier> CODEC_OVERWORLD = MapCodec.unit(() -> INSTANCE_OVERWORLD);
+    public static MapCodec<PlacementModifier> CODEC_DIMENSION = MapCodec.unit(() -> INSTANCE_DIMENSION);
 
     public DimensionBiomeFilter(boolean isOverworld) {
         this.isOverworld = isOverworld;

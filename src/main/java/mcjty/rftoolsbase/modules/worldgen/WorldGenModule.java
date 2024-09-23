@@ -8,6 +8,7 @@ import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.modules.worldgen.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
@@ -59,21 +60,21 @@ public class WorldGenModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.builder(DIMENSIONAL_SHARD_OVERWORLD, DIMENSIONAL_SHARD_OVERWORLD_ITEM)
                         .ironPickaxeTags()
-                        .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
+                        .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
                         .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
                         .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_NETHER, DIMENSIONAL_SHARD_NETHER_ITEM)
                         .ironPickaxeTags()
-                        .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
+                        .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
                         .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
                         .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_END, DIMENSIONAL_SHARD_END_ITEM)
                         .ironPickaxeTags()
-                        .silkTouchLoot(VariousModule.DIMENSIONALSHARD, 4f, 5f)
+                        .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
                         .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
                         .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM))
         );

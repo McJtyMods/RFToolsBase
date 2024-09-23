@@ -29,10 +29,6 @@ public record PacketGetMonitorLog(BlockPos pos) implements CustomPacketPayload {
         return TYPE;
     }
 
-    public static PacketGetMonitorLog create(FriendlyByteBuf buf) {
-        return new PacketGetMonitorLog(buf.readBlockPos());
-    }
-
     public static PacketGetMonitorLog create(BlockPos pos) {
         return new PacketGetMonitorLog(pos);
     }

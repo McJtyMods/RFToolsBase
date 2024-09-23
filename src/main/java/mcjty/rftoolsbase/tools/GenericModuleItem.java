@@ -19,12 +19,12 @@ import static mcjty.lib.builder.TooltipBuilder.*;
 
 public abstract class GenericModuleItem extends Item implements IModuleProvider, ITooltipSettings {
 
-    private final Lazy<TooltipBuilder> tooltipBuilder = () -> new TooltipBuilder()
+    private final Lazy<TooltipBuilder> tooltipBuilder = Lazy.of(() -> new TooltipBuilder()
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(),
                     gold(this::hasGoldMessage),
                     parameter("uses", this::getUsesString),
-                    parameter("info", this::getInfoString));
+                    parameter("info", this::getInfoString)));
 
     protected boolean hasGoldMessage(ItemStack stack) {
         return false;
@@ -45,8 +45,8 @@ public abstract class GenericModuleItem extends Item implements IModuleProvider,
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, @Nullable Level world, @Nonnull List<Component> list, @Nonnull TooltipFlag flag) {
-        super.appendHoverText(itemStack, world, list, flag);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flag) {
+        super.appendHoverText(itemStack, context, list, flag);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flag);
     }
 }

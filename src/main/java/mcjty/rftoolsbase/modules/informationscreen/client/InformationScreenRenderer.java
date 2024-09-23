@@ -2,6 +2,7 @@ package mcjty.rftoolsbase.modules.informationscreen.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.typed.TypedMap;
+import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
 import mcjty.rftoolsbase.modules.informationscreen.InformationScreenModule;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
@@ -31,10 +32,11 @@ public class InformationScreenRenderer implements BlockEntityRenderer<Informatio
             return;
         }
 
-        te.getInfo().ifPresent(h -> {
+        IInformationScreenInfo info = te.getInfo();
+        if (info != null) {
             TypedMap data = te.getClientData();
-            h.render(te.getMode(), matrixStack, buffer, data, orientation, 0.3f);
-        });
+            info.render(te.getMode(), matrixStack, buffer, data, orientation, 0.3f);
+        }
     }
 
     public static void register() {

@@ -11,6 +11,7 @@ import mcjty.rftoolsbase.modules.various.items.ManualItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -68,7 +69,7 @@ public class VariousModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.itemBuilder(DIMENSIONALSHARD)
                         .itemTags(List.of(Tags.Items.DUSTS, SHARDS_TAG))

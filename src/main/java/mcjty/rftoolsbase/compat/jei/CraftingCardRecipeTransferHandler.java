@@ -12,13 +12,14 @@ import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 
-public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler<CraftingCardContainer, CraftingRecipe> {
+public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler<CraftingCardContainer, RecipeHolder<CraftingRecipe>> {
 
     public static void register(IRecipeTransferRegistration transferRegistry) {
         transferRegistry.addRecipeTransferHandler(new CraftingCardRecipeTransferHandler(), RecipeTypes.CRAFTING);
@@ -36,13 +37,13 @@ public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler
     }
 
     @Override
-    public RecipeType<CraftingRecipe> getRecipeType() {
+    public RecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
         return RecipeTypes.CRAFTING;
     }
 
     @Nullable
     @Override
-    public IRecipeTransferError transferRecipe(CraftingCardContainer container, CraftingRecipe recipe, IRecipeSlotsView recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
+    public IRecipeTransferError transferRecipe(CraftingCardContainer container, RecipeHolder<CraftingRecipe> recipe, IRecipeSlotsView recipeLayout, Player player, boolean maxTransfer, boolean doTransfer) {
         List<IRecipeSlotView> slotViews = recipeLayout.getSlotViews();
 
         if (doTransfer) {

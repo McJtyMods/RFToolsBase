@@ -11,6 +11,7 @@ import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.setup.Config;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
 
@@ -33,6 +35,10 @@ public class MachineInfuserModule implements IModule {
     public static final Supplier<BlockEntityType<?>> TYPE_MACHINE_INFUSER = TILES.register("machine_infuser", () -> BlockEntityType.Builder.of(MachineInfuserTileEntity::new, MACHINE_INFUSER.get()).build(null));
     public static final Supplier<MenuType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 
+    public MachineInfuserModule(IEventBus bus) {
+        bus.addListener(MachineInfuserModule::register);
+    }
+
     @Override
     public void init(FMLCommonSetupEvent event) {
 
@@ -40,7 +46,10 @@ public class MachineInfuserModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        GuiMachineInfuser.register();
+    }
+
+    public static void register(RegisterMenuScreensEvent event) {
+        GuiMachineInfuser.register(event);
     }
 
     @Override
@@ -49,7 +58,7 @@ public class MachineInfuserModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.blockBuilder(MACHINE_INFUSER)
                         .ironPickaxeTags()

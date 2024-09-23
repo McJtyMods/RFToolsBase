@@ -7,14 +7,16 @@ import mcjty.lib.varia.SafeClientTools;
 import mcjty.rftoolsbase.modules.crafting.client.GuiCraftingCard;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.function.Supplier;
@@ -38,6 +40,10 @@ public class CraftingModule implements IModule {
         });
     }
 
+    public CraftingModule(IEventBus bus) {
+        bus.addListener(this::registerMenuScreens);
+    }
+
     @Override
     public void init(FMLCommonSetupEvent event) {
 
@@ -45,9 +51,10 @@ public class CraftingModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            GuiCraftingCard.register();
-        });
+    }
+
+    public void registerMenuScreens(RegisterMenuScreensEvent event) {
+        GuiCraftingCard.register(event);
     }
 
     @Override
@@ -56,7 +63,7 @@ public class CraftingModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.itemBuilder(CRAFTING_CARD)
                         .shaped(builder -> builder

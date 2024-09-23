@@ -9,6 +9,7 @@ import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRende
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.BlockItem;
@@ -47,7 +48,7 @@ public class InformationScreenModule implements IModule {
     }
 
     @Override
-    public void initDatagen(DataGen dataGen) {
+    public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.blockBuilder(INFORMATION_SCREEN)
                         .simpleLoot()

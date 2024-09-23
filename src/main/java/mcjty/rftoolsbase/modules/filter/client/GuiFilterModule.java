@@ -23,18 +23,16 @@ import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.Holder;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -62,20 +60,14 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     private WidgetList list;
 
-    public GuiFilterModule(FilterModuleContainer container, Inventory inventory) {
-        super(null, container, inventory, FilterModuleItem.MANUAL);
+    public GuiFilterModule(FilterModuleContainer container, Inventory inventory, Component title) {
+        super(container, inventory, title, FilterModuleItem.MANUAL);
         imageWidth = CONTROLLER_WIDTH;
         imageHeight = CONTROLLER_HEIGHT;
     }
 
-    public static void register() {
-        MenuScreens.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::createFilterModuleGui);
-    }
-
-    @Nonnull
-    private static GuiFilterModule createFilterModuleGui(FilterModuleContainer container, Inventory inventory, Component
-            textComponent) {
-        return new GuiFilterModule(container, inventory);
+    public static void register(RegisterMenuScreensEvent event) {
+        event.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::new);
     }
 
     @Override
@@ -105,15 +97,16 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list = list(5, 4, 207, 99).name("list");
         Slider slider = slider(212, 4, 10, 99).scrollableName("list");
 
-        CompoundTag tagCompound = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getTag();
-        if (tagCompound != null) {
-            setBlacklistMode(tagCompound.getString("blacklistMode"));
-            damageMode.setCurrentChoice(tagCompound.getBoolean("damageMode") ? 1 : 0);
-            nbtMode.setCurrentChoice(tagCompound.getBoolean("nbtMode") ? 1 : 0);
-            modMode.setCurrentChoice(tagCompound.getBoolean("modMode") ? 1 : 0);
-        } else {
-            setBlacklistMode("White");
-        }
+        // @todo 1.21
+//        CompoundTag tagCompound = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getTag();
+//        if (tagCompound != null) {
+//            setBlacklistMode(tagCompound.getString("blacklistMode"));
+//            damageMode.setCurrentChoice(tagCompound.getBoolean("damageMode") ? 1 : 0);
+//            nbtMode.setCurrentChoice(tagCompound.getBoolean("nbtMode") ? 1 : 0);
+//            modMode.setCurrentChoice(tagCompound.getBoolean("modMode") ? 1 : 0);
+//        } else {
+//            setBlacklistMode("White");
+//        }
 
         Panel toplevel = positional().background(iconLocation)
                 .children(blacklistMode, damageMode, nbtMode, modMode, list, slider, remove, expand, addTags);
@@ -129,7 +122,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         selector.create(window, TagSelectorWindow.TYPE_BOTH, t -> {
             if (t != null) {
                 FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
-                inventory.addTag(TagTools.createItemTagKey(new ResourceLocation(t)));
+                inventory.addTag(TagTools.createItemTagKey(ResourceLocation.parse(t)));
                 inventory.markDirty();
                 refresh();
             }
