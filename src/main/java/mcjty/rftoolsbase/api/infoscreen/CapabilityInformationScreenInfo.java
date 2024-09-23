@@ -9,9 +9,4 @@ import org.jetbrains.annotations.Nullable;
 public class CapabilityInformationScreenInfo {
 
     public static final BlockCapability<IInformationScreenInfo, @Nullable Direction> INFORMATION_SCREEN_INFO_CAPABILITY = BlockCapability.createSided(ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "information_screen"), IInformationScreenInfo.class);
-
-    // @todo 1.21
-//    public static void register(RegisterCapabilitiesEvent event) {
-//        event.register(IInformationScreenInfo.class);
-//    }
 }

@@ -9,7 +9,9 @@ import mcjty.lib.varia.InventoryTools;
 import mcjty.lib.varia.TagTools;
 import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.filter.FilterModule;
 import mcjty.rftoolsbase.modules.filter.FilterModuleCache;
+import mcjty.rftoolsbase.modules.filter.data.FilterModuleData;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -48,6 +50,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info", stack -> {
+                        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
                         /// @todo 1.21
 //                        CompoundTag tagCompound = stack.getTag();
 //                        if (tagCompound != null) {

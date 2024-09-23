@@ -20,7 +20,7 @@ public class ModSetup extends DefaultModSetup {
             McJtyLib.registerListCommandInfo(Hud.COMMAND_GETHUDLOG, String.class, buf -> buf.readUtf(32767), FriendlyByteBuf::writeUtf);
         });
 
-        NeoForge.EVENT_BUS.addListener((LevelTickEvent event) -> {
+        NeoForge.EVENT_BUS.addListener((LevelTickEvent.Post event) -> {
             if (!event.getLevel().isClientSide) {
                 TickOrderHandler.postWorldTick(event.getLevel().dimension());
             }

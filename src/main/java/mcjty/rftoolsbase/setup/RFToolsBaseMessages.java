@@ -5,7 +5,7 @@ import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
-import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
+import mcjty.rftoolsbase.modules.crafting.network.PacketItemComponentsToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
@@ -27,7 +27,7 @@ public class RFToolsBaseMessages {
                 .versioned("1.0")
                 .optional();
 
-        registrar.playToServer(PacketItemNBTToServer.TYPE, PacketItemNBTToServer.CODEC, PacketItemNBTToServer::handle);
+        registrar.playToServer(PacketItemComponentsToServer.TYPE, PacketItemComponentsToServer.CODEC, PacketItemComponentsToServer::handle);
         registrar.playToServer(PacketUpdateNBTItemCard.TYPE, PacketUpdateNBTItemCard.CODEC, PacketUpdateNBTItemCard::handle);
         registrar.playToServer(PacketSendRecipe.TYPE, PacketSendRecipe.CODEC, PacketSendRecipe::handle);
         registrar.playToServer(PacketGetMonitorLog.TYPE, PacketGetMonitorLog.CODEC, PacketGetMonitorLog::handle);

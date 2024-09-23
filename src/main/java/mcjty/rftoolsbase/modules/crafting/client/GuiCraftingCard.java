@@ -16,6 +16,7 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
+import mcjty.rftoolsbase.modules.crafting.network.PacketItemComponentsToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.gui.GuiGraphics;
@@ -166,8 +167,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
                     stacks.set(idx, itemstack);
                     ItemStack cardItem = minecraft.player.getItemInHand(InteractionHand.MAIN_HAND);
                     CraftingCardItem.putStacksInItem(cardItem, stacks);
-                    // @todo 1.21
-//                    RFToolsBaseMessages.sendToServer(PacketItemNBTToServer.create(cardItem.getTag()));
+                    RFToolsBaseMessages.sendToServer(PacketItemComponentsToServer.create(cardItem));
                 }
             }
 

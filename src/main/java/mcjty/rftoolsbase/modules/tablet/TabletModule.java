@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -42,6 +43,10 @@ public class TabletModule implements IModule {
         });
     }
 
+    public TabletModule(IEventBus bus) {
+        bus.addListener(TabletModule::register);
+    }
+
     @Override
     public void init(FMLCommonSetupEvent event) {
 
@@ -49,12 +54,14 @@ public class TabletModule implements IModule {
 
     @Override
     public void initClient(FMLClientSetupEvent event) {
-        GuiTablet.register();
+    }
+
+    public static void register(RegisterMenuScreensEvent event) {
+        GuiTablet.register(event);
     }
 
     @Override
     public void initConfig(IEventBus bus) {
-
     }
 
     @Override

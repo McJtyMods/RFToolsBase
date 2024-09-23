@@ -8,6 +8,8 @@ import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.crafting.CraftingModule;
+import mcjty.rftoolsbase.modules.crafting.data.CraftingCardData;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -31,13 +33,20 @@ import java.util.List;
 
 import static mcjty.lib.builder.TooltipBuilder.header;
 import static mcjty.lib.builder.TooltipBuilder.parameter;
-import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.GRID_WIDTH;
-import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.INPUT_SLOTS;
+import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.*;
 
 public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/craftingcard");
-    private static final CraftingInput CRAFTING_INVENTORY = CraftingInput.of(3, 3, new ArrayList<>(9));
+    private static final CraftingInput CRAFTING_INVENTORY = CraftingInput.of(3, 3, createList());
+
+    private static List<ItemStack> createList() {
+        List<ItemStack> list = new ArrayList<>();
+        for (int i = 0 ; i < 9 ; i++) {
+            list.add(ItemStack.EMPTY);
+        }
+        return list;
+    }
 
     @Override
     public ManualEntry getManualEntry() {
@@ -115,29 +124,29 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     public static ItemStackList getStacksFromItem(ItemStack craftingCard) {
-        // @todo 1.21
-//        CompoundTag tagCompound = craftingCard.getOrCreateTag();
+        CraftingCardData data = craftingCard.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY);
         ItemStackList stacks = ItemStackList.create(INPUT_SLOTS+1);
-//        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
-//        for (int i = 0 ; i < bufferTagList.size() ; i++) {
-//            CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
-//            stacks.set(i, ItemStack.of(nbtTagCompound));
-//        }
+        for (int i = 0 ; i < stacks.size() ; i++) {
+            if (i < data.stacks().size()) {
+                stacks.set(i, data.stacks().get(i));
+            } else {
+                stacks.set(i, ItemStack.EMPTY);
+            }
+        }
         return stacks;
     }
 
     public static void putStacksInItem(ItemStack craftingCard, ItemStackList stacks) {
-        // @todo 1.21
-//        CompoundTag tagCompound = craftingCard.getOrCreateTag();
-//        ListTag bufferTagList = new ListTag();
-//        for (ItemStack stack : stacks) {
-//            CompoundTag nbtTagCompound = new CompoundTag();
-//            if (!stack.isEmpty()) {
-//                stack.save(nbtTagCompound);
-//            }
-//            bufferTagList.add(nbtTagCompound);
-//        }
-//        tagCompound.put("Items", bufferTagList);
+        craftingCard.update(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY, data -> {
+            for (int i = 0 ; i < data.stacks().size() ; i++) {
+                if (i < stacks.size()) {
+                    data.stacks().set(i, stacks.get(i));
+                } else {
+                    data.stacks().add(ItemStack.EMPTY);
+                }
+            }
+            return data;
+        });
     }
 
     @Override
@@ -175,14 +184,8 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     public static ItemStack getResult(ItemStack card) {
-        // @todo 1.21
-//        CompoundTag tagCompound = card.getTag();
-//        if (tagCompound == null) {
-            return ItemStack.EMPTY;
-//        }
-//        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
-//        CompoundTag nbtTagCompound = bufferTagList.getCompound(CraftingCardContainer.SLOT_OUT);
-//        return ItemStack.of(nbtTagCompound);
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY);
+        return data.stacks().get(SLOT_OUT);
     }
 
     private static boolean isInGrid(int index) {
@@ -193,63 +196,40 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
 
     // Return true if this crafting card fits a 3x3 crafting grid nicely
     public static boolean fitsGrid(ItemStack card) {
-        // @todo 1.21
-//        CompoundTag tagCompound = card.getTag();
-//        if (tagCompound == null) {
-//            return false;
-//        }
-//        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
-//        for (int i = 0 ; i < bufferTagList.size() ; i++) {
-//            if (i < INPUT_SLOTS) {
-//                CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
-//                ItemStack s = ItemStack.of(nbtTagCompound);
-//                if (!s.isEmpty()) {
-//                    if (!isInGrid(i)) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY);
+        for (int i = 0 ; i < data.stacks().size() ; i++) {
+            if (i < INPUT_SLOTS) {
+                if (!isInGrid(i)) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 
     public static List<Ingredient> getIngredientsGrid(ItemStack card) {
-        // @todo 1.21
-//        CompoundTag tagCompound = card.getTag();
-//        if (tagCompound == null) {
-//            return Collections.emptyList();
-//        }
-//        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY);
         List<Ingredient> stacks = new ArrayList<>();
-//        for (int i = 0 ; i < bufferTagList.size() ; i++) {
-//            if (i < INPUT_SLOTS) {
-//                CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
-//                ItemStack s = ItemStack.of(nbtTagCompound);
-//                if (isInGrid(i)) {
-//                    stacks.add(Ingredient.of(s));
-//                }
-//            }
-//        }
+        for (int i = 0 ; i < data.stacks().size() ; i++) {
+            if (i < INPUT_SLOTS) {
+                if (isInGrid(i)) {
+                    stacks.add(Ingredient.of(data.stacks().get(i)));
+                }
+            }
+        }
         return stacks;
     }
 
     public static List<ItemStack> getIngredientStacks(ItemStack card) {
-        // @todo 1.21
-//        CompoundTag tagCompound = card.getTag();
-//        if (tagCompound == null) {
-//            return Collections.emptyList();
-//        }
-//        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY);
         List<ItemStack> stacks = new ArrayList<>();
-//        for (int i = 0 ; i < bufferTagList.size() ; i++) {
-//            if (i < INPUT_SLOTS) {
-//                CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
-//                ItemStack s = ItemStack.of(nbtTagCompound);
-//                if (!s.isEmpty()) {
-//                    stacks.add(s);
-//                }
-//            }
-//        }
+        for (int i = 0 ; i < data.stacks().size() ; i++) {
+            if (i < INPUT_SLOTS) {
+                if (isInGrid(i)) {
+                    stacks.add(data.stacks().get(i));
+                }
+            }
+        }
         return stacks;
     }
 
@@ -257,22 +237,13 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
      * Get the stacks in this card as a list of Ingredient
      */
     public static List<Ingredient> getIngredients(ItemStack card) {
-        // @todo 1.21
-//        CompoundTag tagCompound = card.getTag();
-//        if (tagCompound == null) {
-//            return Collections.emptyList();
-//        }
-//        ListTag bufferTagList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, CraftingCardData.EMPTY);
         List<Ingredient> stacks = new ArrayList<>();
-//        for (int i = 0 ; i < bufferTagList.size() ; i++) {
-//            if (i < INPUT_SLOTS) {
-//                CompoundTag nbtTagCompound = bufferTagList.getCompound(i);
-//                ItemStack s = ItemStack.of(nbtTagCompound);
-//                if (!s.isEmpty()) {
-//                    stacks.add(Ingredient.of(s));
-//                }
-//            }
-//        }
+        for (int i = 0 ; i < data.stacks().size() ; i++) {
+            if (i < INPUT_SLOTS) {
+                stacks.add(Ingredient.of(data.stacks().get(i)));
+            }
+        }
         return stacks;
     }
 }

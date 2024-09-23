@@ -12,9 +12,7 @@ import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
 import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -95,19 +93,22 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static ItemStack getContainingItem(ItemStack stack, int slot) {
-        return NBTTools.getTag(stack).map(tag -> ItemStack.of(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
+        // @todo 1.21
+//        return NBTTools.getTag(stack).map(tag -> ItemStack.of(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
+        return ItemStack.EMPTY;
     }
 
     public static void setContainingItem(Player player, InteractionHand hand, int slot, ItemStack containingItem) {
         ItemStack stack = player.getItemInHand(hand);
-        CompoundTag tag = stack.getOrCreateTag();
-        if (containingItem.isEmpty()) {
-            tag.remove("Item" + slot);
-        } else {
-            CompoundTag compound = new CompoundTag();
-            containingItem.save(compound);
-            tag.put("Item" + slot, compound);
-        }
+        // @todo 1.21
+//        CompoundTag tag = stack.getOrCreateTag();
+//        if (containingItem.isEmpty()) {
+//            tag.remove("Item" + slot);
+//        } else {
+//            CompoundTag compound = new CompoundTag();
+//            containingItem.save(compound);
+//            tag.put("Item" + slot, compound);
+//        }
 
         int current = getCurrentSlot(stack);
         ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
@@ -123,7 +124,8 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
             } else {
                 newTablet = new ItemStack(((ITabletSupport) containingItem.getItem()).getInstalledTablet());
             }
-            newTablet.setTag(stack.getTag());
+            // @todo 1.21
+//            newTablet.setTag(stack.getTag());
         } else {
             newTablet = stack;
         }
@@ -154,7 +156,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     private void openTabletGui(Player player) {
-        NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
+        player.openMenu(new MenuProvider() {
             @Nonnull
             @Override
             public Component getDisplayName() {
@@ -176,8 +178,8 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, Level world, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
-        super.appendHoverText(itemStack, world, list, flags);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
+        super.appendHoverText(itemStack, context, list, flags);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flags);
     }
 }

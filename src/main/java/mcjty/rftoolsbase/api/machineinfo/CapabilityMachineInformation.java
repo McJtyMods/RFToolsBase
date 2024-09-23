@@ -9,9 +9,4 @@ import org.jetbrains.annotations.Nullable;
 public class CapabilityMachineInformation {
 
     public static final BlockCapability<IMachineInformation, @Nullable Direction> MACHINE_INFORMATION_CAPABILITY = BlockCapability.createSided(ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "machine_information"), IMachineInformation.class);
-
-    // @todo 1.21
-//    public static void register(RegisterCapabilitiesEvent event) {
-//        event.register(IMachineInformation.class);
-//    }
 }

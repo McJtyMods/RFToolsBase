@@ -74,7 +74,7 @@ public class RFToolsBase {
         modules.register(new FilterModule(bus));
         modules.register(new InformationScreenModule());
         modules.register(new MachineInfuserModule(bus));
-        modules.register(new TabletModule());
+        modules.register(new TabletModule(bus));
         modules.register(new VariousModule());
         modules.register(new WorldGenModule());
     }

@@ -2,10 +2,7 @@ package mcjty.rftoolsbase.modules.crafting.network;
 
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtAccounter;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -15,16 +12,17 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 /**
- * This packet will update the held item NBT from client to server
+ * This packet will update the held item components on the server. We use an ItemStack as the parameter
+ * but only use the components
  */
-public record PacketItemNBTToServer(CompoundTag tagCompound) implements CustomPacketPayload {
+public record PacketItemComponentsToServer(ItemStack stack) implements CustomPacketPayload {
 
     public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "itemnbt");
-    public static final CustomPacketPayload.Type<PacketItemNBTToServer> TYPE = new Type<>(ID);
+    public static final CustomPacketPayload.Type<PacketItemComponentsToServer> TYPE = new Type<>(ID);
 
-    public static final StreamCodec<FriendlyByteBuf, PacketItemNBTToServer> CODEC = StreamCodec.composite(
-            ByteBufCodecs.compoundTagCodec(NbtAccounter::unlimitedHeap), PacketItemNBTToServer::tagCompound,
-            PacketItemNBTToServer::new
+    public static final StreamCodec<RegistryFriendlyByteBuf, PacketItemComponentsToServer> CODEC = StreamCodec.composite(
+            ItemStack.STREAM_CODEC, PacketItemComponentsToServer::stack,
+            PacketItemComponentsToServer::new
     );
 
     @Override
@@ -32,8 +30,8 @@ public record PacketItemNBTToServer(CompoundTag tagCompound) implements CustomPa
         return TYPE;
     }
 
-    public static PacketItemNBTToServer create(CompoundTag tagCompound) {
-        return new PacketItemNBTToServer(tagCompound);
+    public static PacketItemComponentsToServer create(ItemStack stack) {
+        return new PacketItemComponentsToServer(stack);
     }
 
     public void handle(IPayloadContext ctx) {
@@ -44,10 +42,9 @@ public record PacketItemNBTToServer(CompoundTag tagCompound) implements CustomPa
                 return;
             }
 //            if (heldItem.getItem() instanceof ProgramCardItem) {
-//                heldItem.setTagCompound(tagCompound);
+//                heldItem.applyComponents(components);
             if (heldItem.getItem() instanceof CraftingCardItem) {
-                // @todo 1.21
-//                heldItem.setTag(tagCompound);
+                heldItem.applyComponents(stack.getComponents());
             }
         });
     }

@@ -35,6 +35,7 @@ public class Registration {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, MODID);
     public static final DeferredRegister<PlacementModifierType<?>> PLACEMENT_MODIFIERS = Tools.createPlacementRegistry(MODID);
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
+    public static final DeferredRegister.DataComponents COMPONENTS = DeferredRegister.createDataComponents(MODID);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
@@ -45,6 +46,7 @@ public class Registration {
         ENTITIES.register(bus);
         PLACEMENT_MODIFIERS.register(bus);
         TABS.register(bus);
+        COMPONENTS.register(bus);
     }
 
 

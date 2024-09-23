@@ -12,12 +12,12 @@ import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 
@@ -33,19 +33,14 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
 
     private ToggleButton[] buttons;
 
-    public GuiTablet(TabletContainer container, Inventory inventory) {
-        super(null, container, inventory, TabletItem.MANUAL);
+    public GuiTablet(TabletContainer container, Inventory inventory, Component title) {
+        super(container, inventory, title, TabletItem.MANUAL);
         imageWidth = TABLET_WIDTH;
         imageHeight = TABLET_HEIGHT;
     }
 
-    public static void register() {
-        MenuScreens.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::createTabletGui);
-    }
-
-    @Nonnull
-    private static GuiTablet createTabletGui(TabletContainer container, Inventory inventory, Component textComponent) {
-        return new GuiTablet(container, inventory);
+    public static void register(RegisterMenuScreensEvent event) {
+        event.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::new);
     }
 
     @Override
