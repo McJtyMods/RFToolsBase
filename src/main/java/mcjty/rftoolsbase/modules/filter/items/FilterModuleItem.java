@@ -51,23 +51,17 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             .infoShift(header(), gold(),
                     parameter("info", stack -> {
                         FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
-                        /// @todo 1.21
-//                        CompoundTag tagCompound = stack.getTag();
-//                        if (tagCompound != null) {
-//                            String blackListMode = tagCompound.getString("blacklistMode");
-//                            String modeLine = "Mode " + ("Black".equals(blackListMode) ? "blacklist" : "whitelist");
-//                            if (tagCompound.getBoolean("damageMode")) {
-//                                modeLine += ", Damage";
-//                            }
-//                            if (tagCompound.getBoolean("nbtMode")) {
-//                                modeLine += ", NBT";
-//                            }
-//                            if (tagCompound.getBoolean("modMode")) {
-//                                modeLine += ", Mod";
-//                            }
-//                            return modeLine;
-//                        }
-                        return "<not configured>";
+                        String modeLine = "Mode " + (data.blacklist() ? "blacklist" : "whitelist");
+                        if (data.damage()) {
+                            modeLine += ", Damage";
+                        }
+                        if (data.components()) {
+                            modeLine += ", Comp";
+                        }
+                        if (data.mod()) {
+                            modeLine += ", Mod";
+                        }
+                        return modeLine;
                     })));
 
 

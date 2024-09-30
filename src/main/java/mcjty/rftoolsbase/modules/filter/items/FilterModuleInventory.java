@@ -1,6 +1,9 @@
 package mcjty.rftoolsbase.modules.filter.items;
 
 import mcjty.lib.varia.ItemStackList;
+import mcjty.lib.varia.TagTools;
+import mcjty.rftoolsbase.modules.filter.FilterModule;
+import mcjty.rftoolsbase.modules.filter.data.FilterModuleData;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -21,34 +24,25 @@ public class FilterModuleInventory {
 
     public FilterModuleInventory(Player player) {
         filterGetter = () -> player.getItemInHand(InteractionHand.MAIN_HAND);
-        // @todo 1.21
-//        CompoundTag tagCompound = player.getItemInHand(InteractionHand.MAIN_HAND).getOrCreateTag();
-//        convertFromNBT(tagCompound);
+        ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+        convertFromItem(stack);
     }
 
     public FilterModuleInventory(ItemStack filterItem) {
         filterGetter = () -> filterItem;
-        // @todo 1.21
-//        CompoundTag tagCompound = filterItem.getOrCreateTag();
-//        convertFromNBT(tagCompound);
+        convertFromItem(filterItem);
     }
 
-    // @todo 1.21
-//    private void convertFromNBT(CompoundTag tagCompound) {
-//        ListTag itemList = tagCompound.getList("Items", Tag.TAG_COMPOUND);
-//        for (int i = 0; i < itemList.size(); i++) {
-//            CompoundTag compound = itemList.getCompound(i);
-//            ItemStack s = ItemStack.of(compound);
-//            if (!s.isEmpty()) {
-//                stacks.add(s);
-//            }
-//        }
-//        ListTag tagList = tagCompound.getList("Tags", Tag.TAG_STRING);
-//        for (int i = 0 ; i < tagList.size() ; i++) {
-//            String s = tagList.getString(i);
-//            tags.add(TagTools.createItemTagKey(ResourceLocation.parse(s)));
-//        }
-//    }
+    // Parameter is the filter item
+    private void convertFromItem(ItemStack stack) {
+        stacks.clear();
+        tags.clear();
+        if (stack.is(FilterModule.FILTER_MODULE.get())) {
+            FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+            stacks.addAll(data.stacks());
+            data.tags().stream().map(TagTools::createItemTagKey).forEach(tags::add);
+        }
+    }
 
     public void addStack(ItemStack stack) {
         ItemStack toPlace = stack.copy();
@@ -92,24 +86,9 @@ public class FilterModuleInventory {
     public void markDirty() {
         ItemStack heldItem = filterGetter.get();
         if (!heldItem.isEmpty()) {
-            // @todo 1.21
-//            CompoundTag tagCompound = heldItem.getOrCreateTag();
-//
-//            ListTag itemList = new ListTag();
-//            for (ItemStack stack : stacks) {
-//                CompoundTag nbtTagCompound = new CompoundTag();
-//                if (!stack.isEmpty()) {
-//                    stack.save(nbtTagCompound);
-//                }
-//                itemList.add(nbtTagCompound);
-//            }
-//            tagCompound.put("Items", itemList);
-//
-//            ListTag tagList = new ListTag();
-//            for (TagKey<Item> tag : tags) {
-//                tagList.add(StringTag.valueOf(tag.location().toString()));
-//            }
-//            tagCompound.put("Tags", tagList);
+            FilterModuleData data = heldItem.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+            FilterModuleData newdata = new FilterModuleData(stacks, tags.stream().map(TagKey::location).toList(), data.blacklist(), data.damage(), data.components(), data.mod());
+            heldItem.set(FilterModule.ITEM_FILTERMODULE_DATA, newdata);
         }
     }
 

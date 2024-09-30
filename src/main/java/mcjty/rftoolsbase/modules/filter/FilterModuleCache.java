@@ -3,40 +3,38 @@ package mcjty.rftoolsbase.modules.filter;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.lib.varia.TagTools;
 import mcjty.lib.varia.Tools;
+import mcjty.rftoolsbase.modules.filter.data.FilterModuleData;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
 public class FilterModuleCache implements Predicate<ItemStack> {
-    private boolean matchDamage = true;
-    private boolean blacklistMode = true;
-    private boolean nbtMode = false;
-    private boolean modMode = false;
+    private final boolean matchDamage;
+    private final boolean blacklistMode;
+    private final boolean componentMode;
+    private final boolean modMode;
     private final ItemStackList stacks;
-    private Set<TagKey<Item>> tags = Collections.emptySet();
+    private final Set<TagKey<Item>> tags;
 
     // Parameter is the filter item.
     public FilterModuleCache(ItemStack stack) {
-        // @todo 1.21
-//        CompoundTag tagCompound = stack.getTag();
-//        if (tagCompound != null) {
-//            matchDamage = tagCompound.getBoolean("damageMode");
-//            nbtMode = tagCompound.getBoolean("nbtMode");
-//            modMode = tagCompound.getBoolean("modMode");
-//            blacklistMode = "Black".equals(tagCompound.getString("blacklistMode"));
-//
-//            FilterModuleInventory inventory = new FilterModuleInventory(stack);
-//            tags = new HashSet<>();
-//            stacks = ItemStackList.create();
-//            stacks.addAll(inventory.getStacks());
-//            tags.addAll(inventory.getTags());
-//        } else {
-            stacks = ItemStackList.EMPTY;
-//        }
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        matchDamage = data.damage();
+        componentMode = data.components();
+        modMode = data.mod();
+        blacklistMode = data.blacklist();
+
+        FilterModuleInventory inventory = new FilterModuleInventory(stack);
+        tags = new HashSet<>();
+        stacks = ItemStackList.create();
+        stacks.addAll(inventory.getStacks());
+        tags.addAll(inventory.getTags());
     }
 
     @Override
@@ -71,7 +69,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
                 if (matchDamage && itemStack.getDamageValue() != stack.getDamageValue()) {
                     continue;
                 }
-                if (nbtMode && !ItemStack.isSameItemSameComponents(itemStack, stack)) {
+                if (componentMode && !ItemStack.isSameItemSameComponents(itemStack, stack)) {
                     continue;
                 }
                 if (modMode) {

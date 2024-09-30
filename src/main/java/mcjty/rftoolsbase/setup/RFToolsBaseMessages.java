@@ -8,7 +8,6 @@ import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemComponentsToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
-import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -31,7 +30,6 @@ public class RFToolsBaseMessages {
         registrar.playToServer(PacketUpdateNBTItemCard.TYPE, PacketUpdateNBTItemCard.CODEC, PacketUpdateNBTItemCard::handle);
         registrar.playToServer(PacketSendRecipe.TYPE, PacketSendRecipe.CODEC, PacketSendRecipe::handle);
         registrar.playToServer(PacketGetMonitorLog.TYPE, PacketGetMonitorLog.CODEC, PacketGetMonitorLog::handle);
-        registrar.playToServer(PacketUpdateNBTItemFilter.TYPE, PacketUpdateNBTItemFilter.CODEC, PacketUpdateNBTItemFilter::handle);
         registrar.playToServer(PacketSyncHandItem.TYPE, PacketSyncHandItem.CODEC, PacketSyncHandItem::handle);
 
         registrar.playToClient(PacketMonitorLogReady.TYPE, PacketMonitorLogReady.CODEC, PacketMonitorLogReady::handle);

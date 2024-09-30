@@ -6,19 +6,16 @@ import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.HorizontalAlignment;
 import mcjty.lib.gui.widgets.*;
 import mcjty.lib.tileentity.GenericTileEntity;
-import mcjty.lib.typed.Key;
-import mcjty.lib.typed.Type;
-import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.modules.filter.FilterModule;
+import mcjty.rftoolsbase.modules.filter.data.FilterModuleData;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
-import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -27,6 +24,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
@@ -52,7 +50,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     private ImageChoiceLabel blacklistMode;
     private ImageChoiceLabel damageMode;
-    private ImageChoiceLabel nbtMode;
+    private ImageChoiceLabel componentMode;
     private ImageChoiceLabel modMode;
 
     private Button remove;
@@ -86,9 +84,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         damageMode.choice("Off", "Ignore damage", guiElements, 6 * 16, 32);
         damageMode.choice("On", "Damage must match", guiElements, 7 * 16, 32);
 
-        nbtMode = imageChoice(5, 168, 16, 16).tooltips("Filter ignoring NBT").event((newChoice) -> updateSettings());
-        nbtMode.choice("Off", "Ignore NBT", guiElements, 8 * 16, 32);
-        nbtMode.choice("On", "NBT must match", guiElements, 9 * 16, 32);
+        componentMode = imageChoice(5, 168, 16, 16).tooltips("Filter ignoring Components").event((newChoice) -> updateSettings());
+        componentMode.choice("Off", "Ignore Components", guiElements, 8 * 16, 32);
+        componentMode.choice("On", "Components must match", guiElements, 9 * 16, 32);
 
         modMode = imageChoice(21, 168, 16, 16).tooltips("Filter ignoring mod").event((newChoice) -> updateSettings());
         modMode.choice("Off", "Don't match on mod", guiElements, 12 * 16, 32);
@@ -97,19 +95,15 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         list = list(5, 4, 207, 99).name("list");
         Slider slider = slider(212, 4, 10, 99).scrollableName("list");
 
-        // @todo 1.21
-//        CompoundTag tagCompound = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND).getTag();
-//        if (tagCompound != null) {
-//            setBlacklistMode(tagCompound.getString("blacklistMode"));
-//            damageMode.setCurrentChoice(tagCompound.getBoolean("damageMode") ? 1 : 0);
-//            nbtMode.setCurrentChoice(tagCompound.getBoolean("nbtMode") ? 1 : 0);
-//            modMode.setCurrentChoice(tagCompound.getBoolean("modMode") ? 1 : 0);
-//        } else {
-//            setBlacklistMode("White");
-//        }
+        ItemStack stack = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        setBlacklistMode(data.blacklist() ? "Black" : "White");
+        damageMode.setCurrentChoice(data.damage() ? 1 : 0);
+        componentMode.setCurrentChoice(data.components() ? 1 : 0);
+        modMode.setCurrentChoice(data.mod() ? 1 : 0);
 
         Panel toplevel = positional().background(iconLocation)
-                .children(blacklistMode, damageMode, nbtMode, modMode, list, slider, remove, expand, addTags);
+                .children(blacklistMode, damageMode, componentMode, modMode, list, slider, remove, expand, addTags);
 
         toplevel.bounds(leftPos, topPos, imageWidth, imageHeight);
 
@@ -263,12 +257,13 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void updateSettings() {
-        RFToolsBaseMessages.sendToServer(PacketUpdateNBTItemFilter.create(
-                TypedMap.builder()
-                        .put(new Key<>("blacklistMode", Type.STRING), blacklistMode.getCurrentChoice())
-                        .put(new Key<>("damageMode", Type.BOOLEAN), damageMode.getCurrentChoiceIndex() == 1)
-                        .put(new Key<>("modMode", Type.BOOLEAN), modMode.getCurrentChoiceIndex() == 1)
-                        .put(new Key<>("nbtMode", Type.BOOLEAN), nbtMode.getCurrentChoiceIndex() == 1)
-                        .build()));
+        ItemStack stack = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        data = new FilterModuleData(data.stacks(), data.tags(),
+                blacklistMode.getCurrentChoice().equals("Black"),
+                damageMode.getCurrentChoiceIndex() == 1,
+                componentMode.getCurrentChoiceIndex() == 1,
+                modMode.getCurrentChoiceIndex() == 1);
+        RFToolsBaseMessages.sendToServer(PacketSyncHandItem.create(minecraft.player));
    }
 }
