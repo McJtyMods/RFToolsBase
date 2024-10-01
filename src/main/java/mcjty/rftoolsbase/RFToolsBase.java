@@ -50,6 +50,7 @@ public class RFToolsBase {
 //        bus.addListener(setup::registerCapabilities);
         bus.addListener(this::onDataGen);
         bus.addListener(RFToolsBaseMessages::registerMessages);
+        bus.addListener(setup.getBlockCapabilityRegistrar(Registration.RBLOCKS));
 
         NeoForge.EVENT_BUS.addListener((ServerStartedEvent e) -> TickOrderHandler.clean());
         if (dist.isClient()) {
@@ -78,5 +79,4 @@ public class RFToolsBase {
         modules.register(new VariousModule());
         modules.register(new WorldGenModule());
     }
-
 }

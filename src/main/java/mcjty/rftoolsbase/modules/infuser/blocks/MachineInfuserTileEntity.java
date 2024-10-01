@@ -71,7 +71,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     private final IInfusable infusableHandler = new DefaultInfusable(MachineInfuserTileEntity.this);
 
     public MachineInfuserTileEntity(BlockPos pos, BlockState state) {
-        super(MachineInfuserModule.TYPE_MACHINE_INFUSER.get(), pos, state);
+        super(MachineInfuserModule.MACHINE_INFUSER.be().get(), pos, state);
     }
 
     public static BaseBlock createBlock() {

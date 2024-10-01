@@ -27,7 +27,7 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/infuser.png");
 
     public GuiMachineInfuser(GenericContainer container, Inventory inventory, Component title) {
-        super(container, inventory, title, MachineInfuserModule.MACHINE_INFUSER.get().getManualEntry());
+        super(container, inventory, title, MachineInfuserModule.MACHINE_INFUSER.block().get().getManualEntry());
 
         imageWidth = INFUSER_WIDTH;
         imageHeight = INFUSER_HEIGHT;
