@@ -7,11 +7,13 @@ import mcjty.lib.modules.IModule;
 import mcjty.lib.varia.TagTools;
 import mcjty.lib.varia.WrenchChecker;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.various.data.WrenchData;
 import mcjty.rftoolsbase.modules.various.items.ManualItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -20,12 +22,14 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.List;
 
 import static mcjty.lib.datagen.DataGen.has;
 import static mcjty.rftoolsbase.RFToolsBase.tab;
+import static mcjty.rftoolsbase.setup.Registration.COMPONENTS;
 import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 
 public class VariousModule implements IModule {
@@ -44,6 +48,12 @@ public class VariousModule implements IModule {
 
     public static final ResourceLocation SHARDS = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "shards");
     public static final TagKey<Item> SHARDS_TAG = TagTools.createItemTagKey(SHARDS);
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<WrenchData>> ITEM_WRENCH_DATA = COMPONENTS.registerComponentType(
+            "wrench_data",
+            builder -> builder
+                    .persistent(WrenchData.CODEC)
+                    .networkSynchronized(WrenchData.STREAM_CODEC));
 
     private static Item createItem16() {
         return new Item(RFToolsBase.setup.defaultProperties().stacksTo(16));

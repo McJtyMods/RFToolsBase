@@ -15,11 +15,11 @@ import mcjty.lib.tileentity.TickingTileEntity;
 import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserConfiguration;
 import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
+import mcjty.rftoolsbase.modules.infuser.data.InfuserData;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -70,8 +70,6 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     @Cap(type = CapType.INFUSABLE)
     private final IInfusable infusableHandler = new DefaultInfusable(MachineInfuserTileEntity.this);
 
-    private int infusing = 0;
-
     public MachineInfuserTileEntity(BlockPos pos, BlockState state) {
         super(MachineInfuserModule.TYPE_MACHINE_INFUSER.get(), pos, state);
     }
@@ -88,13 +86,15 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
     @Override
     public void tickServer() {
+        var data = getData(MachineInfuserModule.INFUSER_DATA);
+        int infusing = data.infusing();
         if (infusing > 0) {
             infusing--;
             if (infusing == 0) {
                 ItemStack outputStack = items.getStackInSlot(1);
                 finishInfusing(outputStack);
             }
-            markDirtyQuick();
+            setData(MachineInfuserModule.INFUSER_DATA, new InfuserData(infusing));
         } else {
             ItemStack inputStack = items.getStackInSlot(0);
             ItemStack outputStack = items.getStackInSlot(1);
@@ -102,6 +102,22 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
                 startInfusing();
             }
         }
+    }
+
+    @Override
+    protected void applyImplicitComponents(DataComponentInput input) {
+        super.applyImplicitComponents(input);
+        var data = input.get(MachineInfuserModule.ITEM_INFUSER_DATA);
+        if (data != null) {
+            setData(MachineInfuserModule.INFUSER_DATA, data);
+        }
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder builder) {
+        super.collectImplicitComponents(builder);
+        var data = getData(MachineInfuserModule.INFUSER_DATA);
+        builder.set(MachineInfuserModule.ITEM_INFUSER_DATA, data);
     }
 
     private static boolean isShard(ItemStack stack) {
@@ -150,21 +166,18 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
         if (items.getStackInSlot(0).isEmpty()) {
             items.setStackInSlot(0, ItemStack.EMPTY);
         }
-        infusing = 5;
-        markDirtyQuick();
+        setData(MachineInfuserModule.INFUSER_DATA, new InfuserData(5));
     }
 
-    @Override
-    protected void loadAdditional(CompoundTag tagCompound, HolderLookup.Provider pRegistries) {
-        super.loadAdditional(tagCompound, pRegistries);
-        // @todo 1.21 (data?)
-        infusing = tagCompound.getCompound("Info").getInt("infusing");
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag tagCompound, HolderLookup.Provider provider) {
-        super.saveAdditional(tagCompound, provider);
-        // @todo 1.21 (data?)
-        getOrCreateInfo(tagCompound).putInt("infusing", infusing);
-    }
+//    @Override
+//    protected void loadAdditional(CompoundTag tagCompound, HolderLookup.Provider pRegistries) {
+//        super.loadAdditional(tagCompound, pRegistries);
+//        infusing = tagCompound.getCompound("Info").getInt("infusing");
+//    }
+//
+//    @Override
+//    protected void saveAdditional(CompoundTag tagCompound, HolderLookup.Provider provider) {
+//        super.saveAdditional(tagCompound, provider);
+//        getOrCreateInfo(tagCompound).putInt("infusing", infusing);
+//    }
 }

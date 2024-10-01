@@ -5,12 +5,12 @@ import mcjty.lib.gui.ManualEntry;
 import mcjty.lib.items.BaseItem;
 import mcjty.lib.tooltips.ITooltipSettings;
 import mcjty.lib.varia.ComponentFactory;
-import mcjty.lib.varia.NBTTools;
 import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.api.various.IItemCycler;
 import mcjty.rftoolsbase.api.various.ITabletSupport;
 import mcjty.rftoolsbase.modules.tablet.TabletModule;
+import mcjty.rftoolsbase.modules.tablet.data.TabletData;
 import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -50,14 +50,16 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static int getCurrentSlot(ItemStack stack) {
-        return NBTTools.getTag(stack).map(tag -> tag.getInt("Current")).orElse(0);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        return data.current();
     }
 
     public static void setCurrentSlot(Player player, ItemStack stack, int current) {
-        // @todo 1.21
-//        stack.getOrCreateTag().putInt("Current", current);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        data = data.withCurrent(current);
+
         ItemStack containingItem = getContainingItem(stack, current);
-        ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
+        ItemStack newTablet = deriveNewItemstack(current, containingItem, data, current);
         player.getInventory().items.set(player.getInventory().selected, newTablet);
 //        player.setHeldItem(getHand(player), newTablet);
     }
@@ -93,30 +95,30 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static ItemStack getContainingItem(ItemStack stack, int slot) {
-        // @todo 1.21
-//        return NBTTools.getTag(stack).map(tag -> ItemStack.of(tag.getCompound("Item" + slot))).orElse(ItemStack.EMPTY);
-        return ItemStack.EMPTY;
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        if (slot < 0 || slot >= data.stacks().size()) {
+            return ItemStack.EMPTY;
+        }
+        return data.stacks().get(slot);
     }
 
     public static void setContainingItem(Player player, InteractionHand hand, int slot, ItemStack containingItem) {
         ItemStack stack = player.getItemInHand(hand);
-        // @todo 1.21
-//        CompoundTag tag = stack.getOrCreateTag();
-//        if (containingItem.isEmpty()) {
-//            tag.remove("Item" + slot);
-//        } else {
-//            CompoundTag compound = new CompoundTag();
-//            containingItem.save(compound);
-//            tag.put("Item" + slot, compound);
-//        }
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        if (containingItem.isEmpty()) {
+            data = data.setStack(slot, ItemStack.EMPTY);
+        } else {
+            data = data.setStack(slot, containingItem.copy());
+        }
+        stack.set(TabletModule.ITEM_TABLET_DATA, data);
 
         int current = getCurrentSlot(stack);
-        ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
+        ItemStack newTablet = deriveNewItemstack(slot, containingItem, data, current);
         player.getInventory().items.set(player.getInventory().selected, newTablet);
 //        player.setHeldItem(hand, newTablet);
     }
 
-    private static ItemStack deriveNewItemstack(int slot, ItemStack containingItem, ItemStack stack, int current) {
+    private static ItemStack deriveNewItemstack(int slot, ItemStack containingItem, TabletData data, int current) {
         ItemStack newTablet;
         if (slot == current) {
             if (containingItem.isEmpty()) {
@@ -124,11 +126,10 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
             } else {
                 newTablet = new ItemStack(((ITabletSupport) containingItem.getItem()).getInstalledTablet());
             }
-            // @todo 1.21
-//            newTablet.setTag(stack.getTag());
         } else {
-            newTablet = stack;
+            newTablet = new ItemStack(TabletModule.TABLET.get());
         }
+        newTablet.set(TabletModule.ITEM_TABLET_DATA, data);
         return newTablet;
     }
 

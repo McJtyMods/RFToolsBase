@@ -27,12 +27,6 @@ public class ModSetup extends DefaultModSetup {
         });
     }
 
-    // @todo 1.21
-//    public void registerCapabilities(RegisterCapabilitiesEvent event) {
-//        CapabilityInformationScreenInfo.register(event);
-//        CapabilityMachineInformation.register(event);
-//    }
-
     @Override
     protected void setupModCompat() {
     }

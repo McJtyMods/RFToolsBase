@@ -10,6 +10,8 @@ import mcjty.lib.varia.BlockPosTools;
 import mcjty.lib.varia.Logging;
 import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.various.VariousModule;
+import mcjty.rftoolsbase.modules.various.data.WrenchData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -57,18 +59,17 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide) {
             SmartWrenchMode mode = getCurrentMode(stack);
-            // @todo 1.21
-//            CompoundTag tag = stack.getTag();
-//            ItemStack newStack;
-//            if (mode == SmartWrenchMode.MODE_WRENCH) {
-//                mode = SmartWrenchMode.MODE_SELECT;
-//                newStack = new ItemStack(VariousModule.SMARTWRENCH_SELECT.get());
-//            } else {
-//                mode = SmartWrenchMode.MODE_WRENCH;
-//                newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
-//            }
-//            newStack.setTag(tag);
-//            player.setItemInHand(hand, newStack);
+            WrenchData data = stack.get(VariousModule.ITEM_WRENCH_DATA);
+            ItemStack newStack;
+            if (mode == SmartWrenchMode.MODE_WRENCH) {
+                mode = SmartWrenchMode.MODE_SELECT;
+                newStack = new ItemStack(VariousModule.SMARTWRENCH_SELECT.get());
+            } else {
+                mode = SmartWrenchMode.MODE_WRENCH;
+                newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
+            }
+            newStack.set(VariousModule.ITEM_WRENCH_DATA, data);
+            player.setItemInHand(hand, newStack);
             Logging.message(player, ChatFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
         }
         return super.use(world, player, hand);
@@ -137,34 +138,21 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     public static void setCurrentBlock(ItemStack itemStack, GlobalPos c) {
-        // @todo 1.21
-//        CompoundTag tagCompound = itemStack.getOrCreateTag();
-//
-//        if (c == null) {
-//            tagCompound.remove("selectedX");
-//            tagCompound.remove("selectedY");
-//            tagCompound.remove("selectedZ");
-//            tagCompound.remove("selectedDim");
-//        } else {
-//            tagCompound.putInt("selectedX", c.pos().getX());
-//            tagCompound.putInt("selectedY", c.pos().getY());
-//            tagCompound.putInt("selectedZ", c.pos().getZ());
-//            tagCompound.putString("selectedDim", c.dimension().location().toString());
-//        }
+        if (c == null) {
+            itemStack.remove(VariousModule.ITEM_WRENCH_DATA);
+            return;
+        }
+        itemStack.set(VariousModule.ITEM_WRENCH_DATA, new WrenchData(c));
     }
 
     @Nonnull
     public static Optional<GlobalPos> getCurrentBlock(ItemStack itemStack) {
-        // @todo 1.21
-//        CompoundTag tagCompound = itemStack.getTag();
-//        if (tagCompound != null && tagCompound.contains("selectedX")) {
-//            int x = tagCompound.getInt("selectedX");
-//            int y = tagCompound.getInt("selectedY");
-//            int z = tagCompound.getInt("selectedZ");
-//            String dim = tagCompound.getString("selectedDim");
-//            return Optional.of(GlobalPos.of(LevelTools.getId(dim), new BlockPos(x, y, z)));
-//        }
-        return Optional.empty();
+        WrenchData data = itemStack.get(VariousModule.ITEM_WRENCH_DATA);
+        if (data != null) {
+            return Optional.of(data.pos());
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override

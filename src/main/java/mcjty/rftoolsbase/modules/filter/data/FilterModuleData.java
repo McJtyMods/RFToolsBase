@@ -13,6 +13,8 @@ import java.util.List;
 
 public record FilterModuleData(List<ItemStack> stacks, List<ResourceLocation> tags, boolean blacklist, boolean damage, boolean components, boolean mod) {
 
+    public static final FilterModuleData EMPTY = new FilterModuleData(List.of(), List.of(), false, false, false, false);
+
     public static final Codec<FilterModuleData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             ItemStack.CODEC.listOf().fieldOf("stacks").forGetter(FilterModuleData::stacks),
             ResourceLocation.CODEC.listOf().fieldOf("tags").forGetter(FilterModuleData::tags),
@@ -21,8 +23,6 @@ public record FilterModuleData(List<ItemStack> stacks, List<ResourceLocation> ta
             Codec.BOOL.fieldOf("components").forGetter(FilterModuleData::components),
             Codec.BOOL.fieldOf("mod").forGetter(FilterModuleData::mod)
     ).apply(instance, FilterModuleData::new));
-
-    public static final FilterModuleData EMPTY = new FilterModuleData(List.of(), List.of(), false, false, false, false);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, FilterModuleData> STREAM_CODEC = StreamCodec.composite(
             ItemStack.LIST_STREAM_CODEC, FilterModuleData::stacks,
