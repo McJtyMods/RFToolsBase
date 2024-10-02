@@ -30,6 +30,7 @@ import net.neoforged.neoforge.common.util.Lazy;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static mcjty.lib.api.container.DefaultContainerProvider.container;
 import static mcjty.lib.builder.TooltipBuilder.*;
@@ -45,7 +46,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
             .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
 
-    @Cap(type = CapType.ITEMS_AUTOMATION)
+
     private final GenericItemHandler items = GenericItemHandler.create(this, CONTAINER_FACTORY)
             .slotLimit(slot -> slot == SLOT_MACHINEOUTPUT ? 1 : 64)
             .insertable((slot, stack) -> {
@@ -56,19 +57,23 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
                 }
             })
             .build();
+    @Cap(type = CapType.ITEMS_AUTOMATION)
+    private final static Function<MachineInfuserTileEntity, GenericItemHandler> itemCap = be -> be.items;
 
-    @Cap(type = CapType.ENERGY)
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
+    @Cap(type = CapType.ENERGY)
+    private final static Function<MachineInfuserTileEntity, GenericEnergyStorage> energyStorageCap = be -> be.energyStorage;
 
     @Cap(type = CapType.CONTAINER)
-    private final Lazy<MenuProvider> screenHandler = Lazy.of(() -> new DefaultContainerProvider<GenericContainer>("Machine Infuser")
-            .containerSupplier(container(MachineInfuserModule.CONTAINER_MACHINE_INFUSER, CONTAINER_FACTORY,this))
-            .itemHandler(() -> items)
-            .energyHandler(() -> energyStorage)
-            .setupSync(this));
+    private final static Function<MachineInfuserTileEntity, MenuProvider> screenHandler = be -> (new DefaultContainerProvider<GenericContainer>("Machine Infuser")
+            .containerSupplier(container(MachineInfuserModule.CONTAINER_MACHINE_INFUSER, CONTAINER_FACTORY, be))
+            .itemHandler(() -> be.items)
+            .energyHandler(() -> be.energyStorage)
+            .setupSync(be));
 
+    private final IInfusable infusableHandler = new DefaultInfusable(this);
     @Cap(type = CapType.INFUSABLE)
-    private final IInfusable infusableHandler = new DefaultInfusable(MachineInfuserTileEntity.this);
+    private final static Function<MachineInfuserTileEntity, IInfusable> infusableHandlerCap = be -> be.infusableHandler;
 
     public MachineInfuserTileEntity(BlockPos pos, BlockState state) {
         super(MachineInfuserModule.MACHINE_INFUSER.be().get(), pos, state);
