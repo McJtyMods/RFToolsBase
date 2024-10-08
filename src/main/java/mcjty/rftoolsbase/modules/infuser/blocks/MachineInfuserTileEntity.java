@@ -58,14 +58,14 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
             })
             .build();
     @Cap(type = CapType.ITEMS_AUTOMATION)
-    private final static Function<MachineInfuserTileEntity, GenericItemHandler> itemCap = be -> be.items;
+    private static final Function<MachineInfuserTileEntity, GenericItemHandler> itemCap = be -> be.items;
 
     private final GenericEnergyStorage energyStorage = new GenericEnergyStorage(this, true, MachineInfuserConfiguration.MAXENERGY.get(), MachineInfuserConfiguration.RECEIVEPERTICK.get());
     @Cap(type = CapType.ENERGY)
-    private final static Function<MachineInfuserTileEntity, GenericEnergyStorage> energyStorageCap = be -> be.energyStorage;
+    private static final Function<MachineInfuserTileEntity, GenericEnergyStorage> energyStorageCap = be -> be.energyStorage;
 
     @Cap(type = CapType.CONTAINER)
-    private final static Function<MachineInfuserTileEntity, MenuProvider> screenHandler = be -> (new DefaultContainerProvider<GenericContainer>("Machine Infuser")
+    private static final Function<MachineInfuserTileEntity, MenuProvider> screenHandler = be -> (new DefaultContainerProvider<GenericContainer>("Machine Infuser")
             .containerSupplier(container(MachineInfuserModule.CONTAINER_MACHINE_INFUSER, CONTAINER_FACTORY, be))
             .itemHandler(() -> be.items)
             .energyHandler(() -> be.energyStorage)
@@ -73,7 +73,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
 
     private final IInfusable infusableHandler = new DefaultInfusable(this);
     @Cap(type = CapType.INFUSABLE)
-    private final static Function<MachineInfuserTileEntity, IInfusable> infusableHandlerCap = be -> be.infusableHandler;
+    private static final Function<MachineInfuserTileEntity, IInfusable> infusableHandlerCap = be -> be.infusableHandler;
 
     public MachineInfuserTileEntity(BlockPos pos, BlockState state) {
         super(MachineInfuserModule.MACHINE_INFUSER.be().get(), pos, state);
