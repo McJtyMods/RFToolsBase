@@ -8,6 +8,7 @@ import mcjty.rftoolsbase.api.infoscreen.CapabilityInformationScreenInfo;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -73,29 +74,25 @@ public class InformationScreenTileEntity extends TickingTileEntity {
     }
 
     @Override
-    protected void loadInfo(CompoundTag tagCompound) {
-        super.loadInfo(tagCompound);
-        CompoundTag info = tagCompound.getCompound("Info");
-        mode = info.getByte("mode");
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.saveAdditional(tag, provider);
+        tag.putByte("mode", (byte) mode);
     }
 
     @Override
-    protected void saveInfo(CompoundTag tagCompound) {
-        super.saveInfo(tagCompound);
-        CompoundTag infoTag = getOrCreateInfo(tagCompound);
-        infoTag.putByte("mode", (byte) mode);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+        super.loadAdditional(tag, provider);
+        mode = tag.getByte("mode");
     }
 
     @Override
-    public void saveClientDataToNBT(CompoundTag tagCompound) {
-        CompoundTag infoTag = getOrCreateInfo(tagCompound);
-        infoTag.putByte("mode", (byte) mode);
+    public void saveClientDataToNBT(CompoundTag tag) {
+        tag.putByte("mode", (byte) mode);
     }
 
     @Override
-    public void loadClientDataFromNBT(CompoundTag tagCompound) {
-        CompoundTag info = tagCompound.getCompound("Info");
-        mode = info.getByte("mode");
+    public void loadClientDataFromNBT(CompoundTag tag) {
+        mode = tag.getByte("mode");
     }
 
     public void setClientData(TypedMap power) {
