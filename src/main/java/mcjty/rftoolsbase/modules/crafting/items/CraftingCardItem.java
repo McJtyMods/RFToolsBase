@@ -70,8 +70,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public CraftingCardItem() {
         super(RFToolsBase.setup.defaultProperties()
-                .durability(0)
-                .stacksTo(1));
+                .stacksTo(8));
     }
 
     @Nullable

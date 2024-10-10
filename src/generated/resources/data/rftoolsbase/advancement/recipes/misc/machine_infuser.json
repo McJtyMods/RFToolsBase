@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "rftoolsbase:machine_infuser"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "machine_frame": {
+      "conditions": {
+        "items": [
+          {
+            "items": "rftoolsbase:machine_frame"
+          },
+          {
+            "items": "rftoolsbase:dimensionalshard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "machine_frame"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "rftoolsbase:machine_infuser"
+    ]
+  }
+}
