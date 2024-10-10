@@ -132,7 +132,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
         if (truetype) {
             if (!trueTypeRenderer.containsKey(fontId)) {
                 FontSet font = Minecraft.getInstance().fontManager.fontSets.get(fontId);
-                        //new ResourceLocation("rftoolsutility", "ubuntu"));
+                        //ResourceLocation.fromNamespaceAndPath("rftoolsutility", "ubuntu"));
                 trueTypeRenderer.put(fontId, new Font(resourceLocation -> font, false));
             }
             return trueTypeRenderer.get(fontId);

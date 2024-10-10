@@ -49,7 +49,7 @@ public class MachineInfuserModule implements IModule {
                     .networkSynchronized(InfuserData.STREAM_CODEC));
 
     public MachineInfuserModule(IEventBus bus) {
-        bus.addListener(MachineInfuserModule::register);
+        bus.addListener(this::registerScreens);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MachineInfuserModule implements IModule {
     public void initClient(FMLClientSetupEvent event) {
     }
 
-    public static void register(RegisterMenuScreensEvent event) {
+    public void registerScreens(RegisterMenuScreensEvent event) {
         GuiMachineInfuser.register(event);
     }
 

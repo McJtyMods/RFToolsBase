@@ -1,9 +1,12 @@
 package mcjty.rftoolsbase.api.xnet.channels;
 
 import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
 import mcjty.rftoolsbase.api.xnet.gui.IEditorGui;
 import mcjty.rftoolsbase.api.xnet.gui.IndicatorIcon;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 
 import javax.annotation.Nullable;
 import java.util.Map;

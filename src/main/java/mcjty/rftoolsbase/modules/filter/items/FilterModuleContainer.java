@@ -31,7 +31,7 @@ public class FilterModuleContainer extends GenericContainer {
 	@Override
 	protected Slot createSlot(SlotFactory slotFactory, Player playerEntity, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
 		if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
-			return new BaseSlot(inventories.get(slotFactory.inventoryName()), te, slotFactory.index(), slotFactory.x(), slotFactory.y()) {
+			return new BaseSlot(inventories.get(slotFactory.inventoryName()), be, slotFactory.index(), slotFactory.x(), slotFactory.y()) {
 				@Override
 				public boolean mayPickup(Player player) {
 					// We don't want to take the stack from this slot.

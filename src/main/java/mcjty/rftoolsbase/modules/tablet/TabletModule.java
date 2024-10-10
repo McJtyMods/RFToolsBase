@@ -53,7 +53,7 @@ public class TabletModule implements IModule {
     }
 
     public TabletModule(IEventBus bus) {
-        bus.addListener(TabletModule::register);
+        bus.addListener(this::registerScreens);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class TabletModule implements IModule {
     public void initClient(FMLClientSetupEvent event) {
     }
 
-    public static void register(RegisterMenuScreensEvent event) {
+    public void registerScreens(RegisterMenuScreensEvent event) {
         GuiTablet.register(event);
     }
 
