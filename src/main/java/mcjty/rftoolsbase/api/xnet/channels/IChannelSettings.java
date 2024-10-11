@@ -18,8 +18,10 @@ public interface IChannelSettings {
 
     IChannelType getType();
 
+    // @todo 1.21 deprecated
     void readFromNBT(CompoundTag tag);
 
+    // @todo 1.21 deprecated
     void writeToNBT(CompoundTag tag);
 
     /**

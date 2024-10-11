@@ -39,6 +39,11 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
     }
 
     @Nonnull
+    public Direction getSide() {
+        return side;
+    }
+
+    @Nonnull
     public Direction getFacing() {
         return facingOverride == null ? side : facingOverride;
     }
