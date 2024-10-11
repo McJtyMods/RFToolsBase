@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.api.xnet.channels;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -16,9 +17,13 @@ public interface IChannelType {
 
     String getName();
 
-    Codec<? extends IChannelSettings> getCodec();
+    MapCodec<? extends IChannelSettings> getCodec();
+
+    MapCodec<? extends IConnectorSettings> getConnectorCodec();
 
     StreamCodec<RegistryFriendlyByteBuf, ? extends IChannelSettings> getStreamCodec();
+
+    StreamCodec<RegistryFriendlyByteBuf, ? extends IConnectorSettings> getConnectorStreamCodec();
 
     /**
      * Return true if the block at that specific side (can be null) supports this channel type

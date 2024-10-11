@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface IConnectorSettings {
 
+    IChannelType getType();
+
     void readFromNBT(CompoundTag tag);
 
     void writeToNBT(CompoundTag tag);

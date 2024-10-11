@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public interface IChannelSettings {
 
+    IChannelType getType();
+
     void readFromNBT(CompoundTag tag);
 
     void writeToNBT(CompoundTag tag);
