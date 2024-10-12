@@ -1,9 +1,15 @@
 package mcjty.rftoolsbase.api.xnet.channels;
 
+import com.mojang.serialization.Codec;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.StringRepresentable;
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Color {
+public enum Color implements StringRepresentable {
     OFF(0x000000),
     WHITE(0xffffff),
     RED(0xff0000),
@@ -30,6 +36,9 @@ public enum Color {
     private static final Map<Integer, Color> COLOR_MAP = new HashMap<>();
     public static final Integer[] COLORS = new Integer[Color.values().length];
 
+    public static final Codec<Color> CODEC = StringRepresentable.fromEnum(Color::values);
+    public static final StreamCodec<FriendlyByteBuf, Color> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(Color.class);
+
     static {
         for (int i = 0; i < Color.values().length; i++) {
             Color col = Color.values()[i];
@@ -44,5 +53,11 @@ public enum Color {
 
     public static Color colorByValue(int color) {
         return COLOR_MAP.get(color);
+    }
+
+
+    @Override
+    public String getSerializedName() {
+        return name();
     }
 }
