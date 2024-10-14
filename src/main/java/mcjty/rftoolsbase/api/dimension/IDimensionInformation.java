@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface IDimensionInformation {
 
     /**
-     * Get the owner of this dimension.
+     * Get the ownerUUID of this dimension.
      */
     UUID getOwner();
 
