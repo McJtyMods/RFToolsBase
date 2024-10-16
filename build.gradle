@@ -43,6 +43,7 @@ cfdeps(['the-one-probe'], ['mcjtylib'], [])
 modrinth(['the-one-probe'], ['mcjtylib'], [])
 
 task apiJar(type: Jar) {
+    archiveClassifier = "api"
     from(sourceSets.main.output) {
         include "mcjty/rftoolsbase/api/**"
     }
