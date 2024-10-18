@@ -18,10 +18,10 @@ public interface IChannelSettings {
 
     IChannelType getType();
 
-    // @todo 1.21 deprecated
+    // This is called when the BE is loaded and should load all data that is needed during operation but not the settings (those are loaded with the codec)
     void readFromNBT(CompoundTag tag);
 
-    // @todo 1.21 deprecated
+    // This is called when the BE is saved and should save all data that is needed during operation but not the settings (those are saved with the codec)
     void writeToNBT(CompoundTag tag);
 
     /**

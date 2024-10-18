@@ -26,7 +26,8 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
     public static final String TAG_COLOR = "color";
     public static final String TAG_FACING = "facing";
 
-    protected BaseSettings settings = new BaseSettings(RSMode.IGNORED, Color.OFF, Color.OFF, Color.OFF, Color.OFF, null);
+    public static final BaseSettings DEFAULT_SETTINGS = new BaseSettings(RSMode.IGNORED, Color.OFF, Color.OFF, Color.OFF, Color.OFF, null);
+    protected BaseSettings settings;
     private int colorsMask = 0;
     private int prevPulse = 0;
 
@@ -57,8 +58,10 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
                 (rsMode, c0, c1, c2, c3, direction) -> new BaseSettings(rsMode, c0, c1, c2, c3, direction.orElse(null)));
     }
 
-    public AbstractConnectorSettings(@Nonnull Direction side) {
+    public AbstractConnectorSettings(@Nonnull BaseSettings base, @Nonnull Direction side) {
+        this.settings = base;
         this.side = side;
+        calculateColorsMask();
     }
 
     @Nonnull
@@ -208,29 +211,12 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
 
     @Override
     public void readFromNBT(CompoundTag tag) {
-        RSMode rsMode = RSMode.values()[tag.getByte("rsMode")];
-        Color color0 = Color.values()[tag.getByte("color0")];
-        Color color1 = Color.values()[tag.getByte("color1")];
-        Color color2 = Color.values()[tag.getByte("color2")];
-        Color color3 = Color.values()[tag.getByte("color3")];
-        Direction facingOverride = settings.facingOverride;
-        if (tag.contains("facingOverride")) {
-            facingOverride = OrientationTools.DIRECTION_VALUES[tag.getByte("facingOverride")];
-        }
-        settings = new BaseSettings(rsMode, color0, color1, color2, color3, facingOverride);
-        calculateColorsMask();
+        prevPulse = tag.getInt("prevPulse");
     }
 
     @Override
     public void writeToNBT(CompoundTag tag) {
-        tag.putByte("rsMode", (byte) settings.rsMode.ordinal());
-        tag.putByte("color0", (byte) settings.color0.ordinal());
-        tag.putByte("color1", (byte) settings.color1.ordinal());
-        tag.putByte("color2", (byte) settings.color2.ordinal());
-        tag.putByte("color3", (byte) settings.color3.ordinal());
-        if (settings.facingOverride != null) {
-            tag.putByte("facingOverride", (byte) settings.facingOverride.ordinal());
-        }
+        tag.putInt("prevPulse", prevPulse);
     }
 
     protected IEditorGui sideGui(IEditorGui gui) {
