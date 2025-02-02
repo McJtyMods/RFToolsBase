@@ -1,3 +1,6 @@
+1.21-6.0.5:
+- Fixed several crafting card related problems
+
 1.21-6.0.4:
 - The machine infuser will now correctly remember it's state when the world is reloaded and also when the block is broken and placed again
 

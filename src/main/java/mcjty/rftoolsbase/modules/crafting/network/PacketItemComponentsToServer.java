@@ -21,7 +21,7 @@ public record PacketItemComponentsToServer(ItemStack stack) implements CustomPac
     public static final CustomPacketPayload.Type<PacketItemComponentsToServer> TYPE = new Type<>(ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PacketItemComponentsToServer> CODEC = StreamCodec.composite(
-            ItemStack.STREAM_CODEC, PacketItemComponentsToServer::stack,
+            ItemStack.OPTIONAL_STREAM_CODEC, PacketItemComponentsToServer::stack,
             PacketItemComponentsToServer::new
     );
 

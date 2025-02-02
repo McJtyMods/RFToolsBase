@@ -12,10 +12,10 @@ import java.util.List;
 
 public record CraftingCardData(List<ItemStack> stacks) {
 
-    public static final Codec<CraftingCardData> CODEC = ItemStack.CODEC.listOf().xmap(CraftingCardData::new, CraftingCardData::stacks);
+    public static final Codec<CraftingCardData> CODEC = ItemStack.OPTIONAL_CODEC.listOf().xmap(CraftingCardData::new, CraftingCardData::stacks);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, CraftingCardData> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.LIST_STREAM_CODEC, CraftingCardData::stacks,
+            ItemStack.OPTIONAL_LIST_STREAM_CODEC, CraftingCardData::stacks,
             CraftingCardData::new
     );
 }

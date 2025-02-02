@@ -39,7 +39,7 @@ import static mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer.*;
 public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public static final ManualEntry MANUAL = ManualHelper.create("rftoolsbase:tools/craftingcard");
-    private static final CraftingInput CRAFTING_INVENTORY = CraftingInput.of(3, 3, createList());
+    private static CraftingInput CRAFTING_INVENTORY = CraftingInput.of(3, 3, createList());
 
     private static List<ItemStack> createList() {
         List<ItemStack> list = new ArrayList<>();
@@ -94,25 +94,27 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     @Nullable
     public static Recipe findRecipe(Level world, ItemStack craftingCard, RecipeType<?> type) {
         ItemStackList stacks = getStacksFromItem(craftingCard);
+        List<ItemStack> list = new ArrayList<>(9);
         for (int y = 0 ; y < 3 ; y++) {
             for (int x = 0 ; x < 3 ; x++) {
-                int idx = y*3+x;
                 int idxCard = y*GRID_WIDTH + x;
-                CRAFTING_INVENTORY.items().set(idx, stacks.get(idxCard));
+                list.add(stacks.get(idxCard));
             }
         }
+        CRAFTING_INVENTORY = CraftingInput.of(3, 3, list);
         return findRecipeInternal(world, CRAFTING_INVENTORY, type);
     }
 
     public static void testRecipe(Level world, ItemStack craftingCard) {
         ItemStackList stacks = getStacksFromItem(craftingCard);
+        List<ItemStack> list = new ArrayList<>(9);
         for (int y = 0 ; y < 3 ; y++) {
             for (int x = 0 ; x < 3 ; x++) {
-                int idx = y*3+x;
                 int idxCard = y*GRID_WIDTH + x;
-                CRAFTING_INVENTORY.items().set(idx, stacks.get(idxCard));
+                list.add(stacks.get(idxCard));
             }
         }
+        CRAFTING_INVENTORY = CraftingInput.of(3, 3, list);
         Recipe recipe = findRecipeInternal(world, CRAFTING_INVENTORY, RecipeType.CRAFTING);
         if (recipe != null) {
             ItemStack stack = BaseRecipe.assemble(recipe, CRAFTING_INVENTORY, world);
