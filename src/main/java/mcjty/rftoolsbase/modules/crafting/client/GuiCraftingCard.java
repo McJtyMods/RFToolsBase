@@ -8,6 +8,7 @@ import mcjty.lib.gui.layout.PositionalLayout;
 import mcjty.lib.gui.widgets.BlockRender;
 import mcjty.lib.gui.widgets.Panel;
 import mcjty.lib.gui.widgets.Widgets;
+import mcjty.lib.network.Networking;
 import mcjty.lib.network.PacketSendServerCommand;
 import mcjty.lib.tileentity.GenericTileEntity;
 import mcjty.lib.typed.TypedMap;
@@ -72,7 +73,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
         toplevel.children(label("or more complicated recipes").horizontalAlignment(HorizontalAlignment.ALIGN_LEFT).hint(10, 17, 160, 14));
         toplevel.children(button(110, 57, 60, 14, "Update")
                 .tooltips("Update the item in the output", "slot to the recipe in the", "3x3 grid")
-                .event(() -> RFToolsBaseMessages.sendToServer(PacketSendServerCommand.create(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY))));
+                .event(() -> Networking.sendToServer(PacketSendServerCommand.create(RFToolsBase.MODID, CommandHandler.CMD_TESTRECIPE, TypedMap.EMPTY))));
         // In 1.15 this no longer makes sense
 //        ToggleButton toggle = new ToggleButton(minecraft, this)
 //                .setCheckMarker(true)
