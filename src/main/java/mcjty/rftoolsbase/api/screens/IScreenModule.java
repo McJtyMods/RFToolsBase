@@ -23,14 +23,20 @@ public interface IScreenModule<T extends IModuleData> {
     T getData(IScreenDataHelper helper, Level worldObj, long millis);
 
     /**
-     * This is called when your module is being instantiated from a saved world
-     * so you can setup your data. The tags that are given to the tagCompound
-     * depend on how you set up your GUI in the IClientScreenModule.
-     * @param tagCompound
-     * @param dim the dimension for the screen this module is in
-     * @param pos the position of the screen
+     * This is called after loading the module. It will validate the data
+     * and enable/disable the module depending on tha data.
      */
-    void setupFromNBT(CompoundTag tagCompound, ResourceKey<Level> dim, BlockPos pos);
+    void validate(Level world, BlockPos pos);
+
+//    /**
+//     * This is called when your module is being instantiated from a saved world
+//     * so you can setup your data. The tags that are given to the tagCompound
+//     * depend on how you set up your GUI in the IClientScreenModule.
+//     * @param tagCompound
+//     * @param dim the dimension for the screen this module is in
+//     * @param pos the position of the screen
+//     */
+//    void setupFromNBT(CompoundTag tagCompound, ResourceKey<Level> dim, BlockPos pos);
 
     /**
      * How much RF/tick this module consumes
