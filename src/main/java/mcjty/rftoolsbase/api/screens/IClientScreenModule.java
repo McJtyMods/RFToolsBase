@@ -4,9 +4,6 @@ import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
 /**
@@ -71,16 +68,6 @@ public interface IClientScreenModule<T extends IModuleData> {
      * @param clicked
      */
     void mouseClick(Level world, int x, int y, boolean clicked);
-
-    /**
-     * This is called when your module is being instantiated from a saved world
-     * so you can setup your data. The tags that are given to the tagCompound
-     * depend on how you set up your GUI in the IClientScreenModule.
-     * @param tagCompound
-     * @param dim the dimension for the screen this module is in
-     * @param pos the position of the screen
-     */
-    void setupFromNBT(CompoundTag tagCompound, ResourceKey<Level> dim, BlockPos pos);
 
     // Return true if this module needs server data.
     boolean needsServerData();

@@ -2,8 +2,6 @@ package mcjty.rftoolsbase.api.screens;
 
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 
@@ -24,19 +22,9 @@ public interface IScreenModule<T extends IModuleData> {
 
     /**
      * This is called after loading the module. It will validate the data
-     * and enable/disable the module depending on tha data.
+     * and enable/disable the module depending on the data.
      */
-    void validate(Level world, BlockPos pos);
-
-//    /**
-//     * This is called when your module is being instantiated from a saved world
-//     * so you can setup your data. The tags that are given to the tagCompound
-//     * depend on how you set up your GUI in the IClientScreenModule.
-//     * @param tagCompound
-//     * @param dim the dimension for the screen this module is in
-//     * @param pos the position of the screen
-//     */
-//    void setupFromNBT(CompoundTag tagCompound, ResourceKey<Level> dim, BlockPos pos);
+    void validate(Level world, BlockPos pos, boolean isPlus);
 
     /**
      * How much RF/tick this module consumes

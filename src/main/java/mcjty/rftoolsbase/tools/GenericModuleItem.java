@@ -44,6 +44,10 @@ public abstract class GenericModuleItem extends Item implements IModuleProvider,
         super(properties);
     }
 
+    public boolean isPlusModule() {
+        return false;
+    }
+
     @Override
     public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flag) {
         super.appendHoverText(itemStack, context, list, flag);
