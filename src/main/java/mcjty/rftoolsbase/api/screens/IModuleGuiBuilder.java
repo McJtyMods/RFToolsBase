@@ -1,7 +1,12 @@
 package mcjty.rftoolsbase.api.screens;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * A builder to help create gui's for your screen modules. The 'tagname' parameter is what will
@@ -23,7 +28,7 @@ import net.minecraft.world.level.Level;
  */
 public interface IModuleGuiBuilder {
 
-    CompoundTag getCurrentData();
+    ItemStack getCurrentModule();
 
     Level getWorld();
 
@@ -32,6 +37,8 @@ public interface IModuleGuiBuilder {
     IModuleGuiBuilder leftLabel(String text);
 
     IModuleGuiBuilder text(String tagname, String... tooltip);
+
+    IModuleGuiBuilder text(BiConsumer<ItemStack, String> setter, Function<ItemStack, String> getter, String... tooltip);
 
     IModuleGuiBuilder integer(String tagname, String... tooltip);
 
