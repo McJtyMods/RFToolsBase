@@ -1,11 +1,10 @@
 package mcjty.rftoolsbase.api.screens;
 
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -36,33 +35,33 @@ public interface IModuleGuiBuilder {
 
     IModuleGuiBuilder leftLabel(String text);
 
-    IModuleGuiBuilder text(String tagname, String... tooltip);
-
     IModuleGuiBuilder text(BiConsumer<ItemStack, String> setter, Function<ItemStack, String> getter, String... tooltip);
 
     IModuleGuiBuilder integer(String tagname, String... tooltip);
 
-    IModuleGuiBuilder toggle(String tagname, String label, String... tooltip);
+    IModuleGuiBuilder toggle(BiConsumer<ItemStack, Boolean> setter, Function<ItemStack, Boolean> getter, String label, String... tooltip);
 
     IModuleGuiBuilder toggleNegative(String tagname, String label, String... tooltip);
 
     /**
      * A color selector.
      *
-     * @param tagname the tag that will be used to save the color in your NBT
+     * @param setter a consumer that will be called with the ItemStack and the selected color
+     * @param getter a function that will be called with the ItemStack and should return the selected color
      * @param tooltip
      * @return
      */
-    IModuleGuiBuilder color(String tagname, String... tooltip);
+    IModuleGuiBuilder color(BiConsumer<ItemStack, Integer> setter, Function<ItemStack, Integer> getter, String... tooltip);
 
     /**
      * A choice selector that saves the text of the selected choice.
 
-     * @param tagname the tag that will be used to save the choice in your NBT
+     * @param setter a consumer that will be called with the ItemStack and the selected choice
+     * @param getter a function that will be called with the ItemStack and should return the selected choice
      * @param choices
      * @return
      */
-    IModuleGuiBuilder choices(String tagname, String tooltip, String... choices);
+    IModuleGuiBuilder choices(BiConsumer<ItemStack, String> setter, Function<ItemStack, String> getter, String tooltip, String... choices);
 
     public static class Choice {
         private final String name;
@@ -115,25 +114,13 @@ public interface IModuleGuiBuilder {
 
     /**
      * This is a read-only component that shows the block at the given
-     * position and dimension. It gets this information from the NBT with
-     * the tagnamePos and suffix 'x', 'y', or 'z' as well as the dimension.
-     * So for example if 'tagnamePos' is equal to 'block' then the following
-     * tags are supported:
-     * <list>
-     *     <li>blockx</li>
-     *     <li>blocky</li>
-     *     <li>blockz</li>
-     *     <li>blockdim (dimension)</li>
-     *     <li>blockname (optional name to show in the gui)</li>
-     * </list>
+     * position and dimension.
+     *
      * This is usually used in combination with a module item that overrides onItemUse
      * to be able to set the target of this module to a specific block. The onItemUse
      * implementation must then set these same tags.
-     *
-     * @param tagname
-     * @return
      */
-    IModuleGuiBuilder block(String tagname);
+    IModuleGuiBuilder block(Function<ItemStack, GlobalPos> getter);
 
     /**
      * Add a gui component for a ghost stack. This allows the users to select ghost
