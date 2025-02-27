@@ -41,7 +41,7 @@ public interface IModuleGuiBuilder {
 
     IModuleGuiBuilder toggle(BiConsumer<ItemStack, Boolean> setter, Function<ItemStack, Boolean> getter, String label, String... tooltip);
 
-    IModuleGuiBuilder toggleNegative(String tagname, String label, String... tooltip);
+    IModuleGuiBuilder toggleNegative(BiConsumer<ItemStack, Boolean> setter, Function<ItemStack, Boolean> getter, String label, String... tooltip);
 
     /**
      * A color selector.
@@ -93,12 +93,8 @@ public interface IModuleGuiBuilder {
     /**
      * A combobox component that can be used to specify a format. This allows
      * the user of your module to specify any of the possible FormatStyle values.
-     *
-     * @param tagname the tag that will be used to save the format in your NBT. The format
-     *                is saved as an integer ordinal value for the FormatStyle enum.
-     * @return
      */
-    IModuleGuiBuilder format(String tagname);
+    IModuleGuiBuilder format(BiConsumer<ItemStack, FormatStyle> setter, Function<ItemStack, FormatStyle> getter);
 
     /**
      * This is a more hardcoded component that can be used to control the
