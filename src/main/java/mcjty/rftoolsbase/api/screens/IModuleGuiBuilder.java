@@ -37,7 +37,7 @@ public interface IModuleGuiBuilder {
 
     IModuleGuiBuilder text(BiConsumer<ItemStack, String> setter, Function<ItemStack, String> getter, String... tooltip);
 
-    IModuleGuiBuilder integer(String tagname, String... tooltip);
+    IModuleGuiBuilder integer(BiConsumer<ItemStack, Integer> setter, Function<ItemStack, Integer> getter, String... tooltip);
 
     IModuleGuiBuilder toggle(BiConsumer<ItemStack, Boolean> setter, Function<ItemStack, Boolean> getter, String label, String... tooltip);
 

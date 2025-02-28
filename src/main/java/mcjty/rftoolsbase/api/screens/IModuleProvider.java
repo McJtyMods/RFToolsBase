@@ -23,15 +23,6 @@ public interface IModuleProvider {
 
     IScreenModule<?> createServerScreenModule();
 
-    @Nullable
-    Codec<? extends IClientScreenModule<?>> clientCodec();
-
-    @Nullable
-    StreamCodec<RegistryFriendlyByteBuf, ? extends IClientScreenModule<?>> clientStreamCodec();
-
-    @Nullable
-    DataComponentType<? extends IClientScreenModule<?>> clientComponentType();
-
     IClientScreenModule<?> createClientScreenModule();
 
     String getModuleName();

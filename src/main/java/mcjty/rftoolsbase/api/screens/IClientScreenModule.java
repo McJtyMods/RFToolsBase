@@ -4,6 +4,7 @@ import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
@@ -62,12 +63,13 @@ public interface IClientScreenModule<T extends IModuleData> {
     /**
      * For interactive modules you can implement this to detect if your module was clickedd
      *
+     * @param moduleStack
      * @param world
      * @param x
      * @param y
      * @param clicked
      */
-    void mouseClick(Level world, int x, int y, boolean clicked);
+    void mouseClick(ItemStack moduleStack, Level world, int x, int y, boolean clicked);
 
     // Return true if this module needs server data.
     boolean needsServerData();

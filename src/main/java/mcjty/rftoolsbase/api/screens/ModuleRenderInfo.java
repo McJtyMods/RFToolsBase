@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.api.screens;
 import mcjty.lib.client.RenderHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * Class containing various things useful for rendering your module. You get an instance of this
@@ -30,7 +31,9 @@ public class ModuleRenderInfo {
 
     private final boolean fullbright;
 
-    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright, ResourceLocation fontId) {
+    public final ItemStack moduleStack;
+
+    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright, ResourceLocation fontId, ItemStack moduleStack) {
         this.factor = factor;
         this.pos = pos;
         this.hitx = hitx;
@@ -38,6 +41,7 @@ public class ModuleRenderInfo {
         this.truetype = truetype;
         this.fullbright = fullbright;
         this.fontId = fontId;
+        this.moduleStack = moduleStack;
     }
 
     public int getLightmapValue() {
