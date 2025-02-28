@@ -41,13 +41,13 @@ public interface IClientScreenModule<T extends IModuleData> {
         ITEM
     }
 
-    TransformMode getTransformMode();
+    TransformMode getTransformMode(ItemStack moduleItem);
 
     /**
      * Get the height (depends on transform mode) of a line from this module.
      * @return
      */
-    int getHeight();
+    int getHeight(ItemStack moduleItem);
 
     /**
      * Here you actually render your module. Warning! Always check if screenData is actually set! It is possible
