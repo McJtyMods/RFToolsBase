@@ -83,12 +83,8 @@ public interface IModuleGuiBuilder {
 
     /**
      * A choice selector that saves the zero-based index of the selected choice.
-
-     * @param tagname the tag that will be used to save the choice in your NBT
-     * @param choices
-     * @return
      */
-    IModuleGuiBuilder choices(String tagname, Choice... choices);
+    IModuleGuiBuilder choices(BiConsumer<ItemStack, Integer> setter, Function<ItemStack, Integer> getter, Choice... choices);
 
     /**
      * A combobox component that can be used to specify a format. This allows
