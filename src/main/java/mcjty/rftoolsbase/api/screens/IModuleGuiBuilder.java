@@ -112,7 +112,7 @@ public interface IModuleGuiBuilder {
      * to be able to set the target of this module to a specific block. The onItemUse
      * implementation must then set these same tags.
      */
-    IModuleGuiBuilder block(Function<ItemStack, GlobalPos> getter);
+    IModuleGuiBuilder block(Function<ItemStack, GlobalPos> getter, Function<ItemStack, String> nameGetter);
 
     /**
      * Add a gui component for a ghost stack. This allows the users to select ghost
