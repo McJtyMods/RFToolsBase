@@ -16,7 +16,7 @@ public interface ILevelRenderHelper {
 
     ILevelRenderHelper label(String label);
 
-    ILevelRenderHelper settings(boolean hidebar, boolean hidetext, boolean showpct, boolean showdiff);
+    ILevelRenderHelper settings(boolean hidebar, BarMode barMode);
 
     ILevelRenderHelper color(int poscolor, int negcolor);
 
@@ -30,10 +30,8 @@ public interface ILevelRenderHelper {
     int getGradient1();
     int getGradient2();
     FormatStyle getFormatStyle();
+    BarMode getBarMode();
     boolean isHideBar();
-    boolean isHideText();
-    boolean isShowPct();
-    boolean isShowDiff();
     String getLabel();
 
     // All setters
@@ -42,9 +40,7 @@ public interface ILevelRenderHelper {
     void setGradient1(int gradient1);
     void setGradient2(int gradient2);
     void setFormatStyle(FormatStyle formatStyle);
+    void setBarMode(BarMode barMode);
     void setHideBar(boolean hidebar);
-    void setHideText(boolean hidetext);
-    void setShowPct(boolean showpct);
-    void setShowDiff(boolean showdiff);
     void setLabel(String label);
 }

@@ -102,7 +102,7 @@ public interface IModuleGuiBuilder {
      * @param componentName is the name of the unit we are displaying (example 'RF').
      * @return
      */
-    IModuleGuiBuilder mode(String componentName);
+    IModuleGuiBuilder mode(BiConsumer<ItemStack, BarMode> setter, Function<ItemStack, BarMode> getter, String componentName);
 
     /**
      * This is a read-only component that shows the block at the given
@@ -117,12 +117,8 @@ public interface IModuleGuiBuilder {
     /**
      * Add a gui component for a ghost stack. This allows the users to select ghost
      * stacks.
-     *
-     * @param tagname the tag that will be used to save the format in your NBT. The format
-     *                is saved as an integer ordinal value for the FormatStyle enum.
-     * @return
      */
-    IModuleGuiBuilder ghostStack(String tagname);
+    IModuleGuiBuilder ghostStack(BiConsumer<ItemStack, ItemStack> setter, Function<ItemStack, ItemStack> getter);
 
     /**
      * Perform a new line in your GUI.
