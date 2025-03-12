@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
  *
  * @param <T>
  */
-public interface IScreenModule<T extends IModuleData> {
+public interface IScreenModule<M extends IScreenModule<?, T>, T extends IModuleData> {
     /**
      * Get the data that can be used client side to help render this module.
      * If you don't need data from the server side you can return null here.
@@ -24,7 +24,7 @@ public interface IScreenModule<T extends IModuleData> {
      * This is called after loading the module. It will validate the data
      * and enable/disable the module depending on the data.
      */
-    void validate(Level world, BlockPos pos, boolean isPlus);
+    M validate(Level world, BlockPos pos, boolean isPlus);
 
     /**
      * How much RF/tick this module consumes
