@@ -13,15 +13,15 @@ import javax.annotation.Nullable;
 public interface IModuleProvider {
 
     @Nullable
-    Codec<? extends IScreenModule<?>> codec();
+    Codec<? extends IScreenModule<?, ?>> codec();
 
     @Nullable
-    StreamCodec<RegistryFriendlyByteBuf, ? extends IScreenModule<?>> streamCodec();
+    StreamCodec<RegistryFriendlyByteBuf, ? extends IScreenModule<?, ?>> streamCodec();
 
     @Nullable
-    DataComponentType<? extends IScreenModule<?>> componentType();
+    DataComponentType<? extends IScreenModule<?, ?>> componentType();
 
-    IScreenModule<?> createServerScreenModule();
+    IScreenModule<?, ?> createServerScreenModule();
 
     IClientScreenModule<?> createClientScreenModule();
 
