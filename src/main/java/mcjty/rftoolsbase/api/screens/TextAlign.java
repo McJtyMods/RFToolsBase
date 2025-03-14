@@ -7,9 +7,15 @@ import net.minecraft.util.StringRepresentable;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
 public enum TextAlign implements StringRepresentable {
-    ALIGN_LEFT,
-    ALIGN_CENTER,
-    ALIGN_RIGHT;
+    ALIGN_LEFT("Left"),
+    ALIGN_CENTER("Center"),
+    ALIGN_RIGHT("Right");
+
+    private final String alignment;
+
+    TextAlign(String alignment) {
+        this.alignment = alignment;
+    }
 
     public static final Codec<TextAlign> CODEC = StringRepresentable.fromEnum(TextAlign::values);
     public static final StreamCodec<FriendlyByteBuf, TextAlign> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(TextAlign.class);
@@ -24,6 +30,6 @@ public enum TextAlign implements StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return name();
+        return alignment;
     }
 }

@@ -48,6 +48,6 @@ public enum BarMode implements StringRepresentable {
 
     @Override
     public String getSerializedName() {
-        return name();
+        return name;
     }
 }
