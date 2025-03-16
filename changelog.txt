@@ -1,4 +1,4 @@
-Upcoming:
+1.21-6.0.6:
 - Some various fixes and improvements
 
 1.21-6.0.5:
