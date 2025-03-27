@@ -146,13 +146,15 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
 
     public static void putStacksInItem(ItemStack craftingCard, ItemStackList stacks) {
         craftingCard.update(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData(), data -> {
-            for (int i = 0 ; i < data.stacks().size() ; i++) {
+            List<ItemStack> list = new ArrayList<>(data.stacks());
+            for (int i = 0 ; i < list.size() ; i++) {
                 if (i < stacks.size()) {
-                    data.stacks().set(i, stacks.get(i));
+                    list.set(i, stacks.get(i));
                 } else {
-                    data.stacks().add(ItemStack.EMPTY);
+                    list.add(ItemStack.EMPTY);
                 }
             }
+            data = data.withStacks(list);
             return data;
         });
     }

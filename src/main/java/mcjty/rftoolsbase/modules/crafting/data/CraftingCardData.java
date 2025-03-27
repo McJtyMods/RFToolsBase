@@ -1,13 +1,10 @@
 package mcjty.rftoolsbase.modules.crafting.data;
 
 import com.mojang.serialization.Codec;
-import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
-import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public record CraftingCardData(List<ItemStack> stacks) {
@@ -18,4 +15,8 @@ public record CraftingCardData(List<ItemStack> stacks) {
             ItemStack.OPTIONAL_LIST_STREAM_CODEC, CraftingCardData::stacks,
             CraftingCardData::new
     );
+
+    public CraftingCardData withStacks(List<ItemStack> stacks) {
+        return new CraftingCardData(stacks);
+    }
 }

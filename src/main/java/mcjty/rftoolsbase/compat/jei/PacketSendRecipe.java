@@ -21,7 +21,7 @@ public record PacketSendRecipe(List<ItemStack> stacks) implements CustomPacketPa
     public static final CustomPacketPayload.Type<PacketSendRecipe> TYPE = new Type<>(ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PacketSendRecipe> CODEC = StreamCodec.composite(
-            ItemStack.LIST_STREAM_CODEC, PacketSendRecipe::stacks,
+            ItemStack.OPTIONAL_LIST_STREAM_CODEC, PacketSendRecipe::stacks,
             PacketSendRecipe::new
     );
 
