@@ -1,5 +1,6 @@
 Upcoming:
 - Fixed a crash bug in the crafting card
+- Fixed a crashing problem with the tablet
 
 1.21-6.0.6:
 - Some various fixes and improvements

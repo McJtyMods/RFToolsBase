@@ -16,12 +16,12 @@ public record TabletData(List<ItemStack> stacks, int current) {
     public static final TabletData EMPTY = new TabletData(List.of(), 0);
 
     public static final Codec<TabletData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            ItemStack.CODEC.listOf().fieldOf("stacks").forGetter(TabletData::stacks),
+            ItemStack.OPTIONAL_CODEC.listOf().fieldOf("stacks").forGetter(TabletData::stacks),
             Codec.INT.fieldOf("current").forGetter(TabletData::current)
     ).apply(instance, TabletData::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, TabletData> STREAM_CODEC = StreamCodec.composite(
-            ItemStack.LIST_STREAM_CODEC, TabletData::stacks,
+            ItemStack.OPTIONAL_LIST_STREAM_CODEC, TabletData::stacks,
             ByteBufCodecs.INT, TabletData::current,
             TabletData::new
     );
