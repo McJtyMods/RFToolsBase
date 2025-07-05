@@ -4,6 +4,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nonnull;
+
 /**
  * Implement this interface on your screen module (typically the module
  * that also implements IScreenModule) to allow updating of that module
@@ -21,6 +23,7 @@ public interface IScreenModuleUpdater {
      * @param player can be null in case button is released. Beware of that!
      * @return a new tagCompound or null if no change needed
      */
+    @Nonnull
     ItemStack update(ItemStack module, Level world, Player player);
 
 }

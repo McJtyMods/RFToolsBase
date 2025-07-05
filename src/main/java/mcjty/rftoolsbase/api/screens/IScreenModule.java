@@ -3,7 +3,10 @@ package mcjty.rftoolsbase.api.screens;
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+
+import javax.annotation.Nonnull;
 
 /**
  * This is the server side implementation of your module. This will be called
@@ -34,13 +37,16 @@ public interface IScreenModule<M extends IScreenModule<?, T>, T extends IModuleD
 
     /**
      * For interactive modules you can implement this to detect if your module was clicked
+     * @param moduleStack is the module itemstack
      * @param world
      * @param x
      * @param y
      * @param clicked
      * @param player
+     * @return a new ItemStack if you want to change the module itemstack, otherwise ItemStack.EMPTY
      */
-    void mouseClick(Level world, int x, int y, boolean clicked, Player player);
+    @Nonnull
+    ItemStack mouseClick(ItemStack moduleStack, Level world, int x, int y, boolean clicked, Player player);
 
     /**
      * @return Whether this module needs a screen controller to work,
