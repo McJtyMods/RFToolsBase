@@ -1,3 +1,6 @@
+Upcoming:
+- Changes for the upcoming RFTools Storage release
+
 1.21-6.0.7:
 - Fixed a crash bug in the crafting card
 - Fixed a crashing problem with the tablet
