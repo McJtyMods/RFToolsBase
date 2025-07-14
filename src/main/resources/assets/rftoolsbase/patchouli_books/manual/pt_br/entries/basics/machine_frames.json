@@ -1,0 +1,15 @@
+{
+  "name": "Estruturas de Máquina",
+  "icon": "rftoolsbase:machine_frame",
+  "category": "rftoolsbase:category_basics",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Toda máquina ou dispositivo precisa de algum tipo de estrutura, uma $(thing)estrutura$(), por assim dizer. Elas não fazem nada sozinhas, mas são um ingrediente comum no artesanato."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:machine_frame"
+    }
+  ]
+}

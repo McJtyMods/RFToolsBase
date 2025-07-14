@@ -1,0 +1,15 @@
+{
+  "name": "O Tablet",
+  "icon": "rftoolsbase:tablet",
+  "category": "rftoolsbase:category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "O Tablet pode ser usado para acessar remotamente várias máquinas. $(5)Agache e clique com o botão direito$() para abrir a interface interna do tablet, onde você pode instalar até 6 módulos. Clicar com o botão direito no tablet abrirá a interface do módulo atual. Usando as teclas $(k:prevDestination) e $(k:nextDestination), você pode alternar entre os módulos instalados."
+    },
+    {
+      "type": "text",
+      "text": "Observe que, para acessar a máquina remotamente, ela precisa estar próxima ou com o chunk carregado. Se estiver corretamente chunkloaded, o tablet também funcionará de outra dimensão."
+    }
+  ]
+}

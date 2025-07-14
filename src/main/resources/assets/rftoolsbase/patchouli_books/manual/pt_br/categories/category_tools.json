@@ -1,0 +1,7 @@
+{
+  "name": "Ferramentas",
+  "description": "Existem várias ferramentas que facilitam sua vida ao manipular e configurar as diversas máquinas tecnológicas.",
+  "parent": "rftoolsbase:category_rftoolsbase",
+  "icon": "rftoolsbase:smartwrench",
+  "sortnum": 20
+}
