@@ -1,5 +1,9 @@
 package mcjty.rftoolsbase.api.control.parameters;
 
+import com.mojang.serialization.Codec;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+
 import java.util.Objects;
 
 /**
@@ -9,6 +13,9 @@ public class Parameter implements IParameter {
 
     private final ParameterType parameterType;
     private final ParameterValue parameterValue;
+
+    public static final Codec<Parameter> CODEC = ParameterValue.CODEC.xmap(ParameterValue.Typed::toParameter, ParameterValue.Typed::fromParameter);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Parameter> STREAM_CODEC = ParameterValue.STREAM_CODEC.map(ParameterValue.Typed::toParameter, ParameterValue.Typed::fromParameter);
 
     private Parameter(Builder builder) {
         parameterType = builder.parameterType;

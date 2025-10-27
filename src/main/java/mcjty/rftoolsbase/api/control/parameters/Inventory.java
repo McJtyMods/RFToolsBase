@@ -1,10 +1,17 @@
 package mcjty.rftoolsbase.api.control.parameters;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Direction;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import java.util.Optional;
 
 /**
  * This class identifies an inventory on a network. It has an optional
@@ -16,6 +23,19 @@ import javax.annotation.Nullable;
 public class Inventory extends BlockSide {
 
     @Nullable private final Direction intSide;   // The side at which we are accessing the inventory (can be null)
+
+    public static final Codec<Inventory> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.optionalFieldOf("node").forGetter(inv -> Optional.ofNullable(inv.getNodeName())),
+            Direction.CODEC.fieldOf("side").forGetter(Inventory::getSide),
+            Direction.CODEC.optionalFieldOf("int_side").forGetter(inv -> Optional.ofNullable(inv.getIntSide()))
+    ).apply(instance, (node, side, intSide) -> new Inventory(node.orElse(null), side, intSide.orElse(null))));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, Inventory> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8), inv -> Optional.ofNullable(inv.getNodeName()),
+            Direction.STREAM_CODEC, Inventory::getSide,
+            ByteBufCodecs.optional(Direction.STREAM_CODEC), inv -> Optional.ofNullable(inv.intSide),
+            (node, side, intSide) -> new Inventory(node.orElse(null), side, intSide.orElse(null))
+    );
 
     public Inventory(@Nullable String name, @Nonnull Direction side, @Nullable Direction intSide) {
         super(name, side);

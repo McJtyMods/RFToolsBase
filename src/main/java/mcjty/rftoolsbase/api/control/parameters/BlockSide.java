@@ -1,10 +1,16 @@
 package mcjty.rftoolsbase.api.control.parameters;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Direction;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * This class identifies a side of a network blocked. This basically
@@ -14,6 +20,19 @@ import javax.annotation.Nullable;
 public class BlockSide implements Comparable<BlockSide> {
     @Nullable private final String nodeName;          // An inventory on a network
     @Nullable private final Direction side;      // The side at which the inventory can be found
+
+    private static final int MAX_STRING_LENGTH = 32767;
+
+    public static final Codec<BlockSide> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.STRING.optionalFieldOf("node").forGetter(side -> Optional.ofNullable(side.getNodeName())),
+            Direction.CODEC.optionalFieldOf("side").forGetter(side -> Optional.ofNullable(side.getSide()))
+    ).apply(instance, (node, dir) -> new BlockSide(node.orElse(null), dir.orElse(null))));
+
+    public static final StreamCodec<RegistryFriendlyByteBuf, BlockSide> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.optional(ByteBufCodecs.STRING_UTF8), inv -> Optional.ofNullable(inv.getNodeName()),
+            ByteBufCodecs.optional(Direction.STREAM_CODEC), inv -> Optional.ofNullable(inv.getSide()),
+            (node, side) -> new BlockSide(node.orElse(null), side.orElse(null))
+    );
 
     public BlockSide(@Nullable String name, @Nullable Direction side) {
         this.nodeName = (name == null || name.isEmpty()) ? null : name;

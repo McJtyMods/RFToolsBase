@@ -1,5 +1,11 @@
 package mcjty.rftoolsbase.api.control.parameters;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +27,18 @@ public enum ParameterType {
     private final String name;
 
     private static final Map<String, ParameterType> TYPE_MAP = new HashMap<>();
+
+    public static final Codec<ParameterType> CODEC = Codec.STRING.flatXmap(
+            name -> {
+                ParameterType type = getByName(name);
+                return type != null
+                        ? DataResult.success(type)
+                        : DataResult.error(() -> "Unknown parameter type: " + name);
+            },
+            type -> DataResult.success(type.getName()))
+            .stable();
+
+    public static final StreamCodec<FriendlyByteBuf, ParameterType> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(ParameterType.class);
 
     static {
         for (ParameterType type : values()) {

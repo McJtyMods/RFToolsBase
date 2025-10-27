@@ -1,3 +1,6 @@
+Upcoming:
+- Implemented codec and stream codec for Paramater
+
 1.21-6.0.8:
 - Changes for the upcoming RFTools Storage release
 
