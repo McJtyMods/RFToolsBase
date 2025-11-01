@@ -11,8 +11,6 @@ import java.util.Objects;
  */
 public class Parameter implements IParameter {
 
-    public static final Parameter EMPTY = Parameter.builder().build();
-
     private final ParameterType parameterType;
     private final ParameterValue parameterValue;
 
