@@ -154,11 +154,6 @@ public class ParameterValue {
     };
 
     public record Typed(ParameterType type, ParameterValue value) {
-        public Typed {
-            Objects.requireNonNull(type, "Parameter type cannot be null");
-            Objects.requireNonNull(value, "Parameter value cannot be null");
-        }
-
         public Parameter toParameter() {
             return Parameter.builder().type(type).value(value).build();
         }
