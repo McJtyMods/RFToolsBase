@@ -287,12 +287,10 @@ public class ParameterSerializerHelpers {
         CONSTANT_SERIALIZERS.put(Objects.requireNonNull(type), Objects.requireNonNull(serializer));
     }
 
-    // @todo 1.21
     public static Function resolveFunction(String id) {
         return functionResolver == null ? null : functionResolver.resolve(id);
     }
 
-    // @todo 1.21
     public static ConstantSerializer requireSerializer(ParameterType type) {
         ConstantSerializer serializer = CONSTANT_SERIALIZERS.get(type);
         if (serializer == null) {
@@ -301,7 +299,6 @@ public class ParameterSerializerHelpers {
         return serializer;
     }
 
-    // @todo 1.21
     public static <T> DataResult<T> encodeConstant(DynamicOps<T> ops, ParameterType type, Object value) {
         ConstantSerializer serializer = CONSTANT_SERIALIZERS.get(type);
         if (serializer == null) {
