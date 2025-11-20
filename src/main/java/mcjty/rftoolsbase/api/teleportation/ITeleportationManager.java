@@ -3,6 +3,7 @@ package mcjty.rftoolsbase.api.teleportation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 /**
@@ -24,6 +25,11 @@ public interface ITeleportationManager {
      * the specified power (capped at the maximum possible power).
      */
     boolean createReceiver(Level world, BlockPos pos, String name, int power);
+
+    /**
+     * Get the name from a matter receiver itemstack
+     */
+    String getReceiverName(ItemStack matterReceiver);
 
     /**
      * Teleport a player to a dimension at the given spot.
