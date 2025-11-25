@@ -5,9 +5,12 @@ import net.minecraft.world.level.Level;
 
 /**
  * Get a reference to an implementation of this interface by calling:
- *         FMLInterModComms.sendFunctionMessage("rftoolsdim", "getDimensionManager", "<whatever>.YourClass$GetDimensionManager");
+ *         FMLInterModComms.sendFunctionMessage(RFTOOLSDIMENSIONS, GET_DIMENSION_MANAGER, "<whatever>.YourClass$GetDimensionManager");
  */
 public interface IDimensionManager {
+
+    String RFTOOLSDIMENSIONS = "rftoolsdim";
+    String GET_DIMENSION_MANAGER = "getDimensionManager";
 
     /**
      * Get the dimension information. If the id doesn't represent an RFTools
