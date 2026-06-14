@@ -2,6 +2,9 @@
   "name": "Infusing",
   "icon": "rftoolsbase:machine_infuser",
   "category": "rftoolsbase:category_machines",
+  "extra_recipe_mappings": {
+    "rftoolsbase:machine_infuser": 0
+  },
   "pages": [
     {
       "type": "text",
@@ -16,7 +19,7 @@
       "type": "text",
       "flag": "mod:rftoolsutility",
       "title": "RFTools Utility",
-      "text": "$(li)$(l:rftoolsutility:machines/environmental)Environmental Controller$() $(li)$(l:rftoolsutility:machines/dialing_device)Dialing Device$() $(li)$(l:rftoolsutility:machines/matter_receiver)Matter Receiver$() $(li)$(l:rftoolsutility:machines/matter_transmitter)Matter Transmitter$() (+Speed) $(li)$()Spawner$() $(li)$()Matter Beamer$() (+Speed, -Items Needed) $(li)$(l:rftoolsutility:machines/screen_controller)Screen Controller$() (+Range) $(li)$(l:rftoolsutility:machines/crafter)Crafter$()"
+      "text": "$(li)$(l:rftoolsutility:machines/environmental)Environmental Controller$() $(li)$(l:rftoolsutility:machines/dialing_device)Dialing Device$() $(li)$(l:rftoolsutility:machines/matter_receiver)Matter Receiver$() $(li)$(l:rftoolsutility:machines/matter_transmitter)Matter Transmitter$() (+Speed) $(li)$(l:rftoolsutility:machines/spawner)Spawner$() $(li)$(l:rftoolsutility:machines/matter_beamer)Matter Beamer$() (+Speed, -Items Needed) $(li)$(l:rftoolsutility:machines/screen_controller)Screen Controller$() (+Range) $(li)$(l:rftoolsutility:machines/crafter)Crafter$()"
     },
     {
       "type": "text",

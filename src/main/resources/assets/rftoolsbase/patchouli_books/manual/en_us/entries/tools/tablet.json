@@ -2,6 +2,10 @@
   "name": "The Tablet",
   "icon": "rftoolsbase:tablet",
   "category": "rftoolsbase:category_tools",
+  "extra_recipe_mappings": {
+    "rftoolsbase:tablet": 0,
+    "rftoolsbase:tablet_filled": 0
+  },
   "pages": [
     {
       "type": "text",

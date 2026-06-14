@@ -2,6 +2,10 @@
   "name": "Modules",
   "icon": "rftoolsbase:filter_module",
   "category": "rftoolsbase:category_basics",
+  "extra_recipe_mappings": {
+    "rftoolsbase:filter_module": 0,
+    "rftoolsbase:crafting_card": 0
+  },
   "pages": [
     {
       "type": "text",
