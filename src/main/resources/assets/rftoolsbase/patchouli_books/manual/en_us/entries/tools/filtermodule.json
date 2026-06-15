@@ -2,6 +2,9 @@
   "name": "Filter Module",
   "icon": "rftoolsbase:filter_module",
   "category": "rftoolsbase:category_tools",
+  "extra_recipe_mappings": {
+    "rftoolsbase:filter_module": 0
+  },
   "pages": [
     {
       "type": "text",

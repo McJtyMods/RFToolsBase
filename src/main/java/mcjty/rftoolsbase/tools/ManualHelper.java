@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 public class ManualHelper {
 
     public static ManualEntry create(String entryName) {
-        return new ManualEntry(ResourceLocation.parse("rftoolsbase:manual"), ResourceLocation.parse(entryName), 0);
+        ResourceLocation entry = ResourceLocation.parse(entryName);
+        return new ManualEntry(ResourceLocation.parse("rftoolsbase:manual"), ResourceLocation.fromNamespaceAndPath("rftoolsbase", entry.getPath()), 0);
     }
 }

@@ -2,6 +2,9 @@
   "name": "Information Screen",
   "icon": "rftoolsbase:information_screen",
   "category": "rftoolsbase:category_machines",
+  "extra_recipe_mappings": {
+    "rftoolsbase:information_screen": 0
+  },
   "pages": [
     {
       "type": "text",
