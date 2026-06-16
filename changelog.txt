@@ -1,3 +1,6 @@
+1.20-5.0.7:
+- Various Patchouli documentation updates and fixes
+
 1.20-5.0.6:
 - Fixed a crash with the crafting card
 
