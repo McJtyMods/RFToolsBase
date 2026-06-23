@@ -1,0 +1,47 @@
+{
+  "name": "Infusão",
+  "icon": "rftoolsbase:machine_infuser",
+  "category": "rftoolsbase:category_machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "O $(item)Infusor de Máquina$() usa $(l:rftoolsbase:basics/dimensional_shards)Fragmentos Dimensionais$() para $(thing)melhorar a eficiência$() de muitas máquinas. Para a maioria das coisas, infundi-las reduzirá seus requisitos de energia. Alguns dispositivos terão benefícios adicionais com a infusão. $(br2)$(thing)Infundir$() o próprio Infundidor fará com que ele use menos energia."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:machine_infuser",
+      "text": "Veja no verso os usos adicionais para o Infusor de Máquina, dependendo de quais outros mods você tem instalados."
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsutility",
+      "title": "RFTools Utility",
+      "text": "$(li)$(l:rftoolsutility:machines/environmental)Controlador Ambiental$() $(li)$(l:rftoolsutility:machines/dialing_device)Dispositivo de Discagem$() $(li)$(l:rftoolsutility:machines/matter_receiver)Receptor de Matéria$() $(li)$(l:rftoolsutility:machines/matter_transmitter)Transmissor de Matéria$() (+Velocidade) $(li)$()Gerador$() $(li)$()Emissor de Matéria$() (+Velocidade, -Itens Necessários) $(li)$(l:rftoolsutility:machines/screen_controller)Controlador de Tela$() (+Alcance) $(li)$(l:rftoolsutility:machines/crafter)Criador$()"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsstorage",
+      "title": "RFTools Storage",
+      "text": "$(li)$(l:rftoolsstorage:scanner/scanner)Scanner de Armazenamento$()"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolspower",
+      "title": "RFTools Power",
+      "text": "$(li)$(l:rftoolspower:powergeneration/coalgenerator)Gerador a Carvão$() $(li)$(l:rftoolspower:powergeneration/endergenic)Endergênico$() (+Energia Gerada, -perda de energia ao segurar pérolas) $(li)$(l:rftoolspower:powerstorage/dimensionalcell)Célula Dimensional$() (-Custo de extrair RF a longa distância, +saída de RF/t) $(li)$(l:rftoolspower:powergeneration/blazingagitator)Agitador de Blaze$() (+Qualidade da Vara de Blaze) $(li)$(l:rftoolspower:powergeneration/blazinggenerator)Gerador de Blaze$() (+Energia Gerada)"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsdim",
+      "title": "RFTools Dimensions",
+      "text": "$(li)$(l:rftoolsdim:dimlets/researcher)Pesquisador$() (+Velocidade) $(li)$(l:rftoolsdim:dimensions/dimension_builder)Construtor de Dimensões$() (+Velocidade)"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsbuilder",
+      "title": "RFTools Builder",
+      "text": "$(li)$(l:rftoolsbuilder:shield/shield_intro)Projetor de Escudo$() (+Dano) $(li)$(l:rftoolsbuilder:builder/builder_intro)Construtor$() (+Velocidade)"
+    }
+  ]
+}
+}
