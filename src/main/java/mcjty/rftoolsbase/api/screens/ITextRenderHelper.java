@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.api.screens;
 
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 
 /**
  * This text render helper knows how to render text in vanilla
@@ -53,5 +53,5 @@ public interface ITextRenderHelper {
      * @param color
      * @param renderInfo
      */
-    void renderText(GuiGraphics graphics, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo);
+    void renderText(GuiGraphicsExtractor graphics, SubmitNodeCollector buffer, int x, int y, int color, ModuleRenderInfo renderInfo);
 }

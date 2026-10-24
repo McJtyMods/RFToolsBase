@@ -2,7 +2,7 @@ package mcjty.rftoolsbase.api.infoscreen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mcjty.lib.typed.TypedMap;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.Direction;
 
 import javax.annotation.Nonnull;
@@ -37,5 +37,5 @@ public interface IInformationScreenInfo {
     /**
      * Called client-side to actually render the information
      */
-    void render(int mode, PoseStack matrixStack, MultiBufferSource buffer, @Nonnull TypedMap info, Direction orientation, double scale);
+    void render(int mode, PoseStack matrixStack, SubmitNodeCollector buffer, @Nonnull TypedMap info, Direction orientation, double scale);
 }

@@ -2,8 +2,8 @@ package mcjty.rftoolsbase.api.screens;
 
 import mcjty.rftoolsbase.api.screens.data.IModuleData;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
@@ -58,7 +58,7 @@ public interface IClientScreenModule<T extends IModuleData> {
      * @param buffer
      * @param renderInfo
      */
-    void render(GuiGraphics graphics, MultiBufferSource buffer, IModuleRenderHelper renderHelper, Font fontRenderer, int currenty, T screenData, ModuleRenderInfo renderInfo);
+    void render(GuiGraphicsExtractor graphics, SubmitNodeCollector buffer, IModuleRenderHelper renderHelper, Font fontRenderer, int currenty, T screenData, ModuleRenderInfo renderInfo);
 
     /**
      * For interactive modules you can implement this to detect if your module was clickedd

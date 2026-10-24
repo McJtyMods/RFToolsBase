@@ -211,7 +211,7 @@ public abstract class AbstractConnectorSettings implements IConnectorSettings {
 
     @Override
     public void readFromNBT(CompoundTag tag) {
-        prevPulse = tag.getInt("prevPulse");
+        prevPulse = tag.getIntOr("prevPulse", 0);
     }
 
     @Override

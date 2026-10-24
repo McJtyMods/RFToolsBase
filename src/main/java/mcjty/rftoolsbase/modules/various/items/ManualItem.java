@@ -7,10 +7,10 @@ import mcjty.lib.varia.Tools;
 import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,22 +30,25 @@ public class ManualItem extends Item implements ITooltipSettings {
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header()));
 
-    public ManualItem() {
-        super(Registration.createStandardProperties().stacksTo(1));
+    public ManualItem(net.minecraft.world.item.Item.Properties properties) {
+        super(properties.stacksTo(1));
     }
 
     @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level worldIn, @Nonnull Player playerIn, @Nonnull InteractionHand handIn) {
-        if (!worldIn.isClientSide) {
-            PatchouliCompatibility.openBookGUI((ServerPlayer) playerIn, ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "manual"));
+    public InteractionResult use(Level worldIn, @Nonnull Player playerIn, @Nonnull InteractionHand handIn) {
+        if (!worldIn.isClientSide()) {
+            PatchouliCompatibility.openBookGUI((ServerPlayer) playerIn, Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "manual"));
         }
         return super.use(worldIn, playerIn, handIn);
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
-        super.appendHoverText(itemStack, context, list, flags);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> consumer, @Nonnull TooltipFlag flags) {
+        List<Component> list = new java.util.ArrayList<>();
+        super.appendHoverText(itemStack, context, display, consumer, flags);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flags);
+
+        list.forEach(consumer);
     }
 }

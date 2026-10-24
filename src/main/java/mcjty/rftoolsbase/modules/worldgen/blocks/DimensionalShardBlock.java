@@ -13,8 +13,8 @@ import java.util.Random;
 
 public class DimensionalShardBlock extends Block {
 
-    public DimensionalShardBlock() {
-        super(Properties.of()
+    public DimensionalShardBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties properties) {
+        super(properties
                 .sound(SoundType.METAL)
                 .mapColor(MapColor.METAL)
                 .strength(3.0f, 5.0f)

@@ -9,7 +9,7 @@ import mcjty.rftoolsbase.modules.worldgen.blocks.DimensionalShardBlock;
 import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -30,16 +30,16 @@ import static mcjty.rftoolsbase.setup.Registration.ITEMS;
 public class WorldGenModule implements IModule {
 
     public static final DeferredBlock<Block> DIMENSIONAL_SHARD_OVERWORLD = BLOCKS.register("dimensionalshard_overworld", DimensionalShardBlock::new);
-    public static final DeferredItem<Item> DIMENSIONAL_SHARD_OVERWORLD_ITEM = ITEMS.register("dimensionalshard_overworld", tab(() -> new BlockItem(DIMENSIONAL_SHARD_OVERWORLD.get(), Registration.createStandardProperties())));
+    public static final DeferredItem<Item> DIMENSIONAL_SHARD_OVERWORLD_ITEM = ITEMS.register("dimensionalshard_overworld", tab(properties -> new BlockItem(DIMENSIONAL_SHARD_OVERWORLD.get(), properties)));
 
     public static final DeferredBlock<Block> DIMENSIONAL_SHARD_NETHER = BLOCKS.register("dimensionalshard_nether", DimensionalShardBlock::new);
-    public static final DeferredItem<Item> DIMENSIONAL_SHARD_NETHER_ITEM = ITEMS.register("dimensionalshard_nether", tab(() -> new BlockItem(DIMENSIONAL_SHARD_NETHER.get(), Registration.createStandardProperties())));
+    public static final DeferredItem<Item> DIMENSIONAL_SHARD_NETHER_ITEM = ITEMS.register("dimensionalshard_nether", tab(properties -> new BlockItem(DIMENSIONAL_SHARD_NETHER.get(), properties)));
 
     public static final DeferredBlock<Block> DIMENSIONAL_SHARD_END = BLOCKS.register("dimensionalshard_end", DimensionalShardBlock::new);
-    public static final DeferredItem<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", tab(() -> new BlockItem(DIMENSIONAL_SHARD_END.get(), Registration.createStandardProperties())));
+    public static final DeferredItem<Item> DIMENSIONAL_SHARD_END_ITEM = ITEMS.register("dimensionalshard_end", tab(properties -> new BlockItem(DIMENSIONAL_SHARD_END.get(), properties)));
 
-    public static final TagKey<Block> DIMENSIONAL_SHARD_ORE = TagTools.createBlockTagKey(ResourceLocation.fromNamespaceAndPath("c", "ores/dimensional_shard"));
-    public static final TagKey<Item> DIMENSIONAL_SHARD_ORE_ITEM = TagTools.createItemTagKey(ResourceLocation.fromNamespaceAndPath("c", "ores/dimensional_shard"));
+    public static final TagKey<Block> DIMENSIONAL_SHARD_ORE = TagTools.createBlockTagKey(Identifier.fromNamespaceAndPath("c", "ores/dimensional_shard"));
+    public static final TagKey<Item> DIMENSIONAL_SHARD_ORE_ITEM = TagTools.createItemTagKey(Identifier.fromNamespaceAndPath("c", "ores/dimensional_shard"));
 
     public WorldGenModule() {
         OreGenerator.init();

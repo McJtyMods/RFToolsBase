@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "item": "minecraft:crafting_table"
-    },
-    "p": {
-      "item": "minecraft:paper"
-    },
-    "r": {
-      "item": "minecraft:redstone"
-    }
+    "C": "minecraft:crafting_table",
+    "p": "minecraft:paper",
+    "r": "minecraft:redstone"
   },
   "pattern": [
     "pC",

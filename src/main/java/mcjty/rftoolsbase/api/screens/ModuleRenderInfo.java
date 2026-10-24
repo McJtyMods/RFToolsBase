@@ -1,7 +1,7 @@
 package mcjty.rftoolsbase.api.screens;
 
 import mcjty.lib.client.RenderHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 
@@ -27,13 +27,13 @@ public class ModuleRenderInfo {
     public final boolean truetype;
 
     // The fontId to use for truetype rendering
-    public final ResourceLocation fontId;
+    public final Identifier fontId;
 
     private final boolean fullbright;
 
     public final ItemStack moduleStack;
 
-    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright, ResourceLocation fontId, ItemStack moduleStack) {
+    public ModuleRenderInfo(float factor, BlockPos pos, int hitx, int hity, boolean truetype, boolean fullbright, Identifier fontId, ItemStack moduleStack) {
         this.factor = factor;
         this.pos = pos;
         this.hitx = hitx;

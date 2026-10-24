@@ -7,10 +7,10 @@ import mcjty.rftoolsbase.api.screens.ModuleRenderInfo;
 import mcjty.rftoolsbase.api.screens.TextAlign;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.font.FontSet;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class ScreenTextHelper implements ITextRenderHelper {
     private int textx;
     private String text;
     private boolean truetype = false;
-    private ResourceLocation fontId;
+    private Identifier fontId;
 
     public int getTextx() {
         return textx;
@@ -94,51 +94,42 @@ public class ScreenTextHelper implements ITextRenderHelper {
     }
 
     @Override
-    public void renderText(GuiGraphics graphics, MultiBufferSource buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
+    public void renderText(GuiGraphicsExtractor graphics, SubmitNodeCollector buffer, int x, int y, int color, ModuleRenderInfo renderInfo) {
         renderScaled(fontId, graphics, buffer, text, textx + x, y, color, truetype, renderInfo.getLightmapValue());
     }
 
-    public static void renderScaled(ResourceLocation fontId, GuiGraphics graphics, MultiBufferSource buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
-        PoseStack matrixStack = graphics.pose();
-        Font renderer = getFontRenderer(truetype, fontId);
-        if (truetype) {
-            matrixStack.pushPose();
-            matrixStack.scale(.5f, .5f, .5f);
-            // @todo 1.15 check if the 0xff000000 | is needed
-            RenderHelper.renderText(renderer, text, x * 2, y * 2, 0xff000000 | color, matrixStack, buffer, lightmapValue);
-            matrixStack.popPose();
-        } else {
-            RenderHelper.renderText(renderer, text, x, y, 0xff000000 | color, matrixStack, buffer, lightmapValue);
-        }
+    public static void renderScaled(Identifier fontId, GuiGraphicsExtractor graphics, SubmitNodeCollector buffer, String text, int x, int y, int color, boolean truetype, int lightmapValue) {
+        var pose = graphics.pose();
+        pose.pushMatrix();
+        if (truetype) pose.scale(0.5f, 0.5f);
+        var component = net.minecraft.network.chat.Component.literal(text);
+        if (fontId != null) component.withStyle(style -> style.withFont(new net.minecraft.network.chat.FontDescription.Resource(fontId)));
+        graphics.text(Minecraft.getInstance().font, component, truetype ? x * 2 : x, truetype ? y * 2 : y, 0xff000000 | color, false);
+        pose.popMatrix();
     }
 
-    public static void renderScaledTrimmed(ResourceLocation fontId, PoseStack matrixStack, MultiBufferSource buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
+    public static void renderScaledTrimmed(Identifier fontId, PoseStack matrixStack, SubmitNodeCollector buffer, String text, int x, int y, int maxwidth, int color, boolean truetype, int lightmapValue) {
         Font renderer = getFontRenderer(truetype, fontId);
         if (truetype) {
             matrixStack.pushPose();
             matrixStack.scale(.5f, .5f, .5f);
             text = renderer.plainSubstrByWidth(text, maxwidth * 2);
-            RenderHelper.renderText(renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
+            renderFontText(fontId, renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
             matrixStack.popPose();
         } else {
             text = renderer.plainSubstrByWidth(text, maxwidth);
-            RenderHelper.renderText(renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
+            renderFontText(fontId, renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
         }
     }
 
-    private static final Map<ResourceLocation, Font> trueTypeRenderer = new HashMap<>();
-
-    private static Font getFontRenderer(boolean truetype, ResourceLocation fontId) {
-        if (truetype) {
-            if (!trueTypeRenderer.containsKey(fontId)) {
-                FontSet font = Minecraft.getInstance().fontManager.fontSets.get(fontId);
-                        //ResourceLocation.fromNamespaceAndPath("rftoolsutility", "ubuntu"));
-                trueTypeRenderer.put(fontId, new Font(resourceLocation -> font, false));
-            }
-            return trueTypeRenderer.get(fontId);
-        } else {
-            return Minecraft.getInstance().font;
-        }
+    private static void renderFontText(Identifier fontId, Font font, String text, int x, int y, int color,
+            PoseStack pose, SubmitNodeCollector collector, int light) {
+        var component = net.minecraft.network.chat.Component.literal(text);
+        if (fontId != null) component.withStyle(style -> style.withFont(new net.minecraft.network.chat.FontDescription.Resource(fontId)));
+        collector.submitText(pose, x, y, component.getVisualOrderText(), false, Font.DisplayMode.NORMAL, light, color, 0, 0);
     }
 
+    private static Font getFontRenderer(boolean truetype, Identifier fontId) {
+        return Minecraft.getInstance().font;
+    }
 }

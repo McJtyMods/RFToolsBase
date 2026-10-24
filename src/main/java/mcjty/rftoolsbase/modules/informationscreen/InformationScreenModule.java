@@ -8,7 +8,7 @@ import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileE
 import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRenderer;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -30,8 +30,8 @@ import static mcjty.rftoolsbase.setup.Registration.*;
 public class InformationScreenModule implements IModule {
 
     public static final DeferredBlock<Block> INFORMATION_SCREEN = BLOCKS.register("information_screen", InformationScreenBlock::new);
-    public static final DeferredItem<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", tab(() -> new BlockItem(INFORMATION_SCREEN.get(), Registration.createStandardProperties())));
-    public static final Supplier<BlockEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> BlockEntityType.Builder.of(InformationScreenTileEntity::new, INFORMATION_SCREEN.get()).build(null));
+    public static final DeferredItem<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", tab(properties -> new BlockItem(INFORMATION_SCREEN.get(), properties)));
+    public static final Supplier<BlockEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> new BlockEntityType<>(InformationScreenTileEntity::new, java.util.Set.of(INFORMATION_SCREEN.get())));
 
     @Override
     public void init(FMLCommonSetupEvent event) {

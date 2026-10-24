@@ -48,6 +48,6 @@ public class RFToolsBaseMessages {
     }
 
     public static <T extends CustomPacketPayload> void sendToServer(T packet) {
-        PacketDistributor.sendToServer(packet);
+        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(packet);
     }
 }

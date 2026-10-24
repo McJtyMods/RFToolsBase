@@ -19,9 +19,9 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemComponentsToServer;
 import mcjty.rftoolsbase.setup.CommandHandler;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
@@ -43,7 +43,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     public static final int WIDTH = 180;
     public static final int HEIGHT = 198;
 
-    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/craftingcard.png");
+    private static final Identifier iconLocation = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/craftingcard.png");
 
     private final BlockRender[] slots = new BlockRender[1 + INPUT_SLOTS];
 
@@ -179,7 +179,7 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
     }
 
     @Override
-    protected void renderBg(@Nonnull GuiGraphics graphics, float partialTicks, int x, int y) {
+    protected void renderBg(@Nonnull GuiGraphicsExtractor graphics, float partialTicks, int x, int y) {
         updateSlots();
         drawWindow(graphics, partialTicks, x, y);
     }

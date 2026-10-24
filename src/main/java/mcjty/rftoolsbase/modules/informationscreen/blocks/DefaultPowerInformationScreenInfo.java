@@ -6,7 +6,7 @@ import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.api.infoscreen.IInformationScreenInfo;
 import mcjty.rftoolsbase.modules.informationscreen.client.DefaultPowerInformationRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -38,7 +38,7 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     @Nonnull
     @Override
     public TypedMap getInfo(int mode) {
-        IEnergyStorage h = tileEntity.getLevel().getCapability(Capabilities.EnergyStorage.BLOCK, tileEntity.getBlockPos(), null);
+        IEnergyStorage h = mcjty.lib.varia.CapabilityTools.energyHandler(tileEntity.getLevel().getCapability(Capabilities.Energy.BLOCK, tileEntity.getBlockPos(), null));
         if (h != null) {
             return TypedMap.builder()
                     .put(ENERGY, (long) h.getEnergyStored())
@@ -50,7 +50,7 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     }
 
     @Override
-    public void render(int mode, PoseStack matrixStack, MultiBufferSource buffer, @Nonnull TypedMap data, Direction orientation, double scale) {
+    public void render(int mode, PoseStack matrixStack, SubmitNodeCollector buffer, @Nonnull TypedMap data, Direction orientation, double scale) {
         if (mode == MODE_POWER) {
             DefaultPowerInformationRenderer.renderDefault(matrixStack, buffer, data, orientation, scale);
         } else {

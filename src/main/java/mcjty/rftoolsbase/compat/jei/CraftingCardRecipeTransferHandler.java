@@ -5,7 +5,7 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardContainer;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
@@ -37,7 +37,7 @@ public class CraftingCardRecipeTransferHandler implements IRecipeTransferHandler
     }
 
     @Override
-    public RecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
+    public IRecipeType<RecipeHolder<CraftingRecipe>> getRecipeType() {
         return RecipeTypes.CRAFTING;
     }
 

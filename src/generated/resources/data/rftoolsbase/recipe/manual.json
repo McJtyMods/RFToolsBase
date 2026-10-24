@@ -2,19 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "X": {
-      "item": "minecraft:book"
-    },
-    "g": {
-      "tag": "c:nuggets/iron"
-    }
+    "X": "minecraft:book",
+    "g": "#c:nuggets/iron"
   },
   "pattern": [
     "Xg",
     "gg"
   ],
   "result": {
-    "count": 1,
     "id": "rftoolsbase:manual"
   }
 }

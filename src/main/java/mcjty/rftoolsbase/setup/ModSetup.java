@@ -21,7 +21,7 @@ public class ModSetup extends DefaultModSetup {
         });
 
         NeoForge.EVENT_BUS.addListener((LevelTickEvent.Post event) -> {
-            if (!event.getLevel().isClientSide) {
+            if (!event.getLevel().isClientSide()) {
                 TickOrderHandler.postWorldTick(event.getLevel().dimension());
             }
         });

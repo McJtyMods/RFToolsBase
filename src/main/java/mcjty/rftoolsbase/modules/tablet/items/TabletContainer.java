@@ -25,7 +25,7 @@ public class TabletContainer extends GenericContainer {
 
 	public TabletContainer(int id, BlockPos pos, Player player) {
 		super(TabletModule.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY.get(), pos, null, player);
-		cardIndex = player.getInventory().selected;
+		cardIndex = player.getInventory().getSelectedSlot();
     }
 
 	@Override

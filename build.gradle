@@ -14,20 +14,23 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.1.4'
+    id 'net.neoforged.gradle.userdev' version '7.1.38'
 }
 
 apply plugin: 'com.hypherionmc.modutils.modpublisher'
 
-if (project.file('../gradletools.gradle').exists()) {
-    apply from: '../gradletools.gradle'
+def sharedTools = rootProject.file('gradletools.gradle')
+if (rootProject != project && sharedTools.isFile()) {
+    apply from: sharedTools
 } else {
-    apply from: 'https://raw.githubusercontent.com/McJtyMods/MultiWorkspace/1.21_neo/gradletools.gradle'
+    apply from: 'https://raw.githubusercontent.com/McJtyMods/MultiWorkspace/26.1.2_neo/gradletools.gradle'
 }
 
 group = "com.github.mcjty"
-archivesBaseName = "rftoolsbase"
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+base.archivesName = "rftoolsbase"
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+// The JEI version in the shared script requires NeoForge 26.1.2.99.
+neo_version = '26.1.2.99'
 
 if (System.getenv('BUILD_NUMBER') != null) {
     version += "-${System.getenv('BUILD_NUMBER')}"
@@ -43,9 +46,10 @@ sourceSets.main.resources {
 }
 
 dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.12.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.12.2'
     mc()
     jei()
-    patchouli()
     top()
     mcjtylib()
 }
@@ -69,7 +73,7 @@ publishing {
         from components.java
         artifact apiJar
 
-        artifactId = project.archivesBaseName
+        artifactId = base.archivesName.get()
         pom {
             name = 'RFToolsBase'
             description = 'Base mod for all McJty tech mods'
@@ -106,3 +110,5 @@ publishing {
         }
     }
 }
+
+tasks.named('test') { useJUnitPlatform() }

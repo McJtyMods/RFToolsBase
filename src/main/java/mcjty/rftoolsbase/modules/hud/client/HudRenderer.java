@@ -6,18 +6,18 @@ import mcjty.lib.network.Networking;
 import mcjty.lib.network.PacketGetListFromServer;
 import mcjty.rftoolsbase.api.client.IHudSupport;
 import mcjty.rftoolsbase.modules.hud.Hud;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.Direction;
 
 import java.util.List;
 
 public class HudRenderer {
 
-    public static void renderHud(PoseStack matrixStack, MultiBufferSource buffer, IHudSupport hudSupport) {
+    public static void renderHud(PoseStack matrixStack, SubmitNodeCollector buffer, IHudSupport hudSupport) {
         renderHud(matrixStack, buffer, hudSupport, 0.0f, false);
     }
 
-    public static void renderHud(PoseStack matrixStack, MultiBufferSource buffer, IHudSupport support, float scale, boolean faceVert) {
+    public static void renderHud(PoseStack matrixStack, SubmitNodeCollector buffer, IHudSupport support, float scale, boolean faceVert) {
         List<String> log = support.getClientLog();
         long t = System.currentTimeMillis();
         if (t - support.getLastUpdateTime() > 250) {

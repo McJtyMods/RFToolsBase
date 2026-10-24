@@ -23,7 +23,7 @@ public class CommandHandler {
                 return false;
             }
             if (heldItem.getItem() instanceof CraftingCardItem) {
-                CraftingCardItem.testRecipe(player.getCommandSenderWorld(), heldItem);
+                CraftingCardItem.testRecipe(player.level(), heldItem);
             }
             return true;
         });

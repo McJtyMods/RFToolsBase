@@ -7,7 +7,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +15,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PacketSyncHandItem(ItemStack stack) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "synchanditem");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "synchanditem");
     public static final CustomPacketPayload.Type<PacketSyncHandItem> TYPE = new Type<>(ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PacketSyncHandItem> CODEC = StreamCodec.composite(

@@ -15,7 +15,6 @@ import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -45,8 +44,8 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
         return MANUAL;
     }
 
-    public TabletItem() {
-        super(RFToolsBase.setup.defaultProperties().stacksTo(1));
+    public TabletItem(net.minecraft.world.item.Item.Properties properties) {
+        super(properties.stacksTo(1));
     }
 
     public static int getCurrentSlot(ItemStack stack) {
@@ -60,7 +59,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
         ItemStack containingItem = getContainingItem(stack, current);
         ItemStack newTablet = deriveNewItemstack(current, containingItem, data, current);
-        player.getInventory().items.set(player.getInventory().selected, newTablet);
+        player.getInventory().setItem(player.getInventory().getSelectedSlot(), newTablet);
 //        player.setHeldItem(getHand(player), newTablet);
     }
 
@@ -87,7 +86,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
             ItemStack containingItem = getContainingItem(stack, currentItem);
             if (!containingItem.isEmpty()) {
                 setCurrentSlot(player, stack, currentItem);
-                player.displayClientMessage(ComponentFactory.literal("Switched item"), false);
+                player.sendSystemMessage(ComponentFactory.literal("Switched item"));
                 return;
             }
             tries--;
@@ -114,7 +113,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
         int current = getCurrentSlot(stack);
         ItemStack newTablet = deriveNewItemstack(slot, containingItem, data, current);
-        player.getInventory().items.set(player.getInventory().selected, newTablet);
+        player.getInventory().setItem(player.getInventory().getSelectedSlot(), newTablet);
 //        player.setHeldItem(hand, newTablet);
     }
 
@@ -135,9 +134,9 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
     @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             if (player.isShiftKeyDown()) {
                 openTabletGui(player);
             } else {
@@ -151,9 +150,9 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
                 }
             }
 
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 
     private void openTabletGui(Player player) {
@@ -179,8 +178,11 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
-        super.appendHoverText(itemStack, context, list, flags);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> consumer, @Nonnull TooltipFlag flags) {
+        List<Component> list = new java.util.ArrayList<>();
+        super.appendHoverText(itemStack, context, display, consumer, flags);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flags);
+
+        list.forEach(consumer);
     }
 }

@@ -14,7 +14,6 @@ import mcjty.rftoolsbase.tools.ManualHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -68,14 +67,15 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                         return "<empty>";
                     })));
 
-    public CraftingCardItem() {
-        super(RFToolsBase.setup.defaultProperties()
+    public CraftingCardItem(net.minecraft.world.item.Item.Properties properties) {
+        super(properties
                 .stacksTo(8));
     }
 
     @Nullable
     private static Recipe<?> findRecipeInternal(Level world, CraftingInput inv, RecipeType<?> type) {
-        for (RecipeHolder<?> rh : world.getRecipeManager().getRecipes()) {
+        if (!(world instanceof net.minecraft.server.level.ServerLevel serverLevel)) return null;
+        for (RecipeHolder<?> rh : serverLevel.getServer().getRecipeManager().getRecipes()) {
             Recipe<?> r = rh.value();
             if (r != null && type.equals(r.getType()) && recipeMatch((Recipe<CraftingInput>)r, inv, world)) {
                 return r;
@@ -160,20 +160,23 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack stack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
-        super.appendHoverText(stack, context, list, flagIn);
+    public void appendHoverText(@Nonnull ItemStack stack, TooltipContext context, @Nonnull net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> consumer, @Nonnull TooltipFlag flagIn) {
+        List<Component> list = new java.util.ArrayList<>();
+        super.appendHoverText(stack, context, display, consumer, flagIn);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), stack, list, flagIn);
         // @todo tooltip icons
+
+        list.forEach(consumer);
     }
 
     @Override
     @Nonnull
-    public InteractionResultHolder<ItemStack> use(@Nonnull Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult use(@Nonnull Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (hand != InteractionHand.MAIN_HAND) {
-            return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+            return InteractionResult.PASS;
         }
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             player.openMenu(new MenuProvider() {
                 @Override
                 @Nonnull
@@ -188,9 +191,9 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                     return container;
                 }
             });
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 
     public static ItemStack getResult(ItemStack card) {
@@ -223,7 +226,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         for (int i = 0 ; i < data.stacks().size() ; i++) {
             if (i < INPUT_SLOTS) {
                 if (isInGrid(i)) {
-                    stacks.add(Ingredient.of(data.stacks().get(i)));
+                    stacks.add(Ingredient.of(data.stacks().get(i).getItem()));
                 }
             }
         }
@@ -251,7 +254,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
         List<Ingredient> stacks = new ArrayList<>();
         for (int i = 0 ; i < data.stacks().size() ; i++) {
             if (i < INPUT_SLOTS) {
-                stacks.add(Ingredient.of(data.stacks().get(i)));
+                stacks.add(Ingredient.of(data.stacks().get(i).getItem()));
             }
         }
         return stacks;

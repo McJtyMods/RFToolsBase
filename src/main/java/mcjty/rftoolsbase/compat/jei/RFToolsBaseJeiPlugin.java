@@ -8,7 +8,7 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -36,8 +36,8 @@ public class RFToolsBaseJeiPlugin implements IModPlugin {
 
     @Nonnull
     @Override
-    public ResourceLocation getPluginUid() {
-        return ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "rftoolsbase");
+    public Identifier getPluginUid() {
+        return Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "rftoolsbase");
     }
 
     @Override

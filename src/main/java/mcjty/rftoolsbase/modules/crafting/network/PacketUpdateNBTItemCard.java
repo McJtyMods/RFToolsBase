@@ -6,7 +6,7 @@ import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +14,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PacketUpdateNBTItemCard(TypedMap args) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "update_nbt_item_card");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "update_nbt_item_card");
     public static final CustomPacketPayload.Type<PacketUpdateNBTItemCard> TYPE = new Type<>(ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PacketUpdateNBTItemCard> CODEC = StreamCodec.composite(
@@ -34,7 +34,6 @@ public record PacketUpdateNBTItemCard(TypedMap args) implements CustomPacketPayl
     protected boolean isValidItem(ItemStack itemStack) {
         return itemStack.getItem() instanceof CraftingCardItem;
     }
-
 
 
     public void handle(IPayloadContext ctx) {

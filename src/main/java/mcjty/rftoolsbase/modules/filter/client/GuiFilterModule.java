@@ -19,14 +19,14 @@ import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -43,8 +43,8 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     public static final int CONTROLLER_WIDTH = 230;
     public static final int CONTROLLER_HEIGHT = 188;
 
-    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/filtermodule.png");
-    private static final ResourceLocation guiElements = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/guielements.png");
+    private static final Identifier iconLocation = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/filtermodule.png");
+    private static final Identifier guiElements = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/guielements.png");
 
     private final TagSelectorWindow selector = new TagSelectorWindow();
 
@@ -116,7 +116,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         selector.create(window, TagSelectorWindow.TYPE_BOTH, t -> {
             if (t != null) {
                 FilterModuleInventory inventory = new FilterModuleInventory(Minecraft.getInstance().player);
-                inventory.addTag(TagTools.createItemTagKey(ResourceLocation.parse(t)));
+                inventory.addTag(TagTools.createItemTagKey(Identifier.parse(t)));
                 inventory.markDirty();
                 refresh();
             }
@@ -158,7 +158,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         if (list.getSelected() >= inventory.getTags().size()) {
             inventory.removeStack(list.getSelected()-inventory.getTags().size());
         } else {
-            ResourceLocation location = (ResourceLocation) list.getChild(list.getSelected()).getUserObject();
+            Identifier location = (Identifier) list.getChild(list.getSelected()).getUserObject();
             TagKey<Item> tag = TagTools.createItemTagKey(location);
             inventory.removeTag(tag);
         }
@@ -167,7 +167,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void drawWindow(GuiGraphics graphics, float partialTicks, int x, int y) {
+    protected void drawWindow(GuiGraphicsExtractor graphics, float partialTicks, int x, int y) {
         super.drawWindow(graphics, partialTicks, x, y);
         remove.enabled(canRemove());
         expand.enabled(canExpand());
@@ -228,7 +228,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     @Override
-    protected void slotClicked(Slot slotIn, int slotId, int mouseButton, @Nonnull ClickType type) {
+    protected void slotClicked(Slot slotIn, int slotId, int mouseButton, @Nonnull ContainerInput type) {
         if (slotIn == null) {
             return;
         }

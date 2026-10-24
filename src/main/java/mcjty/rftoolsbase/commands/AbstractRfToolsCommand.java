@@ -23,7 +23,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = false;
             Component component = ComponentFactory.literal(ChatFormatting.RED + "Parameter is not a valid boolean!");
             if (sender != null) {
-                sender.displayClientMessage(component, false);
+                sender.sendSystemMessage(component);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
@@ -39,7 +39,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = 0;
             Component component = ComponentFactory.literal(ChatFormatting.RED + "Parameter is not a valid integer!");
             if (sender != null) {
-                sender.displayClientMessage(component, false);
+                sender.sendSystemMessage(component);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;
@@ -55,7 +55,7 @@ public abstract class AbstractRfToolsCommand implements RfToolsCommand {
             value = 0.0f;
             Component component = ComponentFactory.literal(ChatFormatting.RED + "Parameter is not a valid real number!");
             if (sender != null) {
-                sender.displayClientMessage(component, false);
+                sender.sendSystemMessage(component);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             return defaultValue;

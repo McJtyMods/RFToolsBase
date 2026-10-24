@@ -8,13 +8,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record PacketMonitorLogReady(BlockPos pos, TypedMap data) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "monitorlogready");
+    public static final Identifier ID = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "monitorlogready");
     public static final CustomPacketPayload.Type<PacketMonitorLogReady> TYPE = new Type<>(ID);
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PacketMonitorLogReady> CODEC = StreamCodec.composite(

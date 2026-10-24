@@ -60,14 +60,20 @@ public class RFToolsBase {
         }
     }
 
+    public static <T extends Item> java.util.function.Function<Item.Properties, T> tab(java.util.function.Function<Item.Properties, T> factory) {
+        return properties -> instance.setup.tab(() -> factory.apply(properties)).get();
+    }
+
     public static <T extends Item> Supplier<T> tab(Supplier<T> supplier) {
         return instance.setup.tab(supplier);
     }
 
-    private void onDataGen(GatherDataEvent event) {
+    private void onDataGen(GatherDataEvent.Client event) {
         DataGen datagen = new DataGen(MODID, event);
         modules.datagen(datagen, event.getLookupProvider());
         datagen.generate();
+        event.getGenerator().addProvider(true,
+                new mcjty.rftoolsbase.tools.ClientItemDefinitions(event.getGenerator().getPackOutput(), MODID, java.util.Map.of()));
     }
 
     private void setupModules(IEventBus bus) {

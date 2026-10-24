@@ -11,9 +11,9 @@ import mcjty.rftoolsbase.modules.tablet.TabletModule;
 import mcjty.rftoolsbase.modules.tablet.items.TabletContainer;
 import mcjty.rftoolsbase.modules.tablet.items.TabletItem;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -29,7 +29,7 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     public static final int TABLET_WIDTH = 180;
     public static final int TABLET_HEIGHT = 188;
 
-    private static final ResourceLocation iconLocation = ResourceLocation.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/tablet.png");
+    private static final Identifier iconLocation = Identifier.fromNamespaceAndPath(RFToolsBase.MODID, "textures/gui/tablet.png");
 
     private ToggleButton[] buttons;
 
@@ -75,8 +75,8 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
     }
 
     @Override
-    protected void renderLabels(@Nonnull GuiGraphics graphics, int mouseX, int mouseY) {
-        super.renderLabels(graphics, mouseX, mouseY);
+    protected void extractLabels(@Nonnull GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractLabels(graphics, mouseX, mouseY);
         ItemStack heldItem = minecraft.player.getItemInHand(getHand());
         updateActiveButton(TabletItem.getCurrentSlot(heldItem));
     }

@@ -1,12 +1,12 @@
 package mcjty.rftoolsbase.tools;
 
 import mcjty.lib.gui.ManualEntry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ManualHelper {
 
     public static ManualEntry create(String entryName) {
-        ResourceLocation entry = ResourceLocation.parse(entryName);
-        return new ManualEntry(ResourceLocation.parse("rftoolsbase:manual"), ResourceLocation.fromNamespaceAndPath("rftoolsbase", entry.getPath()), 0);
+        Identifier entry = Identifier.parse(entryName);
+        return new ManualEntry(Identifier.parse("rftoolsbase:manual"), Identifier.fromNamespaceAndPath("rftoolsbase", entry.getPath()), 0);
     }
 }

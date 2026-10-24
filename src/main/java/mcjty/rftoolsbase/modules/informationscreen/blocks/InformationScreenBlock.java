@@ -25,8 +25,8 @@ import static mcjty.lib.builder.TooltipBuilder.*;
 
 public class InformationScreenBlock extends BaseBlock {
 
-    public InformationScreenBlock() {
-        super(new BlockBuilder()
+    public InformationScreenBlock(net.minecraft.world.level.block.state.BlockBehaviour.Properties properties) {
+        super(new BlockBuilder().properties(mcjty.rftoolsbase.tools.RegistryProperties.block(properties))
                 .info(key("message.rftoolsbase.shiftmessage"))
                 .infoShift(header(), gold())
                 .tileEntitySupplier(InformationScreenTileEntity::new));
@@ -71,7 +71,7 @@ public class InformationScreenBlock extends BaseBlock {
 
     @Override
     protected boolean wrenchUse(Level world, BlockPos pos, Direction side, Player player) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             BlockEntity te = world.getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity monitor) {
                 monitor.toggleMode();
@@ -79,7 +79,6 @@ public class InformationScreenBlock extends BaseBlock {
         }
         return true;
     }
-
 
 
     @Override

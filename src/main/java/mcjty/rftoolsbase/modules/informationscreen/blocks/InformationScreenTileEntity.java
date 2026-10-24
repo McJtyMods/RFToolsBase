@@ -74,15 +74,21 @@ public class InformationScreenTileEntity extends TickingTileEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.saveAdditional(tag, provider);
+    protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput output) {
+        super.saveAdditional(output);
+        CompoundTag tag = new CompoundTag();
+        HolderLookup.Provider provider = (level != null ? level.registryAccess() : net.minecraft.core.RegistryAccess.EMPTY);
         tag.putByte("mode", (byte) mode);
+
+        output.store(com.mojang.serialization.MapCodec.assumeMapUnsafe(CompoundTag.CODEC), tag);
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-        super.loadAdditional(tag, provider);
-        mode = tag.getByte("mode");
+    protected void loadAdditional(net.minecraft.world.level.storage.ValueInput input) {
+        super.loadAdditional(input);
+        CompoundTag tag = input.read(com.mojang.serialization.MapCodec.assumeMapUnsafe(CompoundTag.CODEC)).orElseGet(CompoundTag::new);
+        HolderLookup.Provider provider = input.lookup();
+        mode = tag.getByteOr("mode", (byte) 0);
     }
 
     @Override
@@ -92,7 +98,7 @@ public class InformationScreenTileEntity extends TickingTileEntity {
 
     @Override
     public void loadClientDataFromNBT(CompoundTag tag, HolderLookup.Provider provider) {
-        mode = tag.getByte("mode");
+        mode = tag.getByteOr("mode", (byte) 0);
     }
 
     public void setClientData(TypedMap power) {

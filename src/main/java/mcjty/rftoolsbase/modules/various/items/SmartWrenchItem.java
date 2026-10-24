@@ -18,7 +18,6 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -48,16 +47,16 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                     parameter("info1", stack -> getMode().getName()),
                     parameter("info2", stack -> getCurrentBlock(stack).map(BlockPosTools::toString).orElse("<not selected>"))));
 
-    public SmartWrenchItem(SmartWrenchMode mode) {
-        super(RFToolsBase.setup.defaultProperties().stacksTo(1));
+    public SmartWrenchItem(SmartWrenchMode mode, net.minecraft.world.item.Item.Properties properties) {
+        super(properties.stacksTo(1));
         this.mode = mode;
     }
 
     @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             SmartWrenchMode mode = getCurrentMode(stack);
             WrenchData data = stack.get(VariousModule.ITEM_WRENCH_DATA);
             ItemStack newStack;
@@ -79,7 +78,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     @Nonnull
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             Player player = context.getPlayer();
             InteractionHand hand = context.getHand();
             ItemStack stack = context.getItemInHand();
@@ -116,9 +115,12 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flags) {
-        super.appendHoverText(itemStack, context, list, flags);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> consumer, @Nonnull TooltipFlag flags) {
+        List<Component> list = new java.util.ArrayList<>();
+        super.appendHoverText(itemStack, context, display, consumer, flags);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flags);
+
+        list.forEach(consumer);
     }
 
     public SmartWrenchMode getMode() {

@@ -19,7 +19,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -65,8 +64,8 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                     })));
 
 
-    public FilterModuleItem() {
-        super(RFToolsBase.setup.defaultProperties().stacksTo(1));
+    public FilterModuleItem(net.minecraft.world.item.Item.Properties properties) {
+        super(properties.stacksTo(1));
     }
 
     @Override
@@ -75,9 +74,12 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     }
 
     @Override
-    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull List<Component> list, @Nonnull TooltipFlag flagIn) {
-        super.appendHoverText(itemStack, context, list, flagIn);
+    public void appendHoverText(@Nonnull ItemStack itemStack, TooltipContext context, @Nonnull net.minecraft.world.item.component.TooltipDisplay display, java.util.function.Consumer<Component> consumer, @Nonnull TooltipFlag flagIn) {
+        List<Component> list = new java.util.ArrayList<>();
+        super.appendHoverText(itemStack, context, display, consumer, flagIn);
         tooltipBuilder.get().makeTooltip(Tools.getId(this), itemStack, list, flagIn);
+
+        list.forEach(consumer);
     }
 
     @Nonnull
@@ -89,23 +91,23 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
         ItemStack stack = player.getItemInHand(hand);
         BlockPos pos = context.getClickedPos();
         if (player.isCrouching()) {
-            if (!world.isClientSide) {
+            if (!world.isClientSide()) {
                 BlockEntity te = world.getBlockEntity(pos);
                 if (InventoryTools.isInventory(te)) {
                     FilterModuleInventory inventory = new FilterModuleInventory(stack);
                     InventoryTools.getItems(te, s -> true).forEach(inventory::addStack);
                     inventory.markDirty();
-                    player.displayClientMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Stored inventory contents in filter"), false);
+                    player.sendSystemMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Stored inventory contents in filter"));
                 } else {
                     BlockState state = world.getBlockState(pos);
-                    ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state);
+                    ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state, false, player);
                     if (!blockStack.isEmpty()) {
                         FilterModuleInventory inventory = new FilterModuleInventory(stack);
                         inventory.addStack(blockStack);
                         inventory.markDirty();
-                        player.displayClientMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.sendSystemMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Added " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"));
                     } else {
-                        player.displayClientMessage(ComponentFactory.literal(ChatFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"), false);
+                        player.sendSystemMessage(ComponentFactory.literal(ChatFormatting.RED + "Could not add " + blockStack.getHoverName().getString() /* was getFormattedText() */ + " to the filter!"));
                     }
                 }
             }
@@ -116,9 +118,9 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
 
     @Nonnull
     @Override
-    public InteractionResultHolder<ItemStack> use(Level world, Player player, @Nonnull InteractionHand hand) {
+    public InteractionResult use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             player.openMenu(new MenuProvider() {
                 @Nonnull
                 @Override
@@ -134,9 +136,9 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                 }
             });
 
-            return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+            return InteractionResult.SUCCESS;
         }
-        return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+        return InteractionResult.SUCCESS;
     }
 
     public static Predicate<ItemStack> getCache(ItemStack stack) {

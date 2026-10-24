@@ -5,7 +5,7 @@ import mcjty.lib.client.HudRenderHelper;
 import mcjty.lib.typed.TypedMap;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.DefaultPowerInformationScreenInfo;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.Direction;
 
 import java.text.DecimalFormat;
@@ -15,7 +15,7 @@ import java.util.List;
 public class DefaultPowerInformationRenderer {
 
     // @todo 1.15 port rendering
-    public static void renderGraphical(PoseStack matrixStack, MultiBufferSource buffer, TypedMap data, Direction orientation, double scale) {
+    public static void renderGraphical(PoseStack matrixStack, SubmitNodeCollector buffer, TypedMap data, Direction orientation, double scale) {
         if (data == null || data.size() == 0) {
             return;
         }
@@ -56,7 +56,7 @@ public class DefaultPowerInformationRenderer {
 //        GlStateManager._popMatrix();
     }
 
-    public static void renderDefault(PoseStack matrixStack, MultiBufferSource buffer, TypedMap data, Direction orientation, double scale) {
+    public static void renderDefault(PoseStack matrixStack, SubmitNodeCollector buffer, TypedMap data, Direction orientation, double scale) {
         List<String> log = getLog(data);
         HudRenderHelper.HudPlacement hudPlacement = HudRenderHelper.HudPlacement.HUD_FRONT;
         HudRenderHelper.HudOrientation hudOrientation = HudRenderHelper.HudOrientation.HUD_SOUTH;
