@@ -13,7 +13,7 @@ import mcjty.rftoolsbase.modules.infuser.client.GuiMachineInfuser;
 import mcjty.rftoolsbase.modules.infuser.data.InfuserData;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.setup.Config;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.inventory.MenuType;
