@@ -13,6 +13,8 @@ Standalone builds resolve these Jenkins Fabric artifacts when source projects ar
 - `com.github.mcjty:mcjtylib-fabric:26.2-10.0.1-fabric.4`
 - `mcjty.theoneprobe:theoneprobe:26.2-15.0.1-fabric-1`
 
+Jenkins builds append `-<BUILD_NUMBER>` to the Maven artifact version and filename. The version embedded in `fabric.mod.json` remains `26.2-8.0.0-fabric`.
+
 Minimum runtime mod versions omit the artifact revision suffix: McJtyLib `26.2-10.0.1-fabric` and RFToolsBase `26.2-8.0.0-fabric`. TOP remains an optional mod integration. Workspace builds use the local McJtyLib and TOP source checkouts when available.
 
 Validation commands cover all three builds, generated resources, JUnit tests, and an integrated Fabric client/server test. From Multi_fabric, run `./gradlew -PfabricPortTests :RFToolsBase:runClientGameTest` to check native energy and inventory rollback, fluid rounding, generation, menus, facade removal and cable/antenna models. The fixture is excluded from release jars.

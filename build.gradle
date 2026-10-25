@@ -25,6 +25,8 @@ group = "com.github.mcjty"
 base.archivesName = "rftoolsbase-fabric"
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
+// Jenkins revisions identify Maven artifacts, not the runtime mod version.
+def modVersion = project.version.toString()
 if (System.getenv('BUILD_NUMBER') != null) {
     version += "-${System.getenv('BUILD_NUMBER')}"
 }
@@ -110,8 +112,8 @@ tasks.named('test') { useJUnitPlatform() }
 
 processResources {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    inputs.property 'version', project.version
-    filesMatching('fabric.mod.json') { expand version: project.version }
+    inputs.property 'version', modVersion
+    filesMatching('fabric.mod.json') { expand version: modVersion }
 }
 
 // Native integration checks run with all three Fabric ports and the Jenkins libraries.
