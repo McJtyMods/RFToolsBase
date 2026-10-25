@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.util.Lazy;
+import mcjty.lib.varia.Lazy;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -58,7 +58,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide()) {
             SmartWrenchMode mode = getCurrentMode(stack);
-            WrenchData data = stack.get(VariousModule.ITEM_WRENCH_DATA);
+            WrenchData data = stack.get(VariousModule.ITEM_WRENCH_DATA.get());
             ItemStack newStack;
             if (mode == SmartWrenchMode.MODE_WRENCH) {
                 mode = SmartWrenchMode.MODE_SELECT;
@@ -67,7 +67,7 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
                 mode = SmartWrenchMode.MODE_WRENCH;
                 newStack = new ItemStack(VariousModule.SMARTWRENCH.get());
             }
-            newStack.set(VariousModule.ITEM_WRENCH_DATA, data);
+            newStack.set(VariousModule.ITEM_WRENCH_DATA.get(), data);
             player.setItemInHand(hand, newStack);
             Logging.message(player, ChatFormatting.YELLOW + "Smart wrench is now in " + mode.getName() + " mode.");
         }
@@ -141,15 +141,15 @@ public class SmartWrenchItem extends Item implements SmartWrench, ITooltipSettin
 
     public static void setCurrentBlock(ItemStack itemStack, GlobalPos c) {
         if (c == null) {
-            itemStack.remove(VariousModule.ITEM_WRENCH_DATA);
+            itemStack.remove(VariousModule.ITEM_WRENCH_DATA.get());
             return;
         }
-        itemStack.set(VariousModule.ITEM_WRENCH_DATA, new WrenchData(c));
+        itemStack.set(VariousModule.ITEM_WRENCH_DATA.get(), new WrenchData(c));
     }
 
     @Nonnull
     public static Optional<GlobalPos> getCurrentBlock(ItemStack itemStack) {
-        WrenchData data = itemStack.get(VariousModule.ITEM_WRENCH_DATA);
+        WrenchData data = itemStack.get(VariousModule.ITEM_WRENCH_DATA.get());
         if (data != null) {
             return Optional.of(data.pos());
         } else {

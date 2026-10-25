@@ -11,7 +11,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import mcjty.lib.network.PayloadContext;
 
 public record PacketSyncHandItem(ItemStack stack) implements CustomPacketPayload {
 
@@ -36,7 +36,7 @@ public record PacketSyncHandItem(ItemStack stack) implements CustomPacketPayload
         return itemStack.getItem() instanceof FilterModuleItem || itemStack.getItem() instanceof TabletItem;
     }
 
-    public void handle(IPayloadContext ctx) {
+    public void handle(PayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Player player = ctx.player();
             ItemStack heldItem = player.getItemInHand(InteractionHand.MAIN_HAND);

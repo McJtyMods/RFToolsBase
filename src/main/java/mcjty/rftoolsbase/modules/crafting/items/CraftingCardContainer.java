@@ -9,9 +9,9 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
-import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import mcjty.lib.varia.Lazy;
+import mcjty.lib.container.IItemHandler;
+import mcjty.lib.container.InvWrapper;
 
 import java.util.List;
 

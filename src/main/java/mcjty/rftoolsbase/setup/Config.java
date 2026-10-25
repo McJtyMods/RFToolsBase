@@ -2,8 +2,6 @@ package mcjty.rftoolsbase.setup;
 
 
 import mcjty.lib.modules.Modules;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.Builder;
@@ -19,14 +17,14 @@ public class Config {
 //    public static ModConfigSpec CLIENT_CONFIG;
 
 
-    public static void register(ModContainer mod, IEventBus bus, Modules modules) {
-        modules.initConfig(bus);
+    public static void register(Modules modules) {
+        modules.initConfig();
 
         SERVER_CONFIG = SERVER_BUILDER.build();
         COMMON_CONFIG = COMMON_BUILDER.build();
 
-        mod.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG);
-        mod.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
+        fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry.INSTANCE.register("rftoolsbase", ModConfig.Type.SERVER, SERVER_CONFIG);
+        fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry.INSTANCE.register("rftoolsbase", ModConfig.Type.COMMON, COMMON_CONFIG);
     }
 
 }

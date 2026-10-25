@@ -38,7 +38,7 @@ public class FilterModuleInventory {
         stacks.clear();
         tags.clear();
         if (stack.is(FilterModule.FILTER_MODULE.get())) {
-            FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+            FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA.get(), FilterModuleData.EMPTY);
             stacks.addAll(data.stacks());
             data.tags().stream().map(TagTools::createItemTagKey).forEach(tags::add);
         }
@@ -86,9 +86,9 @@ public class FilterModuleInventory {
     public void markDirty() {
         ItemStack heldItem = filterGetter.get();
         if (!heldItem.isEmpty()) {
-            FilterModuleData data = heldItem.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+            FilterModuleData data = heldItem.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA.get(), FilterModuleData.EMPTY);
             FilterModuleData newdata = new FilterModuleData(stacks, tags.stream().map(TagKey::location).toList(), data.blacklist(), data.damage(), data.components(), data.mod());
-            heldItem.set(FilterModule.ITEM_FILTERMODULE_DATA, newdata);
+            heldItem.set(FilterModule.ITEM_FILTERMODULE_DATA.get(), newdata);
         }
     }
 

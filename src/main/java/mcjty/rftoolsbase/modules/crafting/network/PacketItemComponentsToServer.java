@@ -9,7 +9,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import mcjty.lib.network.PayloadContext;
 
 /**
  * This packet will update the held item components on the server. We use an ItemStack as the parameter
@@ -34,7 +34,7 @@ public record PacketItemComponentsToServer(ItemStack stack) implements CustomPac
         return new PacketItemComponentsToServer(stack);
     }
 
-    public void handle(IPayloadContext ctx) {
+    public void handle(PayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Player player = ctx.player();
             ItemStack heldItem = player.getItemInHand(InteractionHand.MAIN_HAND);

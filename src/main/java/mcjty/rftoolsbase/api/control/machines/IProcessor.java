@@ -10,9 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.core.BlockPos;
-import net.neoforged.neoforge.fluids.FluidStack;
-import net.neoforged.neoforge.fluids.capability.IFluidHandler;
-import net.neoforged.neoforge.items.IItemHandler;
+import mcjty.lib.varia.FluidStack;
+import mcjty.lib.varia.IFluidHandler;
+import mcjty.lib.container.IItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

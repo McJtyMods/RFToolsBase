@@ -30,7 +30,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.Lazy;
+import mcjty.lib.varia.Lazy;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
@@ -49,7 +49,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
             .info(key("message.rftoolsbase.shiftmessage"))
             .infoShift(header(), gold(),
                     parameter("info", stack -> {
-                        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+                        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA.get(), FilterModuleData.EMPTY);
                         String modeLine = "Mode " + (data.blacklist() ? "blacklist" : "whitelist");
                         if (data.damage()) {
                             modeLine += ", Damage";
@@ -100,7 +100,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                     player.sendSystemMessage(ComponentFactory.literal(ChatFormatting.GREEN + "Stored inventory contents in filter"));
                 } else {
                     BlockState state = world.getBlockState(pos);
-                    ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state, false, player);
+                    ItemStack blockStack = state.getBlock().getCloneItemStack(world, pos, state, false);
                     if (!blockStack.isEmpty()) {
                         FilterModuleInventory inventory = new FilterModuleInventory(stack);
                         inventory.addStack(blockStack);
@@ -121,7 +121,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
     public InteractionResult use(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!world.isClientSide()) {
-            player.openMenu(new MenuProvider() {
+            mcjty.lib.container.MenuTools.open(player, new MenuProvider() {
                 @Nonnull
                 @Override
                 public Component getDisplayName() {
@@ -134,7 +134,7 @@ public class FilterModuleItem extends Item implements ITooltipSettings, ITooltip
                     container.setupInventories(null, playerInventory);
                     return container;
                 }
-            });
+            }, data -> {});
 
             return InteractionResult.SUCCESS;
         }

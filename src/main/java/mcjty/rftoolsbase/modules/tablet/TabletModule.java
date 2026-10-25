@@ -14,14 +14,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
+import mcjty.lib.setup.DeferredHolder;
+import mcjty.lib.setup.DeferredItem;
 
 import java.util.function.Supplier;
 
@@ -44,33 +39,31 @@ public class TabletModule implements IModule {
 
 
     private static MenuType<TabletContainer> createTabletContainer() {
-        return IMenuTypeExtension.create((windowId, inv, data) -> {
+        return new ExtendedMenuType<>((windowId, inv, data) -> {
             Player player = inv.player;
             TabletContainer container = new TabletContainer(windowId, player.blockPosition(), player);
             container.setupInventories(new TabletItemHandler(player), inv);
             return container;
-        });
+        }, mcjty.lib.container.MenuTools.CODEC);
     }
 
-    public TabletModule(IEventBus bus) {
-        bus.addListener(this::registerScreens);
-    }
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
+    public void init() {
 
     }
 
     @Override
-    public void initClient(FMLClientSetupEvent event) {
+    public void initClient() {
+        registerScreens();
     }
 
-    public void registerScreens(RegisterMenuScreensEvent event) {
-        GuiTablet.register(event);
+    public void registerScreens() {
+        GuiTablet.register();
     }
 
     @Override
-    public void initConfig(IEventBus bus) {
+    public void initConfig() {
     }
 
     @Override
@@ -78,7 +71,7 @@ public class TabletModule implements IModule {
         dataGen.add(
                 Dob.itemBuilder(TABLET)
                         .shaped(builder -> builder
-                                        .define('g', Tags.Items.NUGGETS_GOLD)
+                                        .define('g', net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:nuggets/gold")))
                                         .define('Q', Items.QUARTZ_BLOCK)
                                         .unlockedBy("quartz", has(Blocks.QUARTZ_BLOCK)),
                                 "geg", "RQR", "gRg")

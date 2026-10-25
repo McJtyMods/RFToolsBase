@@ -45,7 +45,7 @@ public class InformationScreenTileEntity extends TickingTileEntity {
         if (cnt <= 0) {
             cnt = 10;
             BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
-            IInformationScreenInfo capability = level.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY, offset, null);
+            IInformationScreenInfo capability = CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY.find(level, offset, null);
             if (capability != null) {
                 capability.tick();
             }
@@ -122,7 +122,7 @@ public class InformationScreenTileEntity extends TickingTileEntity {
         BlockPos offset = getBlockPos().relative(getBlockOrientation().getOpposite());
         BlockEntity te = level.getBlockEntity(offset);
         if (te != null) {
-            IInformationScreenInfo capability = level.getCapability(CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY, offset, null);
+            IInformationScreenInfo capability = CapabilityInformationScreenInfo.INFORMATION_SCREEN_INFO_CAPABILITY.find(level, offset, null);
             if (capability != null) {
                 return capability;
             }

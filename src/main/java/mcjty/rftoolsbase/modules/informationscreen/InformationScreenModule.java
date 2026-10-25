@@ -15,12 +15,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredItem;
+import mcjty.lib.setup.DeferredBlock;
+import mcjty.lib.setup.DeferredItem;
 
 import java.util.function.Supplier;
 
@@ -34,16 +30,16 @@ public class InformationScreenModule implements IModule {
     public static final Supplier<BlockEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> new BlockEntityType<>(InformationScreenTileEntity::new, java.util.Set.of(INFORMATION_SCREEN.get())));
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
+    public void init() {
     }
 
     @Override
-    public void initClient(FMLClientSetupEvent event) {
+    public void initClient() {
         InformationScreenRenderer.register();
     }
 
     @Override
-    public void initConfig(IEventBus bus) {
+    public void initConfig() {
 
     }
 
@@ -54,7 +50,7 @@ public class InformationScreenModule implements IModule {
                         .simpleLoot()
                         .ironPickaxeTags()
                         .shaped(builder -> builder
-                                        .define('-', Tags.Items.GLASS_PANES)
+                                        .define('-', net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:glass_panes")))
                                         .define('A', VariousModule.MACHINE_BASE.get())
                                         .unlockedBy("frame", InventoryChangeTrigger.TriggerInstance.hasItems(VariousModule.MACHINE_BASE.get(), Items.REDSTONE)),
                                 "---", "rAr")

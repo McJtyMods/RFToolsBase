@@ -10,7 +10,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import mcjty.lib.network.PayloadContext;
 
 public record PacketMonitorLogReady(BlockPos pos, TypedMap data) implements CustomPacketPayload {
 
@@ -31,7 +31,7 @@ public record PacketMonitorLogReady(BlockPos pos, TypedMap data) implements Cust
         return new PacketMonitorLogReady(pos, data);
     }
 
-    public void handle(IPayloadContext ctx) {
+    public void handle(PayloadContext ctx) {
         ctx.enqueueWork(() -> {
             BlockEntity te = SafeClientTools.getClientWorld().getBlockEntity(pos);
             if (te instanceof InformationScreenTileEntity info) {

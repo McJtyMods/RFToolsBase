@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+import mcjty.lib.network.StreamCodecs;
 
 public enum FormatStyle implements StringRepresentable {
     MODE_FULL("Full"),
@@ -14,7 +14,7 @@ public enum FormatStyle implements StringRepresentable {
     private final String name;
 
     public static final Codec<FormatStyle> CODEC = StringRepresentable.fromEnum(FormatStyle::values);
-    public static final StreamCodec<FriendlyByteBuf, FormatStyle> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(FormatStyle.class);
+    public static final StreamCodec<FriendlyByteBuf, FormatStyle> STREAM_CODEC = StreamCodecs.enumCodec(FormatStyle.class);
 
     FormatStyle(String name) {
         this.name = name;

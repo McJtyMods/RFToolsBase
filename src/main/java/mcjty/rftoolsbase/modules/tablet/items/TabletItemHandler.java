@@ -4,7 +4,7 @@ import mcjty.rftoolsbase.api.various.ITabletSupport;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionHand;
-import net.neoforged.neoforge.items.IItemHandlerModifiable;
+import mcjty.lib.container.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 

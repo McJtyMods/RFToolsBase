@@ -11,28 +11,22 @@ import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-
 import javax.annotation.Nonnull;
 
 public class RFToolsBaseMessages {
-
-    public static void registerMessages(RegisterPayloadHandlersEvent event) {
-        final PayloadRegistrar registrar = event.registrar(RFToolsBase.MODID)
-                .versioned("1.0")
-                .optional();
-
-        registrar.playToServer(PacketItemComponentsToServer.TYPE, PacketItemComponentsToServer.CODEC, PacketItemComponentsToServer::handle);
-        registrar.playToServer(PacketUpdateNBTItemCard.TYPE, PacketUpdateNBTItemCard.CODEC, PacketUpdateNBTItemCard::handle);
-        registrar.playToServer(PacketSendRecipe.TYPE, PacketSendRecipe.CODEC, PacketSendRecipe::handle);
-        registrar.playToServer(PacketGetMonitorLog.TYPE, PacketGetMonitorLog.CODEC, PacketGetMonitorLog::handle);
-        registrar.playToServer(PacketSyncHandItem.TYPE, PacketSyncHandItem.CODEC, PacketSyncHandItem::handle);
-
-        registrar.playToClient(PacketMonitorLogReady.TYPE, PacketMonitorLogReady.CODEC, PacketMonitorLogReady::handle);
+    public static void registerMessages() {
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketItemComponentsToServer.TYPE, PacketItemComponentsToServer.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketItemComponentsToServer.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketUpdateNBTItemCard.TYPE, PacketUpdateNBTItemCard.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketUpdateNBTItemCard.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketSendRecipe.TYPE, PacketSendRecipe.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketSendRecipe.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketGetMonitorLog.TYPE, PacketGetMonitorLog.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketGetMonitorLog.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketSyncHandItem.TYPE, PacketSyncHandItem.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketSyncHandItem.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.clientboundPlay().register(PacketMonitorLogReady.TYPE, PacketMonitorLogReady.CODEC);
     }
 
     public static void sendToServer(String command, @Nonnull TypedMap.Builder argumentBuilder) {
@@ -44,10 +38,10 @@ public class RFToolsBaseMessages {
     }
 
     public static <T extends CustomPacketPayload> void sendToPlayer(T packet, Player player) {
-        PacketDistributor.sendToPlayer((ServerPlayer)player, packet);
+        Networking.sendToPlayer(packet, player);
     }
 
     public static <T extends CustomPacketPayload> void sendToServer(T packet) {
-        net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(packet);
+        Networking.sendToServer(packet);
     }
 }

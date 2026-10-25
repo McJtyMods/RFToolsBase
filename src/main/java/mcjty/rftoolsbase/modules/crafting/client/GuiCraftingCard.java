@@ -27,7 +27,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -49,12 +48,11 @@ public class GuiCraftingCard extends GenericGuiContainer<GenericTileEntity, Craf
 
     public GuiCraftingCard(CraftingCardContainer container, Inventory inventory, Component title) {
         super(container, inventory, title, CraftingCardItem.MANUAL);
-        imageWidth = WIDTH;
-        imageHeight = HEIGHT;
+        setWindowDimensions(WIDTH, HEIGHT);
     }
 
-    public static void register(RegisterMenuScreensEvent event) {
-        event.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::new);
+    public static void register() {
+        net.minecraft.client.gui.screens.MenuScreens.register(CraftingModule.CONTAINER_CRAFTING_CARD.get(), GuiCraftingCard::new);
     }
 
     @Override

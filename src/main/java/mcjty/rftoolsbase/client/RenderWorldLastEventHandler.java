@@ -10,16 +10,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.event.SubmitCustomGeometryEvent;
+import net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderContext;
 
 public class RenderWorldLastEventHandler {
 
     // @todo 1.20 is this the right event?
-    public static void tick(SubmitCustomGeometryEvent evt) {
+    public static void tick(LevelRenderContext evt) {
         renderHilightedBlock(evt);
     }
 
-    private static void renderHilightedBlock(SubmitCustomGeometryEvent evt) {
+    private static void renderHilightedBlock(LevelRenderContext evt) {
         BlockPos c = RFToolsBase.instance.clientInfo.getHilightedBlock();
         if (c == null) {
             return;
@@ -35,13 +35,13 @@ public class RenderWorldLastEventHandler {
             return;
         }
 
-        PoseStack matrixStack = evt.getPoseStack();
+        PoseStack matrixStack = evt.poseStack();
         matrixStack.pushPose();
 
         Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().position();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
-        evt.getSubmitNodeCollector().submitCustomGeometry(matrixStack, CustomRenderTypes.OVERLAY_LINES, (pose, builder) -> {
+        evt.submitNodeCollector().submitCustomGeometry(matrixStack, CustomRenderTypes.OVERLAY_LINES, (pose, builder) -> {
             PoseStack captured = new PoseStack();
             captured.last().pose().set(pose.pose());
             RenderHelper.renderHighLightedBlocksOutline(captured, builder, c.getX(), c.getY(), c.getZ(), 1.0f, 0.0f, 0.0f, 1.0f);

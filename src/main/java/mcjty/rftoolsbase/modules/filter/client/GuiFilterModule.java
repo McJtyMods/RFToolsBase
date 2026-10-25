@@ -30,7 +30,6 @@ import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -60,12 +59,11 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     public GuiFilterModule(FilterModuleContainer container, Inventory inventory, Component title) {
         super(container, inventory, title, FilterModuleItem.MANUAL);
-        imageWidth = CONTROLLER_WIDTH;
-        imageHeight = CONTROLLER_HEIGHT;
+        setWindowDimensions(CONTROLLER_WIDTH, CONTROLLER_HEIGHT);
     }
 
-    public static void register(RegisterMenuScreensEvent event) {
-        event.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::new);
+    public static void register() {
+        net.minecraft.client.gui.screens.MenuScreens.register(FilterModule.CONTAINER_FILTER_MODULE.get(), GuiFilterModule::new);
     }
 
     @Override
@@ -96,7 +94,7 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
         Slider slider = slider(212, 4, 10, 99).scrollableName("list");
 
         ItemStack stack = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
-        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA.get(), FilterModuleData.EMPTY);
         setBlacklistMode(data.blacklist() ? "Black" : "White");
         damageMode.setCurrentChoice(data.damage() ? 1 : 0);
         componentMode.setCurrentChoice(data.components() ? 1 : 0);
@@ -258,13 +256,13 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
 
     private void updateSettings() {
         ItemStack stack = Minecraft.getInstance().player.getItemInHand(InteractionHand.MAIN_HAND);
-        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA.get(), FilterModuleData.EMPTY);
         data = new FilterModuleData(data.stacks(), data.tags(),
                 blacklistMode.getCurrentChoice().equals("Black"),
                 damageMode.getCurrentChoiceIndex() == 1,
                 componentMode.getCurrentChoiceIndex() == 1,
                 modMode.getCurrentChoiceIndex() == 1);
-        stack.set(FilterModule.ITEM_FILTERMODULE_DATA, data);
+        stack.set(FilterModule.ITEM_FILTERMODULE_DATA.get(), data);
         RFToolsBaseMessages.sendToServer(PacketSyncHandItem.create(minecraft.player));
    }
 }

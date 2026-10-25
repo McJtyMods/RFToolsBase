@@ -29,7 +29,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.util.Lazy;
+import mcjty.lib.varia.Lazy;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
@@ -137,10 +137,10 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     @Override
     protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter input) {
         super.applyImplicitComponents(input);
-        energyStorage.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_ENERGY));
-        items.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_INVENTORY));
-        infusable.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_INFUSABLE));
-        var data = input.get(MachineInfuserModule.ITEM_INFUSER_DATA);
+        energyStorage.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_ENERGY.get()));
+        items.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_INVENTORY.get()));
+        infusable.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_INFUSABLE.get()));
+        var data = input.get(MachineInfuserModule.ITEM_INFUSER_DATA.get());
         if (data != null) {
             setData(MachineInfuserModule.INFUSER_DATA, data);
         }
@@ -153,7 +153,7 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
         items.collectImplicitComponents(builder);
         infusable.collectImplicitComponents(builder);
         var data = getData(MachineInfuserModule.INFUSER_DATA);
-        builder.set(MachineInfuserModule.ITEM_INFUSER_DATA, data);
+        builder.set(MachineInfuserModule.ITEM_INFUSER_DATA.get(), data);
     }
 
     private static boolean isShard(ItemStack stack) {

@@ -22,7 +22,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.util.Lazy;
+import mcjty.lib.varia.Lazy;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -49,12 +49,12 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static int getCurrentSlot(ItemStack stack) {
-        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA.get(), TabletData.EMPTY);
         return data.current();
     }
 
     public static void setCurrentSlot(Player player, ItemStack stack, int current) {
-        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA.get(), TabletData.EMPTY);
         data = data.withCurrent(current);
 
         ItemStack containingItem = getContainingItem(stack, current);
@@ -94,7 +94,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static ItemStack getContainingItem(ItemStack stack, int slot) {
-        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA.get(), TabletData.EMPTY);
         if (slot < 0 || slot >= data.stacks().size()) {
             return ItemStack.EMPTY;
         }
@@ -103,13 +103,13 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
     public static void setContainingItem(Player player, InteractionHand hand, int slot, ItemStack containingItem) {
         ItemStack stack = player.getItemInHand(hand);
-        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA.get(), TabletData.EMPTY);
         if (containingItem.isEmpty()) {
             data = data.setStack(slot, ItemStack.EMPTY);
         } else {
             data = data.setStack(slot, containingItem.copy());
         }
-        stack.set(TabletModule.ITEM_TABLET_DATA, data);
+        stack.set(TabletModule.ITEM_TABLET_DATA.get(), data);
 
         int current = getCurrentSlot(stack);
         ItemStack newTablet = deriveNewItemstack(slot, containingItem, data, current);
@@ -128,7 +128,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
         } else {
             newTablet = new ItemStack(TabletModule.TABLET.get());
         }
-        newTablet.set(TabletModule.ITEM_TABLET_DATA, data);
+        newTablet.set(TabletModule.ITEM_TABLET_DATA.get(), data);
         return newTablet;
     }
 
@@ -156,7 +156,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     private void openTabletGui(Player player) {
-        player.openMenu(new MenuProvider() {
+        mcjty.lib.container.MenuTools.open(player, new MenuProvider() {
             @Nonnull
             @Override
             public Component getDisplayName() {
@@ -169,10 +169,9 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
                 container.setupInventories(new TabletItemHandler(player), playerInventory);
                 return container;
             }
-        });
+        }, data -> {});
     }
 
-    @Override
     public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
         return false;
     }

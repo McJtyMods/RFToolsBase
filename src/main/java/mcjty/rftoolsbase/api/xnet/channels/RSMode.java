@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+import mcjty.lib.network.StreamCodecs;
 
 public enum RSMode implements StringRepresentable {
     IGNORED,
@@ -13,7 +13,7 @@ public enum RSMode implements StringRepresentable {
     PULSE;
 
     public static final Codec<RSMode> CODEC = StringRepresentable.fromEnum(RSMode::values);
-    public static final StreamCodec<FriendlyByteBuf, RSMode> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(RSMode.class);
+    public static final StreamCodec<FriendlyByteBuf, RSMode> STREAM_CODEC = StreamCodecs.enumCodec(RSMode.class);
 
     @Override
     public String getSerializedName() {

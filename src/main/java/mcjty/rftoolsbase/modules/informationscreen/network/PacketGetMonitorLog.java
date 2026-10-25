@@ -12,7 +12,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import mcjty.lib.network.PayloadContext;
 
 public record PacketGetMonitorLog(BlockPos pos) implements CustomPacketPayload {
 
@@ -33,7 +33,7 @@ public record PacketGetMonitorLog(BlockPos pos) implements CustomPacketPayload {
         return new PacketGetMonitorLog(pos);
     }
 
-    public void handle(IPayloadContext ctx) {
+    public void handle(PayloadContext ctx) {
         ctx.enqueueWork(() -> {
             Player player = ctx.player();
             Level world = player.level();

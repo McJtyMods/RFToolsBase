@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+import mcjty.lib.network.StreamCodecs;
 
 public enum BarMode implements StringRepresentable {
     MODE_TEXT("Text"),
@@ -15,7 +15,7 @@ public enum BarMode implements StringRepresentable {
     private final String name;
 
     public static final Codec<BarMode> CODEC = StringRepresentable.fromEnum(BarMode::values);
-    public static final StreamCodec<FriendlyByteBuf, BarMode> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(BarMode.class);
+    public static final StreamCodec<FriendlyByteBuf, BarMode> STREAM_CODEC = StreamCodecs.enumCodec(BarMode.class);
 
     BarMode(String name) {
         this.name = name;

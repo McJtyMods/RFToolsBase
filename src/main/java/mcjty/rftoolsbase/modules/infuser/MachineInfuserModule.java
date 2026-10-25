@@ -18,12 +18,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.fabricmc.fabric.api.attachment.v1.AttachmentType;
+import mcjty.lib.setup.DeferredHolder;
 
 import java.util.function.Supplier;
 
@@ -38,35 +34,31 @@ public class MachineInfuserModule implements IModule {
             MachineInfuserTileEntity::new);
     public static final Supplier<MenuType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 
-    public static final Supplier<AttachmentType<InfuserData>> INFUSER_DATA = ATTACHMENT_TYPES.register(
-            "infuser_data", () -> AttachmentType.builder(() -> new InfuserData(0))
-                    .serialize(com.mojang.serialization.MapCodec.assumeMapUnsafe(InfuserData.CODEC))
-                    .build());
+    public static final AttachmentType<InfuserData> INFUSER_DATA = net.fabricmc.fabric.api.attachment.v1.AttachmentRegistry.create(
+            net.minecraft.resources.Identifier.fromNamespaceAndPath("rftoolsbase", "infuser_data"), builder -> builder.initializer(() -> new InfuserData(0)).persistent(InfuserData.CODEC));
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<InfuserData>> ITEM_INFUSER_DATA = COMPONENTS.registerComponentType(
             "infuser_data",
             builder -> builder
                     .persistent(InfuserData.CODEC)
                     .networkSynchronized(InfuserData.STREAM_CODEC));
 
-    public MachineInfuserModule(IEventBus bus) {
-        bus.addListener(this::registerScreens);
-    }
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
+    public void init() {
 
     }
 
     @Override
-    public void initClient(FMLClientSetupEvent event) {
+    public void initClient() {
+        registerScreens();
     }
 
-    public void registerScreens(RegisterMenuScreensEvent event) {
-        GuiMachineInfuser.register(event);
+    public void registerScreens() {
+        GuiMachineInfuser.register();
     }
 
     @Override
-    public void initConfig(IEventBus bus) {
+    public void initConfig() {
         MachineInfuserConfiguration.init(Config.SERVER_BUILDER);
     }
 

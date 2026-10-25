@@ -18,12 +18,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
+import mcjty.lib.setup.DeferredHolder;
+import mcjty.lib.setup.DeferredItem;
 
 import java.util.List;
 
@@ -64,17 +60,17 @@ public class VariousModule implements IModule {
     }
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
+    public void init() {
 
     }
 
     @Override
-    public void initClient(FMLClientSetupEvent event) {
+    public void initClient() {
 
     }
 
     @Override
-    public void initConfig(IEventBus bus) {
+    public void initConfig() {
 
     }
 
@@ -82,7 +78,7 @@ public class VariousModule implements IModule {
     public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.itemBuilder(DIMENSIONALSHARD)
-                        .itemTags(List.of(Tags.Items.DUSTS, SHARDS_TAG))
+                        .itemTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:dusts")), SHARDS_TAG))
                         .shaped(builder -> builder
                                         .define('q', Items.QUARTZ)
                                         .define('C', Items.PRISMARINE_SHARD)
@@ -95,7 +91,7 @@ public class VariousModule implements IModule {
                 Dob.itemBuilder(SMARTWRENCH)
                         .itemTags(List.of(WrenchChecker.WRENCH_TAG))
                         .shaped(builder -> builder
-                                        .define('l', Tags.Items.DYES_BLUE)
+                                        .define('l', net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:dyes/blue")))
                                         .unlockedBy("iron", has(Items.IRON_INGOT)),
                                 "  i", " l ", "l  "),
                 Dob.itemBuilder(SMARTWRENCH_SELECT)
@@ -103,13 +99,13 @@ public class VariousModule implements IModule {
                 Dob.itemBuilder(MACHINE_BASE)
                         .shaped(builder -> builder
                                         .define('g', Items.GOLD_NUGGET)
-                                        .define('s', Tags.Items.STONES)
+                                        .define('s', net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:stones")))
                                         .unlockedBy("gold", has(Items.GOLD_NUGGET)),
                                 "ggg", "sss"),
                 Dob.itemBuilder(MACHINE_FRAME)
                         .shaped(builder -> builder
                                         .define('g', Items.GOLD_NUGGET)
-                                        .define('l', Tags.Items.DYES_BLUE)
+                                        .define('l', net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:dyes/blue")))
                                         .unlockedBy("iron_ingot", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT, Items.GOLD_NUGGET)),
                                 "ili", "g g", "ili"),
                 Dob.itemBuilder(INFUSED_DIAMOND)
@@ -125,7 +121,7 @@ public class VariousModule implements IModule {
                 Dob.itemBuilder(MANUAL)
                         .shaped(builder -> builder
                                         .define('X', Items.BOOK)
-                                        .define('g', Tags.Items.NUGGETS_IRON)
+                                        .define('g', net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:nuggets/iron")))
                                         .unlockedBy("book", has(Items.BOOK)),
                                 "Xg", "gg")
         );

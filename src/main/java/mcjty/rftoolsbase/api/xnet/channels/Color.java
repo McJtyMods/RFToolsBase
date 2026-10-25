@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+import mcjty.lib.network.StreamCodecs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public enum Color implements StringRepresentable {
     public static final Integer[] COLORS = new Integer[Color.values().length];
 
     public static final Codec<Color> CODEC = StringRepresentable.fromEnum(Color::values);
-    public static final StreamCodec<FriendlyByteBuf, Color> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(Color.class);
+    public static final StreamCodec<FriendlyByteBuf, Color> STREAM_CODEC = StreamCodecs.enumCodec(Color.class);
 
     static {
         for (int i = 0; i < Color.values().length; i++) {

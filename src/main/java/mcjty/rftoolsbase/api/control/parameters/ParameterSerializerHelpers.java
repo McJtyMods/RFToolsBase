@@ -5,7 +5,7 @@ import com.mojang.serialization.DynamicOps;
 import mcjty.rftoolsbase.api.control.code.Function;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.fluids.FluidStack;
+import mcjty.lib.varia.FluidStack;
 
 import javax.annotation.Nullable;
 import java.util.EnumMap;

@@ -12,7 +12,6 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.Identifier;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 
@@ -29,12 +28,11 @@ public class GuiMachineInfuser extends GenericGuiContainer<MachineInfuserTileEnt
     public GuiMachineInfuser(GenericContainer container, Inventory inventory, Component title) {
         super(container, inventory, title, MachineInfuserModule.MACHINE_INFUSER.block().get().getManualEntry());
 
-        imageWidth = INFUSER_WIDTH;
-        imageHeight = INFUSER_HEIGHT;
+        setWindowDimensions(INFUSER_WIDTH, INFUSER_HEIGHT);
     }
 
-    public static void register(RegisterMenuScreensEvent event) {
-        event.register(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
+    public static void register() {
+        net.minecraft.client.gui.screens.MenuScreens.register(MachineInfuserModule.CONTAINER_MACHINE_INFUSER.get(), GuiMachineInfuser::new);
     }
 
     @Override

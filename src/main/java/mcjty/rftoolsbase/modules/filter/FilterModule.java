@@ -14,13 +14,9 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Items;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuType;
+import mcjty.lib.setup.DeferredHolder;
+import mcjty.lib.setup.DeferredItem;
 
 import java.util.function.Supplier;
 
@@ -41,33 +37,31 @@ public class FilterModule implements IModule {
 
 
     private static MenuType<FilterModuleContainer> createFilterModuleContainer() {
-        return IMenuTypeExtension.create((windowId, inv, data) -> {
+        return new ExtendedMenuType<>((windowId, inv, data) -> {
             Player player = SafeClientTools.getClientPlayer();
             FilterModuleContainer container = new FilterModuleContainer(windowId, player.blockPosition(), player);
             container.setupInventories(null, inv);
             return container;
-        });
+        }, mcjty.lib.container.MenuTools.CODEC);
     }
 
-    public FilterModule(IEventBus bus) {
-        bus.addListener(this::registerMenuScreens);
-    }
 
     @Override
-    public void init(FMLCommonSetupEvent event) {
+    public void init() {
 
     }
 
     @Override
-    public void initClient(FMLClientSetupEvent event) {
+    public void initClient() {
+        registerMenuScreens();
     }
 
-    public void registerMenuScreens(RegisterMenuScreensEvent event) {
-        GuiFilterModule.register(event);
+    public void registerMenuScreens() {
+        GuiFilterModule.register();
     }
 
     @Override
-    public void initConfig(IEventBus bus) {
+    public void initConfig() {
 
     }
 

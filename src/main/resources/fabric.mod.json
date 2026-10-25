@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "rftoolsbase",
+  "version": "${version}",
+  "name": "RFToolsBase",
+  "description": "RFToolsBase for Fabric",
+  "authors": [
+    "McJty"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "mcjty.rftoolsbase.RFToolsBase"
+    ],
+    "client": [
+      "mcjty.rftoolsbase.setup.ClientSetup"
+    ],
+    "fabric-datagen": [
+      "mcjty.rftoolsbase.datagen.FabricDataGen"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "=26.1.2",
+    "java": ">=25",
+    "fabric-api": ">=0.155.3+26.1.2",
+    "forgeconfigapiport": ">=26.1.5",
+    "mcjtylib": ">=26.1.2-10.0.1-fabric"
+  },
+  "suggests": {
+    "theoneprobe": "*",
+    "jei": "*"
+  },
+  "accessWidener": "rftoolsbase.accesswidener"
+}

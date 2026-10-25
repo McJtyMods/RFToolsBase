@@ -17,7 +17,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import javax.annotation.Nonnull;
 
@@ -35,12 +34,11 @@ public class GuiTablet extends GenericGuiContainer<GenericTileEntity, TabletCont
 
     public GuiTablet(TabletContainer container, Inventory inventory, Component title) {
         super(container, inventory, title, TabletItem.MANUAL);
-        imageWidth = TABLET_WIDTH;
-        imageHeight = TABLET_HEIGHT;
+        setWindowDimensions(TABLET_WIDTH, TABLET_HEIGHT);
     }
 
-    public static void register(RegisterMenuScreensEvent event) {
-        event.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::new);
+    public static void register() {
+        net.minecraft.client.gui.screens.MenuScreens.register(TabletModule.CONTAINER_TABLET.get(), GuiTablet::new);
     }
 
     @Override

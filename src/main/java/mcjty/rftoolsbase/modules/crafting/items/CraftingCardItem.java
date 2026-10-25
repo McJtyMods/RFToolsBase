@@ -23,7 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.common.util.Lazy;
+import mcjty.lib.varia.Lazy;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -132,7 +132,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     public static ItemStackList getStacksFromItem(ItemStack craftingCard) {
-        CraftingCardData data = craftingCard.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
+        CraftingCardData data = craftingCard.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData());
         ItemStackList stacks = ItemStackList.create(INPUT_SLOTS+1);
         for (int i = 0 ; i < stacks.size() ; i++) {
             if (i < data.stacks().size()) {
@@ -145,7 +145,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     public static void putStacksInItem(ItemStack craftingCard, ItemStackList stacks) {
-        craftingCard.update(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData(), data -> {
+        craftingCard.update(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData(), data -> {
             List<ItemStack> list = new ArrayList<>(data.stacks());
             for (int i = 0 ; i < list.size() ; i++) {
                 if (i < stacks.size()) {
@@ -177,7 +177,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
             return InteractionResult.PASS;
         }
         if (!world.isClientSide()) {
-            player.openMenu(new MenuProvider() {
+            mcjty.lib.container.MenuTools.open(player, new MenuProvider() {
                 @Override
                 @Nonnull
                 public Component getDisplayName() {
@@ -190,14 +190,14 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
                     container.setupInventories(null, playerInventory);
                     return container;
                 }
-            });
+            }, data -> {});
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.SUCCESS;
     }
 
     public static ItemStack getResult(ItemStack card) {
-        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData());
         return data.stacks().get(SLOT_OUT);
     }
 
@@ -209,7 +209,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
 
     // Return true if this crafting card fits a 3x3 crafting grid nicely
     public static boolean fitsGrid(ItemStack card) {
-        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData());
         for (int i = 0 ; i < data.stacks().size() ; i++) {
             if (i < INPUT_SLOTS) {
                 if (!isInGrid(i)) {
@@ -221,7 +221,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     public static List<Ingredient> getIngredientsGrid(ItemStack card) {
-        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData());
         List<Ingredient> stacks = new ArrayList<>();
         for (int i = 0 ; i < data.stacks().size() ; i++) {
             if (i < INPUT_SLOTS) {
@@ -234,7 +234,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     }
 
     public static List<ItemStack> getIngredientStacks(ItemStack card) {
-        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData());
         List<ItemStack> stacks = new ArrayList<>();
         for (int i = 0 ; i < data.stacks().size() ; i++) {
             if (i < INPUT_SLOTS) {
@@ -250,7 +250,7 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
      * Get the stacks in this card as a list of Ingredient
      */
     public static List<Ingredient> getIngredients(ItemStack card) {
-        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
+        CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA.get(), defaultData());
         List<Ingredient> stacks = new ArrayList<>();
         for (int i = 0 ; i < data.stacks().size() ; i++) {
             if (i < INPUT_SLOTS) {

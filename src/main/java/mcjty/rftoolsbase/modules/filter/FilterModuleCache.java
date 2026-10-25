@@ -24,7 +24,7 @@ public class FilterModuleCache implements Predicate<ItemStack> {
 
     // Parameter is the filter item.
     public FilterModuleCache(ItemStack stack) {
-        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA.get(), FilterModuleData.EMPTY);
         matchDamage = data.damage();
         componentMode = data.components();
         modMode = data.mod();

@@ -1,21 +1,13 @@
 package mcjty.rftoolsbase.setup;
 
-
-import mcjty.rftoolsbase.client.RenderWorldLastEventHandler;
-import mcjty.rftoolsbase.keys.KeyBindings;
-import mcjty.rftoolsbase.keys.KeyInputHandler;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.common.NeoForge;
-
-public class ClientSetup {
-
-    public static void init(FMLClientSetupEvent e) {
-        NeoForge.EVENT_BUS.addListener(RenderWorldLastEventHandler::tick);
-        NeoForge.EVENT_BUS.register(new KeyInputHandler());
-    }
-
-    public static void registerKeyBinds(RegisterKeyMappingsEvent event) {
-        KeyBindings.init(event);
+public class ClientSetup implements net.fabricmc.api.ClientModInitializer {
+    @Override public void onInitializeClient() {
+        ClientMessages.register();
+        mcjty.rftoolsbase.RFToolsBase.instance.modules.initClient();
+        mcjty.rftoolsbase.keys.KeyBindings.init();
+        net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player != null && client.screen == null) new mcjty.rftoolsbase.keys.KeyInputHandler().onKeyInput();
+        });
+        net.fabricmc.fabric.api.client.rendering.v1.level.LevelRenderEvents.COLLECT_SUBMITS.register(mcjty.rftoolsbase.client.RenderWorldLastEventHandler::tick);
     }
 }

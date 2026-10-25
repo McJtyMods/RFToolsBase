@@ -25,7 +25,6 @@
           "name": "rftoolsbase:machine_infuser"
         }
       ],
-      "name": "machine_infuser",
       "rolls": 1.0
     }
   ],

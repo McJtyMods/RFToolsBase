@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
+import mcjty.lib.network.StreamCodecs;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,7 @@ public enum ParameterType {
                 ? DataResult.success(type)
                 : DataResult.error(() -> "Unknown parameter type: " + name);
     }, ParameterType::getName);
-    public static final StreamCodec<FriendlyByteBuf, ParameterType> STREAM_CODEC = NeoForgeStreamCodecs.enumCodec(ParameterType.class);
+    public static final StreamCodec<FriendlyByteBuf, ParameterType> STREAM_CODEC = StreamCodecs.enumCodec(ParameterType.class);
 
     static {
         for (ParameterType type : values()) {
