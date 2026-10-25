@@ -8,7 +8,7 @@ import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileE
 import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRenderer;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;

@@ -11,7 +11,7 @@ import mcjty.rftoolsbase.modules.various.data.WrenchData;
 import mcjty.rftoolsbase.modules.various.items.ManualItem;
 import mcjty.rftoolsbase.modules.various.items.SmartWrenchItem;
 import mcjty.rftoolsbase.setup.Registration;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.resources.Identifier;

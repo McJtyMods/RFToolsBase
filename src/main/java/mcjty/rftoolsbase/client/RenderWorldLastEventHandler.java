@@ -38,7 +38,7 @@ public class RenderWorldLastEventHandler {
         PoseStack matrixStack = evt.getPoseStack();
         matrixStack.pushPose();
 
-        Vec3 projectedView = Minecraft.getInstance().gameRenderer.getMainCamera().position();
+        Vec3 projectedView = Minecraft.getInstance().gameRenderer.mainCamera().position();
         matrixStack.translate(-projectedView.x, -projectedView.y, -projectedView.z);
 
         evt.getSubmitNodeCollector().submitCustomGeometry(matrixStack, CustomRenderTypes.OVERLAY_LINES, (pose, builder) -> {
