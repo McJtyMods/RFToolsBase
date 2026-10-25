@@ -34,7 +34,7 @@ public class MachineInfuserModule implements IModule {
     public static final RBlock<BaseBlock, BlockItem, MachineInfuserTileEntity> MACHINE_INFUSER = RBLOCKS.registerBlock("machine_infuser",
             MachineInfuserTileEntity.class,
             properties -> new BaseBlock(new BlockBuilder().properties(mcjty.rftoolsbase.tools.RegistryProperties.block(properties)).tileEntitySupplier(MachineInfuserTileEntity::new)),
-            (block, itemProperties) -> new BlockItem(block.get(), itemProperties),
+            (block, itemProperties) -> new BlockItem(block.get(), itemProperties.useBlockDescriptionPrefix()),
             MachineInfuserTileEntity::new);
     public static final Supplier<MenuType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 

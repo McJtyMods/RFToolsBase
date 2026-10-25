@@ -30,7 +30,7 @@ import static mcjty.rftoolsbase.setup.Registration.*;
 public class InformationScreenModule implements IModule {
 
     public static final DeferredBlock<Block> INFORMATION_SCREEN = BLOCKS.register("information_screen", InformationScreenBlock::new);
-    public static final DeferredItem<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", tab(properties -> new BlockItem(INFORMATION_SCREEN.get(), properties)));
+    public static final DeferredItem<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", tab(properties -> new BlockItem(INFORMATION_SCREEN.get(), properties.useBlockDescriptionPrefix())));
     public static final Supplier<BlockEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> new BlockEntityType<>(InformationScreenTileEntity::new, java.util.Set.of(INFORMATION_SCREEN.get())));
 
     @Override
