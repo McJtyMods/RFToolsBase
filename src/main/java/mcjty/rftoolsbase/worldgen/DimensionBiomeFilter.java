@@ -11,33 +11,33 @@ import net.minecraft.world.level.levelgen.placement.*;
 /**
  * A biome filter that also checks if the dimension is right
  */
-public class DimensionBiomeFilter extends PlacementFilter {
+public class DimensionBiomeFilter implements PlacementFilter {
 
     private final boolean isOverworld;
 
     private static final DimensionBiomeFilter INSTANCE_OVERWORLD = new DimensionBiomeFilter(true);
     private static final DimensionBiomeFilter INSTANCE_DIMENSION = new DimensionBiomeFilter(false);
-    public static MapCodec<PlacementModifier> CODEC_OVERWORLD = MapCodec.unit(() -> INSTANCE_OVERWORLD);
-    public static MapCodec<PlacementModifier> CODEC_DIMENSION = MapCodec.unit(() -> INSTANCE_DIMENSION);
+    public static MapCodec<DimensionBiomeFilter> CODEC_OVERWORLD = MapCodec.unit(() -> INSTANCE_OVERWORLD);
+    public static MapCodec<DimensionBiomeFilter> CODEC_DIMENSION = MapCodec.unit(() -> INSTANCE_DIMENSION);
 
     public DimensionBiomeFilter(boolean isOverworld) {
         this.isOverworld = isOverworld;
     }
 
     @Override
-    protected boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
+    public boolean shouldPlace(PlacementContext context, RandomSource random, BlockPos pos) {
         boolean overworld = context.getLevel().getLevel().dimension() == Level.OVERWORLD;
         if (overworld == isOverworld) {
             PlacedFeature placedfeature = context.topFeature().orElseThrow(() -> new IllegalStateException("Tried to biome check an unregistered feature"));
             Holder<Biome> biome = context.getLevel().getBiome(pos);
-            return biome.value().getGenerationSettings().hasFeature(placedfeature);
+            return context.generator().getBiomeGenerationSettings(biome).hasFeature(placedfeature);
         } else {
             return false;
         }
     }
 
     @Override
-    public PlacementModifierType<?> type() {
-        return PlacementModifierType.BIOME_FILTER;
+    public MapCodec<? extends PlacementFilter> codec() {
+        return isOverworld ? CODEC_OVERWORLD : CODEC_DIMENSION;
     }
 }

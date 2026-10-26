@@ -1,3 +1,7 @@
+26.3-9.0.0-fabric:
+- Ported to Minecraft 26.3 with Fabric
+- Uses the published 26.3 McJtyLib and shared Multi_fabric build script
+
 26.2-8.0.0-fabric:
 - Keep Jenkins artifact build numbers out of the runtime mod version
 - Ported to Minecraft 26.2 with Fabric

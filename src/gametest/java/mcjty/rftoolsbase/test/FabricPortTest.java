@@ -46,7 +46,7 @@ public class FabricPortTest implements FabricClientGameTest {
     private static final BlockPos INFUSER = new BlockPos(0, -59, 0);
     private static final BlockPos GENERATOR = new BlockPos(2, -59, 0);
     private static final BlockPos CELL = new BlockPos(4, -59, 0);
-    private static final BlockPos CONNECTOR = new BlockPos(6, -59, 0);
+    private static final BlockPos CONNECTOR = new BlockPos(7, -59, 0);
     private static final BlockPos CONTROLLER = new BlockPos(8, -59, 0);
     private static final BlockPos FACADE = new BlockPos(10, -59, 0);
 
@@ -71,6 +71,7 @@ public class FabricPortTest implements FabricClientGameTest {
                 testEnergy(level);
                 testItems(level, player);
                 testFluidRounding();
+                testFacadePersistence(level);
                 var fuel = ItemStorage.SIDED.find(level, GENERATOR, Direction.UP);
                 check(fuel != null, "Generator exposes native item storage");
                 try (var transaction = Transaction.openOuter()) {
@@ -84,6 +85,8 @@ public class FabricPortTest implements FabricClientGameTest {
                 check(energy != null && energy.getAmount() > 0, "Coal generator produces native energy");
             });
             context.runOnClient(client -> {
+                // Holding a connector renders the facade outlines through OVERLAY_LINES.
+                client.player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, new ItemStack(CableModule.CONNECTOR.get()));
                 for (var pos : java.util.List.of(CELL, CONNECTOR, FACADE, new BlockPos(12, -59, 0),
                         new BlockPos(14, -59, 0), new BlockPos(16, -59, 0))) {
                     var state = client.level.getBlockState(pos);
@@ -103,6 +106,7 @@ public class FabricPortTest implements FabricClientGameTest {
                     check(quads > 0, "Block model has geometry at " + pos);
                 }
             });
+            context.waitTicks(5);
             // Verify common packet codecs, synchronized attachments and each mod's menu registration.
             open(context, world.getServer(), INFUSER, GuiMachineInfuser.class);
             open(context, world.getServer(), GENERATOR, GuiCoalGenerator.class);
@@ -166,6 +170,28 @@ public class FabricPortTest implements FabricClientGameTest {
             }
             check(target.amount == 0, "Aborted fluid transfer restores the destination");
         } catch (ReflectiveOperationException exception) { throw new AssertionError(exception); }
+    }
+
+    private static void testFacadePersistence(ServerLevel level) {
+        var legacy = new net.minecraft.nbt.CompoundTag();
+        legacy.putString("Name", "minecraft:oak_log");
+        var properties = new net.minecraft.nbt.CompoundTag();
+        properties.putString("axis", "x");
+        legacy.put("Properties", properties);
+        var root = new net.minecraft.nbt.CompoundTag();
+        root.put("mimic", legacy);
+        var expected = Blocks.OAK_LOG.defaultBlockState()
+                .setValue(net.minecraft.world.level.block.RotatedPillarBlock.AXIS, Direction.Axis.X);
+        check(mcjty.xnet.modules.facade.MimicBlockSupport.readFromNBT(level.registryAccess(), root).equals(expected),
+                "Legacy facade NBT preserves the block and its properties");
+        var ops = net.minecraft.resources.RegistryOps.create(net.minecraft.nbt.NbtOps.INSTANCE, level.registryAccess());
+        var attachment = new net.minecraft.nbt.CompoundTag();
+        attachment.put("state", legacy);
+        var codec = mcjty.xnet.modules.facade.data.MimicData.CODEC;
+        var decoded = codec.parse(ops, attachment).getOrThrow();
+        check(decoded.state().equals(expected), "Legacy facade attachment preserves block properties");
+        check(codec.parse(ops, codec.encodeStart(ops, decoded).getOrThrow()).getOrThrow().equals(decoded),
+                "Facade attachment round trip uses the 26.3 block-state format");
     }
 
     private static void testItems(ServerLevel level, ServerPlayer player) {

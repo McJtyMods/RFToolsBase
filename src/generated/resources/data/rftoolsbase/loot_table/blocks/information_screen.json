@@ -8,7 +8,7 @@
           "name": "rftoolsbase:information_screen"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "rftoolsbase:blocks/information_screen"

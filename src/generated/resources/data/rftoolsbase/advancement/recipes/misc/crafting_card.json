@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:crafting_card"
+        "recipes": "rftoolsbase:crafting_card"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

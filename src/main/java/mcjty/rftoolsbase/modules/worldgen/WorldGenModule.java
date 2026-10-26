@@ -72,17 +72,17 @@ public class WorldGenModule implements IModule {
                 Dob.builder(DIMENSIONAL_SHARD_OVERWORLD, DIMENSIONAL_SHARD_OVERWORLD_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE))
+                        .blockTags(List.of(net.minecraft.tags.BlockTags.BLOCKS_MOTION_NO_LEAVES, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE))
                         .itemTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_NETHER, DIMENSIONAL_SHARD_NETHER_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE))
+                        .blockTags(List.of(net.minecraft.tags.BlockTags.BLOCKS_MOTION_NO_LEAVES, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE))
                         .itemTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_END, DIMENSIONAL_SHARD_END_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE))
+                        .blockTags(List.of(net.minecraft.tags.BlockTags.BLOCKS_MOTION_NO_LEAVES, net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE))
                         .itemTags(List.of(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM, net.minecraft.resources.Identifier.parse("c:ores")), DIMENSIONAL_SHARD_ORE_ITEM))
         );
     }

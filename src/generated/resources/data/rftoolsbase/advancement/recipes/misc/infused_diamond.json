@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:infused_diamond"
+        "recipes": "rftoolsbase:infused_diamond"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

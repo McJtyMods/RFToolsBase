@@ -47,6 +47,7 @@ public class InformationScreenModule implements IModule {
     public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.blockBuilder(INFORMATION_SCREEN)
+                        .blockTags(java.util.List.of(net.minecraft.tags.BlockTags.BLOCKS_MOTION_NO_LEAVES))
                         .simpleLoot()
                         .ironPickaxeTags()
                         .shaped(builder -> builder
