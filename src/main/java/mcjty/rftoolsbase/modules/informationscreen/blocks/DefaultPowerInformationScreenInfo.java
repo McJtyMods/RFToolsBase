@@ -1,6 +1,7 @@
 package mcjty.rftoolsbase.modules.informationscreen.blocks;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import javax.annotation.Nonnull;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
@@ -10,9 +11,8 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 
-import javax.annotation.Nonnull;
 
 public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo{
 
@@ -38,11 +38,11 @@ public class DefaultPowerInformationScreenInfo implements IInformationScreenInfo
     @Nonnull
     @Override
     public TypedMap getInfo(int mode) {
-        IEnergyStorage h = mcjty.lib.varia.CapabilityTools.energyHandler(tileEntity.getLevel().getCapability(Capabilities.Energy.BLOCK, tileEntity.getBlockPos(), null));
+        EnergyHandler h = mcjty.lib.varia.CapabilityTools.energyHandler(tileEntity.getLevel().getCapability(Capabilities.Energy.BLOCK, tileEntity.getBlockPos(), null));
         if (h != null) {
             return TypedMap.builder()
-                    .put(ENERGY, (long) h.getEnergyStored())
-                    .put(MAXENERGY, (long) h.getMaxEnergyStored())
+                    .put(ENERGY, h.getAmountAsLong())
+                    .put(MAXENERGY, h.getCapacityAsLong())
                     .build();
         } else {
             return TypedMap.EMPTY;

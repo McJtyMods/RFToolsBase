@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:filter_module"
+        "recipes": "rftoolsbase:filter_module"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

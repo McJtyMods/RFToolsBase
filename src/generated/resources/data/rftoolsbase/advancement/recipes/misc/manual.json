@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:manual"
+        "recipes": "rftoolsbase:manual"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:infused_enderpearl"
+        "recipes": "rftoolsbase:infused_enderpearl"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

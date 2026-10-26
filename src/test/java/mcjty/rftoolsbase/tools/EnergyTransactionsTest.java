@@ -1,7 +1,6 @@
 package mcjty.rftoolsbase.tools;
 
 import java.util.List;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ class EnergyTransactionsTest {
         final EnergyTransactions.Journal<Snapshot> journal = new EnergyTransactions.Journal<>(
                 () -> new Snapshot(energy, received), saved -> { energy = saved.energy(); received = saved.received(); });
         EnergyHandler side() {
-            IEnergyStorage legacy = new IEnergyStorage() {
+            EnergyBuffer buffer = new EnergyBuffer() {
                 public int receiveEnergy(int amount, boolean simulate) {
                     int accepted = Math.min(60, Math.min(amount, 100 - energy));
                     if (!simulate) { energy += accepted; received += accepted; }
@@ -26,7 +25,7 @@ class EnergyTransactionsTest {
                 public boolean canReceive() { return true; }
                 public boolean canExtract() { return false; }
             };
-            return EnergyTransactions.input(legacy, () -> List.of(journal));
+            return EnergyTransactions.input(buffer, () -> List.of(journal));
         }
     }
 
@@ -77,7 +76,7 @@ class EnergyTransactionsTest {
     }
 
     @Test void capabilityReportsUnclampedNetworkTotals() {
-        IEnergyStorage legacy = new IEnergyStorage() {
+        EnergyBuffer buffer = new EnergyBuffer() {
             public int receiveEnergy(int amount, boolean simulate) { return 0; }
             public int extractEnergy(int amount, boolean simulate) { return 0; }
             public int getEnergyStored() { return Integer.MAX_VALUE; }
@@ -85,7 +84,7 @@ class EnergyTransactionsTest {
             public boolean canReceive() { return false; }
             public boolean canExtract() { return false; }
         };
-        var side = EnergyTransactions.input(legacy, List::of, () -> 3_000_000_000L, () -> 6_000_000_000L);
+        var side = EnergyTransactions.input(buffer, List::of, () -> 3_000_000_000L, () -> 6_000_000_000L);
         assertEquals(3_000_000_000L, side.getAmountAsLong());
         assertEquals(6_000_000_000L, side.getCapacityAsLong());
     }

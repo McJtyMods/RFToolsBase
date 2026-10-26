@@ -5,8 +5,8 @@ import mcjty.lib.modules.Modules;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.Builder;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class Config {
 
@@ -25,8 +25,8 @@ public class Config {
         SERVER_CONFIG = SERVER_BUILDER.build();
         COMMON_CONFIG = COMMON_BUILDER.build();
 
-        mod.registerConfig(ModConfig.Type.SERVER, SERVER_CONFIG);
-        mod.registerConfig(ModConfig.Type.COMMON, COMMON_CONFIG);
+        mod.registerConfig(ModConfig.Type.SYNCED, SERVER_CONFIG, "rftoolsbase-server.toml");
+        mod.registerConfig(ModConfig.Type.LOCAL, COMMON_CONFIG, "rftoolsbase-common.toml");
     }
 
 }

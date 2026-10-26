@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.modules.worldgen;
 
+import java.util.List;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
 import mcjty.lib.modules.IModule;
@@ -10,18 +11,17 @@ import mcjty.rftoolsbase.setup.Registration;
 import mcjty.rftoolsbase.worldgen.OreGenerator;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredItem;
-
-import java.util.List;
 
 import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.BLOCKS;
@@ -65,17 +65,17 @@ public class WorldGenModule implements IModule {
                 Dob.builder(DIMENSIONAL_SHARD_OVERWORLD, DIMENSIONAL_SHARD_OVERWORLD_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
+                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE, BlockTags.BLOCKS_MOTION_NO_LEAVES))
                         .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_NETHER, DIMENSIONAL_SHARD_NETHER_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
+                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE, BlockTags.BLOCKS_MOTION_NO_LEAVES))
                         .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM)),
                 Dob.builder(DIMENSIONAL_SHARD_END, DIMENSIONAL_SHARD_END_ITEM)
                         .ironPickaxeTags()
                         .silkTouchLoot(provider, VariousModule.DIMENSIONALSHARD, 4f, 5f)
-                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE))
+                        .blockTags(List.of(Tags.Blocks.ORES, DIMENSIONAL_SHARD_ORE, BlockTags.BLOCKS_MOTION_NO_LEAVES))
                         .itemTags(List.of(Tags.Items.ORES, DIMENSIONAL_SHARD_ORE_ITEM))
         );
     }

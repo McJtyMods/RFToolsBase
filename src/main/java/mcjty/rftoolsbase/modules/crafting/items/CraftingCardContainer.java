@@ -1,19 +1,20 @@
 package mcjty.rftoolsbase.modules.crafting.items;
 
+import java.util.List;
 import mcjty.lib.container.*;
 import mcjty.lib.varia.ItemStackList;
 import mcjty.rftoolsbase.modules.crafting.CraftingModule;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.core.BlockPos;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.InvWrapper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.PlayerInventoryWrapper;
 
-import java.util.List;
 
 public class CraftingCardContainer extends GenericContainer {
 
@@ -34,13 +35,13 @@ public class CraftingCardContainer extends GenericContainer {
     }
 
     @Override
-    public void setupInventories(IItemHandler itemHandler, Inventory inventory) {
-        addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
+    public void setupInventories(ResourceHandler<ItemResource> itemHandler, Inventory inventory) {
+        addInventory(ContainerFactory.CONTAINER_PLAYER, PlayerInventoryWrapper.of(inventory));
         generateSlots(inventory.player);
     }
 
     @Override
-    protected Slot createSlot(SlotFactory slotFactory, Player playerEntity, IItemHandler inventory, int index, int x, int y, SlotType slotType) {
+    protected Slot createSlot(SlotFactory slotFactory, Player playerEntity, ResourceHandler<ItemResource> inventory, int index, int x, int y, SlotType slotType) {
         if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
             return new BaseSlot(inventories.get(slotFactory.inventoryName()), null, slotFactory.index(), slotFactory.x(), slotFactory.y()) {
                 @Override

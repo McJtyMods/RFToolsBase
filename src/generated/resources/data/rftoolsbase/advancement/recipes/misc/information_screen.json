@@ -16,7 +16,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:information_screen"
+        "recipes": "rftoolsbase:information_screen"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

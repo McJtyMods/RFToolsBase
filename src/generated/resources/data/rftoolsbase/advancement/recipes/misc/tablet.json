@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "rftoolsbase:tablet"
+        "recipes": "rftoolsbase:tablet"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

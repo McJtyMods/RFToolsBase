@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase;
 
+import java.util.function.Supplier;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.modules.Modules;
 import mcjty.rftoolsbase.client.ClientInfo;
@@ -21,7 +22,6 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 
-import java.util.function.Supplier;
 
 
 @Mod(RFToolsBase.MODID)
@@ -70,7 +70,7 @@ public class RFToolsBase {
 
     private void onDataGen(GatherDataEvent.Client event) {
         DataGen datagen = new DataGen(MODID, event);
-        modules.datagen(datagen, event.getLookupProvider());
+        modules.datagen(datagen, event.getWorldLookupProvider());
         datagen.generate();
         event.getGenerator().addProvider(true,
                 new mcjty.rftoolsbase.tools.ClientItemDefinitions(event.getGenerator().getPackOutput(), MODID, java.util.Map.of()));

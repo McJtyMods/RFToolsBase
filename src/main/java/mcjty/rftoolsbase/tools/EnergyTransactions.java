@@ -3,7 +3,6 @@ package mcjty.rftoolsbase.tools;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
-import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
@@ -23,12 +22,12 @@ public final class EnergyTransactions {
         @Override protected void revertToSnapshot(S snapshot) { restore.accept(snapshot); }
     }
 
-    public static EnergyHandler input(IEnergyStorage storage, Supplier<List<SnapshotJournal<?>>> journals) {
+    public static EnergyHandler input(EnergyBuffer storage, Supplier<List<SnapshotJournal<?>>> journals) {
         if (storage == null) return null;
         return input(storage, journals, storage::getEnergyStored, storage::getMaxEnergyStored);
     }
 
-    public static EnergyHandler input(IEnergyStorage storage, Supplier<List<SnapshotJournal<?>>> journals,
+    public static EnergyHandler input(EnergyBuffer storage, Supplier<List<SnapshotJournal<?>>> journals,
             java.util.function.LongSupplier energy, java.util.function.LongSupplier capacity) {
         if (storage == null) return null;
         return new EnergyHandler() {
