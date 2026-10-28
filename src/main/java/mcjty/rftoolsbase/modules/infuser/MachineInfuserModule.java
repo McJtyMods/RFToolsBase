@@ -1,11 +1,13 @@
 package mcjty.rftoolsbase.modules.infuser;
 
+import com.mojang.serialization.MapCodec;
+import java.util.function.Supplier;
 import mcjty.lib.blocks.BaseBlock;
 import mcjty.lib.blocks.RBlock;
-import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
+import mcjty.lib.items.BaseBlockItem;
 import mcjty.lib.modules.IModule;
 import mcjty.lib.setup.Registration;
 import mcjty.rftoolsbase.modules.infuser.blocks.MachineInfuserTileEntity;
@@ -25,22 +27,21 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.function.Supplier;
-
+import static mcjty.lib.setup.Registration.ITEM_INFUSABLE;
 import static mcjty.rftoolsbase.setup.Registration.*;
 
 public class MachineInfuserModule implements IModule {
 
     public static final RBlock<BaseBlock, BlockItem, MachineInfuserTileEntity> MACHINE_INFUSER = RBLOCKS.registerBlock("machine_infuser",
             MachineInfuserTileEntity.class,
-            properties -> new BaseBlock(new BlockBuilder().properties(mcjty.rftoolsbase.tools.RegistryProperties.block(properties)).tileEntitySupplier(MachineInfuserTileEntity::new)),
-            (block, itemProperties) -> new BlockItem(block.get(), itemProperties.useBlockDescriptionPrefix()),
+            MachineInfuserTileEntity::createBlock,
+            (block, itemProperties) -> new BaseBlockItem(block.get(), itemProperties.useBlockDescriptionPrefix()),
             MachineInfuserTileEntity::new);
     public static final Supplier<MenuType<GenericContainer>> CONTAINER_MACHINE_INFUSER = CONTAINERS.register("machine_infuser", GenericContainer::createContainerType);
 
     public static final Supplier<AttachmentType<InfuserData>> INFUSER_DATA = ATTACHMENT_TYPES.register(
             "infuser_data", () -> AttachmentType.builder(() -> new InfuserData(0))
-                    .serialize(com.mojang.serialization.MapCodec.assumeMapUnsafe(InfuserData.CODEC))
+                    .serialize(MapCodec.assumeMapUnsafe(InfuserData.CODEC))
                     .build());
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<InfuserData>> ITEM_INFUSER_DATA = COMPONENTS.registerComponentType(
             "infuser_data",
@@ -75,7 +76,7 @@ public class MachineInfuserModule implements IModule {
         dataGen.add(
                 Dob.blockBuilder(MACHINE_INFUSER)
                         .ironPickaxeTags()
-                        .standardLoot(ITEM_INFUSER_DATA.get(), mcjty.lib.setup.Registration.ITEM_INFUSABLE.get())
+                        .standardLoot(ITEM_INFUSER_DATA.get(), ITEM_INFUSABLE.get())
                         .shaped(builder -> builder
                                 .define('s', VariousModule.DIMENSIONALSHARD.get())
                                 .define('M', VariousModule.MACHINE_FRAME.get())
