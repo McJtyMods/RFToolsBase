@@ -1,3 +1,6 @@
+26.2-8.0.1-fabric:
+- Restored block tooltips, including the extra information shown while holding Shift
+
 26.2-8.0.0-fabric:
 - Keep Jenkins artifact build numbers out of the runtime mod version
 - Ported to Minecraft 26.2 with Fabric

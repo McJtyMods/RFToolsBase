@@ -1,5 +1,6 @@
 package mcjty.rftoolsbase.modules.infuser.blocks;
 
+import com.mojang.serialization.MapCodec;
 import mcjty.lib.api.container.DefaultContainerProvider;
 import mcjty.lib.api.infusable.DefaultInfusable;
 import mcjty.lib.api.infusable.IInfusable;
@@ -8,7 +9,6 @@ import mcjty.lib.builder.BlockBuilder;
 import mcjty.lib.container.ContainerFactory;
 import mcjty.lib.container.GenericContainer;
 import mcjty.lib.container.GenericItemHandler;
-import mcjty.lib.setup.Registration;
 import mcjty.lib.tileentity.Cap;
 import mcjty.lib.tileentity.CapType;
 import mcjty.lib.tileentity.GenericEnergyStorage;
@@ -19,8 +19,11 @@ import mcjty.rftoolsbase.modules.infuser.MachineInfuserModule;
 import mcjty.rftoolsbase.modules.infuser.data.InfuserData;
 import mcjty.rftoolsbase.modules.various.VariousModule;
 import mcjty.rftoolsbase.tools.ManualHelper;
+import mcjty.rftoolsbase.tools.RegistryProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.MenuProvider;
@@ -28,16 +31,18 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import mcjty.lib.varia.Lazy;
-
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.function.Function;
-
 import static mcjty.lib.api.container.DefaultContainerProvider.container;
 import static mcjty.lib.builder.TooltipBuilder.*;
 import static mcjty.lib.container.SlotDefinition.specific;
+import static mcjty.lib.setup.Registration.*;
 
 public class MachineInfuserTileEntity extends TickingTileEntity {
 
@@ -48,7 +53,6 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
             .slot(specific(MachineInfuserTileEntity::isShard).in(), SLOT_SHARDINPUT, 64, 24)
             .slot(specific(MachineInfuserTileEntity::isInfusable).in().out(), SLOT_MACHINEOUTPUT, 118, 24)
             .playerSlots(10, 70));
-
 
     private final GenericItemHandler items = GenericItemHandler.create(this, CONTAINER_FACTORY)
             .slotLimit(slot -> slot == SLOT_MACHINEOUTPUT ? 1 : 64)
@@ -82,9 +86,9 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
         super(MachineInfuserModule.MACHINE_INFUSER.be().get(), pos, state);
     }
 
-    public static BaseBlock createBlock() {
+    public static BaseBlock createBlock(BlockBehaviour.Properties properties) {
 
-        return new BaseBlock(new BlockBuilder()
+        return new BaseBlock(new BlockBuilder().properties(RegistryProperties.block(properties))
                 .tileEntitySupplier(MachineInfuserTileEntity::new)
                 .infusable()
                 .manualEntry(ManualHelper.create("rftoolsbase:machines/infusing"))
@@ -113,9 +117,9 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     }
 
     @Override
-    protected void loadAdditional(net.minecraft.world.level.storage.ValueInput input) {
+    protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
-        CompoundTag tag = input.read(com.mojang.serialization.MapCodec.assumeMapUnsafe(CompoundTag.CODEC)).orElseGet(CompoundTag::new);
+        CompoundTag tag = input.read(MapCodec.assumeMapUnsafe(CompoundTag.CODEC)).orElseGet(CompoundTag::new);
         HolderLookup.Provider provider = input.lookup();
         energyStorage.load(tag, "energy", provider);
         items.load(tag, "items", provider);
@@ -123,23 +127,23 @@ public class MachineInfuserTileEntity extends TickingTileEntity {
     }
 
     @Override
-    protected void saveAdditional(net.minecraft.world.level.storage.ValueOutput output) {
+    protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         CompoundTag tag = new CompoundTag();
-        HolderLookup.Provider provider = (level != null ? level.registryAccess() : net.minecraft.core.RegistryAccess.EMPTY);
+        HolderLookup.Provider provider = (level != null ? level.registryAccess() : RegistryAccess.EMPTY);
         energyStorage.save(tag, "energy", provider);
         items.save(tag, "items", provider);
         infusable.save(tag, "infusable");
 
-        output.store(com.mojang.serialization.MapCodec.assumeMapUnsafe(CompoundTag.CODEC), tag);
+        output.store(MapCodec.assumeMapUnsafe(CompoundTag.CODEC), tag);
     }
 
     @Override
-    protected void applyImplicitComponents(net.minecraft.core.component.DataComponentGetter input) {
+    protected void applyImplicitComponents(DataComponentGetter input) {
         super.applyImplicitComponents(input);
-        energyStorage.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_ENERGY.get()));
-        items.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_INVENTORY.get()));
-        infusable.applyImplicitComponents(input.get(mcjty.lib.setup.Registration.ITEM_INFUSABLE.get()));
+        energyStorage.applyImplicitComponents(input.get(ITEM_ENERGY.get()));
+        items.applyImplicitComponents(input.get(ITEM_INVENTORY.get()));
+        infusable.applyImplicitComponents(input.get(ITEM_INFUSABLE.get()));
         var data = input.get(MachineInfuserModule.ITEM_INFUSER_DATA.get());
         if (data != null) {
             setData(MachineInfuserModule.INFUSER_DATA, data);
