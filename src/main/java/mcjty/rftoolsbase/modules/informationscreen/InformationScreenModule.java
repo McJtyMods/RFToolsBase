@@ -1,33 +1,32 @@
 package mcjty.rftoolsbase.modules.informationscreen;
 
+import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
 import mcjty.lib.datagen.DataGen;
 import mcjty.lib.datagen.Dob;
+import mcjty.lib.items.BaseBlockItem;
 import mcjty.lib.modules.IModule;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenBlock;
 import mcjty.rftoolsbase.modules.informationscreen.blocks.InformationScreenTileEntity;
 import mcjty.rftoolsbase.modules.informationscreen.client.InformationScreenRenderer;
 import mcjty.rftoolsbase.modules.various.VariousModule;
-import mcjty.rftoolsbase.setup.Registration;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import mcjty.lib.setup.DeferredBlock;
 import mcjty.lib.setup.DeferredItem;
-
-import java.util.function.Supplier;
-
 import static mcjty.rftoolsbase.RFToolsBase.tab;
 import static mcjty.rftoolsbase.setup.Registration.*;
 
 public class InformationScreenModule implements IModule {
 
     public static final DeferredBlock<Block> INFORMATION_SCREEN = BLOCKS.register("information_screen", InformationScreenBlock::new);
-    public static final DeferredItem<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", tab(properties -> new BlockItem(INFORMATION_SCREEN.get(), properties.useBlockDescriptionPrefix())));
-    public static final Supplier<BlockEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> new BlockEntityType<>(InformationScreenTileEntity::new, java.util.Set.of(INFORMATION_SCREEN.get())));
+    public static final DeferredItem<Item> INFORMATION_SCREEN_ITEM = ITEMS.register("information_screen", tab(properties -> new BaseBlockItem(INFORMATION_SCREEN.get(), properties.useBlockDescriptionPrefix())));
+    public static final Supplier<BlockEntityType<InformationScreenTileEntity>> TYPE_INFORMATION_SCREEN = TILES.register("information_screen", () -> new BlockEntityType<>(InformationScreenTileEntity::new, Set.of(INFORMATION_SCREEN.get())));
 
     @Override
     public void init() {
@@ -47,7 +46,7 @@ public class InformationScreenModule implements IModule {
     public void initDatagen(DataGen dataGen, HolderLookup.Provider provider) {
         dataGen.add(
                 Dob.blockBuilder(INFORMATION_SCREEN)
-                        .blockTags(java.util.List.of(net.minecraft.tags.BlockTags.BLOCKS_MOTION_NO_LEAVES))
+                        .blockTags(List.of(net.minecraft.tags.BlockTags.BLOCKS_MOTION_NO_LEAVES))
                         .simpleLoot()
                         .ironPickaxeTags()
                         .shaped(builder -> builder

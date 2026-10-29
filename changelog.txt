@@ -1,3 +1,6 @@
+26.3-9.0.1-fabric:
+- Restored block tooltips, including the extra information shown while holding Shift
+
 26.3-9.0.0-fabric:
 - Ported to Minecraft 26.3 with Fabric
 - Uses the published 26.3 McJtyLib and shared Multi_fabric build script
