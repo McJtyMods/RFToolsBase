@@ -1,6 +1,8 @@
 package mcjty.rftoolsbase.modules.crafting.network;
 
 import mcjty.rftoolsbase.RFToolsBase;
+import mcjty.rftoolsbase.modules.crafting.CraftingModule;
+import mcjty.rftoolsbase.modules.crafting.data.CraftingCardData;
 import mcjty.rftoolsbase.modules.crafting.items.CraftingCardItem;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -44,7 +46,11 @@ public record PacketItemComponentsToServer(ItemStack stack) implements CustomPac
 //            if (heldItem.getItem() instanceof ProgramCardItem) {
 //                heldItem.applyComponents(components);
             if (heldItem.getItem() instanceof CraftingCardItem) {
-                heldItem.applyComponents(stack.getComponents());
+                // Copy only the card grid. The other client components can add enchantments or attribute modifiers to the card
+                CraftingCardData data = stack.get(CraftingModule.ITEM_CRAFTINGCARD_DATA);
+                if (data != null) {
+                    heldItem.set(CraftingModule.ITEM_CRAFTINGCARD_DATA, data);
+                }
             }
         });
     }
