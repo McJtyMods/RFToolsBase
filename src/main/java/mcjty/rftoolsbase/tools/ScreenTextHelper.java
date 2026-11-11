@@ -10,6 +10,8 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FontDescription;
 import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
@@ -102,8 +104,10 @@ public class ScreenTextHelper implements ITextRenderHelper {
         var pose = graphics.pose();
         pose.pushMatrix();
         if (truetype) pose.scale(0.5f, 0.5f);
-        var component = net.minecraft.network.chat.Component.literal(text);
-        if (fontId != null) component.withStyle(style -> style.withFont(new net.minecraft.network.chat.FontDescription.Resource(fontId)));
+        var component = Component.literal(text);
+        if (truetype && fontId != null) {
+            component.withStyle(style -> style.withFont(new FontDescription.Resource(fontId)));
+        }
         graphics.text(Minecraft.getInstance().font, component, truetype ? x * 2 : x, truetype ? y * 2 : y, 0xff000000 | color, false);
         pose.popMatrix();
     }
@@ -118,14 +122,14 @@ public class ScreenTextHelper implements ITextRenderHelper {
             matrixStack.popPose();
         } else {
             text = renderer.plainSubstrByWidth(text, maxwidth);
-            renderFontText(fontId, renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
+            renderFontText(null, renderer, text, x * 2, y * 2, color, matrixStack, buffer, lightmapValue);
         }
     }
 
     private static void renderFontText(Identifier fontId, Font font, String text, int x, int y, int color,
             PoseStack pose, SubmitNodeCollector collector, int light) {
-        var component = net.minecraft.network.chat.Component.literal(text);
-        if (fontId != null) component.withStyle(style -> style.withFont(new net.minecraft.network.chat.FontDescription.Resource(fontId)));
+        var component = Component.literal(text);
+        if (fontId != null) component.withStyle(style -> style.withFont(new FontDescription.Resource(fontId)));
         collector.submitText(pose, x, y, component.getVisualOrderText(), false, Font.DisplayMode.NORMAL, light, color, 0, 0);
     }
 
