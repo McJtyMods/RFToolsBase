@@ -1,3 +1,6 @@
+26.1.2-7.0.2-fabric:
+- Fixed screens using the wrong font when TrueType text is disabled
+
 26.1.2-7.0.1-fabric:
 - Restored block tooltips, including the extra information shown while holding Shift
 
