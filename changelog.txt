@@ -1,3 +1,6 @@
+26.3-9.0.2:
+- Fixed screen text using the TrueType font when TrueType rendering is disabled
+
 26.3-9.0.1:
 - Restored block tooltips, including the extra information shown while holding Shift
 
