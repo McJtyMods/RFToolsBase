@@ -19,6 +19,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -54,13 +55,17 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static void setCurrentSlot(Player player, ItemStack stack, int current) {
-        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
-        data = data.withCurrent(current);
-
+        if (!(stack.getItem() instanceof TabletItem) || current < 0 || current >= NUM_SLOTS) {
+            return;
+        }
         ItemStack containingItem = getContainingItem(stack, current);
-        ItemStack newTablet = deriveNewItemstack(current, containingItem, data, current);
-        player.getInventory().setItem(player.getInventory().getSelectedSlot(), newTablet);
-//        player.setHeldItem(getHand(player), newTablet);
+        if (!containingItem.isEmpty() && !(containingItem.getItem() instanceof ITabletSupport)) {
+            return;
+        }
+        ItemStack tablet = getTabletVariant(stack, containingItem);
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        tablet.set(TabletModule.ITEM_TABLET_DATA, data.withCurrent(current));
+        player.setItemInHand(InteractionHand.MAIN_HAND, tablet);
     }
 
     public static InteractionHand getHand(Player player) {
@@ -84,7 +89,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
                 currentItem = (currentItem + NUM_SLOTS - 1) % NUM_SLOTS;
             }
             ItemStack containingItem = getContainingItem(stack, currentItem);
-            if (!containingItem.isEmpty()) {
+            if (containingItem.getItem() instanceof ITabletSupport) {
                 setCurrentSlot(player, stack, currentItem);
                 player.sendSystemMessage(ComponentFactory.literal("Switched item"));
                 return;
@@ -103,33 +108,21 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
     public static void setContainingItem(Player player, InteractionHand hand, int slot, ItemStack containingItem) {
         ItemStack stack = player.getItemInHand(hand);
-        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
-        if (containingItem.isEmpty()) {
-            data = data.setStack(slot, ItemStack.EMPTY);
-        } else {
-            data = data.setStack(slot, containingItem.copy());
+        if (!(stack.getItem() instanceof TabletItem) || slot < 0 || slot >= NUM_SLOTS
+                || (!containingItem.isEmpty() && !(containingItem.getItem() instanceof ITabletSupport))) {
+            return;
         }
-        stack.set(TabletModule.ITEM_TABLET_DATA, data);
 
-        int current = getCurrentSlot(stack);
-        ItemStack newTablet = deriveNewItemstack(slot, containingItem, data, current);
-        player.getInventory().setItem(player.getInventory().getSelectedSlot(), newTablet);
-//        player.setHeldItem(hand, newTablet);
+        ItemStack tablet = slot == getCurrentSlot(stack) ? getTabletVariant(stack, containingItem) : stack;
+        TabletData data = stack.getOrDefault(TabletModule.ITEM_TABLET_DATA, TabletData.EMPTY);
+        tablet.set(TabletModule.ITEM_TABLET_DATA, data.setStack(slot, containingItem.copy()));
+        player.setItemInHand(hand, tablet);
     }
 
-    private static ItemStack deriveNewItemstack(int slot, ItemStack containingItem, TabletData data, int current) {
-        ItemStack newTablet;
-        if (slot == current) {
-            if (containingItem.isEmpty()) {
-                newTablet = new ItemStack(TabletModule.TABLET.get());
-            } else {
-                newTablet = new ItemStack(((ITabletSupport) containingItem.getItem()).getInstalledTablet());
-            }
-        } else {
-            newTablet = new ItemStack(TabletModule.TABLET.get());
-        }
-        newTablet.set(TabletModule.ITEM_TABLET_DATA, data);
-        return newTablet;
+    private static ItemStack getTabletVariant(ItemStack tablet, ItemStack containingItem) {
+        Item variant = containingItem.getItem() instanceof ITabletSupport support
+                ? support.getInstalledTablet() : TabletModule.TABLET.get();
+        return tablet.is(variant) ? tablet : tablet.transmuteCopy(variant);
     }
 
     @Nonnull
