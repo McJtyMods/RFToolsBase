@@ -39,7 +39,7 @@ public class TabletContainer extends GenericContainer {
 	@Override
 	protected Slot createSlot(SlotFactory slotFactory, Player playerEntity, ResourceHandler<ItemResource> inventory, int index, int x, int y, SlotType slotType) {
 		if (slotType == SlotType.SLOT_PLAYERHOTBAR && index == cardIndex) {
-			return new BaseSlot(inventories.get(slotFactory.inventoryName()), be, slotFactory.index(), slotFactory.x(), slotFactory.y()) {
+			return new Slot(playerEntity.getInventory(), index, x, y) {
 				@Override
 				public boolean mayPickup(Player player) {
 					// We don't want to take the stack from this slot.

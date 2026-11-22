@@ -1,3 +1,6 @@
+26.3-9.0.3:
+- Fixed a crash when opening the tablet menu
+
 26.3-9.0.2:
 - Fixed screen text using the TrueType font when TrueType rendering is disabled
 
