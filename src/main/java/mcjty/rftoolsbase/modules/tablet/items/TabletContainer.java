@@ -15,7 +15,7 @@ import static mcjty.lib.container.ContainerFactory.CONTAINER_CONTAINER;
 import static mcjty.lib.container.SlotDefinition.specific;
 
 public class TabletContainer extends GenericContainer {
-	private int cardIndex;
+	private final int cardIndex;
 
 	public static final int NUM_SLOTS = 6;
 
@@ -26,6 +26,21 @@ public class TabletContainer extends GenericContainer {
 	public TabletContainer(int id, BlockPos pos, Player player) {
 		super(TabletModule.CONTAINER_TABLET.get(), id, CONTAINER_FACTORY.get(), pos, null, player);
 		cardIndex = player.getInventory().getSelectedSlot();
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return player.getInventory().getSelectedSlot() == cardIndex
+                && player.getMainHandItem().getItem() instanceof TabletItem;
+    }
+
+    @Override
+    public boolean clickMenuButton(Player player, int slot) {
+        if (slot < 0 || slot >= NUM_SLOTS || !stillValid(player)) {
+            return false;
+        }
+        TabletItem.setCurrentSlot(player, player.getMainHandItem(), slot);
+        return true;
     }
 
 	@Override

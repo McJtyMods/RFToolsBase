@@ -1,3 +1,6 @@
+26.3-9.0.3-fabric:
+- Fixed a multiplayer bug that let clients add items to tablets without owning them
+
 26.3-9.0.2-fabric:
 - Fixed screens using the wrong font when TrueType text is disabled
 

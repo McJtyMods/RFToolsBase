@@ -7,7 +7,7 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemComponentsToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
-import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
+import mcjty.rftoolsbase.modules.filter.network.PacketUpdateFilter;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -24,8 +24,8 @@ public class RFToolsBaseMessages {
         net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketSendRecipe.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
         net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketGetMonitorLog.TYPE, PacketGetMonitorLog.CODEC);
         net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketGetMonitorLog.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
-        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketSyncHandItem.TYPE, PacketSyncHandItem.CODEC);
-        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketSyncHandItem.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
+        net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.serverboundPlay().register(PacketUpdateFilter.TYPE, PacketUpdateFilter.CODEC);
+        net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking.registerGlobalReceiver(PacketUpdateFilter.TYPE, (packet, context) -> packet.handle(new mcjty.lib.network.PayloadContext(context.player(), context.server())));
         net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry.clientboundPlay().register(PacketMonitorLogReady.TYPE, PacketMonitorLogReady.CODEC);
     }
 
