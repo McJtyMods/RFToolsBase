@@ -22,6 +22,12 @@ public class FilterModuleContainer extends GenericContainer {
 		cardIndex = player.getInventory().getSelectedSlot();
     }
 
+    @Override
+    public boolean stillValid(Player player) {
+        return player.getInventory().getSelectedSlot() == cardIndex
+                && player.getMainHandItem().getItem() instanceof FilterModuleItem;
+    }
+
 	@Override
 	public void setupInventories(IItemHandler itemHandler, Inventory inventory) {
 		addInventory(ContainerFactory.CONTAINER_PLAYER, new InvWrapper(inventory));
