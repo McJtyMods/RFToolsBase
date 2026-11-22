@@ -6,28 +6,51 @@ import mcjty.lib.network.TypedMapTools;
 import mcjty.lib.typed.Key;
 import mcjty.lib.typed.Type;
 import mcjty.lib.typed.TypedMap;
+import mcjty.lib.varia.TagTools;
 import mcjty.rftoolsbase.RFToolsBase;
-import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
+import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
 
 public record PacketUpdateNBTItemFilter(TypedMap args) implements CustomPacketPayload {
 
     public static final ResourceLocation ID = new ResourceLocation(RFToolsBase.MODID, "update_nbt_item_filter");
 
+    private static final Key<Integer> CONTAINER_ID = new Key<>("containerId", Type.INTEGER);
+    private static final Key<List<ItemStack>> ITEMS = new Key<>("Items", Type.ITEMSTACK_LIST);
+    private static final Key<List<String>> TAGS = new Key<>("Tags", Type.STRING_LIST);
+    private static final Key<Boolean> BLACKLIST = new Key<>("blacklistMode", Type.BOOLEAN);
+    private static final Key<Boolean> DAMAGE = new Key<>("damageMode", Type.BOOLEAN);
+    private static final Key<Boolean> NBT = new Key<>("nbtMode", Type.BOOLEAN);
+    private static final Key<Boolean> MOD = new Key<>("modMode", Type.BOOLEAN);
+
     public static PacketUpdateNBTItemFilter create(FriendlyByteBuf buf) {
         return new PacketUpdateNBTItemFilter(TypedMapTools.readArguments(buf));
     }
 
-    public static PacketUpdateNBTItemFilter create(TypedMap arguments) {
-        return new PacketUpdateNBTItemFilter(arguments);
+    public static PacketUpdateNBTItemFilter updateEntries(int containerId, FilterModuleInventory inventory) {
+        return new PacketUpdateNBTItemFilter(TypedMap.builder()
+                .put(CONTAINER_ID, containerId)
+                .put(ITEMS, inventory.getStacks())
+                .put(TAGS, inventory.getTags().stream().map(TagKey::location).map(ResourceLocation::toString).toList())
+                .build());
     }
 
-    protected boolean isValidItem(ItemStack itemStack) {
-        return itemStack.getItem() instanceof FilterModuleItem;
+    public static PacketUpdateNBTItemFilter updateModes(int containerId, boolean blacklist, boolean damage, boolean nbt, boolean mod) {
+        return new PacketUpdateNBTItemFilter(TypedMap.builder()
+                .put(CONTAINER_ID, containerId)
+                .put(BLACKLIST, blacklist)
+                .put(DAMAGE, damage)
+                .put(NBT, nbt)
+                .put(MOD, mod)
+                .build());
     }
 
     @Override
@@ -41,38 +64,41 @@ public record PacketUpdateNBTItemFilter(TypedMap args) implements CustomPacketPa
     }
 
     public void handle(PlayPayloadContext ctx) {
-        ctx.workHandler().submitAsync(() -> {
-            ctx.player().ifPresent(playerEntity -> {
-                ItemStack heldItem = playerEntity.getItemInHand(InteractionHand.MAIN_HAND);
-                if (heldItem.isEmpty()) {
-                    return;
+        ctx.workHandler().submitAsync(() -> ctx.player().ifPresent(this::updateFilter));
+    }
+
+    private void updateFilter(Player player) {
+        Integer containerId = args.get(CONTAINER_ID);
+        if (containerId == null || !(player.containerMenu instanceof FilterModuleContainer menu)
+                || menu.containerId != containerId || !menu.stillValid(player)) {
+            return;
+        }
+
+        ItemStack filter = player.getMainHandItem();
+        List<ItemStack> items = args.get(ITEMS);
+        List<String> tags = args.get(TAGS);
+        if (items != null && tags != null) {
+            FilterModuleInventory inventory = new FilterModuleInventory(filter);
+            inventory.getStacks().clear();
+            for (ItemStack stack : items) {
+                if (!stack.isEmpty()) {
+                    inventory.getStacks().add(stack.copyWithCount(1));
                 }
-                // To avoid people messing with packets
-                if (!isValidItem(heldItem)) {
-                    return;
+            }
+            inventory.getTags().clear();
+            for (String tag : tags) {
+                ResourceLocation id = ResourceLocation.tryParse(tag);
+                if (id != null) {
+                    inventory.addTag(TagTools.createItemTagKey(id));
                 }
-                CompoundTag tagCompound = heldItem.getOrCreateTag();
-                for (Key<?> akey : args.getKeys()) {
-                    String key = akey.name();
-                    if (Type.STRING.equals(akey.type())) {
-                        tagCompound.putString(key, (String) args.get(akey));
-                    } else if (Type.INTEGER.equals(akey.type())) {
-                        tagCompound.putInt(key, (Integer) args.get(akey));
-                    } else if (Type.LONG.equals(akey.type())) {
-                        tagCompound.putLong(key, (Long) args.get(akey));
-                    } else if (Type.DOUBLE.equals(akey.type())) {
-                        tagCompound.putDouble(key, (Double) args.get(akey));
-                    } else if (Type.BOOLEAN.equals(akey.type())) {
-                        tagCompound.putBoolean(key, (Boolean) args.get(akey));
-                    } else if (Type.BLOCKPOS.equals(akey.type())) {
-                        throw new RuntimeException("BlockPos not supported for PacketUpdateNBTItem!");
-                    } else if (Type.ITEMSTACK.equals(akey.type())) {
-                        throw new RuntimeException("ItemStack not supported for PacketUpdateNBTItem!");
-                    } else {
-                        throw new RuntimeException(akey.type().getType().getSimpleName() + " not supported for PacketUpdateNBTItem!");
-                    }
-                }
-            });
-        });
+            }
+            inventory.markDirty();
+        }
+
+        CompoundTag tag = filter.getOrCreateTag();
+        args.getOptional(BLACKLIST).ifPresent(value -> tag.putString(BLACKLIST.name(), value ? "Black" : "White"));
+        args.getOptional(DAMAGE).ifPresent(value -> tag.putBoolean(DAMAGE.name(), value));
+        args.getOptional(NBT).ifPresent(value -> tag.putBoolean(NBT.name(), value));
+        args.getOptional(MOD).ifPresent(value -> tag.putBoolean(MOD.name(), value));
     }
 }

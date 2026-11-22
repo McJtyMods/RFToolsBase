@@ -22,6 +22,7 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -57,11 +58,16 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
     }
 
     public static void setCurrentSlot(Player player, ItemStack stack, int current) {
-        stack.getOrCreateTag().putInt("Current", current);
+        if (!(stack.getItem() instanceof TabletItem) || current < 0 || current >= NUM_SLOTS) {
+            return;
+        }
         ItemStack containingItem = getContainingItem(stack, current);
-        ItemStack newTablet = deriveNewItemstack(current, containingItem, stack, current);
-        player.getInventory().items.set(player.getInventory().selected, newTablet);
-//        player.setHeldItem(getHand(player), newTablet);
+        if (!containingItem.isEmpty() && !(containingItem.getItem() instanceof ITabletSupport)) {
+            return;
+        }
+        ItemStack tablet = getTabletVariant(stack, containingItem);
+        tablet.getOrCreateTag().putInt("Current", current);
+        player.setItemInHand(InteractionHand.MAIN_HAND, tablet);
     }
 
     public static InteractionHand getHand(Player player) {
@@ -85,7 +91,7 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
                 currentItem = (currentItem + NUM_SLOTS - 1) % NUM_SLOTS;
             }
             ItemStack containingItem = getContainingItem(stack, currentItem);
-            if (!containingItem.isEmpty()) {
+            if (containingItem.getItem() instanceof ITabletSupport) {
                 setCurrentSlot(player, stack, currentItem);
                 player.displayClientMessage(ComponentFactory.literal("Switched item"), false);
                 return;
@@ -100,34 +106,32 @@ public class TabletItem extends BaseItem implements IItemCycler, ITooltipSetting
 
     public static void setContainingItem(Player player, InteractionHand hand, int slot, ItemStack containingItem) {
         ItemStack stack = player.getItemInHand(hand);
-        CompoundTag tag = stack.getOrCreateTag();
+        if (!(stack.getItem() instanceof TabletItem) || slot < 0 || slot >= NUM_SLOTS
+                || (!containingItem.isEmpty() && !(containingItem.getItem() instanceof ITabletSupport))) {
+            return;
+        }
+
+        ItemStack tablet = slot == getCurrentSlot(stack) ? getTabletVariant(stack, containingItem) : stack;
+        CompoundTag tag = tablet.getOrCreateTag();
         if (containingItem.isEmpty()) {
             tag.remove("Item" + slot);
         } else {
-            CompoundTag compound = new CompoundTag();
-            containingItem.save(compound);
-            tag.put("Item" + slot, compound);
+            tag.put("Item" + slot, containingItem.save(new CompoundTag()));
         }
-
-        int current = getCurrentSlot(stack);
-        ItemStack newTablet = deriveNewItemstack(slot, containingItem, stack, current);
-        player.getInventory().items.set(player.getInventory().selected, newTablet);
-//        player.setHeldItem(hand, newTablet);
+        player.setItemInHand(hand, tablet);
     }
 
-    private static ItemStack deriveNewItemstack(int slot, ItemStack containingItem, ItemStack stack, int current) {
-        ItemStack newTablet;
-        if (slot == current) {
-            if (containingItem.isEmpty()) {
-                newTablet = new ItemStack(TabletModule.TABLET.get());
-            } else {
-                newTablet = new ItemStack(((ITabletSupport) containingItem.getItem()).getInstalledTablet());
-            }
-            newTablet.setTag(stack.getTag());
-        } else {
-            newTablet = stack;
+    private static ItemStack getTabletVariant(ItemStack tablet, ItemStack containingItem) {
+        Item variant = containingItem.getItem() instanceof ITabletSupport support
+                ? support.getInstalledTablet() : TabletModule.TABLET.get();
+        if (tablet.is(variant)) {
+            return tablet;
         }
-        return newTablet;
+        ItemStack replacement = new ItemStack(variant, tablet.getCount());
+        if (tablet.hasTag()) {
+            replacement.setTag(tablet.getTag().copy());
+        }
+        return replacement;
     }
 
     @Nonnull

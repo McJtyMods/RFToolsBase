@@ -8,7 +8,6 @@ import mcjty.rftoolsbase.RFToolsBase;
 import mcjty.rftoolsbase.compat.jei.PacketSendRecipe;
 import mcjty.rftoolsbase.modules.crafting.network.PacketItemNBTToServer;
 import mcjty.rftoolsbase.modules.crafting.network.PacketUpdateNBTItemCard;
-import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketGetMonitorLog;
 import mcjty.rftoolsbase.modules.informationscreen.network.PacketMonitorLogReady;
@@ -33,7 +32,6 @@ public class RFToolsBaseMessages {
         registrar.play(PacketGetMonitorLog.class, PacketGetMonitorLog::create, handler -> handler.server(PacketGetMonitorLog::handle));
         registrar.play(PacketMonitorLogReady.class, PacketMonitorLogReady::create, handler -> handler.client(PacketMonitorLogReady::handle));
         registrar.play(PacketUpdateNBTItemFilter.class, PacketUpdateNBTItemFilter::create, handler -> handler.server(PacketUpdateNBTItemFilter::handle));
-        registrar.play(PacketSyncHandItem.class, PacketSyncHandItem::create, handler -> handler.server(PacketSyncHandItem::handle));
     }
 
     public static void sendToServer(String command, @Nonnull TypedMap.Builder argumentBuilder) {

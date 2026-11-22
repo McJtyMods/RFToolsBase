@@ -6,9 +6,6 @@ import mcjty.lib.gui.Window;
 import mcjty.lib.gui.layout.HorizontalAlignment;
 import mcjty.lib.gui.widgets.*;
 import mcjty.lib.tileentity.GenericTileEntity;
-import mcjty.lib.typed.Key;
-import mcjty.lib.typed.Type;
-import mcjty.lib.typed.TypedMap;
 import mcjty.lib.varia.ComponentFactory;
 import mcjty.lib.varia.SafeClientTools;
 import mcjty.lib.varia.TagTools;
@@ -17,7 +14,6 @@ import mcjty.rftoolsbase.modules.filter.FilterModule;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
-import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
 import mcjty.rftoolsbase.modules.filter.network.PacketUpdateNBTItemFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.ChatFormatting;
@@ -266,16 +262,13 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void syncStack() {
-        RFToolsBaseMessages.sendToServer(PacketSyncHandItem.create(minecraft.player));
+        FilterModuleInventory inventory = new FilterModuleInventory(minecraft.player);
+        RFToolsBaseMessages.sendToServer(PacketUpdateNBTItemFilter.updateEntries(menu.containerId, inventory));
     }
 
     private void updateSettings() {
-        RFToolsBaseMessages.sendToServer(PacketUpdateNBTItemFilter.create(
-                TypedMap.builder()
-                        .put(new Key<>("blacklistMode", Type.STRING), blacklistMode.getCurrentChoice())
-                        .put(new Key<>("damageMode", Type.BOOLEAN), damageMode.getCurrentChoiceIndex() == 1)
-                        .put(new Key<>("modMode", Type.BOOLEAN), modMode.getCurrentChoiceIndex() == 1)
-                        .put(new Key<>("nbtMode", Type.BOOLEAN), nbtMode.getCurrentChoiceIndex() == 1)
-                        .build()));
-   }
+        RFToolsBaseMessages.sendToServer(PacketUpdateNBTItemFilter.updateModes(menu.containerId,
+                blacklistMode.getCurrentChoice().equals("Black"), damageMode.getCurrentChoiceIndex() == 1,
+                nbtMode.getCurrentChoiceIndex() == 1, modMode.getCurrentChoiceIndex() == 1));
+    }
 }
