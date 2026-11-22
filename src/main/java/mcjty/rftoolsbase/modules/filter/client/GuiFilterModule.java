@@ -15,7 +15,7 @@ import mcjty.rftoolsbase.modules.filter.data.FilterModuleData;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleContainer;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleInventory;
 import mcjty.rftoolsbase.modules.filter.items.FilterModuleItem;
-import mcjty.rftoolsbase.modules.filter.network.PacketSyncHandItem;
+import mcjty.rftoolsbase.modules.filter.network.PacketUpdateFilter;
 import mcjty.rftoolsbase.setup.RFToolsBaseMessages;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -253,7 +253,9 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
     }
 
     private void syncStack() {
-        RFToolsBaseMessages.sendToServer(PacketSyncHandItem.create(minecraft.player));
+        ItemStack stack = minecraft.player.getMainHandItem();
+        FilterModuleData data = stack.getOrDefault(FilterModule.ITEM_FILTERMODULE_DATA, FilterModuleData.EMPTY);
+        RFToolsBaseMessages.sendToServer(new PacketUpdateFilter(menu.containerId, data));
     }
 
     private void updateSettings() {
@@ -265,6 +267,6 @@ public class GuiFilterModule extends GenericGuiContainer<GenericTileEntity, Filt
                 componentMode.getCurrentChoiceIndex() == 1,
                 modMode.getCurrentChoiceIndex() == 1);
         stack.set(FilterModule.ITEM_FILTERMODULE_DATA, data);
-        RFToolsBaseMessages.sendToServer(PacketSyncHandItem.create(minecraft.player));
+        syncStack();
    }
 }
