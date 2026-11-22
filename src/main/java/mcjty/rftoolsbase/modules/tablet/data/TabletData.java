@@ -31,12 +31,9 @@ public record TabletData(List<ItemStack> stacks, int current) {
     }
 
     public TabletData setStack(int index, ItemStack stack) {
-        List<ItemStack> newStacks = stacks();
-        if (newStacks.isEmpty()) {
-            newStacks = new ArrayList<>();
-            for (int i = 0 ; i < TabletContainer.NUM_SLOTS ; i++) {
-                newStacks.add(ItemStack.EMPTY);
-            }
+        List<ItemStack> newStacks = new ArrayList<>(stacks());
+        while (newStacks.size() < TabletContainer.NUM_SLOTS) {
+            newStacks.add(ItemStack.EMPTY);
         }
         newStacks.set(index, stack);
         return new TabletData(newStacks, current());
