@@ -1,0 +1,16 @@
+{
+  "name": "Chave Inglesa Inteligente",
+  "icon": "rftoolsbase:smartwrench",
+  "category": "rftoolsbase:category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A Chave Inglesa Inteligente pode ser usada para remover blocos tecnológicos com facilidade e também para selecionar blocos para funcionalidades especiais. $(br2)Use como uma chave inglesa normal: $(5)Agache e clique com o botão direito$() para pegar o bloco e $(5)clique com o botão direito$() para rotacionar.$(br2)$(5)Clique com o botão direito$() no ar para mudar o modo."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:smartwrench",
+      "text": "Se a chave inglesa estiver no $(thing)Modo de Seleção$(), ela pode ser usada para realizar operações especializadas em blocos (por exemplo, o Projetor de Escudo)."
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "name": "Fragmentos Dimensionais",
+  "icon": "rftoolsbase:dimensionalshard",
+  "category": "rftoolsbase:category_basics",
+  "extra_recipe_mappings":{
+    "rftoolsbase:dimensionalshard": 0,
+    "rftoolsbase:dimensionalshard_overworld": 0,
+    "rftoolsbase:dimensionalshard_nether": 0,
+    "rftoolsbase:dimensionalshard_end": 0
+  },
+  "pages": [
+    {
+      "type": "text",
+      "text": "$(item)Minério de Fragmento Dimensional$() pode ser encontrado no subsolo em pequenos grupos em várias dimensões. Ele é afetado por $(thing)Fortuna$() e dropa $(item)Fragmentos Dimensionais$() quando quebrado. $(br2)Eles são usados em várias receitas mais complexas e também podem ser usados para $(l:rftoolsbase:machines/infusing)infundir máquinas$()."
+    },
+    {
+      "type": "image",
+      "images": [
+        "rftoolsbase:textures/manual/image_ore.png"
+      ],
+      "text": "Alguns Minérios de Fragmento Dimensional no subsolo do Overworld."
+    },
+    {
+      "type": "crafting",
+      "recipe": "rftoolsbase:infused_diamond",
+      "recipe2": "rftoolsbase:infused_enderpearl"
+    },
+    {
+      "type": "text",
+      "flag": "mod:rftoolsdim",
+      "text": "$(item)Fragmentos Dimensionais$() também podem ser usados para a criação de uma variedade de $(item)Blocos Decorativos$()."
+    },
+
+    {
+      "type": "text",
+      "flag": "!mod:rftoolsdim",
+      "text": "Se você tivesse o RFTools Dimensions, poderia criar alguns blocos decorativos bem legais, mas como não tem, fazer o quê, né :("
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_blank_block",
+      "recipe2": "rftoolsdim:dimensional_block"
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_small_blocks",
+      "recipe2": "rftoolsdim:dimensional_cross_block"
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_pattern1_block",
+      "recipe2": "rftoolsdim:dimensional_pattern2_block"
+    },
+    {
+      "type": "crafting",
+      "flag": "mod:rftoolsdim",
+      "recipe": "rftoolsdim:dimensional_cross2_block"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Módulos",
+  "icon": "rftoolsbase:filter_module",
+  "category": "rftoolsbase:category_basics",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Várias máquinas nos mods tecnológicos do RFTools oferecem suporte a módulos. Esses são itens que podem ser inseridos na máquina para modificar ou fornecer funcionalidades. Na maioria dos casos (quando uma máquina oferece suporte a módulos), você pode simplesmente clicar com o botão direito com o módulo sobre a máquina para inseri-lo."
+    }
+  ]
+}

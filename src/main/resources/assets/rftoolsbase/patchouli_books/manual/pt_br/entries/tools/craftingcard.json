@@ -1,0 +1,17 @@
+{
+  "name": "Cartão de Fabricação",
+  "icon": "rftoolsbase:crafting_card",
+  "category": "rftoolsbase:category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "O Cartão de Fabricação é um item que pode armazenar uma receita. Ele pode ser usado para receitas regulares 3x3, mas também para formatos mais complexos. Várias máquinas podem usar este cartão.$(br2)Observe que as receitas armazenadas não precisam ser necessariamente válidas. Este cartão também pode servir como uma forma geral de representar 'entradas' e uma 'saída'."
+    },
+    {
+      "type": "image",
+      "images": [
+        "rftoolsbase:textures/manual/image_craftingcard.png"
+      ]
+    }
+  ]
+}

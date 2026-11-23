@@ -1,0 +1,16 @@
+{
+  "name": "Encontrou um bug?",
+  "icon": "minecraft:tnt",
+  "category": "rftoolsbase:category_basics",
+  "priority": "true",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Se você encontrou um bug em um dos meus mods, por favor reporte-o em um dos links abaixo! (A menos que tenha encontrado o bug em um modpack — nesse caso, primeiro informe os criadores do pack para que eles possam verificar se o erro é deles.)"
+    },
+    {
+      "type": "text",
+      "text": "$(li)$(l:https://github.com/McJtyMods/DeepResonance/issues)Deep Resonance$() $(li)$(l:https://github.com/McJtyMods/RFToolsBase/issues)RFTools Base$() $(li)$(l:https://github.com/McJtyMods/RFToolsBuilder/issues)RFTools Builder$() $(li)$(l:https://github.com/McJtyMods/RFToolsControl/issues)RFTools Control$() $(li)$(l:https://github.com/McJtyMods/RFToolsDimensions/issues)RFTools Dimensions$() $(li)$(l:https://github.com/McJtyMods/RFToolsPower/issues)RFTools Power$() $(li)$(l:https://github.com/McJtyMods/RFToolsStorage/issues)RFTools Storage$() $(li)$(l:https://github.com/McJtyMods/RFToolsUtility/issues)RFTools Utility$() $(li)$(l:https://github.com/McJtyMods/XNet/issues)XNet$()"
+    }
+  ]
+}

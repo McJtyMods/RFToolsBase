@@ -1,0 +1,15 @@
+{
+  "name": "Módulo de Filtro",
+  "icon": "rftoolsbase:filter_module",
+  "category": "rftoolsbase:category_tools",
+  "pages": [
+    {
+      "type": "text",
+      "text": "O Módulo de Filtro é um item muito versátil que pode ser usado para permitir (whitelist) ou bloquear (blacklist) itens para a máquina. Várias máquinas suportam esse módulo (Construtor, Armazenamento Modular, Fabricador, ...).$(br2)Blocos, itens e tags são suportados. Você pode bloquear ou permitir e também exigir correspondência em NBT e dano."
+    },
+    {
+      "type": "text",
+      "text": "$(5)Agache e clique com o botão direito$() em um inventário (como um baú) para adicionar todos os itens/blocos desse inventário ao filtro.$(br)$(5)Agache e clique com o botão direito$() em um bloco no mundo para adicionar esse bloco ao filtro.$(br2)Na interface gráfica (GUI) do módulo de filtro, você também pode adicionar tags ou converter um bloco/item para as tags correspondentes."
+    }
+  ]
+}

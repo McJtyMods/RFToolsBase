@@ -1,0 +1,15 @@
+{
+  "name": "Tela de Informações",
+  "icon": "rftoolsbase:information_screen",
+  "category": "rftoolsbase:category_machines",
+  "pages": [
+    {
+      "type": "text",
+      "text": "A Tela de Informações é uma pequena tela que pode ser colocada ao lado de uma máquina para exibir algumas informações. Por padrão, essa tela mostrará informações de energia, mas algumas máquinas (como as Células de Energia do RFTools Power) possuem opções adicionais de visualização."
+    },
+    {
+      "type": "text",
+      "text": "Usar uma chave inglesa na Tela de Informações alternará o modo de exibição (se suportado pela máquina conectada)."
+    }
+  ]
+}

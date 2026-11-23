@@ -1,0 +1,7 @@
+{
+  "name": "Noções Básicas",
+  "description": "Informações básicas sobre o RFTools, incluindo detalhes da geração de mundo.",
+  "parent": "rftoolsbase:category_rftoolsbase",
+  "icon": "rftoolsbase:dimensionalshard_overworld",
+  "sortnum": 10
+}
