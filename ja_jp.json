@@ -1,0 +1,73 @@
+{
+    "item.rftoolsbase.network_monitor": "RF ネットワークモニター",
+    "item.rftoolsbase.teleport_probe": "テレポータープローブ",
+    "item.rftoolsbase.filter_module": "フィルターモジュール",
+    "item.rftoolsbase.developers_delight": "開発者の喜び",
+    "item.rftoolsbase.shard_wand": "欠片の杖",
+    "item.rftoolsbase.orphaning_card": "オーファンカード",
+    "item.rftoolsbase.security_card": "セキュリティカード",
+    "item.rftoolsbase.infused_diamond": "注入ダイヤモンド",
+    "item.rftoolsbase.infused_enderpearl": "注入エンダーパール",
+    "item.rftoolsbase.smartwrench": "スマートレンチ",
+    "item.rftoolsbase.smartwrench_select": "スマートレンチ(選択)",
+    "item.rftoolsbase.dimensionalshard": "ディメンショナルシャード",
+    "item.rftoolsbase.machine_frame": "機械フレーム",
+    "item.rftoolsbase.machine_base": "機械ベース",
+    "item.rftoolsbase.crafting_card": "クラフトカード",
+    "item.rftoolsbase.tablet": "タブレット(空)",
+    "item.rftoolsbase.tablet_filled": "タブレット(満タン)",
+    "item.rftoolsbase.manual": "技術ガイド",
+
+    "block.rftoolsbase.machine_infuser": "機械注入機",
+    "block.rftoolsbase.security_manager": "セキュリティマネージャー",
+    "block.rftoolsbase.dimensionalshard_overworld": "ディメンショナルシャード鉱石",
+    "block.rftoolsbase.dimensionalshard_nether": "ディメンショナルシャード鉱石",
+    "block.rftoolsbase.dimensionalshard_end": "ディメンショナルシャード鉱石",
+    "block.rftoolsbase.information_screen": "詳細スクリーン",
+
+    "_comment": "Creative Tabs",
+    "itemGroup.rftoolsbase": "RFTools Base",
+
+    "_comment": "Keys",
+    "key.categories.rftools": "RFTools",
+    "key.debugDumpNBTItem": "手持ちアイテムのNBT消去",
+    "key.debugDumpNBTBlock": "選択ブロックのNBT消去",
+    "key.nextDestination": "次のターゲットにサイクル",
+    "key.prevDestination": "前のターゲットにサイクル",
+
+    "_comment": "Messages",
+    "message.rftoolsbase.shiftmessage": "<Shiftを押す>",
+
+    "message.rftoolsbase.crafting_card.header": "このアイテムはクラフトに使用できます。レシピの材料と成果物を保存します",
+    "message.rftoolsbase.crafting_card.info": "アイテム: ",
+
+    "message.rftoolsbase.information_screen.header": "このブロックをパワーセルに貼り付けると、そのセルに関する情報が表示されます。レンチで右クリックしてモードを変更できます。",
+    "message.rftoolsbase.information_screen.gold": "このブロックは、RF/FEをサポートする任意のブロックに関する電力情報も表示できます",
+
+    "message.rftoolsbase.machine_infuser.header": "この機械を使用することでRFToolsのほとんどの機械を様々な方法で改善することが可能です。動作にはディメンショナルシャードを使用します。",
+    "message.rftoolsbase.machine_infuser.gold": "注入ボーナス:消費電力の削減",
+
+    "message.rftoolsbase.filter_module.header": "このフィルターモジュールは、さまざまなMOD(XNet、ストレージ、ビルダー、クラフターなど)で使用されます。ブロックが特定のアイテムのみを受け入れるようにすることができます",
+    "message.rftoolsbase.filter_module.gold": "インベントリをスニーク右クリックしてコンテンツに基づいて設定するか、ブロックをスニーク右クリックしてそのブロックをフィルターに追加します",
+    "message.rftoolsbase.filter_module.info": "モード: ",
+
+    "message.rftoolsbase.manual.header": "このガイドは、全てのRFToolsを基礎とする技術MODのマニュアルです。",
+
+    "message.rftoolsbase.tablet.header": "リモートGUIと情報を参照するために使用できるタブレットです。",
+    "message.rftoolsbase.tablet.gold": "空のタブレット:GUIを開いて、可能なタブレット情報アイテムと組み合わせます",
+
+    "message.rftoolsbase.tablet_filled.header": "リモートGUIと情報を参照するために使用できるタブレットです。",
+    "message.rftoolsbase.tablet_filled.gold": "情報を含むタブレット:右クリックで情報GUI、スニーク右クリックでタブレットGUIを表示",
+
+    "message.rftoolsbase.smartwrench.header": "一般的なスマートレンチですです。空中を右クリックしてモードを変更します",
+    "message.rftoolsbase.smartwrench.gold": "通常のレンチとして使用:スニーク右クリックして回収、右クリックして回転させます",
+    "message.rftoolsbase.smartwrench.info1": "モード: ",
+    "message.rftoolsbase.smartwrench.info2": "ブロック: ",
+
+    "message.rftoolsbase.smartwrench_select.header": "一般的なスマートレンチです。空中を右クリックしてモードを変更します",
+    "message.rftoolsbase.smartwrench_select.gold": "ブロックセレクターとして使用:スニーク右クリックでマスターブロックを選択し、右クリックしてブロックをマスターに接続します",
+    "message.rftoolsbase.smartwrench_select.info1": "モード: ",
+    "message.rftoolsbase.smartwrench_select.info2": "ブロック: ",
+
+    "message.rftoolsbase.security_manager": "@a内容:%s スタック\n@fこのブロックは、セキュリティカードを管理します"
+}
