@@ -7,7 +7,7 @@
       {
         "target": {
           "predicate_type": "minecraft:tag_match",
-          "tag": "minecraft:end_stones"
+          "tag": "c:end_stones"
         },
         "state": {
           "Name": "rftoolsbase:dimensionalshard_end"
