@@ -207,11 +207,11 @@ public class CraftingCardItem extends Item implements ITooltipSettings {
     // Return true if this crafting card fits a 3x3 crafting grid nicely
     public static boolean fitsGrid(ItemStack card) {
         CraftingCardData data = card.getOrDefault(CraftingModule.ITEM_CRAFTINGCARD_DATA, defaultData());
-        for (int i = 0 ; i < data.stacks().size() ; i++) {
-            if (i < INPUT_SLOTS) {
-                if (!isInGrid(i)) {
-                    return false;
-                }
+        List<ItemStack> stacks = data.stacks();
+        int limit = Math.min(INPUT_SLOTS, stacks.size());
+        for (int i = 0; i < limit; i++) {
+            if (!isInGrid(i) && !stacks.get(i).isEmpty()) {
+                return false;
             }
         }
         return true;
